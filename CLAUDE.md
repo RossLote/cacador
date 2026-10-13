@@ -91,6 +91,7 @@ pnpm build     # apps/web: the production build into apps/web/dist
 pnpm lint      # eslint . --max-warnings 0, then tsc --noEmit in every workspace, then pnpm validate,
                # then node scripts/check-no-radix.mjs (the Radix check)
 pnpm test      # vitest run in packages/data and apps/web
+pnpm e2e:browsers  # e2e: Chromium and its headless shell, once before pnpm e2e and after each Playwright bump
 pnpm e2e       # e2e: Playwright against vite preview of the production build; not part of lint or test
 pnpm extract   # packages/data: rebuild the question files from the source PDF
 pnpm validate  # packages/data: check the manifest and the question files (also part of lint)
