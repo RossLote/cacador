@@ -251,7 +251,10 @@ function checkTranslation(rel, e, pt) {
   expectType(rel, e.id, 'notes', e.notes, 'text');
 }
 
-/** A hint entry (DESIGN.md § 3.3): language entries whose pt occurs in the question, a nudge, pattern tags. */
+/**
+ * A hint entry (DESIGN.md § 3.3): language entries whose pt occurs in the question, a nudge (non-empty
+ * from checked on), pattern tags.
+ */
 function checkHint(rel, e, pt) {
   expectType(rel, e.id, 'language', e.language, 'list');
   const text = textOf(pt).toLowerCase();
@@ -266,6 +269,7 @@ function checkHint(rel, e, pt) {
     }
   });
   expectType(rel, e.id, 'nudge', e.nudge, 'text');
+  if (e.status !== 'draft' && e.nudge === '') failAt(rel, e.id, `nudge is empty, a ${e.status} entry needs a nudge`);
   expectType(rel, e.id, 'patterns', e.patterns, 'list');
   for (const pattern of e.patterns) expectType(rel, e.id, 'patterns entry', pattern, 'string');
 }
@@ -317,15 +321,24 @@ const escapeRegExp = (text) => text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 const straighten = (text) => text.replace(/\u2019/g, "'").replace(/[\u201c\u201d]/g, '"');
 
 /**
- * Reads the glossary file `rel` when it exists: a list of objects whose fields have the types `spec`
- * names, with `pt` unique as rule 6 matches it (ignoring case, curly quotes read as straight ones).
- * Returns the list, or undefined when there is no such file.
+ * Reads the list file `rel` when it exists: a list of objects whose fields have the types `spec` names,
+ * with `key` unique. Returns the list, or undefined when there is no such file.
+ */
+function readList(dir, rel, label, key, spec) {
+  if (!existsSync(join(dir, rel))) return undefined;
+  const list = readJson(dir, rel);
+  if (!Array.isArray(list)) fail(rel, 'does not hold a list');
+  checkEntries(rel, label, list, key, spec);
+  return list;
+}
+
+/**
+ * Reads the glossary file `rel` when it exists (readList), with `pt` also unique as rule 6 matches it
+ * (ignoring case, curly quotes read as straight ones). Returns the list, or undefined when there is no such file.
  */
 function readGlossary(dir, rel, label, spec) {
-  if (!existsSync(join(dir, rel))) return undefined;
-  const glossary = readJson(dir, rel);
-  if (!Array.isArray(glossary)) fail(rel, 'does not hold a list');
-  checkEntries(rel, label, glossary, 'pt', spec);
+  const glossary = readList(dir, rel, label, 'pt', spec);
+  if (!glossary) return undefined;
   const first = new Map();
   for (const entry of glossary) {
     const key = straighten(entry.pt).toLowerCase();
@@ -357,6 +370,29 @@ function checkGlossary(files, translations, glossary) {
   }
 }
 
+const KEBAB = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+
+/**
+ * Rule 8 (DESIGN.md § 4), once hints/patterns.json exists: every entry has non-empty slug, pt, en and
+ * note, the slug unique and kebab-case, and every tag of every hint is one of the slugs.
+ * Returns the list, or undefined when there is no such file.
+ */
+function checkPatterns(dir, hints) {
+  const rel = 'hints/patterns.json';
+  const patterns = readList(dir, rel, 'pattern', 'slug', { slug: 'string', pt: 'string', en: 'string', note: 'string' });
+  if (!patterns) return undefined;
+  for (const { slug } of patterns) {
+    if (!KEBAB.test(slug)) fail(rel, `pattern ${slug} is not a kebab-case slug (lowercase letters and digits joined by single hyphens)`);
+  }
+  const slugs = new Set(patterns.map((p) => p.slug));
+  for (const [id, hint] of hints) {
+    for (const tag of hint.patterns) {
+      if (!slugs.has(tag)) failAt(hint.file, id, `pattern "${tag}" is not a slug of ${rel}`);
+    }
+  }
+  return patterns;
+}
+
 /** The counts `validate` reports for translations or hints: entries, files, and entries at each status. */
 function countEntries(byId) {
   const entries = [...byId.values()];
@@ -381,6 +417,7 @@ export function validate(dir = dataDir) {
   // Rule 7 (DESIGN.md § 4): only the terms glossary's shape is checked; a term's use in translations
   // is the meaning pass's job, not a rule's.
   const terms = readGlossary(dir, 'glossary/terms.json', 'term', { pt: 'string', en: 'string', note: 'text' });
+  const patterns = checkPatterns(dir, hints);
 
   const all = [...files.values()].flat();
   return {
@@ -393,5 +430,6 @@ export function validate(dir = dataDir) {
     translations: countEntries(translations),
     hints: countEntries(hints),
     glossaries: { species: species?.length ?? 0, terms: terms?.length ?? 0 },
+    patterns: patterns?.length ?? 0,
   };
 }

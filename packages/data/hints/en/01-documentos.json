@@ -68,7 +68,7 @@
       }
     ],
     "nudge": "A conviction for a crime de caça makes the carta caducar: it lapses outright. There is no correcting or swapping it.",
-    "patterns": ["caduca"],
+    "patterns": [],
     "status": "draft"
   },
   {
@@ -86,7 +86,7 @@
       }
     ],
     "nudge": "A regional licence covers a region, the região cinegética a que respeita, with no species limit. Nobody, diplomats included, is exempt from the licença de caça (questions 8 and 9).",
-    "patterns": ["apenas"],
+    "patterns": ["only"],
     "status": "draft"
   },
   {
@@ -111,7 +111,7 @@
       }
     ],
     "nudge": "One region, so a licença regional is enough, and the nacional covers it too. Snipe need no waterfowl licence: question 10 asks the same with rabbits and has the same answer.",
-    "patterns": ["so-only", "species-preposition"],
+    "patterns": ["only"],
     "status": "draft"
   },
   {
@@ -165,7 +165,7 @@
       }
     ],
     "nudge": "Rabbits in one region: a licença regional, or the nacional, is all that is needed. The waterfowl licence is only for aves aquáticas.",
-    "patterns": ["so-only"],
+    "patterns": ["only"],
     "status": "draft"
   }
 ]

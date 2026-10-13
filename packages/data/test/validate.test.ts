@@ -84,7 +84,7 @@ function expectFailure(change: (dir: string) => void, message: RegExp): void {
 
 describe('validate on the real data', () => {
   it('passes and returns the counts of DESIGN.md § 2 and § 3, the translations on disk and the glossary sizes', () => {
-    const { translations, hints, glossaries, ...bank } = validate();
+    const { translations, hints, glossaries, patterns, ...bank } = validate();
     expect(bank).toEqual({ questions: 506, files: 18, sections: 11, topics: 29, images: 15, imageQuestions: 18 });
     // Phase 2 leaves every entry translated and none draft; reviewed grows as Ross studies.
     expect(translations).toMatchObject({ entries: 506, files: 18, draft: 0 });
@@ -99,6 +99,8 @@ describe('validate on the real data', () => {
     expect(hints.draft + hints.checked + hints.reviewed).toBe(506);
     expect(glossaries.species).toBeGreaterThan(0);
     expect(glossaries.terms).toBeGreaterThan(0);
+    // The tail bead may add patterns, so the count is read from the file, not pinned.
+    expect(patterns).toBe((JSON.parse(readFileSync(join(realDir, 'hints/patterns.json'), 'utf8')) as unknown[]).length);
   });
 });
 
@@ -114,6 +116,7 @@ describe('validate on the tiny fixture', () => {
       translations: { entries: 4, files: 2, draft: 1, checked: 2, reviewed: 1 },
       hints: { entries: 2, files: 1, draft: 2, checked: 0, reviewed: 0 },
       glossaries: { species: 2, terms: 2 },
+      patterns: 2,
     });
   });
 
@@ -123,6 +126,12 @@ describe('validate on the tiny fixture', () => {
     expect(validate(dir)).toMatchObject({ hints: { entries: 2, files: 1, draft: 1, checked: 1, reviewed: 0 } });
     remove(dir, 'hints');
     expect(validate(dir)).toMatchObject({ hints: { entries: 0, files: 0, draft: 0, checked: 0, reviewed: 0 } });
+  });
+
+  it('counts no patterns when the pattern list does not exist', () => {
+    const dir = copyBase();
+    remove(dir, 'hints/patterns.json');
+    expect(validate(dir)).toMatchObject({ patterns: 0 });
   });
 
   it('counts no translations and empty glossaries when the files do not exist', () => {
@@ -448,6 +457,23 @@ describe('rule 5: translations and hints', () => {
     expectFailure((dir) => editRows(dir, 'hints/en/02-beta.json', (h) => (h[1].patterns = [''])), /hints\/en\/02-beta\.json: id 4: patterns entry is not a non-empty string/);
   });
 
+  it('fails on a checked or reviewed hint with an empty nudge, and allows it on a draft', () => {
+    expectFailure(
+      (dir) => editRows(dir, 'hints/en/02-beta.json', (h) => (h[0].status = 'checked')),
+      /hints\/en\/02-beta\.json: id 3: nudge is empty, a checked entry needs a nudge/,
+    );
+    expectFailure(
+      (dir) => editRows(dir, 'hints/en/02-beta.json', (h) => {
+        h[1].nudge = '';
+        h[1].status = 'reviewed';
+      }),
+      /hints\/en\/02-beta\.json: id 4: nudge is empty, a reviewed entry needs a nudge/,
+    );
+    const dir = copyBase();
+    editRows(dir, 'hints/en/02-beta.json', (h) => (h[1].nudge = ''));
+    expect(() => validate(dir)).not.toThrow();
+  });
+
   it('fails on a translation without a question, with a non-string option, or without notes', () => {
     expectFailure((dir) => editRows(dir, 'translations/en/01-alfa.json', (t) => delete t[0].question), /translations\/en\/01-alfa\.json: id 1: question is not a non-empty string/);
     expectFailure((dir) => editRows(dir, 'translations/en/01-alfa.json', (t) => (t[0].options.A = 5)), /translations\/en\/01-alfa\.json: id 1: option A is not a non-empty string/);
@@ -615,6 +641,66 @@ describe('rule 7: terms glossary shape', () => {
       editTerms(dir, (t) => (t[0]!.en = ''));
       editRows(dir, 'translations/en/02-beta.json', (t) => (t[0].options.A = 'A duck'));
     }, /translations\/en\/02-beta\.json: id 3: "Pato-real" must appear as "Mallard"/);
+  });
+});
+
+interface PatternEntry {
+  slug: string;
+  pt?: string;
+  en?: string;
+  note?: string;
+}
+
+describe('rule 8: pattern list and hint tags', () => {
+  const editPatterns = (dir: string, change: (p: PatternEntry[]) => void) => editJson<PatternEntry[]>(dir, 'hints/patterns.json', change);
+
+  it('fails naming the file, the id and the slug when a hint carries a tag not in the list', () => {
+    expectFailure(
+      (dir) => editRows(dir, 'hints/en/02-beta.json', (h) => (h[1].patterns = ['so-only', 'no-such-pattern'])),
+      /hints\/en\/02-beta\.json: id 4: pattern "no-such-pattern" is not a slug of hints\/patterns\.json/,
+    );
+  });
+
+  it('fails when a tag in use is removed from the list', () => {
+    expectFailure(
+      (dir) => editPatterns(dir, (p) => p.splice(0, 1)),
+      /hints\/en\/02-beta\.json: id 4: pattern "so-only" is not a slug of hints\/patterns\.json/,
+    );
+  });
+
+  it.each([
+    ['no pt', (p: PatternEntry[]) => delete p[0]!.pt, /hints\/patterns\.json: pattern so-only has no non-empty string "pt"/],
+    ['an empty en', (p: PatternEntry[]) => (p[1]!.en = ''), /hints\/patterns\.json: pattern negative-stem has no non-empty string "en"/],
+    ['an empty note', (p: PatternEntry[]) => (p[0]!.note = ''), /hints\/patterns\.json: pattern so-only has no non-empty string "note"/],
+    ['an empty slug', (p: PatternEntry[]) => (p[1]!.slug = ''), /hints\/patterns\.json: pattern #2 has no non-empty string "slug"/],
+    ['a duplicate slug', (p: PatternEntry[]) => p.push({ ...p[0]! }), /hints\/patterns\.json: pattern so-only is listed twice/],
+    ['an entry that is not an object', (p: PatternEntry[]) => p.push('x' as unknown as PatternEntry), /hints\/patterns\.json: pattern #3 is not an object/],
+  ])('rejects a pattern with %s', (_name, change, message) => {
+    expectFailure((dir) => editPatterns(dir, change), message);
+  });
+
+  it.each(['So-only', 'so_only', 'so--only', '-so-only', 'so-only-', 'só'])('rejects the slug %s as not kebab-case', (slug) => {
+    expectFailure(
+      (dir) => editPatterns(dir, (p) => p.push({ slug, pt: 'x', en: 'x', note: 'x' })),
+      new RegExp(`hints/patterns\\.json: pattern ${slug} is not a kebab-case slug`),
+    );
+  });
+
+  it('accepts a kebab-case slug with digits and a pattern no hint uses', () => {
+    const dir = copyBase();
+    editPatterns(dir, (p) => p.push({ slug: 'rule-2b', pt: 'x', en: 'x', note: 'x' }));
+    expect(() => validate(dir)).not.toThrow();
+  });
+
+  it('rejects a pattern list that is not a list', () => {
+    expectFailure((dir) => writeText(dir, 'hints/patterns.json', '{}'), /hints\/patterns\.json: does not hold a list/);
+  });
+
+  it('checks no tag until hints/patterns.json exists', () => {
+    const dir = copyBase();
+    remove(dir, 'hints/patterns.json');
+    editRows(dir, 'hints/en/02-beta.json', (h) => (h[1].patterns = ['no-such-pattern']));
+    expect(() => validate(dir)).not.toThrow();
   });
 });
 

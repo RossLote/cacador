@@ -30,6 +30,8 @@ export interface ValidationCounts {
   translations: EntryCounts;
   hints: EntryCounts;
   glossaries: GlossaryCounts;
+  /** Entries in hints/patterns.json, 0 when the file does not exist. */
+  patterns: number;
 }
 
 /** Reads and parses a JSON file under `dir`; throws a ValidationError naming the file when it cannot. */

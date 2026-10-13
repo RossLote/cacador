@@ -55,6 +55,7 @@ import hint15 from '../hints/en/15-arco-besta.json' with { type: 'json' };
 import hint16 from '../hints/en/16-campos-treino.json' with { type: 'json' };
 import hint17 from '../hints/en/17-caes.json' with { type: 'json' };
 import hint18 from '../hints/en/18-cetraria.json' with { type: 'json' };
+import patternsJson from '../hints/patterns.json' with { type: 'json' };
 
 export type OptionKey = 'A' | 'B' | 'C';
 
@@ -127,6 +128,18 @@ export interface HintLanguage {
   note: string;
 }
 
+/** A pattern, one entry in hints/patterns.json (DESIGN.md § 3.3): a tag a hint's `patterns` may carry. */
+export interface Pattern {
+  /** The kebab-case tag, unique in the list. */
+  slug: string;
+  /** The construction as the bank prints it, or a short Portuguese label. */
+  pt: string;
+  /** The English name the app's report shows. */
+  en: string;
+  /** What the construction does to the reading and when to tag it. */
+  note: string;
+}
+
 /** A hint, one entry in a hints/en/ file (DESIGN.md § 3.3). */
 export interface Hint {
   id: number;
@@ -137,6 +150,9 @@ export interface Hint {
 }
 
 export const manifest: Manifest = manifestJson as Manifest;
+
+/** The closed list of pattern tags (DESIGN.md § 4 rule 8 checks every hint's tags against it). */
+export const patterns: readonly Pattern[] = patternsJson;
 
 /** One import per manifest chunk, in manifest order; the JSON widens `answer` to string, so it is narrowed to Question once, here. */
 const chunks = [

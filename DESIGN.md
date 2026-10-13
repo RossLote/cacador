@@ -280,7 +280,7 @@ precedent of § 5 step 3):
     }
   ],
   "nudge": "One region, so a licença regional is enough, and the nacional covers it too. Snipe need no waterfowl licence: question 10 asks the same with rabbits and has the same answer.",
-  "patterns": ["so-only", "species-preposition"],
+  "patterns": ["only"],
   "status": "draft"
 }
 ```
@@ -489,7 +489,7 @@ Four phases, each its own epic, in order.
       same with rabbits"), with the fact always stated in words too.
    8. A `patterns` tag is a `slug` of `hints/patterns.json` (§ 4 rule 8) and is applied
       only where the construction is part of what the answer turns on, not on every
-      occurrence. In the precedent 4 of 10 entries carry a tag; entry 3 carries none
+      occurrence. In the precedent most entries carry no tag; entry 3 carries none
       because the number decides. A writer who needs a tag the list lacks leaves the
       question untagged and names the construction and the ids in the bead's close
       reason, for the tail bead (cac-eyh.24) that adds the pattern and tags them.
@@ -696,7 +696,7 @@ precedent for every choice here, minus the server: this app has no backend.
   brief cac-bc2 D5.
 - **2026-10-13, Tag what the answer turns on.** A tag is applied only where the
   construction is part of what the answer turns on, not on every occurrence; in the
-  precedent, 4 of 10 entries carry a tag, and entry 3 carries none because the number
+  precedent most entries carry no tag, and entry 3 carries none because the number
   decides (§ 5 step 3 rule 8). Reason: a low score on a pattern should mean that
   construction cost answers (brief cac-bc2 D6).
 - **2026-10-13, Nudges may cite question numbers.** A nudge may cross-reference another

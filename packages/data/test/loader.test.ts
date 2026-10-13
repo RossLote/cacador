@@ -1,8 +1,9 @@
-import { existsSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import {
   hintFor,
   manifest,
+  patterns,
   questionById,
   questions,
   questionsInSection,
@@ -61,6 +62,14 @@ describe('loader', () => {
     const hint = hintFor(506);
     expect(hint?.id).toBe(506);
     expect(['draft', 'checked', 'reviewed']).toContain(hint?.status);
+  });
+
+  it('exports the pattern list, and every tag a hint uses is one of its slugs', () => {
+    const onDisk = JSON.parse(readFileSync(new URL('../hints/patterns.json', import.meta.url), 'utf8')) as unknown[];
+    expect(patterns).toHaveLength(onDisk.length);
+    const slugs = new Set(patterns.map((p) => p.slug));
+    const unknown = questions.flatMap((q) => (hintFor(q.id)?.patterns ?? []).filter((tag) => !slugs.has(tag)));
+    expect(unknown).toEqual([]);
   });
 
   it('resolves translations that have passed the meaning pass', () => {
