@@ -10,14 +10,15 @@ import type { StorageBackend, StorageMode } from './backend';
 import { readExportFile, toExportFile, type ExportRefusal } from './exportFile';
 import { isRunning, newestFirst, runningExam } from './finish';
 import { openIdbBackend } from './idbBackend';
-import { RECENT_KEY } from './keys';
 import type { ImportCounts } from './merge';
 import { createMemoryBackend } from './memoryBackend';
+import { clearRecentWindow } from './recent';
 import { isWellFormedAnswer } from './state';
 import type { Answer, AnswerMode, Exam, ExportFile, Flag, FlagKind, OptionKey } from './types';
 
 export { LOCALE_KEY, RECENT_KEY } from './keys';
 export { exportFileName } from './exportFile';
+export { readRecentWindow, writeRecentWindow } from './recent';
 export type { ImportCounts } from './merge';
 export { FLAG_KINDS, OPTION_KEYS } from './types';
 export type { Answer, Exam, ExportFile, Flag, FlagKind, OptionKey, QuestionState } from './types';
@@ -220,12 +221,8 @@ export async function importProgress(text: string, now: number = Date.now()): Pr
   return { ok: true, added: await (await backend()).importFile(read.file, now) };
 }
 
-/** Clear progress (D8): empties every store and forgets the no-repeat window (sessionStorage `cacador.recent`); the UI language stays. */
+/** Clear progress (D8): empties every store and forgets the no-repeat window (sessionStorage `cacador.recent`, or its memory copy when Web Storage is blocked); the UI language stays. */
 export async function clearProgress(): Promise<void> {
   await (await backend()).clear();
-  try {
-    globalThis.sessionStorage?.removeItem(RECENT_KEY);
-  } catch {
-    // Web Storage blocked: there is no window to forget.
-  }
+  clearRecentWindow();
 }

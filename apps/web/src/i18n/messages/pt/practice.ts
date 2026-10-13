@@ -16,7 +16,7 @@ export const practice: Messages['practice'] = {
     save: 'Guardar',
     saved: 'Guardado',
     saveFailed: 'Não foi possível guardar esta alteração neste dispositivo.',
-    loadFailed: 'Não foi possível ler as sinalizações desta pergunta neste dispositivo.',
+    loadFailed: 'Não foi possível ler as assinalações desta pergunta neste dispositivo.',
   },
   card: {
     questionNumber: (id: number) => `Pergunta ${id}`,
