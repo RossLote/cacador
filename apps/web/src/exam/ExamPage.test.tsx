@@ -367,6 +367,15 @@ describe('submitting', () => {
     expect(await listAnswers()).toHaveLength(20);
   });
 
+  it('shows the not-found page for an address under /exam that names no screen', async () => {
+    renderExam('/exam/nope');
+
+    expect(await screen.findByRole('heading', { name: MESSAGES.en.common.notFound.title })).toBeInTheDocument();
+    expect(screen.getByText(MESSAGES.en.common.notFound.body)).toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: t.start })).not.toBeInTheDocument();
+    expect(await listExams()).toEqual([]);
+  });
+
   it('ends a stale page whose answer the storage module refuses, logging nothing twice', async () => {
     const user = userEvent.setup();
     await start(user);

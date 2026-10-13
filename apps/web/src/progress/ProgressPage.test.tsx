@@ -15,7 +15,7 @@ import {
   finishExam,
   importProgress,
   recordAnswer,
-  saveExamAnswers,
+  saveExamAnswer,
   setFlag,
 } from '@/storage';
 import { ProgressPage } from './ProgressPage';
@@ -260,14 +260,13 @@ describe('Past exams', () => {
     // A failed exam on 10 Oct: 14 of 20.
     const failedIds = drawExam(seededRandom(1));
     const failed = await createExam(failedIds, NOW - 3 * DAY);
-    await saveExamAnswers(failed.id, Object.fromEntries(failedIds.slice(0, 14).map((id) => [id, correctOf(id)])), NOW - 3 * DAY);
+    for (const id of failedIds.slice(0, 14)) await saveExamAnswer(failed.id, id, correctOf(id), NOW - 3 * DAY);
     expect(await finishExam(failed.id, NOW - 3 * DAY + 10 * MINUTE)).toBe(true);
 
     // A passed exam this morning: 15 right, 5 wrong.
     const passedIds = drawExam(seededRandom(2));
     const passed = await createExam(passedIds, NOW - 2 * 60 * MINUTE);
-    const answers = Object.fromEntries(passedIds.map((id, i) => [id, i < 15 ? correctOf(id) : wrongOf(id)]));
-    await saveExamAnswers(passed.id, answers, NOW - 2 * 60 * MINUTE);
+    for (const [i, id] of passedIds.entries()) await saveExamAnswer(passed.id, id, i < 15 ? correctOf(id) : wrongOf(id), NOW - 2 * 60 * MINUTE);
     expect(await finishExam(passed.id, NOW - 2 * 60 * MINUTE + 20 * MINUTE)).toBe(true);
 
     // One still running: never a row.
@@ -301,7 +300,7 @@ describe('Past exams', () => {
   it('settles an exam past its deadline first and lists it', async () => {
     const ids = drawExam(seededRandom(4));
     const exam = await createExam(ids, NOW - 45 * MINUTE);
-    await saveExamAnswers(exam.id, { [ids[0] as number]: correctOf(ids[0] as number) }, NOW - 44 * MINUTE);
+    await saveExamAnswer(exam.id, ids[0] as number, correctOf(ids[0] as number), NOW - 44 * MINUTE);
     renderProgress();
 
     const section = await screen.findByRole('region', { name: en.progress.exams });
@@ -315,11 +314,15 @@ describe('Past exams', () => {
 
 describe('Past exams order and score', () => {
   it('lists overlapping exams newest finished first, as their dates read', async () => {
-    // B started first but finished last; A started later and finished first (two devices merged).
+    // B started first but finished last; A started later and finished first (two devices merged:
+    // one device cannot start A while B runs, so B comes in from a file).
     const b = await createExam(drawExam(seededRandom(5)), NOW - 70 * MINUTE);
+    expect(await finishExam(b.id, NOW - 45 * MINUTE)).toBe(true);
+    const fromOtherDevice = await exportProgress();
+    await clearProgress();
     const a = await createExam(drawExam(seededRandom(6)), NOW - 60 * MINUTE);
     expect(await finishExam(a.id, NOW - 58 * MINUTE)).toBe(true);
-    expect(await finishExam(b.id, NOW - 45 * MINUTE)).toBe(true);
+    expect((await importProgress(JSON.stringify(fromOtherDevice))).ok).toBe(true);
     renderProgress();
 
     const section = await screen.findByRole('region', { name: en.progress.exams });
@@ -332,7 +335,7 @@ describe('Past exams order and score', () => {
   it('shows the score worked out from the answers, as the results page does, not a stored one that disagrees', async () => {
     const ids = drawExam(seededRandom(8));
     const exam = await createExam(ids, NOW - 60 * MINUTE);
-    await saveExamAnswers(exam.id, Object.fromEntries(ids.slice(0, 3).map((id) => [id, correctOf(id)])), NOW - 59 * MINUTE);
+    for (const id of ids.slice(0, 3)) await saveExamAnswer(exam.id, id, correctOf(id), NOW - 59 * MINUTE);
     expect(await finishExam(exam.id, NOW - 50 * MINUTE)).toBe(true);
     // A file whose stored score says 20 for the same answers.
     const file = await exportProgress();

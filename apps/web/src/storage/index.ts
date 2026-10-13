@@ -138,15 +138,6 @@ export async function saveExamAnswer(id: string, questionId: number, option: Opt
 }
 
 /**
- * Replaces a running exam's answers; false once it is finished or past its
- * deadline at `now`. Superseded by `saveExamAnswer`, which cannot overwrite
- * another screen's answers; kept until the running exam moves to it.
- */
-export async function saveExamAnswers(id: string, answers: Record<number, OptionKey>, now: number = Date.now()): Promise<boolean> {
-  return (await backend()).setExamAnswers(id, answers, now);
-}
-
-/**
  * Submits an exam as it stands (Submit and the 30:00 auto-submit, D3): it is
  * marked finished with its score, and each of its questions is logged (mode
  * exam, unanswered ones with no chosen option and wrong) and counted in its

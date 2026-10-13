@@ -7,7 +7,7 @@ import { setLocale } from '@/i18n/locale';
 import type { Locale } from '@/i18n/locales';
 import { MESSAGES } from '@/i18n/messages';
 import { drawExam, seededRandom } from '@/model';
-import { closeStorage, createExam, listAnswers, recordAnswer, saveExamAnswers } from '@/storage';
+import { closeStorage, createExam, listAnswers, recordAnswer, saveExamAnswer } from '@/storage';
 import { HomePage } from './HomePage';
 import { correctOf } from '../../test/fixtures';
 
@@ -119,7 +119,7 @@ describe('Home', () => {
     const startedAt = Date.now() - 31 * MINUTE;
     const exam = await createExam(examIds, startedAt);
     const answered = examIds.slice(0, 12);
-    await saveExamAnswers(exam.id, Object.fromEntries(answered.map((id) => [id, correctOf(id)])), startedAt + MINUTE);
+    for (const id of answered) expect(await saveExamAnswer(exam.id, id, correctOf(id), startedAt + MINUTE)).toBe(true);
     renderHome();
 
     // 12 right at 1, 8 unanswered at 0, 486 unseen at 1/3: 174 / 506 = 34.4 %.

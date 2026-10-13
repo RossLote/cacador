@@ -28,8 +28,6 @@ export interface StorageBackend {
   startExam(exam: Exam): Promise<Exam>;
   getExam(id: string): Promise<Exam | undefined>;
   listExams(): Promise<Exam[]>;
-  /** Replaces the exam's answers while it is running at `now` (`isRunning`); returns whether it did. */
-  setExamAnswers(id: string, answers: Record<number, OptionKey>, now: number): Promise<boolean>;
   /**
    * Sets one question's option on the stored exam, leaving its other answers as
    * stored, while it is running at `at` (`isRunning`) and only for one of its

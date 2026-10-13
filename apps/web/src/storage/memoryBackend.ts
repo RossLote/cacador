@@ -52,12 +52,6 @@ export function createMemoryBackend(): StorageBackend {
       return exam && copy(exam);
     },
     listExams: async () => [...exams.values()].map((e) => copy(e)),
-    setExamAnswers: async (id, examAnswers, now) => {
-      const exam = exams.get(id);
-      if (exam === undefined || !isRunning(exam, now)) return false;
-      exams.set(id, { ...exam, answers: copy(examAnswers) });
-      return true;
-    },
     setExamAnswer: async (id, questionId, option, at) => {
       const exam = exams.get(id);
       if (exam === undefined || !isRunning(exam, at) || !exam.questionIds.includes(questionId)) return false;

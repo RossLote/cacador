@@ -103,14 +103,6 @@ function idbBackend(db: IDBPDatabase<CacadorDB>): StorageBackend {
       }),
     getExam: (id) => db.get('exams', id),
     listExams: () => db.getAll('exams'),
-    setExamAnswers: (id, answers, now) =>
-      write(db, ['exams'], async (tx) => {
-        const exams = tx.objectStore('exams');
-        const exam = await exams.get(id);
-        if (exam === undefined || !isRunning(exam, now)) return false;
-        await exams.put({ ...exam, answers: { ...answers } });
-        return true;
-      }),
     setExamAnswer: (id, questionId, option, at) =>
       write(db, ['exams'], async (tx) => {
         const exams = tx.objectStore('exams');

@@ -1,4 +1,5 @@
 import { Route, Routes } from 'react-router';
+import { NotFoundPage } from '@/notfound/NotFoundPage';
 import { ExamResultsPage } from './ExamResultsPage';
 import { ExamStart } from './ExamStart';
 
@@ -13,6 +14,7 @@ export function ExamPage() {
     <Routes>
       <Route index element={<ExamStart />} />
       <Route path="results/:id" element={<ExamResultsPage />} />
+      <Route path="*" element={<NotFoundPage />} />
     </Routes>
   );
 }

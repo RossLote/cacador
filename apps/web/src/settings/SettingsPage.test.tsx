@@ -20,7 +20,7 @@ import {
   LOCALE_KEY,
   recordAnswer,
   RECENT_KEY,
-  saveExamAnswers,
+  saveExamAnswer,
   setFlag,
   storageMode,
   type ExportFile,
@@ -70,7 +70,7 @@ async function makeProgress(): Promise<void> {
   }
   const ids = drawExam(seededRandom(7));
   const exam = await createExam(ids, T0 + 10 * MINUTE);
-  await saveExamAnswers(exam.id, Object.fromEntries(ids.slice(0, 15).map((id) => [id, correctOf(id)])), T0 + 11 * MINUTE);
+  for (const id of ids.slice(0, 15)) await saveExamAnswer(exam.id, id, correctOf(id), T0 + 11 * MINUTE);
   await finishExam(exam.id, T0 + 20 * MINUTE);
   await setFlag(3, 'translation', 'says deer', T0 + 5 * MINUTE);
   await setFlag(40, 'hint', '', T0 + 6 * MINUTE);
