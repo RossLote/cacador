@@ -11,9 +11,6 @@ export function clean(s: string): string;
 /** Throws an ExtractError naming `where` on empty text or a stray "*". */
 export function checkText(where: string, text: string): void;
 
-/** Joins wrapped pieces; a piece ending in "-" is rejoined to the next without a space. */
-export function joinPieces(pieces: string[]): string;
-
 export interface ParseSection {
   heading: string;
   slug: string;
@@ -29,6 +26,9 @@ export interface PdfLine {
   page: number;
   text: string;
 }
+
+/** Lines of a pdftotext dump with their 1-based page (pages are separated by a form feed). */
+export function toLines(text: string): PdfLine[];
 
 export interface ParsedQuestion {
   id: number;

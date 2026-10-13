@@ -5,8 +5,8 @@ import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'nod
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { dataDir, imageByQuestion, topicOfId } from './lib/manifest.mjs';
-import { checkText, clean, ExtractError, fail, LETTERS, parseQuestions } from './lib/parse.mjs';
-import { checkManifest, readJson, ValidationError } from './lib/validate.mjs';
+import { checkText, clean, ExtractError, fail, LETTERS, parseQuestions, toLines } from './lib/parse.mjs';
+import { checkManifest, isObject, readJson, validate, ValidationError } from './lib/validate.mjs';
 
 // Hand fixes live here so a rerun reproduces them: { [id]: { question?, options?: { A?, B?, C? } } }.
 // The PDF wins; add an entry only when its text is wrong and say why. Empty: no fix is needed.
@@ -24,22 +24,17 @@ function run(cmd, args) {
 // Text -----------------------------------------------------------------------------------------
 
 /** Lines of the PDF with their 1-based page; -layout keeps the hyphen at a wrapped line end. */
-function pdfLines(pdf) {
-  const text = run('pdftotext', ['-layout', pdf, '-']);
-  return text.split('\f').flatMap((page, i) => page.split('\n').map((text) => ({ page: i + 1, text })));
-}
+const pdfLines = (pdf) => toLines(run('pdftotext', ['-layout', pdf, '-']));
 
 /** Fails loudly on a CORRECTIONS key, field or option key that would otherwise never apply. */
 function checkCorrections(total) {
   for (const [key, fix] of Object.entries(CORRECTIONS)) {
     if (!/^[1-9]\d*$/.test(key) || Number(key) > total) fail(`correction key "${key}" is not a question id from 1 to ${total}`);
-    if (typeof fix !== 'object' || fix === null || Array.isArray(fix)) fail(`correction ${key}: must be an object`);
+    if (!isObject(fix)) fail(`correction ${key}: must be an object`);
     for (const field of Object.keys(fix)) {
       if (field !== 'question' && field !== 'options') fail(`correction ${key}: unknown field "${field}" (question or options)`);
     }
-    if (fix.options !== undefined && (typeof fix.options !== 'object' || fix.options === null || Array.isArray(fix.options))) {
-      fail(`correction ${key}: options must be an object`);
-    }
+    if (fix.options !== undefined && !isObject(fix.options)) fail(`correction ${key}: options must be an object`);
     for (const letter of Object.keys(fix.options ?? {})) {
       if (!LETTERS.includes(letter)) fail(`correction ${key}: option key "${letter}" is not one of ${LETTERS.join(', ')}`);
     }
@@ -141,6 +136,7 @@ function main() {
     mkdirSync(imagesDir);
     for (const [file, text] of files) writeFileSync(join(questionsDir, file), text);
     for (const [file, bytes] of images) writeFileSync(join(imagesDir, file), bytes);
+    validate(dataDir); // the written files pass every rule of DESIGN.md § 4, or extract fails here
     console.log(`extract: ${entries.length} questions in ${files.length} files, ${images.size} images`);
   } finally {
     rmSync(tmp, { recursive: true, force: true });

@@ -3,6 +3,7 @@
 import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { dataDir, imageByQuestion, inRanges } from './manifest.mjs';
+import { clean } from './parse.mjs';
 
 export class ValidationError extends Error {
   constructor(message) {
@@ -25,7 +26,7 @@ function failAt(file, id, message) {
   fail(file, `id ${id}: ${message}`);
 }
 
-const isObject = (value) => typeof value === 'object' && value !== null && !Array.isArray(value);
+export const isObject = (value) => typeof value === 'object' && value !== null && !Array.isArray(value);
 const sameList = (a, b) => a.length === b.length && a.every((value, i) => value === b[i]);
 const visibleFiles = (dir) => (existsSync(dir) ? readdirSync(dir).filter((name) => !name.startsWith('.')).sort() : []);
 const textOf = (entry) => [entry.question, ...Object.values(entry.options)].join('\n');
@@ -199,11 +200,9 @@ function checkText(manifest, files) {
   const headings = manifest.sections.map((s) => s.heading);
   const checkField = (rel, id, field, value) => {
     expectType(rel, id, field, value, 'string');
-    if (/[\r\n\u2028\u2029\u0085]/.test(value)) failAt(rel, id, `${field} is not a single line`);
-    if (/[^\S ]/.test(value)) failAt(rel, id, `${field} contains whitespace other than a plain space (tab, no-break space, ...)`);
+    // Single-line, trimmed, single-spaced with plain spaces: the text is a fixed point of the parser's clean().
+    if (clean(value) !== value) failAt(rel, id, `${field} is not trimmed and single-spaced on one line with plain spaces`);
     if (value.includes('*')) failAt(rel, id, `${field} contains "*"`);
-    if (value.includes('  ')) failAt(rel, id, `${field} contains two consecutive spaces`);
-    if (value !== value.trim()) failAt(rel, id, `${field} has leading or trailing whitespace`);
     const heading = headings.find((h) => value.includes(h));
     if (heading) failAt(rel, id, `${field} contains the section heading "${heading}"`);
   };
@@ -315,13 +314,8 @@ const escapeRegExp = (text) => text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 const straighten = (text) => text.replace(/\u2019/g, "'").replace(/[\u201c\u201d]/g, '"');
 
 /**
- * Rule 6: glossary/species.json is an array of
- * { "pt": string, "scientific": string, "en": string, "group": string }, every field a non-empty
- * string and `pt` unique. For each entry whose `pt` occurs (case-insensitive) as a whole word in a
- * Portuguese question or its options, the translation's question or options must contain `en`
- * (case-insensitive); draft translations are skipped. A hyphen is part of the word, so "Perdiz" does
- * not match inside "perdiz-cinzenta"; curly apostrophes and quotes are matched as straight ones. An
- * entry that matches no question is fine: the glossary also holds species the bank never names.
+ * Rule 6 (DESIGN.md § 4): a glossary `pt` that occurs as a whole word in a question (a hyphen is part
+ * of the word, curly quotes straightened) must have its `en` in every non-draft translation of it.
  */
 function checkGlossary(dir, files, translations) {
   const rel = 'glossary/species.json';

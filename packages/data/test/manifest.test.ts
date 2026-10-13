@@ -75,13 +75,6 @@ describe('manifest topics', () => {
 });
 
 describe('manifest images', () => {
-  it('lists 15 files covering the 18 questions of DESIGN.md § 2.3', () => {
-    expect(manifest.images).toHaveLength(15);
-    expect(new Set(manifest.images.map((i) => i.file)).size).toBe(15);
-    expect(manifest.images.flatMap((i) => i.questions).sort((a, b) => a - b)).toEqual([
-      119, 143, 168, 169, 198, 228, 229, 261, 267, 268, 280, 293, 319, 320, 373, 375, 394, 397,
-    ]);
-  });
 
   // DESIGN.md § 2.3: page, placement on the page (index) and question per file.
   it('matches the DESIGN.md § 2.3 table, page and index included', () => {

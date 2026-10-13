@@ -15,8 +15,12 @@ export function checkText(where, text) {
   if (text === '' || text.includes('*')) fail(`${where}: empty text or stray "*" in "${text}"`);
 }
 
+/** Lines of a pdftotext dump with their 1-based page (pages are separated by a form feed). */
+export const toLines = (text) =>
+  text.split('\f').flatMap((page, i) => page.split('\n').map((text) => ({ page: i + 1, text })));
+
 /** Join wrapped pieces; a piece ending in "-" is a hyphenated word split by the wrap (no space). */
-export function joinPieces(pieces) {
+function joinPieces(pieces) {
   return pieces.reduce((acc, piece) => (acc === '' ? piece : acc.endsWith('-') ? acc + piece : `${acc} ${piece}`), '');
 }
 

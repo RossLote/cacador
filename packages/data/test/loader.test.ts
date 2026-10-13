@@ -1,4 +1,4 @@
-import { existsSync, readdirSync, readFileSync } from 'node:fs';
+import { existsSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import {
   hintFor,
@@ -44,31 +44,16 @@ describe('loader', () => {
     expect(topicOf(q)?.slug).toBe('patos');
   });
 
-  // The loader lists translation and hint files by hand (src/index.ts); this catches a file
-  // that exists on disk, and so passes the validator, but was never wired in.
-  describe('English files', () => {
-    const jsonIn = (dir: string): { id: number }[][] => {
-      const path = new URL(`../${dir}/`, import.meta.url);
-      if (!existsSync(path)) return [];
-      return readdirSync(path)
-        .filter((name) => name.endsWith('.json'))
-        .map((name) => JSON.parse(readFileSync(new URL(name, path), 'utf8')) as { id: number }[]);
-    };
-    const translationFiles = jsonIn('translations/en');
-    const hintFiles = jsonIn('hints/en');
-
-    it('wires every translation file on disk into translationFor', () => {
-      if (translationFiles.length === 0) {
-        for (const id of [1, 229, 506]) expect(translationFor(id)).toBeUndefined();
-      }
-      for (const entry of translationFiles.flat()) expect(translationFor(entry.id)).toBeDefined();
-    });
-
-    it('wires every hint file on disk into hintFor', () => {
-      if (hintFiles.length === 0) {
-        for (const id of [1, 229, 506]) expect(hintFor(id)).toBeUndefined();
-      }
-      for (const entry of hintFiles.flat()) expect(hintFor(entry.id)).toBeDefined();
-    });
+  // The loader lists translation and hint files by hand (src/index.ts). The validator makes every
+  // file under translations/en and hints/en carry exactly its chunk's ids, so a chunk file that
+  // exists on disk must resolve for every id of the chunk, or it was never wired in.
+  it.each([
+    ['translations/en', translationFor],
+    ['hints/en', hintFor],
+  ] as const)('wires every file in %s into the loader', (dir, lookup) => {
+    const onDisk = manifest.chunks.filter((c) => existsSync(new URL(`../${dir}/${c.file}`, import.meta.url)));
+    const missing = onDisk.flatMap((c) => Array.from({ length: c.to - c.from + 1 }, (_, i) => c.from + i)).filter((id) => lookup(id) === undefined);
+    expect(missing).toEqual([]);
+    if (onDisk.length === 0) for (const id of [1, 229, 506]) expect(lookup(id)).toBeUndefined();
   });
 });

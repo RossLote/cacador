@@ -1,8 +1,7 @@
 import { readFileSync } from 'node:fs';
-import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
-import { ExtractError, parseQuestions } from '../scripts/lib/parse.mjs';
-import { questionById, questions } from '../src/index';
+import { clean, ExtractError, parseQuestions, toLines } from '../scripts/lib/parse.mjs';
+import { manifest as bank, questionById, questions } from '../src/index';
 
 interface ReferenceQuestion {
   id: number;
@@ -12,13 +11,15 @@ interface ReferenceQuestion {
   correct_answer: string;
 }
 
-const reference = JSON.parse(readFileSync(fileURLToPath(new URL('../source/reference-2026-05.json', import.meta.url)), 'utf8')) as ReferenceQuestion[];
-const collapse = (s: string) => s.replace(/\s+/g, ' ').trim();
+const reference = JSON.parse(readFileSync(new URL('../source/reference-2026-05.json', import.meta.url), 'utf8')) as ReferenceQuestion[];
 
-// The reference glues a heading onto the last option (DESIGN.md § 2.2 item 4) or keeps a space after a hyphen (item 3).
-const HEADING_GLUED = [10, 58, 320, 361, 412, 415, 462, 474, 479, 498];
-const HYPHEN_ARTEFACT = [411, 455];
-const KNOWN_GLITCHES = new Set([...HEADING_GLUED, ...HYPHEN_ARTEFACT]);
+// The reference keeps a space after a wrap hyphen (DESIGN.md § 2.2 item 3) and glues the next
+// section heading onto the last option (item 4); undo both so every id compares.
+const headings = bank.sections.map((s) => s.heading);
+const comparable = (text: string) => {
+  const heading = headings.find((h) => text.endsWith(` ${h}`));
+  return clean(heading ? text.slice(0, -heading.length) : text).replace(/- /g, '-');
+};
 
 describe('extracted questions against the reference parse', () => {
   it('compares all 506 ids', () => {
@@ -31,17 +32,17 @@ describe('extracted questions against the reference parse', () => {
     expect(differing).toEqual([]);
   });
 
-  it('has the same stem and options on every id but the known glitches', () => {
-    const differing: number[] = [];
-    for (const r of reference) {
-      if (KNOWN_GLITCHES.has(r.id)) continue;
-      const q = questionById(r.id);
-      const same =
-        q !== undefined &&
-        collapse(q.question) === collapse(r.question) &&
-        r.options.every((o) => collapse(q.options[o.letter as 'A' | 'B' | 'C']) === collapse(o.text));
-      if (!same) differing.push(r.id);
-    }
+  it('has the same stem and options on every id', () => {
+    const differing = reference
+      .filter((r) => {
+        const q = questionById(r.id);
+        return (
+          q === undefined ||
+          comparable(q.question) !== comparable(r.question) ||
+          r.options.some((o) => comparable(q.options[o.letter as 'A' | 'B' | 'C']) !== comparable(o.text))
+        );
+      })
+      .map((r) => r.id);
     expect(differing).toEqual([]);
   });
 
@@ -64,9 +65,7 @@ const manifest = {
   ],
 };
 
-const lines = (text: string) => text.split('\n').map((line) => ({ page: 1, text: line }));
-
-// One of each hazard of DESIGN.md § 2.2, in a document of four questions.
+// One of each hazard of DESIGN.md § 2.2, in a document of four questions on two pages.
 const HAZARDS = `Introdução ao questionário
 1 - isto não é uma pergunta
 ALFA
@@ -83,7 +82,7 @@ ICNF
 um papel *
 B) Nada
 C) Outra coisa
-BETA
+\fBETA
 3- Qual é o zarro?
 A) Zarro
 B) Zarro-comum*
@@ -95,24 +94,16 @@ C) Terceira
 coisa
 *`;
 
-const failure = (text: string, total: number): unknown => {
-  try {
-    parseQuestions(lines(text), manifest, total);
-  } catch (error) {
-    return error;
-  }
-  return undefined;
-};
+const parse = (text: string, total: number) => () => parseQuestions(toLines(text), manifest, total);
 
 describe('parseQuestions on the hazards of DESIGN.md § 2.2', () => {
-  const parsed = parseQuestions(lines(HAZARDS), manifest, 4);
+  const parsed = parse(HAZARDS, 4)();
 
   it('handles the number separators "1 - ", "2 – " and "3- "', () => {
     expect(parsed.map((q) => q.id)).toEqual([1, 2, 3, 4]);
   });
 
   it('ignores the intro paragraph before the first heading', () => {
-    expect(parsed).toHaveLength(4);
     expect(parsed[0]?.stem).toBe('Qual a perdiz que tem bico vermelho?');
   });
 
@@ -123,34 +114,29 @@ describe('parseQuestions on the hazards of DESIGN.md § 2.2', () => {
 
   it('reads "*" glued to the word, after a space, and on a line of its own', () => {
     expect(parsed.map((q) => q.answer)).toEqual(['A', 'A', 'B', 'C']);
-    expect(parsed[1]?.options[0]).toBe('Pedir ao ICNF um papel');
     expect(parsed[3]?.options[2]).toBe('Terceira coisa');
   });
 
   it('keeps ICNF alone on a line inside an option and does not take it for a heading', () => {
-    expect(parsed[1]?.options[0]).toContain('ICNF');
+    expect(parsed[1]?.options[0]).toBe('Pedir ao ICNF um papel');
   });
 
-  it('closes the last option at a heading with no blank line, and assigns the section', () => {
+  it('closes the last option at a heading with no blank line, and assigns the section and page', () => {
     expect(parsed[1]?.options[2]).toBe('Outra coisa');
     expect(parsed.map((q) => q.section.slug)).toEqual(['alfa', 'alfa', 'beta', 'beta']);
+    expect(parsed.map((q) => q.page)).toEqual([1, 1, 2, 2]);
   });
 
   it('fails loudly on the wrong count', () => {
-    const error = failure(HAZARDS, 5);
-    expect(error).toBeInstanceOf(ExtractError);
-    expect((error as Error).message).toMatch(/parsed 4 questions, expected 5/);
+    expect(parse(HAZARDS, 5)).toThrow(ExtractError);
+    expect(parse(HAZARDS, 5)).toThrow(/parsed 4 questions, expected 5 \(last parsed: question 4 on page 2/);
   });
 
   it('fails loudly on two starred options', () => {
-    const error = failure(HAZARDS.replace('B) Perdiz-comum', 'B) Perdiz-comum*'), 4);
-    expect(error).toBeInstanceOf(ExtractError);
-    expect((error as Error).message).toMatch(/question 1 \(page 1\): expected exactly one option marked \*, found 2/);
+    expect(parse(HAZARDS.replace('B) Perdiz-comum', 'B) Perdiz-comum*'), 4)).toThrow(/question 1 \(page 1\): expected exactly one option marked \*, found 2/);
   });
 
   it('fails loudly on zero starred options', () => {
-    const error = failure(HAZARDS.replace('vermelha*', 'vermelha'), 4);
-    expect(error).toBeInstanceOf(ExtractError);
-    expect((error as Error).message).toMatch(/question 1 \(page 1\): expected exactly one option marked \*, found 0/);
+    expect(parse(HAZARDS.replace('B) Zarro-comum*', 'B) Zarro-comum'), 4)).toThrow(/question 3 \(page 2\): expected exactly one option marked \*, found 0/);
   });
 });

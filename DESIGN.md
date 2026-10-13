@@ -138,6 +138,7 @@ packages/data/
     validate.mjs             the rules in § 4, run by pnpm lint
     lib/
       manifest.mjs           dataDir and the range and image lookups both scripts share
+      parse.mjs              the PDF text parser, pure, unit-tested on the § 2.2 hazards
       validate.mjs           the rule checks as functions, imported by extract.mjs and the tests
   src/
     index.ts                 typed loader for the app and the tests

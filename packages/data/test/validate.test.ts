@@ -288,24 +288,17 @@ describe('rule 3: options and text', () => {
     expectFailure((dir) => editRows(dir, 'questions/01-alfa.json', (q) => (q[0].answer = 'D')), /questions\/01-alfa\.json: id 1: answer "D" is not one of A, B, C/);
   });
 
-  it('fails on a newline in the text', () => {
-    expectFailure((dir) => editRows(dir, 'questions/01-alfa.json', (q) => (q[0].question = 'Qual\né?')), /id 1: question is not a single line/);
-  });
-
   it.each([
-    ['U+2028', '\u2028'],
-    ['U+2029', '\u2029'],
-    ['U+0085', '\u0085'],
-  ])('fails on %s as a line break', (_name, char) => {
-    expectFailure((dir) => editRows(dir, 'questions/01-alfa.json', (q) => (q[0].question = `Qual${char}é?`)), /questions\/01-alfa\.json: id 1: question is not a single line/);
-  });
-
-  it('fails on a tab in the text', () => {
-    expectFailure((dir) => editRows(dir, 'questions/01-alfa.json', (q) => (q[0].options.A = 'Dezasseis\tanos')), /questions\/01-alfa\.json: id 1: option A contains whitespace other than a plain space/);
-  });
-
-  it('fails on a no-break space in the text', () => {
-    expectFailure((dir) => editRows(dir, 'questions/02-beta.json', (q) => (q[1].question = 'Qual\u00a0é?')), /questions\/02-beta\.json: id 4: question contains whitespace other than a plain space/);
+    ['a newline', 'Qual\né?'],
+    ['U+2028', 'Qual\u2028é?'],
+    ['U+2029', 'Qual\u2029é?'],
+    ['U+0085', 'Qual\u0085é?'],
+    ['a tab', 'Qual\té?'],
+    ['a no-break space', 'Qual\u00a0é?'],
+    ['two consecutive spaces', 'Qual  é?'],
+    ['trailing whitespace', 'Qual é? '],
+  ])('fails on %s in the text', (_name, text) => {
+    expectFailure((dir) => editRows(dir, 'questions/01-alfa.json', (q) => (q[0].question = text)), /questions\/01-alfa\.json: id 1: question is not trimmed and single-spaced on one line with plain spaces/);
   });
 
   it('fails on an asterisk', () => {
@@ -319,13 +312,6 @@ describe('rule 3: options and text', () => {
     expect(() => validate(dir)).not.toThrow();
   });
 
-  it('fails on two consecutive spaces', () => {
-    expectFailure((dir) => editRows(dir, 'questions/01-alfa.json', (q) => (q[0].options.A = 'Dezasseis  anos')), /id 1: option A contains two consecutive spaces/);
-  });
-
-  it('fails on leading or trailing whitespace', () => {
-    expectFailure((dir) => editRows(dir, 'questions/01-alfa.json', (q) => (q[0].question = 'Qual é? ')), /id 1: question has leading or trailing whitespace/);
-  });
 });
 
 describe('rule 4: images', () => {

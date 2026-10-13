@@ -2,6 +2,9 @@ export class ValidationError extends Error {
   constructor(message: string);
 }
 
+/** A plain object: not null, not an array. */
+export function isObject(value: unknown): value is Record<string, unknown>;
+
 export interface ValidationCounts {
   questions: number;
   files: number;
