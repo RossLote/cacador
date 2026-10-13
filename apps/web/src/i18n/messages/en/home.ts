@@ -6,6 +6,8 @@ export const home = {
   title: common.appName,
   readiness: 'Readiness',
   loading: 'Loading progress',
+  /** Storage could not be read. */
+  loadFailed: 'Could not read your progress on this device. Reload the page to try again.',
   percent: (percent: number) => `${percent} %`,
   /** Under the readiness bar, whose mark sits at this percentage. */
   passLine: (percent: number) => `Pass line ${percent} %`,

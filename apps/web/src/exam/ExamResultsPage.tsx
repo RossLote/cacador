@@ -10,18 +10,15 @@ import { cn } from '@/lib/utils';
 import { EXAM_PASS_MARK, examPassed, examResults, isFinished, type FinishedExam } from '@/model';
 import { getExam } from '@/storage';
 
-/** The exam with this id once it is finished; null when there is none, it is still running or it cannot be read, undefined while storage is read. */
-function useFinishedExam(id: string | undefined): FinishedExam | null | undefined {
+/** The exam with this id once it is finished: null when there is none or it is still running, undefined while storage is read; `failed` when it cannot be read. */
+function useFinishedExam(id: string | undefined): { exam: FinishedExam | null | undefined; failed: boolean } {
   const load = useCallback(async (): Promise<FinishedExam | null> => {
     if (id === undefined) return null;
-    try {
-      const exam = await getExam(id);
-      return exam !== undefined && isFinished(exam) ? exam : null;
-    } catch {
-      return null;
-    }
+    const exam = await getExam(id);
+    return exam !== undefined && isFinished(exam) ? exam : null;
   }, [id]);
-  return useLoaded(load).data;
+  const { data, failed } = useLoaded(load);
+  return { exam: data, failed };
 }
 
 interface WrongAnswer {
@@ -108,13 +105,17 @@ function WrongAnswers({ exam }: { exam: FinishedExam }) {
 export function ExamResultsPage() {
   const { t } = useI18n();
   const { id } = useParams();
-  const exam = useFinishedExam(id);
+  const { exam, failed } = useFinishedExam(id);
 
   if (!exam) {
     return (
       <section className="flex flex-col gap-4">
         <h1 className="text-xl font-semibold tracking-tight">{t.exam.title}</h1>
-        {exam === undefined ? (
+        {failed ? (
+          <p role="status" className="text-muted-foreground">
+            {t.exam.loadFailed}
+          </p>
+        ) : exam === undefined ? (
           <p role="status" className="text-muted-foreground">
             {t.exam.loading}
           </p>

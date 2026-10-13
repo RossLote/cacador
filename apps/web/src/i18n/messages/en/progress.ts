@@ -9,6 +9,8 @@ const questions = (total: number) => (total === 1 ? '1 question' : `${total} que
 export const progress = {
   title: 'Progress',
   loading: 'Loading progress',
+  /** Storage could not be read. */
+  loadFailed: 'Could not read your progress on this device. Reload the page to try again.',
   readiness: 'Readiness',
   percent: (percent: number) => `${percent} %`,
   unseen: (count: number) => `${count} unseen`,

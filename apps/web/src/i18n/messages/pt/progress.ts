@@ -8,6 +8,7 @@ const questions = (total: number) => (total === 1 ? '1 pergunta' : `${total} per
 export const progress: Messages['progress'] = {
   title: 'Progresso',
   loading: 'A carregar o progresso',
+  loadFailed: 'Não foi possível ler o progresso neste dispositivo. Recarregue a página para tentar de novo.',
   readiness: 'Preparação',
   percent: (percent) => `${percent} %`,
   unseen: (count) => `${count} por ver`,

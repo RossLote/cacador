@@ -1,11 +1,12 @@
 import { IDBFactory } from 'fake-indexeddb';
 import { openDB } from 'idb';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { drawExam, EXAM_DURATION_MS, examDeadline, seededRandom } from '@/model';
 import { DB_NAME, DB_VERSION } from './idbBackend';
 import {
   closeStorage,
   createExam,
+  exportProgress,
   finishExam,
   getExam,
   getFlags,
@@ -92,6 +93,15 @@ describe.each([
   describe('exams', () => {
     const questionIds = drawExam(seededRandom(4));
 
+    // Every read settles the exams past their deadline at the clock's time (D3), so the clock is held at T0.
+    beforeEach(() => {
+      vi.useFakeTimers({ toFake: ['Date'] });
+      vi.setSystemTime(T0);
+    });
+    afterEach(() => {
+      vi.useRealTimers();
+    });
+
     it('creates an exam and saves answers only while it runs', async () => {
       const exam = await createExam(questionIds, T0);
       expect(exam).toEqual({ id: expect.any(String), startedAt: T0, questionIds, answers: {} });
@@ -147,6 +157,24 @@ describe.each([
       // Asking again changes nothing.
       expect(await getUnfinishedExam(T0 + 40 * MINUTE)).toBeUndefined();
       expect(await listAnswers()).toHaveLength(20);
+    });
+
+    it.each([
+      ['the states', async () => (await getStates()).size === 20],
+      ['the log', async () => (await listAnswers()).length === 20],
+      ['the exams', async () => (await listExams())[0]?.finishedAt === T0 + EXAM_DURATION_MS],
+      ['the export', async () => (await exportProgress()).exams[0]?.finishedAt === T0 + EXAM_DURATION_MS],
+    ])('settles an exam past its deadline before reading %s', async (_, readSeesItSettled) => {
+      const exam = await createExam(questionIds, T0);
+      vi.setSystemTime(T0 + 31 * MINUTE);
+      expect(await readSeesItSettled()).toBe(true);
+      expect(await getExam(exam.id)).toMatchObject({ finishedAt: T0 + EXAM_DURATION_MS, score: 0 });
+    });
+
+    it('settles an exam past its deadline before reading it by id', async () => {
+      const exam = await createExam(questionIds, T0);
+      vi.setSystemTime(T0 + 31 * MINUTE);
+      expect(await getExam(exam.id)).toMatchObject({ finishedAt: T0 + EXAM_DURATION_MS, score: 0 });
     });
 
     it('keeps a question state equal to its log when a settled exam lands before later practice', async () => {

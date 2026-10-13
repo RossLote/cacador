@@ -20,12 +20,17 @@ async function loadUnfinished(): Promise<Exam | null> {
 export function ExamStart() {
   const { t } = useI18n();
   /** `exam` is undefined while storage is read, null when there is no exam to resume. */
-  const { data: exam, set: setExam } = useLoaded(loadUnfinished);
+  const { data: exam, failed, set: setExam } = useLoaded(loadUnfinished);
   const [starting, setStarting] = useState(false);
+  const [startFailed, setStartFailed] = useState(false);
 
   const start = () => {
     setStarting(true);
-    void createExam(drawExam()).then(setExam, () => setStarting(false));
+    setStartFailed(false);
+    void createExam(drawExam()).then(setExam, () => {
+      setStarting(false);
+      setStartFailed(true);
+    });
   };
 
   if (exam) return <RunningExam key={exam.id} exam={exam} />;
@@ -33,7 +38,11 @@ export function ExamStart() {
   return (
     <section className="flex flex-col gap-4">
       <h1 className="text-xl font-semibold tracking-tight">{t.exam.title}</h1>
-      {exam === undefined ? (
+      {failed ? (
+        <p role="status" className="text-muted-foreground">
+          {t.exam.loadFailed}
+        </p>
+      ) : exam === undefined ? (
         <p role="status" className="text-muted-foreground">
           {t.exam.loading}
         </p>
@@ -44,6 +53,11 @@ export function ExamStart() {
           <Button type="button" size="lg" className="h-12 text-base sm:self-start sm:px-8" disabled={starting} onClick={start}>
             {t.exam.start}
           </Button>
+          {startFailed && (
+            <p role="status" className="text-sm text-destructive">
+              {t.exam.loadFailed}
+            </p>
+          )}
         </>
       )}
     </section>

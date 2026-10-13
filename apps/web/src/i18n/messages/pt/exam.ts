@@ -3,6 +3,7 @@ import type { Messages } from '../en';
 export const exam: Messages['exam'] = {
   title: 'Exame',
   loading: 'A carregar o exame…',
+  loadFailed: 'Não foi possível ler nem guardar os exames neste dispositivo. Recarregue a página para tentar de novo.',
   intro: (size, minutes, passMark) =>
     `Um exame simulado como o verdadeiro: ${size} perguntas tiradas de todo o banco, ${minutes} minutos e ${passMark} respostas certas para ficar aprovado.`,
   rules: 'Pode andar livremente entre as perguntas e mudar qualquer resposta até entregar. Sem inglês nem dicas até aos resultados.',

@@ -2,6 +2,8 @@ export const flagged = {
   title: 'Flagged',
   empty: 'No flags. Flag a question after answering it in Practice.',
   loading: 'Loading flags',
+  /** Storage could not be read or written. */
+  loadFailed: 'Could not read or change the flags on this device. Reload the page to try again.',
   list: 'Flags, newest first',
   questionNumber: (id: number) => `Question ${id}`,
   kindEnglish: 'English',

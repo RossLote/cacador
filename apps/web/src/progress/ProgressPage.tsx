@@ -13,7 +13,7 @@ import {
   type Readiness,
   type StateMap,
 } from '@/model';
-import { getStates, getUnfinishedExam, listAnswers, listExams, listFlags } from '@/storage';
+import { getStates, listAnswers, listExams, listFlags } from '@/storage';
 import { DayBars } from './DayBars';
 import { GroupTabs } from './GroupTabs';
 import { PastExams } from './PastExams';
@@ -28,13 +28,11 @@ interface ProgressData {
 }
 
 /**
- * Everything Progress shows. The unfinished exam is asked for first, as Home
- * does: settling one past its deadline logs its answers before the numbers
- * are read (D3).
+ * Everything Progress shows. Each read settles an exam past its deadline
+ * first, so its answers are counted and it is listed with its score (D3).
  */
 async function loadProgress(): Promise<ProgressData> {
   const now = Date.now();
-  await getUnfinishedExam(now);
   const [states, answers, exams, flags] = await Promise.all([
     getStates(),
     listAnswers(accuracyWindowStart(now)),
@@ -70,12 +68,16 @@ function ReadinessSummary({ value }: { value: Readiness }) {
 /** Progress (DESIGN.md § 6.6, D11): readiness, 30 days of answers, the group lists, past exams and the Flagged link. */
 export function ProgressPage() {
   const { t } = useI18n();
-  const { data } = useLoaded(loadProgress);
+  const { data, failed } = useLoaded(loadProgress);
 
   return (
     <section className="flex flex-col gap-8">
       <h1 className="text-2xl font-semibold tracking-tight">{t.progress.title}</h1>
-      {data === undefined ? (
+      {failed ? (
+        <p role="status" className="text-muted-foreground">
+          {t.progress.loadFailed}
+        </p>
+      ) : data === undefined ? (
         <p role="status" className="sr-only">
           {t.progress.loading}
         </p>

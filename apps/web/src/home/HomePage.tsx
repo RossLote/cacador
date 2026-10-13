@@ -15,10 +15,9 @@ interface HomeData {
   exam: Exam | undefined;
 }
 
-/** Everything Home shows. The exam is asked for first: settling one past its deadline logs its answers into the states. */
+/** Everything Home shows. Each read settles an exam past its deadline first, so its answers are in the states (D3). */
 async function loadHome(): Promise<HomeData> {
-  const exam = await getUnfinishedExam();
-  const states = await getStates();
+  const [exam, states] = await Promise.all([getUnfinishedExam(), getStates()]);
   return { exam, readiness: readiness(states) };
 }
 
@@ -44,15 +43,19 @@ function ExamCard({ exam, onDeadline }: { exam: Exam; onDeadline: () => void }) 
   );
 }
 
-/** Readiness as one large number with the unseen count beside it, over a plain bar marked at the pass line. */
-function ReadinessPanel({ value }: { value: Readiness | undefined }) {
+/** Readiness as one large number with the unseen count beside it, over a plain bar marked at the pass line; or why it is missing. */
+function ReadinessPanel({ value, failed }: { value: Readiness | undefined; failed: boolean }) {
   const { t } = useI18n();
   return (
     <section aria-labelledby="home-readiness" className="flex min-h-36 flex-col gap-3">
       <h2 id="home-readiness" className="text-sm font-medium text-muted-foreground">
         {t.home.readiness}
       </h2>
-      {value === undefined ? (
+      {failed ? (
+        <p role="status" className="text-muted-foreground">
+          {t.home.loadFailed}
+        </p>
+      ) : value === undefined ? (
         <p role="status" className="sr-only">
           {t.home.loading}
         </p>
@@ -81,7 +84,7 @@ function ReadinessPanel({ value }: { value: Readiness | undefined }) {
 export function HomePage() {
   const { t } = useI18n();
   // Reloaded when the exam in progress reaches its deadline while Home is open.
-  const { data, reload } = useLoaded(loadHome);
+  const { data, failed, reload } = useLoaded(loadHome);
   const buttons = [
     { to: '/practice', label: t.common.nav.practice, variant: 'default' },
     { to: '/exam', label: t.common.nav.exam, variant: 'outline' },
@@ -93,7 +96,7 @@ export function HomePage() {
     <section className="flex flex-col gap-8 pt-4">
       <h1 className="text-3xl font-semibold tracking-tight">{t.home.title}</h1>
       {data?.exam && <ExamCard key={data.exam.id} exam={data.exam} onDeadline={reload} />}
-      <ReadinessPanel value={data?.readiness} />
+      <ReadinessPanel value={data?.readiness} failed={failed} />
       <nav className="grid grid-cols-2 gap-3">
         {buttons.map(({ to, label, variant }) => (
           <LinkButton key={to} to={to} variant={variant} size="lg" className="h-12 text-base">

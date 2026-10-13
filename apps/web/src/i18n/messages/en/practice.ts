@@ -7,6 +7,8 @@ export const practice = {
   title: 'Practice',
   next: 'Next',
   loading: 'Choosing a question…',
+  /** Storage could not be read, so no question could be drawn. */
+  loadFailed: 'Could not read your progress on this device, so no question was chosen. Reload the page to try again.',
   focusedOn: 'Practising',
   flags: {
     group: 'Report a problem with this question',

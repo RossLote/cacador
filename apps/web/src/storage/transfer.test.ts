@@ -1,6 +1,6 @@
 import type { OptionKey } from '@cacador/data';
 import { IDBFactory, IDBObjectStore } from 'fake-indexeddb';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { drawExam, EXAM_DURATION_MS, seededRandom } from '@/model';
 import { finishExamRecords } from './finish';
 import { withoutLogId } from './state';
@@ -67,9 +67,16 @@ describe.each([
   ['memory', false],
 ] as const)('export, import and clear on %s', (mode, available) => {
   beforeEach(async () => {
+    // Every read settles the exams past their deadline at the clock's time (D3): held where the exams these
+    // tests start at T0 to T0 + 60 minutes are all still running.
+    vi.useFakeTimers({ toFake: ['Date'] });
+    vi.setSystemTime(T0 + 25 * MINUTE);
     await closeStorage();
     vi.stubGlobal('indexedDB', available ? new IDBFactory() : undefined);
     expect(await storageMode()).toBe(mode);
+  });
+  afterEach(() => {
+    vi.useRealTimers();
   });
 
   it('exports the version 1 file: answers without log ids, exams and flags, never question state', async () => {

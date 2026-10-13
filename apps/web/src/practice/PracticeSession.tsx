@@ -29,6 +29,8 @@ export function PracticeSession({ pool }: { pool: readonly number[] }) {
   const [shown, setShown] = useState<Shown>();
   const [peeking, setPeeking] = useState(false);
   const [hintOpen, setHintOpen] = useState(false);
+  /** Storage could not be read, so no question could be drawn (DESIGN.md § 6.9). */
+  const [failed, setFailed] = useState(false);
   /** The answer being written; the next draw waits for it, so its weights count it. */
   const recording = useRef<Promise<unknown>>(Promise.resolve());
   /** The draw already answered, so a second tap or key in the same frame records nothing. */
@@ -54,9 +56,14 @@ export function PracticeSession({ pool }: { pool: readonly number[] }) {
 
   useEffect(() => {
     let current = true;
-    void drawNext(() => current).then((id) => {
-      if (current && id !== undefined) show(id);
-    });
+    void drawNext(() => current).then(
+      (id) => {
+        if (current && id !== undefined) show(id);
+      },
+      () => {
+        if (current) setFailed(true);
+      },
+    );
     return () => {
       current = false;
     };
@@ -90,17 +97,18 @@ export function PracticeSession({ pool }: { pool: readonly number[] }) {
         if (document.scrollingElement) document.scrollingElement.scrollTop = 0;
         top.current?.focus({ preventScroll: true });
       })
+      .catch(() => setFailed(true))
       .finally(() => {
         advancing.current = false;
       });
   }, [drawNext, show]);
 
-  usePracticeKeys({ answered, onAnswer: answer, onNext: next, onPeekChange: setPeeking });
+  usePracticeKeys({ answered, onAnswer: answer, onNext: next, onPeekChange: setPeeking, region: top });
 
-  if (question === undefined) {
+  if (failed || question === undefined) {
     return (
       <p role="status" className="text-muted-foreground">
-        {t.practice.loading}
+        {failed ? t.practice.loadFailed : t.practice.loading}
       </p>
     );
   }

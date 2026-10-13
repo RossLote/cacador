@@ -14,7 +14,7 @@ type CopyState = 'idle' | 'copied' | 'failed';
 /** Flagged (DESIGN.md § 6.7): every flag newest first, with Copy and Share of the same plain text and a clear on each. */
 export function FlaggedPage() {
   const { t } = useI18n();
-  const { data: flags, set: setFlags } = useLoaded(listFlags);
+  const { data: flags, failed, reload, set: setFlags } = useLoaded(listFlags);
   const [copy, setCopy] = useState<CopyState>('idle');
   const canShare = typeof navigator.share === 'function';
 
@@ -24,10 +24,18 @@ export function FlaggedPage() {
     return () => clearTimeout(timer);
   }, [copy]);
 
-  const clear = useCallback(async (flag: Flag) => {
-    await removeFlag(flag.questionId, flag.kind);
-    setFlags(await listFlags());
-  }, [setFlags]);
+  const clear = useCallback(
+    async (flag: Flag) => {
+      try {
+        await removeFlag(flag.questionId, flag.kind);
+        setFlags(await listFlags());
+      } catch {
+        // Read the list again; if storage still fails the page says so.
+        reload();
+      }
+    },
+    [reload, setFlags],
+  );
 
   const list = flags ?? [];
   const text = formatFlags(list);
@@ -69,7 +77,11 @@ export function FlaggedPage() {
         {copy === 'copied' ? t.flagged.copied : copy === 'failed' ? t.flagged.copyFailed : ''}
       </span>
 
-      {flags === undefined ? (
+      {failed ? (
+        <p role="status" className="text-muted-foreground">
+          {t.flagged.loadFailed}
+        </p>
+      ) : flags === undefined ? (
         <p role="status" className="text-muted-foreground">
           {t.flagged.loading}
         </p>

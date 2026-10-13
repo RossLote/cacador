@@ -4,6 +4,7 @@ export const practice: Messages['practice'] = {
   title: 'Praticar',
   next: 'Seguinte',
   loading: 'A escolher uma pergunta…',
+  loadFailed: 'Não foi possível ler o progresso neste dispositivo, por isso não foi escolhida nenhuma pergunta. Recarregue a página para tentar de novo.',
   focusedOn: 'A praticar',
   flags: {
     group: 'Assinalar um problema nesta pergunta',

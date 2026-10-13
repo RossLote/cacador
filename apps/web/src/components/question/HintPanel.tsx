@@ -8,7 +8,11 @@ interface HintPanelProps {
   showNudge: boolean;
 }
 
-/** The hint panel (D23): the question's language notes, or a line saying there are none, then the nudge after answering. */
+/**
+ * The hint panel (D23): the question's language notes, or a line saying there
+ * are none, then the nudge after answering. The headings follow the interface;
+ * the hint text is English (hints/en) and marked so.
+ */
 export function HintPanel({ id, hint, showNudge }: HintPanelProps) {
   const { t } = useI18n();
   const card = t.practice.card;
@@ -16,7 +20,7 @@ export function HintPanel({ id, hint, showNudge }: HintPanelProps) {
   const nudge = showNudge ? hint?.nudge : undefined;
 
   return (
-    <section id={id} aria-label={card.hint} lang="en" className="flex flex-col gap-4 rounded-lg border bg-muted/40 p-4 text-sm">
+    <section id={id} aria-label={card.hint} className="flex flex-col gap-4 rounded-lg border bg-muted/40 p-4 text-sm">
       <div className="flex flex-col gap-2">
         <h2 className="font-medium">{card.languageNotes}</h2>
         {notes.length === 0 ? (
@@ -30,9 +34,13 @@ export function HintPanel({ id, hint, showNudge }: HintPanelProps) {
                     {note.pt}
                   </span>
                   <span className="text-muted-foreground"> · </span>
-                  <span>{note.en}</span>
+                  <span lang="en">{note.en}</span>
                 </p>
-                {note.note && <p className="text-muted-foreground">{note.note}</p>}
+                {note.note && (
+                  <p lang="en" className="text-muted-foreground">
+                    {note.note}
+                  </p>
+                )}
               </li>
             ))}
           </ul>
@@ -41,7 +49,7 @@ export function HintPanel({ id, hint, showNudge }: HintPanelProps) {
       {nudge && (
         <div className="flex flex-col gap-2 border-t pt-4">
           <h2 className="font-medium">{card.nudge}</h2>
-          <p>{nudge}</p>
+          <p lang="en">{nudge}</p>
         </div>
       )}
     </section>

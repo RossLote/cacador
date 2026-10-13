@@ -267,6 +267,37 @@ describe('PracticePage', () => {
       expect(nextButton()).not.toBeInTheDocument();
     });
 
+    it('leaves Enter and Space on a link outside the page, such as the back control, alone', async () => {
+      const user = userEvent.setup();
+      renderPractice();
+      await shownId();
+      await user.keyboard('a');
+      expect(nextButton()).toBeInTheDocument();
+      const back = document.createElement('a');
+      back.href = '#home';
+      back.textContent = 'Home';
+      document.body.prepend(back);
+      back.focus();
+      const enter = fireEvent.keyDown(back, { key: 'Enter', code: 'Enter' });
+      expect(enter).toBe(true);
+      const space = fireEvent.keyDown(back, { key: ' ', code: 'Space' });
+      expect(space).toBe(true);
+      expect(screen.getByText(question(1).question)).toBeInTheDocument();
+      expect(await shownId()).toBe(1);
+      back.remove();
+    });
+
+    it('opens Hint from the keyboard after answering: Enter on the focused Hint button does not advance', async () => {
+      const user = userEvent.setup();
+      renderPractice();
+      await shownId();
+      await user.keyboard('a');
+      screen.getByRole('button', { name: card.hint }).focus();
+      await user.keyboard('{Enter}');
+      expect(hintPanel()).toBeInTheDocument();
+      expect(await shownId()).toBe(1);
+    });
+
     it('ignores the keys while typing in a text field', async () => {
       const user = userEvent.setup();
       renderPractice();

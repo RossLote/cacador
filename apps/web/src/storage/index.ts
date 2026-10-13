@@ -52,6 +52,22 @@ export async function storageMode(): Promise<StorageMode> {
   return (await backend()).mode;
 }
 
+/**
+ * The backend once every unfinished exam past its deadline at `now` is
+ * settled: submitted as it stands at its deadline (D3). Each read whose answer
+ * settling changes (the log, the states, the exams, the export) goes through
+ * it, so no screen sees a stale exam as running or misses its answers.
+ * `finishExam` runs only while an exam is unfinished, so two reads settling at
+ * once finish it once.
+ */
+async function settled(now: number = Date.now()): Promise<StorageBackend> {
+  const store = await backend();
+  for (const exam of await store.listExams()) {
+    if (exam.finishedAt === undefined && !isRunning(exam, now)) await store.finishExam(exam.id, examDeadline(exam));
+  }
+  return store;
+}
+
 /** Closes the database and forgets it; the next call opens it again. */
 export async function closeStorage(): Promise<void> {
   const current = opening;
@@ -85,12 +101,12 @@ export async function recordAnswer(answer: NewAnswer): Promise<Answer> {
 
 /** The answers log in time order, from `since` (ms, inclusive) when given. */
 export async function listAnswers(since?: number): Promise<Answer[]> {
-  return (await backend()).listAnswers(since);
+  return (await settled()).listAnswers(since);
 }
 
 /** Every seen question's state by id, for the model's draw and readiness. */
 export async function getStates(): Promise<StateMap> {
-  return indexStates(await (await backend()).listStates());
+  return indexStates(await (await settled()).listStates());
 }
 
 // Exams (D3)
@@ -120,26 +136,24 @@ export async function finishExam(id: string, at: number = Date.now()): Promise<b
 }
 
 export async function getExam(id: string): Promise<Exam | undefined> {
-  return (await backend()).getExam(id);
+  return (await settled()).getExam(id);
 }
+
+const newestFirst = (a: Exam, b: Exam): number => b.startedAt - a.startedAt;
 
 /** Every exam, finished or not, newest started first. */
 export async function listExams(): Promise<Exam[]> {
-  return (await (await backend()).listExams()).sort((a, b) => b.startedAt - a.startedAt);
+  return (await (await settled()).listExams()).sort(newestFirst);
 }
 
 /**
  * The exam in progress, or undefined. Any unfinished exam past its deadline is
- * first settled: submitted as it stands at the deadline (D3). Should more than
- * one still be running, the most recently started is the one returned.
+ * first settled, as every read settles it (D3). Should more than one still be
+ * running, the most recently started is the one returned.
  */
 export async function getUnfinishedExam(now: number = Date.now()): Promise<Exam | undefined> {
-  const store = await backend();
-  const exams = await listExams();
-  for (const exam of exams) {
-    if (exam.finishedAt === undefined && !isRunning(exam, now)) await store.finishExam(exam.id, examDeadline(exam));
-  }
-  return exams.find((exam) => isRunning(exam, now));
+  const exams = await (await settled(now)).listExams();
+  return exams.sort(newestFirst).find((exam) => isRunning(exam, now));
 }
 
 // Flags (D2)
@@ -167,9 +181,9 @@ export async function listFlags(): Promise<Flag[]> {
 
 // Export, import and clear (D8)
 
-/** Every answer, exam and flag on this device as the version 1 export file; question state is never exported. Save it under `exportFileName(exportedAt)`. */
+/** Every answer, exam and flag on this device as the version 1 export file, any stale exam settled first; question state is never exported. Save it under `exportFileName(exportedAt)`. */
 export async function exportProgress(exportedAt: number = Date.now()): Promise<ExportFile> {
-  return toExportFile(await (await backend()).readAll(), exportedAt);
+  return toExportFile(await (await settled()).readAll(), exportedAt);
 }
 
 /** What an import did: what it added, or why the file was refused (nothing changed). */

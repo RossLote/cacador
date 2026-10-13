@@ -17,6 +17,8 @@ export const settings = {
   imported: (answers: number, exams: number, flags: number) =>
     `Added ${counted(answers, 'answer', 'answers')}, ${counted(exams, 'exam', 'exams')} and ${counted(flags, 'flag', 'flags')}`,
   importRefused: 'That file is not a Caçador progress export. Nothing was changed.',
+  /** Export, Share, Import or Clear could not read or write storage. */
+  failed: 'Progress on this device could not be read or written. Nothing was changed.',
   clear: 'Clear progress',
   clearTitle: 'Clear all progress?',
   clearDescription:

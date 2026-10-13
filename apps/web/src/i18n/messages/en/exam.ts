@@ -2,6 +2,8 @@
 export const exam = {
   title: 'Exam',
   loading: 'Loading the exam…',
+  /** Storage could not be read, or the exam could not be saved. */
+  loadFailed: 'Could not read or save the exams on this device. Reload the page to try again.',
   /** The start screen: the exam's size, time limit in minutes and pass mark come from the model. */
   intro: (size: number, minutes: number, passMark: number) =>
     `A mock exam run like the real one: ${size} questions drawn from the whole bank, ${minutes} minutes, and ${passMark} right to pass.`,

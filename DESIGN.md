@@ -607,7 +607,8 @@ screen has a back control to Home; there is no bottom bar.
   a practice control only: the exam and its review have no flags row.
 - **Laptop keys**: A, B, C and 1, 2, 3 answer; Enter advances; holding Space peeks for
   as long as it is held. The keys belong to the practice page, not to the question
-  card, so the exam leaves Space unbound.
+  card, so the exam leaves Space unbound. They act from the page itself, never from the
+  back control, and Enter on a focused button (Hint, Next, a flag) activates that button.
 - **Focused practice**: `/practice?topic=<slug>`, `?section=<slug>` or
   `?pattern=<slug>` limits the pool to that group, with the same weights and the same
   app-wide window, its size following the filtered pool. A pattern's pool is every
@@ -634,7 +635,8 @@ screen has a back control to Home; there is no bottom bar.
   unanswered question is logged with no chosen option and correct false. They feed the
   draw weights like any other answer.
 - An exam past its deadline (its start time plus 30 minutes) is settled by the storage
-  module whenever a screen asks for the unfinished exam (Home, `/exam`, Progress): it is
+  module whenever progress is read (the states, the log, the exams, an exam by id, the
+  export, the unfinished exam), so every screen sees it settled: it is
   submitted as it stands, with its finish time and every logged answer's time set to
   the deadline, so it lands on the day it was taken. Home's card therefore never shows
   zero minutes, and an exam left overnight appears among the past exams with its score.
@@ -695,10 +697,13 @@ storage is unavailable (§ 6.9); and a link to Flagged.
   site data), the app runs on progress kept in memory for the visit, and Settings says
   progress is not being saved on this device. When localStorage is blocked, the
   language choice holds for the visit only.
+- **A read or write that fails**: when the storage module rejects, the screen says so in
+  one plain line (Home, Practice, Exam, Progress and Flagged in place of their content,
+  Settings in its progress line) instead of loading for good.
 - **A file that is not an export**: Import refuses anything that is not a version 1
   Caçador export, changes nothing, and says so.
-- **An exam past its deadline**: settled as it stands at its deadline the next time any
-  screen asks for the unfinished exam (§ 6.5); it is never resumed and never shown as
+- **An exam past its deadline**: settled as it stands at its deadline the next time
+  progress is read (§ 6.5); it is never resumed and never shown as
   Home's card. A results address whose id is not a finished exam says so.
 - **A pool smaller than the window**: the window shrinks to half the pool rounded down
   (§ 6.2), so the weights still act inside a small topic instead of a fixed rotation; a
@@ -764,7 +769,8 @@ it is still unfinished and reports whether it did, and the exam's answers are lo
 only when it did, so Submit runs once. The finish time is held to the deadline: it is
 the earlier of the moment of finishing and the start time plus 30 minutes, so an
 auto-submit that fires late and the settling of a stale exam both land on the deadline.
-Asking for the unfinished exam first settles any exam past its deadline: finished as it
+Every read of progress (the states, the log, the exams, an exam by id, the export and the
+unfinished exam) first settles any exam past its deadline: finished as it
 stands, with `finishedAt` and every logged answer's `at` equal to the deadline and each
 unanswered question logged with no `chosen` and `correct` false. The deadline and the
 score come from the study model (`apps/web/src/model/`), which the storage module

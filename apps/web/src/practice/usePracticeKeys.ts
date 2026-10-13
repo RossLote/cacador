@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, type RefObject } from 'react';
 import { OPTION_KEYS, type OptionKey } from '@/storage';
 
 /** Each option by its letter (a, b, c) and by its place (1, 2, 3). */
@@ -15,6 +15,8 @@ interface PracticeKeys {
   onAnswer: (option: OptionKey) => void;
   onNext: () => void;
   onPeekChange: (peeking: boolean) => void;
+  /** The practice page's own region: keys from a control outside it (the layout's back link) are left alone. */
+  region: RefObject<HTMLElement | null>;
 }
 
 /** Marks a region whose controls keep their own keys (the flags row): Enter and Space reach its buttons. */
@@ -35,24 +37,37 @@ function isTextEntry(target: EventTarget | null): boolean {
   );
 }
 
+/** A link or button, which Enter activates itself (Next, Hint, the flags row). */
+function isControl(target: EventTarget | null): boolean {
+  return target instanceof Element && target.closest('a[href], button:not(:disabled), [role="button"]') !== null;
+}
+
 /**
  * The laptop keys of the practice page (D9), never the card's: A, B, C and
  * 1, 2, 3 answer while unanswered; Enter advances once answered; Space peeks
  * from keydown to keyup (repeats ignored, never a toggle, the page does not
  * scroll). Losing the window or the tab also ends a peek, so the English is
- * never left on.
+ * never left on. The keys act from the page itself (focus on the body or
+ * inside `region`), never from the layout's back link; Enter on a focused
+ * button or link activates that control instead, so Hint stays reachable
+ * after answering and Enter on Next advances once.
  */
-export function usePracticeKeys({ answered, onAnswer, onNext, onPeekChange }: PracticeKeys): void {
+export function usePracticeKeys({ answered, onAnswer, onNext, onPeekChange, region }: PracticeKeys): void {
   useEffect(() => {
+    const onPage = (target: EventTarget | null): boolean =>
+      !(target instanceof Node) ||
+      target === document.body ||
+      target === document.documentElement ||
+      region.current?.contains(target) === true;
     const keydown = (event: KeyboardEvent) => {
-      if (event.ctrlKey || event.metaKey || event.altKey || isTextEntry(event.target)) return;
+      if (event.ctrlKey || event.metaKey || event.altKey || isTextEntry(event.target) || !onPage(event.target)) return;
       if (event.key === ' ') {
         event.preventDefault();
         if (!event.repeat) onPeekChange(true);
         return;
       }
       if (event.key === 'Enter') {
-        if (!answered) return;
+        if (!answered || isControl(event.target)) return;
         event.preventDefault();
         if (!event.repeat) onNext();
         return;
@@ -65,7 +80,7 @@ export function usePracticeKeys({ answered, onAnswer, onNext, onPeekChange }: Pr
     const keyup = (event: KeyboardEvent) => {
       if (event.key !== ' ') return;
       // A focused button would otherwise click on Space's keyup.
-      if (!isTextEntry(event.target)) event.preventDefault();
+      if (!isTextEntry(event.target) && onPage(event.target)) event.preventDefault();
       onPeekChange(false);
     };
     const stopPeek = () => onPeekChange(false);
@@ -82,5 +97,5 @@ export function usePracticeKeys({ answered, onAnswer, onNext, onPeekChange }: Pr
       window.removeEventListener('blur', stopPeek);
       document.removeEventListener('visibilitychange', hidden);
     };
-  }, [answered, onAnswer, onNext, onPeekChange]);
+  }, [answered, onAnswer, onNext, onPeekChange, region]);
 }

@@ -1,4 +1,4 @@
-import { useId, useRef, useState, type ChangeEvent } from 'react';
+import { useCallback, useEffect, useId, useRef, useState, type ChangeEvent } from 'react';
 import { LinkButton } from '@/components/LinkButton';
 import {
   AlertDialog,
@@ -20,7 +20,19 @@ import { clearProgress, importProgress, storageMode, type ImportCounts } from '@
 import { canShareProgressFile, downloadFile, makeProgressFile } from './progressFile';
 
 /** What the progress line says after the last action. */
-type Outcome = { kind: 'importing' } | { kind: 'imported'; added: ImportCounts } | { kind: 'refused' } | { kind: 'cleared' };
+type Outcome =
+  | { kind: 'importing' }
+  | { kind: 'imported'; added: ImportCounts }
+  | { kind: 'refused' }
+  | { kind: 'cleared' }
+  /** Storage could not be read or written. */
+  | { kind: 'failed' };
+
+/** The progress file for Share, being made or made. */
+interface ShareFile {
+  promise: Promise<File>;
+  file?: File;
+}
 
 /** The file's text, or undefined when it cannot be read. */
 async function readText(file: File): Promise<string | undefined> {
@@ -47,12 +59,45 @@ export function SettingsPage() {
   const languageId = useId();
   const progressId = useId();
 
+  /**
+   * The file Share hands over, made ahead of the tap (and again after an
+   * import or a clear), so navigator.share runs inside the tap's user
+   * activation rather than after a read of the whole log, which a browser
+   * may let expire.
+   */
+  const shareFile = useRef<ShareFile>(undefined);
+  const prepareShare = useCallback(() => {
+    if (!canShare) return;
+    const entry: ShareFile = { promise: makeProgressFile() };
+    entry.promise.then(
+      (file) => {
+        entry.file = file;
+      },
+      () => undefined,
+    );
+    shareFile.current = entry;
+  }, [canShare]);
+  useEffect(prepareShare, [prepareShare]);
+
   async function exportFile() {
-    downloadFile(await makeProgressFile());
+    try {
+      downloadFile(await makeProgressFile());
+    } catch {
+      setOutcome({ kind: 'failed' });
+    }
   }
 
-  async function shareFile() {
-    const file = await makeProgressFile();
+  async function share() {
+    let file: File;
+    try {
+      const entry = shareFile.current;
+      // Already made: shared with no await before it, inside the tap.
+      file = entry?.file ?? (await (entry?.promise ?? makeProgressFile()));
+    } catch {
+      setOutcome({ kind: 'failed' });
+      prepareShare();
+      return;
+    }
     try {
       await navigator.share({ files: [file], title: t.settings.shareTitle });
     } catch {
@@ -66,17 +111,27 @@ export function SettingsPage() {
     if (file === undefined) return;
     setOutcome({ kind: 'importing' });
     const text = await readText(file);
-    // An unreadable file is refused like any other that is not an export.
-    const result = text === undefined ? undefined : await importProgress(text);
-    setOutcome(result?.ok ? { kind: 'imported', added: result.added } : { kind: 'refused' });
+    try {
+      // An unreadable file is refused like any other that is not an export.
+      const result = text === undefined ? undefined : await importProgress(text);
+      setOutcome(result?.ok ? { kind: 'imported', added: result.added } : { kind: 'refused' });
+      if (result?.ok) prepareShare();
+    } catch {
+      setOutcome({ kind: 'failed' });
+    }
     // Lets the same file be chosen again.
     input.value = '';
   }
 
   async function clear() {
-    await clearProgress();
+    try {
+      await clearProgress();
+      setOutcome({ kind: 'cleared' });
+      prepareShare();
+    } catch {
+      setOutcome({ kind: 'failed' });
+    }
     setConfirming(false);
-    setOutcome({ kind: 'cleared' });
   }
 
   function outcomeText(): string {
@@ -91,6 +146,8 @@ export function SettingsPage() {
         return t.settings.importRefused;
       case 'cleared':
         return t.settings.cleared;
+      case 'failed':
+        return t.settings.failed;
     }
   }
 
@@ -136,7 +193,7 @@ export function SettingsPage() {
             {t.settings.export}
           </Button>
           {canShare && (
-            <Button variant="outline" size="lg" className="flex-1" onClick={() => void shareFile()}>
+            <Button variant="outline" size="lg" className="flex-1" onClick={() => void share()}>
               {t.settings.share}
             </Button>
           )}
