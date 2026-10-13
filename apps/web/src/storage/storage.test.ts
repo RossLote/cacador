@@ -54,8 +54,8 @@ describe.each([
 
   describe('answers and state', () => {
     it('logs an answer by question and by time and derives its state', async () => {
-      const recorded = await recordAnswer({ questionId: 12, chosen: correctOf(12), correct: true, mode: 'practice', at: T0 });
-      await recordAnswer({ questionId: 30, chosen: wrongOf(30), correct: false, mode: 'practice', at: T0 + 1000 });
+      const recorded = await recordAnswer({ questionId: 12, chosen: correctOf(12), mode: 'practice', at: T0 });
+      await recordAnswer({ questionId: 30, chosen: wrongOf(30), mode: 'practice', at: T0 + 1000 });
       expect(recorded.id).toEqual(expect.any(Number));
 
       expect(await answersFor(12)).toEqual([recorded]);
@@ -71,24 +71,23 @@ describe.each([
 
     it('three right then one wrong leaves streak 0 and recent [true, true, false]', async () => {
       for (const [i, correct] of [true, true, true, false].entries()) {
-        await recordAnswer({ questionId: 5, chosen: correct ? correctOf(5) : wrongOf(5), correct, mode: 'practice', at: T0 + i });
+        await recordAnswer({ questionId: 5, chosen: correct ? correctOf(5) : wrongOf(5), mode: 'practice', at: T0 + i });
       }
       expect(await stateOf(5)).toEqual({ questionId: 5, attempts: 4, correct: 3, streak: 0, recent: [true, true, false], lastSeenAt: T0 + 3 });
       expect(await answersFor(5)).toHaveLength(4);
     });
 
     it('accepts an exam answer with no chosen option, wrong, and counts it', async () => {
-      const recorded = await recordAnswer({ questionId: 8, correct: false, mode: 'exam', examId: 'x', at: T0 });
+      const recorded = await recordAnswer({ questionId: 8, mode: 'exam', examId: 'x', at: T0 });
       expect(recorded).toMatchObject({ questionId: 8, correct: false });
       expect('chosen' in recorded).toBe(false);
       expect(await stateOf(8)).toMatchObject({ attempts: 1, correct: 0, streak: 0, recent: [false] });
     });
 
     it.each([
-      ['a practice answer with no chosen option', { mode: 'practice', correct: false }],
-      ['a practice answer naming an exam', { mode: 'practice', chosen: 'A', correct: false, examId: 'x' }],
-      ['an exam answer naming no exam', { mode: 'exam', chosen: 'A', correct: false }],
-      ['an exam answer with no chosen option counted right', { mode: 'exam', correct: true, examId: 'x' }],
+      ['a practice answer with no chosen option', { mode: 'practice' }],
+      ['a practice answer naming an exam', { mode: 'practice', chosen: 'A', examId: 'x' }],
+      ['an exam answer naming no exam', { mode: 'exam', chosen: 'A' }],
     ] as const)('refuses %s and writes nothing', async (_, fields) => {
       await expect(recordAnswer({ questionId: 8, at: T0, ...fields })).rejects.toThrow('Not a well-formed answer');
       expect(await listAnswers()).toEqual([]);
@@ -97,7 +96,7 @@ describe.each([
 
     it('stamps an answer with the current time when none is given', async () => {
       const before = Date.now();
-      const recorded = await recordAnswer({ questionId: 9, chosen: 'A', correct: false, mode: 'practice' });
+      const recorded = await recordAnswer({ questionId: 9, chosen: 'A', mode: 'practice' });
       expect(recorded.at).toBeGreaterThanOrEqual(before);
     });
   });
@@ -180,7 +179,7 @@ describe.each([
       const exam = await createExam(questionIds, T0);
       const id = questionIds[0] as number;
       expect(await saveExamAnswer(exam.id, id, wrongOf(id), T0 + MINUTE)).toBe(true);
-      await recordAnswer({ questionId: id, chosen: correctOf(id), correct: true, mode: 'practice', at: T0 + 45 * MINUTE });
+      await recordAnswer({ questionId: id, chosen: correctOf(id), mode: 'practice', at: T0 + 45 * MINUTE });
 
       expect(await getUnfinishedExam(T0 + 50 * MINUTE)).toBeUndefined();
 
@@ -302,7 +301,7 @@ describe('IndexedDB', () => {
   });
 
   it('keeps progress across a reopen', async () => {
-    await recordAnswer({ questionId: 3, chosen: correctOf(3), correct: true, mode: 'practice', at: T0 });
+    await recordAnswer({ questionId: 3, chosen: correctOf(3), mode: 'practice', at: T0 });
     await setFlag(3, 'hint', 'x', T0);
     await closeStorage();
     expect(await stateOf(3)).toMatchObject({ attempts: 1 });
@@ -339,7 +338,7 @@ describe('memory fallback', () => {
     });
     vi.stubGlobal('indexedDB', factory);
     expect(await storageMode()).toBe('memory');
-    await recordAnswer({ questionId: 2, chosen: 'A', correct: true, mode: 'practice', at: T0 });
+    await recordAnswer({ questionId: 2, chosen: correctOf(2), mode: 'practice', at: T0 });
 
     vi.stubGlobal('indexedDB', new IDBFactory());
     expect(await storageMode()).toBe('memory');

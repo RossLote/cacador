@@ -5,7 +5,7 @@
  * when IndexedDB cannot be opened the same API runs in memory for the rest of
  * the page's life and `storageMode()` reports `memory`, nothing being saved.
  */
-import { examDeadline, indexStates, type StateMap } from '@/model';
+import { examDeadline, indexStates, isCorrectOption, type StateMap } from '@/model';
 import type { StorageBackend, StorageMode } from './backend';
 import { readExportFile, toExportFile, type ExportRefusal } from './exportFile';
 import { isRunning, newestFirst, runningExam } from './finish';
@@ -79,12 +79,11 @@ export async function closeStorage(): Promise<void> {
 
 // Answers and question state
 
-/** An answer to record: the log id is assigned on insert. */
+/** An answer to record: whether it is right comes from the bank's key, and the log id is assigned on insert. */
 export interface NewAnswer {
   questionId: number;
-  /** The option picked; leave out for an exam question left unanswered (D15). */
+  /** The option picked; leave out for an exam question left unanswered (D15), which is wrong. */
   chosen?: OptionKey;
-  correct: boolean;
   mode: AnswerMode;
   examId?: string;
   /** ms since the epoch; now when left out. */
@@ -92,15 +91,16 @@ export interface NewAnswer {
 }
 
 /**
- * Appends an answer to the log and updates its question's state, in one
- * transaction; returns it with its id. Rejects, writing nothing, an answer the
- * log does not allow (`isWellFormedAnswer`): a practice answer with no chosen
- * option or naming an exam, an exam answer naming no exam, or one with no
- * chosen option counted right.
+ * Appends an answer to the log, `correct` worked out from the bank's key
+ * (`isCorrectOption`; no chosen option is wrong), and updates its question's
+ * state, in one transaction; returns it with its id. Rejects, writing nothing,
+ * an answer the log does not allow (`isWellFormedAnswer`): a practice answer
+ * with no chosen option or naming an exam, or an exam answer naming no exam.
  */
 export async function recordAnswer(answer: NewAnswer): Promise<Answer> {
-  if (!isWellFormedAnswer(answer)) throw new Error(`Not a well-formed answer to question ${answer.questionId}`);
-  return (await backend()).addAnswer({ ...answer, at: answer.at ?? Date.now() });
+  const full = { ...answer, correct: isCorrectOption(answer.questionId, answer.chosen), at: answer.at ?? Date.now() };
+  if (!isWellFormedAnswer(full)) throw new Error(`Not a well-formed answer to question ${answer.questionId}`);
+  return (await backend()).addAnswer(full);
 }
 
 /** The answers log in time order, from `since` (ms, inclusive) when given. */

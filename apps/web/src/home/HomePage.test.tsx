@@ -67,9 +67,9 @@ describe('Home', () => {
 
   it('follows the model: unseen is 506 minus the distinct questions answered', async () => {
     for (const questionId of [1, 2, 3, 4, 5]) {
-      await recordAnswer({ questionId, chosen: correctOf(questionId), correct: true, mode: 'practice', at: T0 });
+      await recordAnswer({ questionId, chosen: correctOf(questionId), mode: 'practice', at: T0 });
     }
-    await recordAnswer({ questionId: 1, chosen: 'A', correct: false, mode: 'practice', at: T0 + MINUTE });
+    await recordAnswer({ questionId: 1, chosen: 'A', mode: 'practice', at: T0 + MINUTE });
     renderHome();
 
     // Four questions at 1, question 1 at 1/2, 501 unseen at 1/3: 171.5 / 506 = 33.9 %.

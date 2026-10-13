@@ -68,7 +68,7 @@ const en = MESSAGES.en.settings;
 async function makeProgress(): Promise<void> {
   for (const [i, id] of [3, 3, 40, 3, 112, 200].entries()) {
     const right = i % 2 === 0;
-    await recordAnswer({ questionId: id, chosen: right ? correctOf(id) : wrongOf(id), correct: right, mode: 'practice', at: T0 + i * MINUTE });
+    await recordAnswer({ questionId: id, chosen: right ? correctOf(id) : wrongOf(id), mode: 'practice', at: T0 + i * MINUTE });
   }
   const ids = drawExam(seededRandom(7));
   const exam = await createExam(ids, T0 + 10 * MINUTE);
@@ -240,7 +240,7 @@ describe('Settings export and share outcome', () => {
 
     // An answer recorded in another tab after Settings opened, past midnight.
     vi.setSystemTime(new Date(2026, 9, 14, 0, 1));
-    await recordAnswer({ questionId: 3, chosen: correctOf(3), correct: true, mode: 'practice', at: Date.now() });
+    await recordAnswer({ questionId: 3, chosen: correctOf(3), mode: 'practice', at: Date.now() });
 
     await user.click(screen.getByRole('button', { name: en.share }));
     await waitFor(() => expect(share).toHaveBeenCalledTimes(1));

@@ -138,7 +138,7 @@ pnpm workspace of three packages: `packages/data`, `apps/web` and `e2e`
   - one folder per screen, each with its page and its tests: `home` (readiness, the
     exam-in-progress card, the four buttons), `practice` (the session, the flags row,
     the laptop keys, the focused-practice pool from the query and `recent.ts`, the
-    no-repeat window in sessionStorage), `exam` (`ExamPage` owns the sub-routes:
+    draw over the no-repeat window), `exam` (`ExamPage` owns the sub-routes:
     `/exam` starts or resumes the running exam, `/exam/results/<id>` the results and
     review), `progress` (the day bars, the topic, section and pattern lists, past
     exams), `settings` (language, export and share, import, clear), `flagged` (the list
@@ -154,7 +154,8 @@ pnpm workspace of three packages: `packages/data`, `apps/web` and `e2e`
     is the API every screen uses, over an IndexedDB backend and a memory fallback
     with the same behaviour; it also holds the record and export types (`types.ts`),
     the two browser key names (`keys.ts`), the exam finish (`finish.ts`), the import
-    merge (`merge.ts`) and the export file (`exportFile.ts`);
+    merge (`merge.ts`), the export file (`exportFile.ts`) and the no-repeat window in
+    sessionStorage, kept in memory when that is blocked (`recent.ts`);
   - `pwa/`: the image map that puts the 15 pictures in `dist` and the precache, and
     `registerServiceWorker.ts`, which registers vite-plugin-pwa's service worker by
     hand;

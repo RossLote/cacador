@@ -715,8 +715,9 @@ this device when storage is unavailable (§ 6.9); and a link to Flagged.
 - **Storage unavailable**: when IndexedDB cannot be opened (a private window, blocked
   site data), the app runs on progress kept in memory for the visit, and Settings says
   progress is not being saved on this device. When localStorage is blocked, the
-  language choice holds for the visit only; when sessionStorage is blocked, the
-  no-repeat window is kept in memory for the page.
+  language choice holds for the visit only; when sessionStorage is blocked, the storage
+  module keeps the no-repeat window in memory for the page, and Clear progress empties
+  that copy too.
 - **A read or write that fails**: when the storage module rejects, the screen says so in
   one plain line, instead of loading for good or going on as if the write had landed:
   - a failed read: Home, Practice, Exam, Progress and Flagged show the line in place of
@@ -829,8 +830,9 @@ fake-indexeddb.
 - localStorage `cacador.locale`: the interface language, `en` or `pt`. Nothing else
   goes in localStorage: no theme (the system setting decides) and no last mode.
 - sessionStorage `cacador.recent`: the recent list the no-repeat window reads, the ten
-  most recently drawn question ids as a JSON array, oldest first (§ 6.2); kept in memory
-  for the page when sessionStorage is blocked.
+  most recently drawn question ids as a JSON array, oldest first (§ 6.2). The storage
+  module keeps it (`apps/web/src/storage/recent.ts`), in memory for the page when
+  sessionStorage is blocked, and Clear progress empties it, the memory copy included.
 
 **Export.** One JSON file, `cacador-progress-<YYYY-MM-DD>.json`, holding every store
 but `questionState`, each as an array of its records:
@@ -868,8 +870,9 @@ stays unfinished and the others are submitted as they stand at the moment of the
 import, held to the deadline rule above. Every question state is then rebuilt from the
 merged log, and the counts of answers, exams and flags added are reported.
 
-**Clear progress** asks first, then empties every store and removes `cacador.recent`;
-it never touches `cacador.locale`.
+**Clear progress** asks first, then empties every store and removes `cacador.recent`,
+or empties its memory copy when sessionStorage is blocked; it never touches
+`cacador.locale`.
 
 ## 8. Stack and conventions
 
@@ -927,19 +930,20 @@ apps/web/
     home/                  HomePage: readiness, the exam-in-progress card, the four buttons
     practice/              PracticePage and PracticeSession, FlagsRow, usePracticeKeys (the
                            laptop keys), usePracticePool (the query filter and its chip),
-                           recent.ts (the recent list in sessionStorage and the draw)
+                           recent.ts (the draw over the recent list)
     exam/                  ExamPage (the sub-routes), ExamStart (start or resume),
                            RunningExam with ExamMarkers and useExamClock, ExamResultsPage
                            (the score and the review)
     progress/              ProgressPage, DayBars, GroupTabs and groups.ts (the three lists'
-                           rows), PastExams and exams.ts (their order), useDayRefresh (the
-                           read again at midnight and when shown)
+                           rows), PastExams, useDayRefresh (the read again at midnight and
+                           when shown)
     settings/              SettingsPage, progressFile.ts (the download and the share sheet)
     flagged/               FlaggedPage, copyFormat.ts (the fixed copy text, § 6.7)
     notfound/              NotFoundPage, for any address that names no screen
     components/question/   QuestionCard with PeekButton and HintPanel, names.ts (a name in
                            the interface language)
     components/LinkButton.tsx  a router link drawn as a button
+    components/FailureLine.tsx the one line a screen uses to say something did not work
     components/ui/         the 11 generated shadcn components
     model/                 the study model: draw.ts (weights, window, recent list), states.ts,
                            progress.ts (readiness, group accuracy, day bars), pools.ts,
@@ -948,13 +952,17 @@ apps/web/
     storage/               the storage module: index.ts (the API), backend.ts with
                            idbBackend.ts and memoryBackend.ts, state.ts (the derived state),
                            finish.ts (the exam finish), merge.ts (the import merge),
-                           exportFile.ts, keys.ts, types.ts
+                           exportFile.ts, keys.ts, types.ts, recent.ts (the no-repeat
+                           window in sessionStorage, kept in memory when that is blocked)
     pwa/                   images.ts (the image map), registerServiceWorker.ts
     i18n/                  locales.ts, locale.ts (the store), useI18n.ts, messages/en/ and pt/
     lib/                   utils.ts (the cn helper the shadcn components use), useLoaded.ts
-                           (a screen's read of storage)
+                           (a screen's read of storage), isOneOf.ts (the closed-set type
+                           guard)
   test/                    setup.ts (jest-dom, fake-indexeddb, the resets before each test),
-                           fixtures.ts (bank lookups the tests share)
+                           fixtures.ts (bank lookups the tests share), storage.ts (storage
+                           set-ups the tests share: exam answers saved, IndexedDB made to
+                           fail)
 e2e/
   package.json             @cacador/e2e, scripts e2e, browsers and typecheck
   playwright.config.ts     the production build under vite preview, locale en-GB

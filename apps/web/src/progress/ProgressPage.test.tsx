@@ -34,7 +34,7 @@ const firstIn = (topic: string, n = 0): number => {
 };
 
 async function answer(questionId: number, correct: boolean, at = NOW) {
-  await recordAnswer({ questionId, chosen: correct ? correctOf(questionId) : wrongOf(questionId), correct, mode: 'practice', at });
+  await recordAnswer({ questionId, chosen: correct ? correctOf(questionId) : wrongOf(questionId), mode: 'practice', at });
 }
 
 function Where() {

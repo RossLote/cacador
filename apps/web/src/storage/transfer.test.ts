@@ -50,7 +50,7 @@ const examLog = async (examId: string): Promise<Answer[]> => (await listAnswers(
 async function makeProgress(): Promise<{ finished: Exam; running: Exam }> {
   for (const [i, id] of [3, 3, 40, 3, 112].entries()) {
     const right = i % 2 === 0;
-    await recordAnswer({ questionId: id, chosen: right ? correctOf(id) : wrongOf(id), correct: right, mode: 'practice', at: T0 + i * MINUTE });
+    await recordAnswer({ questionId: id, chosen: right ? correctOf(id) : wrongOf(id), mode: 'practice', at: T0 + i * MINUTE });
   }
   const finished = await createExam(questionIds, T0 + 10 * MINUTE);
   await answerExam(finished.id, allOf(questionIds.slice(0, 15), correctOf), T0 + 11 * MINUTE);
@@ -120,7 +120,7 @@ describe.each([
   });
 
   it('merges answers by question and time and rebuilds states from the merged log', async () => {
-    await recordAnswer({ questionId: 5, chosen: correctOf(5), correct: true, mode: 'practice', at: T0 + 2 * MINUTE });
+    await recordAnswer({ questionId: 5, chosen: correctOf(5), mode: 'practice', at: T0 + 2 * MINUTE });
     const file = fileText({
       answers: [
         { questionId: 5, at: T0 + 2 * MINUTE, chosen: correctOf(5), correct: true, mode: 'practice' },
@@ -325,7 +325,7 @@ describe.each([
     expect(localStorage.getItem(LOCALE_KEY)).toBe('pt');
 
     // The stores still work afterwards.
-    await recordAnswer({ questionId: 3, chosen: correctOf(3), correct: true, mode: 'practice', at: T0 });
+    await recordAnswer({ questionId: 3, chosen: correctOf(3), mode: 'practice', at: T0 });
     expect((await getStates()).get(3)).toMatchObject({ attempts: 1 });
   });
 });

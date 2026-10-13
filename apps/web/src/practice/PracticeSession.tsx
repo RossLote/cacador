@@ -96,7 +96,6 @@ export function PracticeSession({ pool }: { pool: readonly number[] }) {
       recording.current = recordAnswer({
         questionId: shown.id,
         chosen: option,
-        correct: option === question.answer,
         mode: 'practice',
       }).catch(() => setAnswerNotSaved(true));
     },
