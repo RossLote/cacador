@@ -9,8 +9,14 @@
 # Dependencies and build output
 node_modules/
 dist/
+.vite/
 coverage/
 *.tsbuildinfo
+
+# Playwright
+test-results/
+playwright-report/
+blob-report/
 
 # OS noise
 .DS_Store

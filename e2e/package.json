@@ -1,0 +1,17 @@
+{
+  "name": "@cacador/e2e",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "e2e": "playwright test",
+    "browsers": "playwright install chromium",
+    "typecheck": "tsc -p tsconfig.json"
+  },
+  "devDependencies": {
+    "@cacador/data": "workspace:*",
+    "@playwright/test": "^1.64.0",
+    "@types/node": "^26.6.5",
+    "typescript": "~6.0.3"
+  }
+}
