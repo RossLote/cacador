@@ -1,330 +1,441 @@
 [
   {
     "id": 416,
-    "language": [],
-    "nudge": "",
-    "patterns": [],
+    "language": [
+      {
+        "pt": "pode ser permitida apenas",
+        "en": "may be permitted only",
+        "note": "apenas = only, placed after the verb: the options say what the permission is limited to."
+      }
+    ],
+    "nudge": "Hare by batida 'pode ser permitida apenas' 'Em zonas de caça': the limit is the kind of ground, not a set of months. January and February is the window for hare coursing in hunting zones (questions 417 and 426), a different method.",
+    "patterns": ["only"],
     "status": "draft"
   },
   {
     "id": 417,
     "language": [],
-    "nudge": "",
+    "nudge": "In January and February hare coursing 'É permitida nas zonas de caça', the same rule as questions 435 and 454. It is not banned outright, and an ICNF public notice is not what opens it.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 418,
     "language": [],
-    "nudge": "",
-    "patterns": [],
+    "nudge": "Rabbit on managed ground takes the whole list of small-game methods: salto, espera, batida, corricão, cetraria and furão. A list with 'de aproximação' is wrong, because stalking is for big game only (question 419).",
+    "patterns": ["list-options"],
     "status": "draft"
   },
   {
     "id": 419,
     "language": [],
-    "nudge": "",
+    "nudge": "Aproximação is stalking, in which the hunter moves in on 'determinado exemplar de caça maior' (question 39), so it is allowed 'Só às espécies de caça maior'. It is banned for small game, resident or aquatic alike (question 421).",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 420,
     "language": [],
-    "nudge": "",
+    "nudge": "Snipe are hunted 'De salto e à espera' (question 432), so cetraria is simply 'proibida' for them, in no month and on no ground. Falconry is a quail method instead (question 453).",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 421,
     "language": [],
-    "nudge": "",
+    "nudge": "Aproximação, stalking, is kept for big game: question 419 allows it 'Só às espécies de caça maior'. Salto and batida are both small-game methods, both on the rabbit's list in question 418.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 422,
     "language": [],
-    "nudge": "",
+    "nudge": "Wild boar may be hunted à espera (question 33 lets big game be hunted 'pelo processo de espera' at full moon) and stalked on managed ground (question 447). Corricão, coursing with dogs and no firearm, is a hare and fox method (questions 37 and 56).",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 423,
-    "language": [],
-    "nudge": "",
+    "language": [
+      {
+        "pt": "limite o máximo",
+        "en": "maximum limit",
+        "note": "A misprint for limite máximo, the outer limit (question 425 prints it right); the stray o changes nothing."
+      }
+    ],
+    "nudge": "The hare's season can run at most from 'Setembro a fevereiro'. Hare coursing in January and February (questions 417 and 426) shows it reaches past December, so both spans ending in December are too short.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 424,
     "language": [],
-    "nudge": "",
+    "nudge": "Turtle doves are hunted 'À espera', from a hide, the same answer as question 433. Walked-up and falconry are not turtle dove methods.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 425,
     "language": [],
-    "nudge": "",
+    "nudge": "The common starling's widest season is 'De outubro a fevereiro', the same span as the thrushes in question 438. The distractors move one end: a December start or a March finish.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 426,
     "language": [],
-    "nudge": "",
+    "nudge": "In January and February hare in hunting zones is taken 'A corricão', by coursing, as questions 417 and 435 also say. Question 416 is a different rule: there the hare batida is limited to hunting zones, with no months named.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 427,
-    "language": [],
-    "nudge": "",
-    "patterns": [],
+    "language": [
+      {
+        "pt": "Só em terrenos cinegéticos ordenados",
+        "en": "Only in managed hunting grounds",
+        "note": "só = only: it shuts unmanaged ground out altogether."
+      }
+    ],
+    "nudge": "Montarias for wild boar may be held on unmanaged ground too, but only 'de outubro a fevereiro' and 'nos locais e condições definidos em edital' of the ICNF. 'Só em terrenos cinegéticos ordenados' shuts that ground out, and 'todo o ano' drops both the season and the notice.",
+    "patterns": ["only", "always-never"],
     "status": "draft"
   },
   {
     "id": 428,
     "language": [],
-    "nudge": "",
+    "nudge": "The stock dove's widest season is 'Agosto a fevereiro'. Do not borrow the rock dove's 'Agosto a dezembro' (question 450): the two pigeons end in different months.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 429,
     "language": [],
-    "nudge": "",
+    "nudge": "Batida may be authorised for partridge, and only on managed ground (question 456). Quail are hunted 'De salto e de cetraria' (question 453), so a drive is not among their methods.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 430,
     "language": [],
-    "nudge": "",
+    "nudge": "The quail's widest season is 'De setembro a dezembro', which question 457 repeats. An August start is wrong: question 441 makes quail shot in August an out-of-season offence.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 431,
-    "language": [],
-    "nudge": "",
-    "patterns": [],
+    "language": [
+      {
+        "pt": "qual não pode ser usado",
+        "en": "which cannot be used",
+        "note": "não pode = cannot: the stem asks for the one method excluded for partridge."
+      }
+    ],
+    "nudge": "Partridge is hunted 'De salto e de cetraria' (question 455), and driven on managed ground (question 456). 'À espera', from a hide, is the one method it is not hunted by.",
+    "patterns": ["negative-stem"],
     "status": "draft"
   },
   {
     "id": 432,
     "language": [],
-    "nudge": "",
-    "patterns": [],
+    "nudge": "Snipe are hunted 'De salto e à espera', walked-up and from a hide. Every option has salto: falconry is banned for snipe (question 420), and batida is not a snipe method.",
+    "patterns": ["list-options"],
     "status": "draft"
   },
   {
     "id": 433,
     "language": [],
-    "nudge": "",
+    "nudge": "Turtle doves are hunted 'De espera', from a hide, as question 424 also keys for August. Walked-up and falconry are not turtle dove methods.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 434,
     "language": [],
-    "nudge": "",
+    "nudge": "The rabbit's widest season is 'Setembro a dezembro'. October to December starts a month late, and a February finish belongs to the hare's longer span (question 423).",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 435,
-    "language": [],
-    "nudge": "",
-    "patterns": [],
+    "language": [
+      {
+        "pt": "Só em zonas de caça",
+        "en": "Only in hunting zones",
+        "note": "só = only: it limits the place to hunting zones and no other ground."
+      }
+    ],
+    "nudge": "In January and February hare coursing is allowed 'Só em zonas de caça', the same rule as questions 417 and 454. No ICNF public notice opens it on other ground, and 'todos os locais' ignores the limit.",
+    "patterns": ["only", "always-never"],
     "status": "draft"
   },
   {
     "id": 436,
-    "language": [],
-    "nudge": "",
+    "language": [
+      {
+        "pt": "se pode caçar aos sábados",
+        "en": "may be hunted on Saturdays",
+        "note": "se pode caçar = may be hunted, passive se; aos sábados = on Saturdays, every Saturday."
+      },
+      {
+        "pt": "desde que nos locais e condições definidas em edital",
+        "en": "provided it is in the places and on the conditions set in a public notice",
+        "note": "desde que = provided that, here with no verb of its own: the Saturday drive holds only where and as the notice sets."
+      }
+    ],
+    "nudge": "The species is the 'Saca-rabos', the Egyptian mongoose, driven on Saturdays in January and February where an ICNF public notice allows. Hare in that window is coursed in hunting zones (question 435), and a rabbit batida needs a hunting zone (question 445).",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 437,
-    "language": [],
-    "nudge": "",
-    "patterns": [],
+    "language": [
+      {
+        "pt": "só se pode caçar de batida à raposa",
+        "en": "one may only hunt red fox in a driven hunt",
+        "note": "só se pode = one may only, impersonal se; the só limits the fox batida to the months named at the end of the sentence."
+      },
+      {
+        "pt": "não se pode caçar de batida em terrenos não ordenados",
+        "en": "one may not hunt in a driven hunt in unmanaged grounds",
+        "note": "não se pode = one may not: a flat ban, with no months attached."
+      }
+    ],
+    "nudge": "December is the wrong month: on unmanaged ground a fox batida is allowed only in 'janeiro e fevereiro' (question 448), so the batida itself is not banned there. That rules out both 'corretamente' and the flat ban.",
+    "patterns": ["case", "yes-no-because", "only"],
     "status": "draft"
   },
   {
     "id": 438,
     "language": [],
-    "nudge": "",
+    "nudge": "Thrushes may be hunted at most from 'Outubro a fevereiro', the same span as the common starling (question 425). The distractors stop in December, too short.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 439,
     "language": [],
-    "nudge": "",
+    "nudge": "Yes, 'nos locais e condições definidas por edital' of the ICNF: salto is a snipe method (question 432), and January is not closed to snipe. Both 'Não' reasons fail, since neither the month nor walked-up is barred.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 440,
     "language": [],
-    "nudge": "",
+    "nudge": "A wild boar batida may run at most from 'Outubro a fevereiro', the same span as walked-up boar on managed ground (question 449) and montarias on unmanaged ground (question 427). The distractors stop early, in December or January.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 441,
     "language": [],
-    "nudge": "",
-    "patterns": [],
+    "nudge": "Walked-up is a quail method (question 453), so the method is no offence. August is: the quail's season runs only 'De setembro a dezembro' (question 430).",
+    "patterns": ["case"],
     "status": "draft"
   },
   {
     "id": 442,
     "language": [],
-    "nudge": "",
-    "patterns": [],
+    "nudge": "'Nenhuma': ducks may be hunted in August, as question 443 shows and as the mallard's span 'Agosto a janeiro' confirms (question 451). In a hunting zone the walked-up method is no offence either.",
+    "patterns": ["case"],
     "status": "draft"
   },
   {
     "id": 443,
     "language": [],
-    "nudge": "",
+    "nudge": "Yes, 'nos locais e condições definidos em edital' of the ICNF: ducks may be hunted in August (the mallard's span is 'Agosto a janeiro', question 451), and from a hide. Neither the month nor the hide is barred, so both 'Não' reasons fail.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 444,
     "language": [],
-    "nudge": "",
-    "patterns": [],
+    "nudge": "'Nenhuma': in managed hunting grounds big game may be hunted 'Todo o ano' (question 459), so June is no closed month. Stalking wild boar is allowed there too, 'só em terrenos cinegéticos ordenados' (question 447).",
+    "patterns": ["case"],
     "status": "draft"
   },
   {
     "id": 445,
-    "language": [],
-    "nudge": "",
-    "patterns": [],
+    "language": [
+      {
+        "pt": "Sim, mas só nos meses",
+        "en": "Yes, but only in the months",
+        "note": "Sim, mas só = yes, but only: every option allows it and then limits it, so the limit is what differs."
+      },
+      {
+        "pt": "desde que previsto",
+        "en": "as long as it is provided for",
+        "note": "desde que = provided that, here with the verb left out (desde que [esteja] previsto): a condition on top of the place."
+      }
+    ],
+    "nudge": "A rabbit batida is allowed 'só em zonas de caça', and there only 'desde que previsto' in the zone's approved POEC or PG. Neither an ICNF public notice nor a fixed pair of months is the rule.",
+    "patterns": ["yes-no-because"],
     "status": "draft"
   },
   {
     "id": 446,
-    "language": [],
-    "nudge": "",
+    "language": [
+      {
+        "pt": "a menos de 100 metros de pontos de água",
+        "en": "less than 100 metres from water points",
+        "note": "a menos de = within, closer than: the ban covers the ground inside 100 metres of the water."
+      }
+    ],
+    "nudge": "The 100-metre ban around 'pontos de água' is for the 'Rola', the turtle dove, a bird hunted from a hide (question 433). Snipe and quail carry no such rule in the bank.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 447,
-    "language": [],
-    "nudge": "",
-    "patterns": [],
+    "language": [
+      {
+        "pt": "Sim, mas só em terrenos cinegéticos não ordenados",
+        "en": "Yes, but only in unmanaged hunting grounds",
+        "note": "Sim, mas só = yes, but only: both 'Sim' options allow it and then limit it to one kind of ground."
+      }
+    ],
+    "nudge": "Stalking is a big-game method (question 419), so wild boar may be stalked, but 'só em terrenos cinegéticos ordenados'. Question 56 marks stalking boar on unmanaged ground as wrong.",
+    "patterns": ["yes-no-because"],
     "status": "draft"
   },
   {
     "id": 448,
-    "language": [],
-    "nudge": "",
-    "patterns": [],
+    "language": [
+      {
+        "pt": "o processo de caça referido",
+        "en": "the hunting method referred to",
+        "note": "referido = mentioned: the batida named in the first sentence."
+      }
+    ],
+    "nudge": "On unmanaged ground a fox batida may be authorised only in 'Janeiro e fevereiro', where and as an ICNF public notice sets, not 'Todo o ano'. Question 437 turns this into a case: a fox drive there in December is unlawful.",
+    "patterns": ["always-never"],
     "status": "draft"
   },
   {
     "id": 449,
     "language": [],
-    "nudge": "",
+    "nudge": "Walked-up wild boar on managed ground may run at most from 'Outubro a fevereiro', the same span as the boar batida in question 440. The distractors stop early, in December or January.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 450,
     "language": [],
-    "nudge": "",
+    "nudge": "The rock dove's widest season is 'Agosto a dezembro'. August to February is the stock dove's span (question 428), so do not mix the two pigeons.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 451,
     "language": [],
-    "nudge": "",
+    "nudge": "The mallard's widest season is 'Agosto a janeiro', opening in August as questions 442 and 443 assume. The distractors start later and run on to February.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 452,
-    "language": [],
-    "nudge": "",
-    "patterns": [],
+    "language": [
+      {
+        "pt": "Em todo o País",
+        "en": "Throughout the country",
+        "note": "todo o = the whole: todo o País is the whole country, every part of it (todos os would be 'all the')."
+      }
+    ],
+    "nudge": "The rock dove may be hunted 'Só nos municípios definidos em portaria', the municipalities a ministerial order lists. It is not open across the whole country, and the limit is by municipality, not to hunting zones.",
+    "patterns": ["only", "always-never"],
     "status": "draft"
   },
   {
     "id": 453,
     "language": [],
-    "nudge": "",
-    "patterns": [],
+    "nudge": "Quail are hunted 'De salto e de cetraria', walked-up and by falconry. From a hide is the snipe and turtle dove method (questions 432 and 433), and stalking is for big game only (question 419).",
+    "patterns": ["list-options"],
     "status": "draft"
   },
   {
     "id": 454,
-    "language": [],
-    "nudge": "",
-    "patterns": [],
+    "language": [
+      {
+        "pt": "Só em zonas de caça",
+        "en": "Only in hunting zones",
+        "note": "só = only: it limits the place to hunting zones and no other ground."
+      }
+    ],
+    "nudge": "As in question 435, hare coursing in January and February is allowed 'Só em zonas de caça'. No ICNF public notice opens it on other ground, and 'todos os locais' ignores the limit.",
+    "patterns": ["only", "always-never"],
     "status": "draft"
   },
   {
     "id": 455,
     "language": [],
-    "nudge": "",
-    "patterns": [],
+    "nudge": "On unmanaged ground the red-legged partridge is hunted 'De salto e de cetraria'. Batida is the partridge method kept to managed ground (question 456), and from a hide is not a partridge method (question 431).",
+    "patterns": ["list-options"],
     "status": "draft"
   },
   {
     "id": 456,
-    "language": [],
-    "nudge": "",
-    "patterns": [],
+    "language": [
+      {
+        "pt": "é autorizado só em terrenos ordenados",
+        "en": "is authorised only in managed grounds",
+        "note": "só = only: the stem asks which method is confined to managed ground."
+      }
+    ],
+    "nudge": "The partridge batida is the managed-ground method, allowed in hunting zones (question 429). Falconry is allowed on unmanaged ground too (question 455), and from a hide is not a partridge method at all (question 431).",
+    "patterns": ["only"],
     "status": "draft"
   },
   {
     "id": 457,
-    "language": [],
-    "nudge": "",
-    "patterns": [],
+    "language": [
+      {
+        "pt": "pode caçar-se apenas de salto",
+        "en": "one may hunt only walked-up",
+        "note": "pode caçar-se = one may hunt, impersonal se after the verb; apenas = only, limiting it to walked-up."
+      }
+    ],
+    "nudge": "The quail's widest season is 'de setembro a dezembro', as in question 430, so the August-to-November span is wrong. 'apenas de salto' shuts out falconry, which question 453 allows for quail.",
+    "patterns": ["which-statement", "only"],
     "status": "draft"
   },
   {
     "id": 458,
-    "language": [],
-    "nudge": "",
-    "patterns": [],
+    "language": [
+      {
+        "pt": "desde que conste do",
+        "en": "provided that it appears in the",
+        "note": "desde que = provided that, with the present subjunctive conste (from constar de, to appear in): a condition attached to the permission."
+      }
+    ],
+    "nudge": "Woodcock may not be hunted from a hide: 'Não é permitida', even in a hunting zone and whatever its plan says. Question 461 gives the woodcock's method on managed ground as 'De salto'.",
+    "patterns": ["provided-that"],
     "status": "draft"
   },
   {
     "id": 459,
     "language": [],
-    "nudge": "",
-    "patterns": [],
+    "nudge": "On managed ground big game is permitted 'Todo o ano', all year, on the days each zone's plan sets (question 58). The 'Só' options impose a season the keyed rule does not.",
+    "patterns": ["only", "always-never"],
     "status": "draft"
   },
   {
     "id": 460,
     "language": [],
-    "nudge": "",
+    "nudge": "Walked-up fox on unmanaged ground may run at most 'De outubro a dezembro'. January belongs to the fox batida there (questions 437 and 448), not to walked-up hunting.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 461,
     "language": [],
-    "nudge": "",
-    "patterns": [],
+    "nudge": "Woodcock on managed ground are hunted 'De salto', walked-up, 'de outubro a fevereiro'. Adding 'à espera' spoils the list: question 458 bars woodcock from a hide even in hunting zones.",
+    "patterns": ["list-options"],
     "status": "draft"
   },
   {
     "id": 462,
     "language": [],
-    "nudge": "",
+    "nudge": "The red-legged partridge's widest season is 'De outubro a janeiro'. September to December is the quail's and the rabbit's span (questions 430 and 434), and August to February the stock dove's (question 428).",
     "patterns": [],
     "status": "draft"
   }

@@ -1,22 +1,50 @@
 [
   {
     "id": 413,
-    "language": [],
-    "nudge": "",
+    "language": [
+      {
+        "pt": "Só se for associado",
+        "en": "Only if they are a member",
+        "note": "só se = only if; for is the future subjunctive of ser after se, 'if they are', not the English 'for'. Every option opens with the same só se, so the condition after it is what differs."
+      },
+      {
+        "pt": "for contemplado em sorteio público",
+        "en": "are drawn in a public draw",
+        "note": "contemplado = picked, chosen (here by the draw), not 'contemplated'."
+      }
+    ],
+    "nudge": "A zona de caça municipal is open to hunters in general, so a place comes through 'inscrição prévia' and the 'sorteio público', the public draw. Membership is the way into an association zone (question 415), and owning land in the zone gives no place of its own.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 414,
-    "language": [],
-    "nudge": "",
-    "patterns": [],
+    "language": [
+      {
+        "pt": "Têm acesso",
+        "en": "have access",
+        "note": "têm acesso = have access; the stem has no subject of its own, and the options say who."
+      },
+      {
+        "pt": "normas privativas de funcionamento",
+        "en": "private operating rules",
+        "note": "privativas = its own, particular to that zone: the rules each zone sets for itself, not secret ones."
+      }
+    ],
+    "nudge": "A zona de caça turística is open to 'Todos os caçadores' who keep its own rules, the 'normas privativas de funcionamento'. The 'Só' options close it to owners or members and guests, which is the association zone's rule (question 415).",
+    "patterns": ["only", "always-never"],
     "status": "draft"
   },
   {
     "id": 415,
-    "language": [],
-    "nudge": "",
+    "language": [
+      {
+        "pt": "Têm acesso",
+        "en": "have access",
+        "note": "têm acesso = have access; the stem has no subject of its own, and the options say who."
+      }
+    ],
+    "nudge": "An association zone is run by a hunters' association for 'os caçadores associados e os convidados', its members and their guests. Owners and foreign hunters get no access of their own, and access for any hunter who keeps the rules belongs to the tourist zones (question 414).",
     "patterns": [],
     "status": "draft"
   }
