@@ -199,7 +199,8 @@ function checkText(manifest, files) {
   const headings = manifest.sections.map((s) => s.heading);
   const checkField = (rel, id, field, value) => {
     expectType(rel, id, field, value, 'string');
-    if (/[\r\n]/.test(value)) failAt(rel, id, `${field} is not a single line`);
+    if (/[\r\n\u2028\u2029\u0085]/.test(value)) failAt(rel, id, `${field} is not a single line`);
+    if (/[^\S ]/.test(value)) failAt(rel, id, `${field} contains whitespace other than a plain space (tab, no-break space, ...)`);
     if (value.includes('*')) failAt(rel, id, `${field} contains "*"`);
     if (value.includes('  ')) failAt(rel, id, `${field} contains two consecutive spaces`);
     if (value !== value.trim()) failAt(rel, id, `${field} has leading or trailing whitespace`);

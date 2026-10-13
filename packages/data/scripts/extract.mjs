@@ -5,19 +5,12 @@ import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'nod
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { dataDir, imageByQuestion, topicOfId } from './lib/manifest.mjs';
+import { checkText, clean, ExtractError, fail, LETTERS, parseQuestions } from './lib/parse.mjs';
 import { checkManifest, readJson, ValidationError } from './lib/validate.mjs';
-
-const LETTERS = ['A', 'B', 'C'];
-const OPTION_LINE = /^([ABC])\) ?(.*)$/;
 
 // Hand fixes live here so a rerun reproduces them: { [id]: { question?, options?: { A?, B?, C? } } }.
 // The PDF wins; add an entry only when its text is wrong and say why. Empty: no fix is needed.
 const CORRECTIONS = {};
-
-class ExtractError extends Error {}
-const fail = (message) => {
-  throw new ExtractError(message);
-};
 
 function run(cmd, args) {
   try {
@@ -36,98 +29,39 @@ function pdfLines(pdf) {
   return text.split('\f').flatMap((page, i) => page.split('\n').map((text) => ({ page: i + 1, text })));
 }
 
-const clean = (s) => s.replace(/\s+/g, ' ').trim();
-
-/** Join wrapped pieces; a piece ending in "-" is a hyphenated word split by the wrap (no space). */
-function joinPieces(pieces) {
-  return pieces.reduce((acc, piece) => (acc === '' ? piece : acc.endsWith('-') ? acc + piece : `${acc} ${piece}`), '');
+/** Fails loudly on a CORRECTIONS key, field or option key that would otherwise never apply. */
+function checkCorrections(total) {
+  for (const [key, fix] of Object.entries(CORRECTIONS)) {
+    if (!/^[1-9]\d*$/.test(key) || Number(key) > total) fail(`correction key "${key}" is not a question id from 1 to ${total}`);
+    if (typeof fix !== 'object' || fix === null || Array.isArray(fix)) fail(`correction ${key}: must be an object`);
+    for (const field of Object.keys(fix)) {
+      if (field !== 'question' && field !== 'options') fail(`correction ${key}: unknown field "${field}" (question or options)`);
+    }
+    if (fix.options !== undefined && (typeof fix.options !== 'object' || fix.options === null || Array.isArray(fix.options))) {
+      fail(`correction ${key}: options must be an object`);
+    }
+    for (const letter of Object.keys(fix.options ?? {})) {
+      if (!LETTERS.includes(letter)) fail(`correction ${key}: option key "${letter}" is not one of ${LETTERS.join(', ')}`);
+    }
+  }
 }
 
-/** Parses the text into `total` questions with contiguous ids from 1, each under its section. */
-function parseQuestions(lines, manifest, total) {
-  const headings = new Set(manifest.sections.map((s) => s.heading));
-  const questions = [];
-  let seen = 0;
-  let section = null;
-  let q = null;
-  let nextId = 1;
-
-  const finish = () => {
-    if (!q) return;
-    const where = `question ${q.id} (page ${q.page})`;
-    if (q.options.length !== LETTERS.length) fail(`${where}: expected 3 options, found ${q.options.length}`);
-    const marked = q.options.filter((o) => o.marked);
-    if (marked.length !== 1) fail(`${where}: expected exactly one option marked *, found ${marked.length}`);
-    const stem = joinPieces(q.stem);
-    const options = q.options.map((o) => joinPieces(o.pieces));
-    for (const text of [stem, ...options]) {
-      if (text === '' || text.includes('*')) fail(`${where}: empty text or stray "*" in "${text}"`);
-    }
-    questions.push({ id: q.id, page: q.page, section: q.section, stem, options, answer: marked[0].letter });
-    q = null;
-  };
-
-  for (const { page, text } of lines) {
-    const line = clean(text);
-    if (line === '') continue;
-    if (headings.has(line)) {
-      finish();
-      const expected = manifest.sections[seen];
-      if (line !== expected?.heading) fail(`page ${page}: heading "${line}" found, expected "${expected?.heading}"`);
-      section = expected;
-      seen += 1;
-      continue;
-    }
-    if (!section) continue; // the intro before the first heading
-
-    const start = /^(\d+) ?[-–] ?(.*)$/.exec(line);
-    if (start && Number(start[1]) === nextId) {
-      finish();
-      if (nextId < section.from || nextId > section.to) {
-        fail(`page ${page}: question ${nextId} falls outside section "${section.heading}" (${section.from}-${section.to})`);
-      }
-      q = { id: nextId, page, section, stem: [], options: [] };
-      nextId += 1;
-      if (start[2] !== '') q.stem.push(start[2]);
-      continue;
-    }
-    if (!q) fail(`page ${page}: text "${line}" outside any question (expected question ${nextId})`);
-
-    // A trailing "*" marks the correct option; it may follow a space or be glued to the word.
-    const marked = line.endsWith('*');
-    const body = marked ? line.slice(0, -1).trimEnd() : line;
-    const option = OPTION_LINE.exec(body);
-    if (option && option[1] === LETTERS[q.options.length]) {
-      q.options.push({ letter: option[1], pieces: option[2] === '' ? [] : [option[2]], marked });
-    } else if (q.options.length === 0) {
-      if (marked) fail(`question ${q.id} (page ${page}): "*" in the stem`);
-      q.stem.push(body);
-    } else {
-      // A lone "*" under a wrapped option leaves an empty body: it marks, but adds no text.
-      const current = q.options[q.options.length - 1];
-      if (body !== '') current.pieces.push(body);
-      current.marked ||= marked;
-    }
-  }
-  finish();
-
-  if (questions.length !== total) {
-    const last = questions.at(-1);
-    fail(`parsed ${questions.length} questions, expected ${total} (last parsed: question ${last?.id} on page ${last?.page}, next expected id ${nextId})`);
-  }
-  if (seen !== manifest.sections.length) fail(`found ${seen} of ${manifest.sections.length} section headings`);
-  return questions;
+/** A corrected text is cleaned and checked like parsed text; an uncorrected one passes through (already clean). */
+function corrected(id, what, fixed, parsed) {
+  if (fixed === undefined) return parsed;
+  if (typeof fixed !== 'string') fail(`correction ${id}: ${what} must be a string`);
+  const text = clean(fixed);
+  checkText(`correction ${id} ${what}`, text);
+  return text;
 }
 
 /** Entries in the § 3.3 shape; checkManifest has already confirmed every image names an existing question. */
 function toEntries(questions, manifest) {
   const images = imageByQuestion(manifest);
-  for (const id of Object.keys(CORRECTIONS)) {
-    if (id < 1 || id > questions.length) fail(`correction table names question ${id}, which does not exist`);
-  }
+  checkCorrections(questions.length);
   return questions.map((q) => {
     const fix = CORRECTIONS[q.id] ?? {};
-    const options = Object.fromEntries(LETTERS.map((letter, i) => [letter, fix.options?.[letter] ?? q.options[i]]));
+    const options = Object.fromEntries(LETTERS.map((letter, i) => [letter, corrected(q.id, `option ${letter}`, fix.options?.[letter], q.options[i])]));
     const image = images.get(q.id);
     if (image && !/figura|sinal/i.test(q.stem)) fail(`question ${q.id}: has image ${image} but its stem does not mention a figure or sign`);
     return {
@@ -135,7 +69,7 @@ function toEntries(questions, manifest) {
       section: q.section.slug,
       topic: topicOfId(manifest, q.id).slug,
       ...(image ? { image } : {}),
-      question: fix.question ?? q.stem,
+      question: corrected(q.id, 'question', fix.question, q.stem),
       options,
       answer: q.answer,
     };
