@@ -1,0 +1,453 @@
+[
+  {
+    "id": 321,
+    "question": "The main effect of birds of prey on prey in general and on game in particular:",
+    "options": {
+      "A": "It is one of extermination",
+      "B": "It is one of selection",
+      "C": "It is insignificant"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 322,
+    "question": "Which of the sentences is incorrect?",
+    "options": {
+      "A": "The Eurasian goshawk is a diurnal bird of prey",
+      "B": "The griffon vulture is a scavenger",
+      "C": "The tawny owl is a diurnal bird of prey"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 323,
+    "question": "Which of the following groups is made up only of diurnal birds of prey?",
+    "options": {
+      "A": "Vultures, eagles and owls",
+      "B": "Eagle-owls, owls and vultures",
+      "C": "Kites, falcons and kestrels"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 324,
+    "question": "Which of the sentences is correct?",
+    "options": {
+      "A": "Birds of prey are important for game and for agriculture",
+      "B": "Birds of prey are a factor of imbalance in animal populations",
+      "C": "Birds of prey are the main factor in the decrease of game"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 325,
+    "question": "In dietary terms, the Iberian lynx is a species:",
+    "options": {
+      "A": "Exclusively insectivorous",
+      "B": "Exclusively carnivorous",
+      "C": "Omnivorous"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 326,
+    "question": "The diet of the Iberian lynx is based on:",
+    "options": {
+      "A": "European rabbits",
+      "B": "Iberian hares",
+      "C": "Partridges"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 327,
+    "question": "The Iberian lynx is a territorial animal. Each animal lives in an individual area that ranges:",
+    "options": {
+      "A": "Between 300 and 500 hectares",
+      "B": "Between 500 and 800 hectares",
+      "C": "Between 700 and 900 hectares"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 328,
+    "question": "In Portugal, the great bustard is a bird:",
+    "options": {
+      "A": "Resident",
+      "B": "Winter migrant",
+      "C": "Summer migrant"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 329,
+    "question": "The great bustard can be observed:",
+    "options": {
+      "A": "In rocky and very steep areas",
+      "B": "In open cereal-growing plains",
+      "C": "In densely wooded areas"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 330,
+    "question": "Which of the statements is correct?",
+    "options": {
+      "A": "The great bustard is a game species although its hunting is not permitted",
+      "B": "Birds of prey are important for game and for agriculture",
+      "C": "The species that do not appear in the hunting calendar are considered protected"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 331,
+    "question": "The great bustard:",
+    "options": {
+      "A": "Is a game species and may be hunted from October to December",
+      "B": "Is not a game species",
+      "C": "Is a game species and may be hunted on the conditions set in a public notice of the Instituto de Conservação da Natureza e das Florestas"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 332,
+    "question": "During most of the year, great bustards normally keep:",
+    "options": {
+      "A": "In flocks separated by sex",
+      "B": "In pairs",
+      "C": "In flocks with individuals of both sexes"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 333,
+    "question": "The Iberian lynx is:",
+    "options": {
+      "A": "A big-game species",
+      "B": "A small-game species",
+      "C": "A non-game species"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 334,
+    "question": "The habitat of the Iberian lynx is typically made up of:",
+    "options": {
+      "A": "Dense thickets, in areas of scant human influence",
+      "B": "Cereal-growing areas, interspersed with woods of deciduous trees",
+      "C": "Very rugged land, interspersed with cultivated areas"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 335,
+    "question": "Birds of prey merit the status of fully protected species, and therefore:",
+    "options": {
+      "A": "They may only be hunted with the express authorisation of the ICNF",
+      "B": "They may be hunted whenever they cause damage to agriculture",
+      "C": "They may never be hunted"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 336,
+    "question": "The abundance and diversity of birds of prey are reliable indicators that a region:",
+    "options": {
+      "A": "Has rich and healthy animal communities",
+      "B": "Has a high degradation of the habitat",
+      "C": "Has a low density of the prey populations"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 337,
+    "question": "In what situation may the hunting of the western osprey be authorised?",
+    "options": {
+      "A": "When the intention is to use it in falconry",
+      "B": "Provided the hunter has a falconer's hunter's certificate",
+      "C": "Never"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 338,
+    "question": "Which of the sentences is correct?",
+    "options": {
+      "A": "Birds of prey capture, preferentially, old and sick animals, contributing to the health of the populations",
+      "B": "Birds of prey exterminate game",
+      "C": "Habitat degradation causes the increase of the populations of birds of prey"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 339,
+    "question": "Which of the species mentioned is not a game species?",
+    "options": {
+      "A": "The Eurasian jay",
+      "B": "The common blackbird",
+      "C": "The Eurasian sparrowhawk"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 340,
+    "question": "Which of the species mentioned below is not a game species?",
+    "options": {
+      "A": "Northern lapwing",
+      "B": "Egyptian mongoose",
+      "C": "Common blackbird"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 341,
+    "question": "Indicate the situation in which a grey partridge (perdiz-cinzenta or charrela) may be hunted?",
+    "options": {
+      "A": "On the conditions set in a public notice of the Instituto da Conservação da Natureza e das Florestas",
+      "B": "In managed hunting grounds",
+      "C": "In no situation"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 342,
+    "question": "For which of these species can hunting not be authorised?",
+    "options": {
+      "A": "Northern shoveler",
+      "B": "European golden plover",
+      "C": "Grey plover"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 343,
+    "question": "When may a Eurasian goshawk be hunted?",
+    "options": {
+      "A": "When the intention is to breed in captivity",
+      "B": "When the intention is to practise falconry",
+      "C": "It may never be hunted"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 344,
+    "question": "Which of the species mentioned is not a game species?",
+    "options": {
+      "A": "Magpie",
+      "B": "Eurasian jay",
+      "C": "Great bustard"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 345,
+    "question": "Indicate the situation in which a bird of prey may be captured?",
+    "options": {
+      "A": "When the intention is to use it in falconry",
+      "B": "None",
+      "C": "Provided the hunter has a falconer's certificate"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 346,
+    "question": "Which of the species mentioned below is not a game species?",
+    "options": {
+      "A": "Mouflon",
+      "B": "European badger",
+      "C": "Roe deer"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 347,
+    "question": "Which of the following species may not be hunted?",
+    "options": {
+      "A": "Mouflon",
+      "B": "Fallow deer",
+      "C": "Grey partridge (charrela or perdiz-cinzenta)"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 348,
+    "question": "May birds of prey be hunted?",
+    "options": {
+      "A": "No",
+      "B": "Yes, provided they appear in the ministerial order of the hunting calendar",
+      "C": "Yes, with an authorisation from the Instituto de Conservação da Natureza e das Florestas if they cause damage"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 349,
+    "question": "The great bustard:",
+    "options": {
+      "A": "Is a game species whose hunting may be authorised from October to December",
+      "B": "Is not a game species",
+      "C": "Is a game species and may be hunted on the conditions set in a public notice of the Instituto de Conservação da Natureza e das Florestas"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 350,
+    "question": "Normally birds of prey have, on the populations of game species on which they feed:",
+    "options": {
+      "A": "An effect of selection, making them healthier",
+      "B": "A harmful effect, contributing to the increase of diseases",
+      "C": "A harmful effect, because they greatly reduce the game populations"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 351,
+    "question": "Which of the species mentioned is not a game species?",
+    "options": {
+      "A": "Common shelduck",
+      "B": "Eurasian wigeon",
+      "C": "Tufted duck"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 352,
+    "question": "Birds of prey feed preferentially on:",
+    "options": {
+      "A": "More robust animals, substantially reducing the populations",
+      "B": "Healthier and more robust prey",
+      "C": "Weakened prey, thus contributing to healthier populations"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 353,
+    "question": "“Birds of prey are important for game” is a statement:",
+    "options": {
+      "A": "False, because birds of prey drastically reduce game populations",
+      "B": "False, because birds of prey do not interfere in the populations of game species",
+      "C": "True, because they preferentially capture sick and old animals, contributing to the health of the populations"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 354,
+    "question": "Which of the following species is protected:",
+    "options": {
+      "A": "Fallow deer",
+      "B": "Lynx",
+      "C": "Mouflon"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 355,
+    "question": "Which of the following species is not a game species?",
+    "options": {
+      "A": "Fallow deer",
+      "B": "Mouflon",
+      "C": "Lynx"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 356,
+    "question": "Which of these species is not a game species?",
+    "options": {
+      "A": "Eurasian jay",
+      "B": "Grey wolf",
+      "C": "Eurasian magpie"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 357,
+    "question": "During most of the year, great bustards:",
+    "options": {
+      "A": "Live in flocks of the same sex",
+      "B": "Live in flocks of both sexes",
+      "C": "Live in pairs"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 358,
+    "question": "Which of the following species is not a game species?",
+    "options": {
+      "A": "Northern pintail",
+      "B": "Kite",
+      "C": "Northern shoveler"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 359,
+    "question": "Which of the following species is protected?",
+    "options": {
+      "A": "Spanish imperial eagle",
+      "B": "European golden plover",
+      "C": "Common snipe"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 360,
+    "question": "Indicate the group made up solely of game species:",
+    "options": {
+      "A": "Great bustard, northern pintail, grey plover",
+      "B": "Grey partridge, Eurasian wigeon, great snipe",
+      "C": "Jack snipe, Eurasian magpie, Egyptian mongoose"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 361,
+    "question": "In what situation may birds of prey be hunted?",
+    "options": {
+      "A": "When they cause damage to agriculture",
+      "B": "When the Instituto da Conservação da Natureza e das Florestas authorises it",
+      "C": "Never"
+    },
+    "status": "draft",
+    "notes": ""
+  }
+]
