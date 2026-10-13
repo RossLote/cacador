@@ -1,0 +1,266 @@
+import 'fake-indexeddb/auto';
+import { questionById, questionsInTopic, type OptionKey } from '@cacador/data';
+import { act, render, screen, within } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { IDBFactory } from 'fake-indexeddb';
+import { MemoryRouter, Route, Routes, useLocation } from 'react-router';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { setLocale } from '@/i18n/locale';
+import type { Locale } from '@/i18n/locales';
+import { MESSAGES } from '@/i18n/messages';
+import { drawExam, seededRandom } from '@/model';
+import { closeStorage, createExam, finishExam, recordAnswer, saveExamAnswers, setFlag } from '@/storage';
+import { ProgressPage } from './ProgressPage';
+
+const MINUTE = 60 * 1000;
+const DAY = 24 * 60 * MINUTE;
+/** 13 Oct 2026, 15:00 on the device's clock. */
+const NOW = new Date(2026, 9, 13, 15, 0).getTime();
+const en = MESSAGES.en;
+
+const correctOf = (id: number): OptionKey => {
+  const q = questionById(id);
+  if (!q) throw new Error(`no question ${id}`);
+  return q.answer;
+};
+const wrongOf = (id: number): OptionKey => (correctOf(id) === 'A' ? 'B' : 'A');
+const firstIn = (topic: string, n = 0): number => {
+  const q = questionsInTopic(topic)[n];
+  if (!q) throw new Error(`no question ${n} in ${topic}`);
+  return q.id;
+};
+
+async function answer(questionId: number, correct: boolean, at = NOW) {
+  await recordAnswer({ questionId, chosen: correct ? correctOf(questionId) : wrongOf(questionId), correct, mode: 'practice', at });
+}
+
+function Where() {
+  const { pathname, search } = useLocation();
+  return <p>at {pathname + search}</p>;
+}
+
+function renderProgress() {
+  return render(
+    <MemoryRouter initialEntries={['/progress']}>
+      <Routes>
+        <Route path="progress" element={<ProgressPage />} />
+        <Route path="*" element={<Where />} />
+      </Routes>
+    </MemoryRouter>,
+  );
+}
+
+/** The rows of the list in the open tab, in order, by accessible name. */
+const rowNames = () =>
+  within(screen.getByRole('tabpanel'))
+    .getAllByRole('link')
+    .map((link) => link.getAttribute('aria-label'));
+
+const dayBars = () => within(screen.getByRole('list', { name: en.progress.daysChart })).getAllByRole('img');
+
+beforeEach(async () => {
+  await closeStorage();
+  vi.stubGlobal('indexedDB', new IDBFactory());
+  vi.useFakeTimers({ toFake: ['Date'] });
+  vi.setSystemTime(NOW);
+});
+
+afterEach(async () => {
+  vi.useRealTimers();
+  await closeStorage();
+  vi.unstubAllGlobals();
+  act(() => setLocale('en'));
+});
+
+describe('Progress on a fresh device', () => {
+  it('shows 33 %, 506 unseen, 30 empty bars, every row not started, no exams and Flagged (0)', async () => {
+    const user = userEvent.setup();
+    renderProgress();
+
+    expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('Progress');
+    expect(await screen.findByText('33 %')).toBeInTheDocument();
+    expect(screen.getByText('506 unseen')).toBeInTheDocument();
+    expect(screen.getByText('Pass line 75 %')).toBeInTheDocument();
+
+    const bars = dayBars();
+    expect(bars).toHaveLength(30);
+    expect(bars[0]).toHaveAccessibleName('14 Sept: 0 answers, 0 right');
+    expect(bars[29]).toHaveAccessibleName('Today, 13 Oct: 0 answers, 0 right');
+    expect(screen.getByText('Today: 0 answers, 0 right')).toBeInTheDocument();
+
+    expect(screen.getByRole('tab', { name: 'Topics' })).toHaveAttribute('aria-selected', 'true');
+    let rows = rowNames();
+    expect(rows).toHaveLength(29);
+    expect(rows.every((name) => name?.includes(': not started, '))).toBe(true);
+    expect(rows[0]).toBe("Hunter's documents: not started, 10 questions");
+    expect(screen.getByRole('link', { name: /^Ducks:/ })).toHaveTextContent(/Not started/);
+
+    await user.click(screen.getByRole('tab', { name: 'Sections' }));
+    rows = rowNames();
+    expect(rows).toHaveLength(11);
+    expect(rows.every((name) => name?.includes(': not started, '))).toBe(true);
+
+    await user.click(screen.getByRole('tab', { name: 'Patterns' }));
+    rows = rowNames();
+    expect(rows).toHaveLength(17);
+    expect(rows.every((name) => name?.includes(': not started, '))).toBe(true);
+
+    expect(screen.getByText(en.progress.noExams)).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'Flagged (0)' })).toHaveAttribute('href', '/flagged');
+  });
+
+  it('reads in European Portuguese', async () => {
+    const user = userEvent.setup();
+    act(() => setLocale('pt'));
+    const pt = MESSAGES.pt.progress;
+    renderProgress();
+
+    expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(pt.title);
+    expect(await screen.findByText('506 por ver')).toBeInTheDocument();
+    expect(screen.getByText('Hoje: 0 respostas, 0 certas')).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'Patos: por começar, 28 perguntas' })).toHaveAttribute(
+      'href',
+      '/practice?topic=patos',
+    );
+    await user.click(screen.getByRole('tab', { name: pt.patterns }));
+    expect(screen.getByRole('link', { name: /^só, apenas: por começar/ })).toBeInTheDocument();
+    expect(screen.getByText(pt.noExams)).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'Assinaladas (0)' })).toBeInTheDocument();
+  });
+});
+
+describe('Progress with answers', () => {
+  it('counts five answers on five questions: 501 unseen, today 5 with 3 right, rows worst first', async () => {
+    const ducks = [firstIn('patos', 0), firstIn('patos', 1)];
+    await answer(firstIn('coelho'), false);
+    await answer(ducks[0] as number, true);
+    await answer(ducks[1] as number, false);
+    await answer(firstIn('lebre'), true);
+    await answer(firstIn('javali'), true);
+    renderProgress();
+
+    expect(await screen.findByText('501 unseen')).toBeInTheDocument();
+    expect(dayBars()[29]).toHaveAccessibleName('Today, 13 Oct: 5 answers, 3 right');
+    expect(screen.getByText('Today: 5 answers, 3 right')).toBeInTheDocument();
+
+    const rows = rowNames();
+    expect(rows.slice(0, 4)).toEqual([
+      'Wild rabbit: 0 %, seen 1 of 29',
+      'Ducks: 50 %, seen 2 of 28',
+      // Ties keep the manifest order: hare before boar.
+      'Iberian hare: 100 %, seen 1 of 17',
+      'Wild boar: 100 %, seen 1 of 14',
+    ]);
+    expect(rows.slice(4).every((name) => name?.includes(': not started, '))).toBe(true);
+    expect(rows[4]).toBe("Hunter's documents: not started, 10 questions");
+
+    const duck = screen.getByRole('link', { name: 'Ducks: 50 %, seen 2 of 28' });
+    expect(duck).toHaveTextContent('50 %');
+    expect(duck).toHaveTextContent('Seen 2 of 28');
+  });
+
+  it('puts each answer on its own day and leaves out answers older than 30 days', async () => {
+    await answer(1, true, NOW - 3 * DAY);
+    await answer(2, false, NOW - 3 * DAY);
+    await answer(3, true, NOW - 29 * DAY);
+    await answer(4, true, NOW - 31 * DAY);
+    renderProgress();
+
+    await screen.findByText('502 unseen');
+    const bars = dayBars();
+    expect(bars[26]).toHaveAccessibleName('10 Oct: 2 answers, 1 right');
+    expect(bars[0]).toHaveAccessibleName('14 Sept: 1 answer, 1 right');
+    expect(bars.reduce((sum, bar) => sum + (bar.getAttribute('aria-label')?.includes(': 0 answers') ? 0 : 1), 0)).toBe(2);
+    expect(screen.getByText('Today: 0 answers, 0 right')).toBeInTheDocument();
+  });
+
+  it('links each row into focused practice: Ducks opens /practice?topic=patos', async () => {
+    const user = userEvent.setup();
+    renderProgress();
+
+    const duck = await screen.findByRole('link', { name: /^Ducks:/ });
+    expect(duck).toHaveAttribute('href', '/practice?topic=patos');
+
+    await user.click(screen.getByRole('tab', { name: 'Sections' }));
+    expect(screen.getByRole('link', { name: /^Biology:/ })).toHaveAttribute('href', '/practice?section=biologia');
+    await user.click(screen.getByRole('tab', { name: 'Patterns' }));
+    expect(screen.getByRole('link', { name: /^Only \(só, apenas\):/ })).toHaveAttribute('href', '/practice?pattern=only');
+
+    await user.click(screen.getByRole('tab', { name: 'Topics' }));
+    await user.click(screen.getByRole('link', { name: /^Ducks:/ }));
+    expect(screen.getByText('at /practice?topic=patos')).toBeInTheDocument();
+  });
+
+  it('shows the flag count', async () => {
+    await setFlag(1, 'translation');
+    await setFlag(1, 'hint');
+    await setFlag(7, 'hint', 'odd');
+    renderProgress();
+    expect(await screen.findByRole('link', { name: 'Flagged (3)' })).toHaveAttribute('href', '/flagged');
+  });
+});
+
+describe('Past exams', () => {
+  it('lists finished exams newest first with date, score and outcome, never the unfinished one', async () => {
+    // A failed exam on 10 Oct: 14 of 20.
+    const failedIds = drawExam(seededRandom(1));
+    const failed = await createExam(failedIds, NOW - 3 * DAY);
+    await saveExamAnswers(failed.id, Object.fromEntries(failedIds.slice(0, 14).map((id) => [id, correctOf(id)])), NOW - 3 * DAY);
+    expect(await finishExam(failed.id, NOW - 3 * DAY + 10 * MINUTE)).toBe(true);
+
+    // A passed exam this morning: 15 right, 5 wrong.
+    const passedIds = drawExam(seededRandom(2));
+    const passed = await createExam(passedIds, NOW - 2 * 60 * MINUTE);
+    const answers = Object.fromEntries(passedIds.map((id, i) => [id, i < 15 ? correctOf(id) : wrongOf(id)]));
+    await saveExamAnswers(passed.id, answers, NOW - 2 * 60 * MINUTE);
+    expect(await finishExam(passed.id, NOW - 2 * 60 * MINUTE + 20 * MINUTE)).toBe(true);
+
+    // One still running: never a row.
+    const running = await createExam(drawExam(seededRandom(3)), NOW - 5 * MINUTE);
+
+    const user = userEvent.setup();
+    renderProgress();
+
+    const section = await screen.findByRole('region', { name: en.progress.exams });
+    const links = within(section).getAllByRole('link');
+    expect(links.map((link) => link.getAttribute('aria-label'))).toEqual([
+      '13 Oct 2026: 15 of 20, Passed',
+      '10 Oct 2026: 14 of 20, Not passed',
+    ]);
+    expect(links[0]).toHaveTextContent('15 / 20');
+    expect(links[0]).toHaveTextContent('Passed');
+    expect(links[1]).toHaveTextContent('14 / 20');
+    expect(links[1]).toHaveTextContent('Not passed');
+    expect(links[0]).toHaveAttribute('href', `/exam/results/${passed.id}`);
+    expect(links[1]).toHaveAttribute('href', `/exam/results/${failed.id}`);
+    expect(screen.queryByRole('link', { name: new RegExp(running.id) })).not.toBeInTheDocument();
+    expect(screen.queryByText(en.progress.noExams)).not.toBeInTheDocument();
+
+    // The passed exam's 20 answers are today's.
+    expect(screen.getByText('Today: 20 answers, 15 right')).toBeInTheDocument();
+
+    await user.click(links[0] as HTMLElement);
+    expect(screen.getByText(`at /exam/results/${passed.id}`)).toBeInTheDocument();
+  });
+
+  it('settles an exam past its deadline first and lists it', async () => {
+    const ids = drawExam(seededRandom(4));
+    const exam = await createExam(ids, NOW - 45 * MINUTE);
+    await saveExamAnswers(exam.id, { [ids[0] as number]: correctOf(ids[0] as number) }, NOW - 44 * MINUTE);
+    renderProgress();
+
+    const section = await screen.findByRole('region', { name: en.progress.exams });
+    expect(within(section).getByRole('link', { name: '13 Oct 2026: 1 of 20, Not passed' })).toHaveAttribute(
+      'href',
+      `/exam/results/${exam.id}`,
+    );
+    expect(screen.getByText('486 unseen')).toBeInTheDocument();
+  });
+});
+
+describe('progress messages', () => {
+  it('has every English key in Portuguese', () => {
+    const [enKeys, ptKeys] = (['en', 'pt'] satisfies Locale[]).map((l) => Object.keys(MESSAGES[l].progress).sort());
+    expect(ptKeys).toEqual(enKeys);
+  });
+});
