@@ -1,16 +1,15 @@
-import 'fake-indexeddb/auto';
-import { questionById, questionsInTopic, type OptionKey } from '@cacador/data';
+import { questionsInTopic } from '@cacador/data';
 import { act, render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { IDBFactory } from 'fake-indexeddb';
 import { MemoryRouter, Route, Routes, useLocation } from 'react-router';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { setLocale } from '@/i18n/locale';
 import type { Locale } from '@/i18n/locales';
 import { MESSAGES } from '@/i18n/messages';
 import { drawExam, seededRandom } from '@/model';
-import { closeStorage, createExam, finishExam, recordAnswer, saveExamAnswers, setFlag } from '@/storage';
+import { createExam, finishExam, recordAnswer, saveExamAnswers, setFlag } from '@/storage';
 import { ProgressPage } from './ProgressPage';
+import { correctOf, wrongOf } from '../../test/fixtures';
 
 const MINUTE = 60 * 1000;
 const DAY = 24 * 60 * MINUTE;
@@ -18,12 +17,6 @@ const DAY = 24 * 60 * MINUTE;
 const NOW = new Date(2026, 9, 13, 15, 0).getTime();
 const en = MESSAGES.en;
 
-const correctOf = (id: number): OptionKey => {
-  const q = questionById(id);
-  if (!q) throw new Error(`no question ${id}`);
-  return q.answer;
-};
-const wrongOf = (id: number): OptionKey => (correctOf(id) === 'A' ? 'B' : 'A');
 const firstIn = (topic: string, n = 0): number => {
   const q = questionsInTopic(topic)[n];
   if (!q) throw new Error(`no question ${n} in ${topic}`);
@@ -58,18 +51,13 @@ const rowNames = () =>
 
 const dayBars = () => within(screen.getByRole('list', { name: en.progress.daysChart })).getAllByRole('img');
 
-beforeEach(async () => {
-  await closeStorage();
-  vi.stubGlobal('indexedDB', new IDBFactory());
+beforeEach(() => {
   vi.useFakeTimers({ toFake: ['Date'] });
   vi.setSystemTime(NOW);
 });
 
-afterEach(async () => {
+afterEach(() => {
   vi.useRealTimers();
-  await closeStorage();
-  vi.unstubAllGlobals();
-  act(() => setLocale('en'));
 });
 
 describe('Progress on a fresh device', () => {

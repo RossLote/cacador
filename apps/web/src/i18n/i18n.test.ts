@@ -1,4 +1,4 @@
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { LOCALE_KEY } from '@/storage/keys';
 import { LOCALES } from './locales';
 import { MESSAGES } from './messages';
@@ -20,12 +20,7 @@ async function freshStore() {
 
 describe('locale store', () => {
   beforeEach(() => {
-    localStorage.clear();
     document.documentElement.lang = '';
-  });
-
-  afterEach(() => {
-    vi.unstubAllGlobals();
   });
 
   it('starts in English on a first visit whatever the browser prefers', async () => {

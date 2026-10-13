@@ -1,16 +1,9 @@
 import { readFileSync } from 'node:fs';
+import { hintFor, questionById, sectionOf, topicOf, topics, translationFor, type OptionKey, type Question } from '@cacador/data';
 import { expect, test, type Locator, type Page } from '@playwright/test';
+// Dependency-free leaves of the app's model: seededRandom is serialised into the page.
+import { localDateKey } from '../apps/web/src/model/dates';
 import { seededRandom } from '../apps/web/src/model/random';
-import {
-  hintFor,
-  questionById,
-  sectionOf,
-  topicOf,
-  topics,
-  translationFor,
-  type OptionKey,
-  type Question,
-} from '../packages/data/src/index';
 
 /**
  * ACCEPTANCE BAR steps 2 to 11 (epic cac-eil), in order, in one fresh browser context: the counts build on each other
@@ -26,6 +19,8 @@ const OPTION_KEYS: readonly OptionKey[] = ['A', 'B', 'C'];
 const NOTE = 'nudge gives the answer away';
 const EXAM_SIZE = 20;
 const EXAM_SECONDS = 30 * 60;
+/** How long step 8 keeps the app closed, on the pages' clock. */
+const CLOSED_MS = 3 * 60 * 1000;
 
 function questionFor(id: number): Question {
   const question = questionById(id);
@@ -34,12 +29,6 @@ function questionFor(id: number): Question {
 }
 
 const wrongOf = (question: Question): OptionKey => OPTION_KEYS.find((key) => key !== question.answer) ?? 'A';
-
-/** The device's date as YYYY-MM-DD, as the app names the export and heads the copied flags. */
-function today(): string {
-  const d = new Date();
-  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
-}
 
 /** mm:ss as seconds. */
 function seconds(clock: string): number {
@@ -107,6 +96,8 @@ test.use({ permissions: ['clipboard-read', 'clipboard-write'] });
 test('acceptance bar steps 2 to 11, in order, in one browser context', async ({ context, page }) => {
   test.setTimeout(300_000);
   await context.addInitScript({ content: `Math.random = (${seededRandom.toString()})(${SEED});` });
+  // The pages' clock runs with real time until step 8 moves it on.
+  await context.clock.install();
 
   /** Every practice question answered so far, in order. */
   const answered: number[] = [];
@@ -306,12 +297,12 @@ test('acceptance bar steps 2 to 11, in order, in one browser context', async ({ 
     }
     await page.close();
 
-    // The app stays closed for a few seconds, which the clock must have counted when it is opened again.
+    // The app stays closed for three minutes, which the clock must have counted when it is opened again.
     page = await context.newPage();
-    await page.waitForTimeout(3_000);
-    const reopened = Date.now();
+    await context.clock.fastForward(CLOSED_MS);
+    const reopened = Date.now() + CLOSED_MS;
     await page.goto('./');
-    await expect(examCard(page)).toContainText(/^Exam in progress(30|29) minutes left$/);
+    await expect(examCard(page)).toContainText(/^Exam in progress27 minutes left$/);
     await examCard(page).click();
 
     const markers = page.getByRole('navigation', { name: 'Questions' });
@@ -328,8 +319,8 @@ test('acceptance bar steps 2 to 11, in order, in one browser context', async ({ 
     const clockSeconds = async () => seconds((await clock.textContent()) ?? '');
     await expect.poll(clockSeconds).toBeLessThanOrEqual(EXAM_SECONDS - Math.floor((reopened - startShown) / 1000));
     const first = await clockSeconds();
-    expect(first).toBeGreaterThanOrEqual(EXAM_SECONDS - Math.ceil((Date.now() - startClicked) / 1000));
-    await page.waitForTimeout(2_000);
+    expect(first).toBeGreaterThanOrEqual(EXAM_SECONDS - Math.ceil((Date.now() + CLOSED_MS - startClicked) / 1000));
+    await context.clock.fastForward(2_000);
     await expect.poll(clockSeconds).toBeLessThan(first);
   });
 
@@ -348,7 +339,7 @@ test('acceptance bar steps 2 to 11, in order, in one browser context', async ({ 
     await page.getByRole('button', { name: 'Copy' }).click();
     await expect(page.getByRole('status')).toHaveText('Copied');
     const copied = await page.evaluate(() => navigator.clipboard.readText());
-    expect(copied.split('\n')).toEqual([`Caçador flags ${today()}`, `#${id} Hint: ${NOTE}`]);
+    expect(copied.split('\n')).toEqual([`Caçador flags ${localDateKey(Date.now())}`, `#${id} Hint: ${NOTE}`]);
 
     await page.getByRole('button', { name: `Clear the Hint flag on question ${id}` }).click();
     await expect(page.getByText('No flags. Flag a question after answering it in Practice.')).toBeVisible();
@@ -364,7 +355,7 @@ test('acceptance bar steps 2 to 11, in order, in one browser context', async ({ 
     const downloading = page.waitForEvent('download');
     await page.getByRole('button', { name: 'Export' }).click();
     const download = await downloading;
-    expect(download.suggestedFilename()).toBe(`cacador-progress-${today()}.json`);
+    expect(download.suggestedFilename()).toBe(`cacador-progress-${localDateKey(Date.now())}.json`);
     const file = test.info().outputPath(download.suggestedFilename());
     await download.saveAs(file);
     const exported = JSON.parse(readFileSync(file, 'utf8')) as {

@@ -1,27 +1,21 @@
-import { hintFor, questionById, sectionOf, topicOf, translationFor, type OptionKey, type Question } from '@cacador/data';
+import { hintFor, sectionOf, topicOf, translationFor, type OptionKey, type Question } from '@cacador/data';
 import { act, fireEvent, render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { useState } from 'react';
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { setLocale } from '@/i18n/locale';
 import { MESSAGES } from '@/i18n/messages';
 import { imageUrl } from '@/pwa/images';
 import { QuestionCard, type QuestionCardProps } from './QuestionCard';
+import { question, wrongOf } from '../../../test/fixtures';
 
 const card = MESSAGES.en.practice.card;
-
-function question(id: number): Question {
-  const q = questionById(id);
-  if (!q) throw new Error(`no question ${id}`);
-  return q;
-}
 
 /** Question 1 has language notes, question 6 has none, question 119 has a picture. */
 const Q1 = question(1);
 const Q6 = question(6);
 const Q119 = question(119);
-const wrongOf = (q: Question): OptionKey => (q.answer === 'A' ? 'B' : 'A');
-const otherWrongOf = (q: Question): OptionKey => (['A', 'B', 'C'] as const).find((k) => k !== q.answer && k !== wrongOf(q))!;
+const otherWrongOf = (q: Question): OptionKey => (['A', 'B', 'C'] as const).find((k) => k !== q.answer && k !== wrongOf(q.id))!;
 
 function renderCard(props: Partial<QuestionCardProps> = {}) {
   return render(
@@ -36,10 +30,6 @@ const markAt = (key: OptionKey, mark: string) =>
   (['A', 'B', 'C'] as const).map((k) => (k === key ? mark : null));
 
 describe('QuestionCard', () => {
-  afterEach(() => {
-    act(() => setLocale('en'));
-  });
-
   it('shows the section, topic and number, the Portuguese stem, three options, Hold for English and Hint', () => {
     renderCard();
     expect(screen.getByText(`${sectionOf(Q1)!.en} · ${topicOf(Q1)!.en}`)).toBeInTheDocument();
@@ -66,9 +56,9 @@ describe('QuestionCard', () => {
 
   it('shows the selection and marks nothing while the result is not revealed', async () => {
     const onSelect = vi.fn();
-    renderCard({ selected: wrongOf(Q1), onSelect });
+    renderCard({ selected: wrongOf(Q1.id), onSelect });
     expect(marks()).toEqual([null, null, null]);
-    expect(optionFor(wrongOf(Q1))).toHaveAttribute('aria-pressed', 'true');
+    expect(optionFor(wrongOf(Q1.id))).toHaveAttribute('aria-pressed', 'true');
     expect(screen.queryByText(card.correctAnswer)).not.toBeInTheDocument();
     expect(screen.queryByText(card.wrong)).not.toBeInTheDocument();
     for (const button of optionButtons()) expect(button).toBeEnabled();
@@ -84,8 +74,8 @@ describe('QuestionCard', () => {
 
   it('marks a wrong choice wrong and the correct option, and locks the options', () => {
     const onSelect = vi.fn();
-    renderCard({ selected: wrongOf(Q1), revealed: true, locked: true, onSelect });
-    expect(within(optionFor(wrongOf(Q1))).getByText(card.wrong)).toBeInTheDocument();
+    renderCard({ selected: wrongOf(Q1.id), revealed: true, locked: true, onSelect });
+    expect(within(optionFor(wrongOf(Q1.id))).getByText(card.wrong)).toBeInTheDocument();
     expect(within(optionFor(Q1.answer)).getByText(card.correctAnswer)).toBeInTheDocument();
     expect(optionFor(otherWrongOf(Q1))).not.toHaveAttribute('data-mark');
     for (const button of optionButtons()) expect(button).toBeDisabled();

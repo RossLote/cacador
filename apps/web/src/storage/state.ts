@@ -1,7 +1,7 @@
 import type { Answer, QuestionState } from './types';
 
 /** How many answers a question's `recent` list keeps (D15): its last three. */
-export const RECENT_SIZE = 3;
+const RECENT_SIZE = 3;
 
 /**
  * The state a question is in after one more answer, newer than every answer
@@ -51,7 +51,8 @@ export function isInOrder(state: QuestionState | undefined, answer: Pick<Answer,
  */
 export function nextState(state: QuestionState | undefined, answer: Answer, log: () => readonly Answer[]): QuestionState {
   if (isInOrder(state, answer)) return applyAnswer(state, answer);
-  return deriveState(log()) ?? applyAnswer(undefined, answer);
+  // The log holds `answer`, so the rebuild always has a state.
+  return deriveState(log()) as QuestionState;
 }
 
 /** Every question's state rebuilt from the whole log (import, D8): one per question that has answers. */

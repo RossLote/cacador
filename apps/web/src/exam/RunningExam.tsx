@@ -15,9 +15,21 @@ import {
 } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
 import { useI18n } from '@/i18n/useI18n';
+import { examResultsPath } from '@/model';
 import { finishExam, saveExamAnswers, type Exam } from '@/storage';
 import { ExamMarkers } from './ExamMarkers';
 import { formatClock, useExamClock } from './useExamClock';
+
+/** The countdown on its own, so only it re-renders every second; calls `onExpire` at 00:00. */
+function ExamClock({ exam, onExpire }: { exam: Exam; onExpire: () => void }) {
+  const { t } = useI18n();
+  const left = useExamClock(exam, onExpire);
+  return (
+    <p role="timer" aria-label={t.exam.timeLeft} className="text-2xl font-semibold tabular-nums">
+      {formatClock(left)}
+    </p>
+  );
+}
 
 /** Where a resumed exam opens: its first unanswered question, or the first when all are answered. */
 function firstUnanswered(exam: Exam): number {
@@ -53,10 +65,8 @@ export function RunningExam({ exam }: { exam: Exam }) {
     void saving.current
       .then(() => finishExam(exam.id))
       .catch(() => undefined)
-      .then(() => navigate(`/exam/results/${exam.id}`, { replace: true }));
+      .then(() => navigate(examResultsPath(exam.id), { replace: true }));
   }, [exam.id, navigate]);
-
-  const left = useExamClock(exam, end);
 
   const total = exam.questionIds.length;
   const questionId = exam.questionIds[current] as number;
@@ -88,9 +98,7 @@ export function RunningExam({ exam }: { exam: Exam }) {
       <div className="flex items-baseline justify-between gap-4">
         <h1 className="text-xl font-semibold tracking-tight">{t.exam.title}</h1>
         <p className="text-muted-foreground tabular-nums">{t.exam.position(current + 1, total)}</p>
-        <p role="timer" aria-label={t.exam.timeLeft} className="text-2xl font-semibold tabular-nums">
-          {formatClock(left)}
-        </p>
+        <ExamClock exam={exam} onExpire={end} />
       </div>
 
       <ExamMarkers

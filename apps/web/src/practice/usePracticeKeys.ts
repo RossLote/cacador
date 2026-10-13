@@ -1,7 +1,13 @@
-import type { OptionKey } from '@cacador/data';
 import { useEffect } from 'react';
+import { OPTION_KEYS, type OptionKey } from '@/storage';
 
-const OPTION_BY_KEY: Readonly<Record<string, OptionKey>> = { a: 'A', b: 'B', c: 'C', '1': 'A', '2': 'B', '3': 'C' };
+/** Each option by its letter (a, b, c) and by its place (1, 2, 3). */
+const OPTION_BY_KEY: ReadonlyMap<string, OptionKey> = new Map(
+  OPTION_KEYS.flatMap((option, i) => [
+    [option.toLowerCase(), option],
+    [String(i + 1), option],
+  ]),
+);
 
 interface PracticeKeys {
   /** The current question is answered: option keys stop, Enter starts. */
@@ -51,7 +57,7 @@ export function usePracticeKeys({ answered, onAnswer, onNext, onPeekChange }: Pr
         if (!event.repeat) onNext();
         return;
       }
-      const option = OPTION_BY_KEY[event.key.toLowerCase()];
+      const option = OPTION_BY_KEY.get(event.key.toLowerCase());
       if (option === undefined || answered) return;
       event.preventDefault();
       if (!event.repeat) onAnswer(option);

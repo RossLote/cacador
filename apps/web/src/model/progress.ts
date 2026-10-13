@@ -1,4 +1,5 @@
 import type { Answer } from '@/storage/types';
+import { localDateKey } from './dates';
 import { bankPool } from './pools';
 import { isSeen, recentShare, type StateMap } from './states';
 
@@ -76,24 +77,26 @@ export interface DayAccuracy {
   total: number;
 }
 
-/** A moment's calendar day in the device's time zone, as YYYY-MM-DD. */
-export function localDateKey(at: number): string {
-  const d = new Date(at);
-  const month = String(d.getMonth() + 1).padStart(2, '0');
-  const day = String(d.getDate()).padStart(2, '0');
-  return `${d.getFullYear()}-${month}-${day}`;
+/** Local midnight at the start of the day `offset` days before `now`'s, ms since the epoch. */
+function dayStart(now: number, offset: number): number {
+  const today = new Date(now);
+  return new Date(today.getFullYear(), today.getMonth(), today.getDate() - offset).getTime();
+}
+
+/** Local midnight at the start of the chart's oldest day, ms since the epoch: the answers log is read from there (D11). */
+export function accuracyWindowStart(now: number): number {
+  return dayStart(now, ACCURACY_DAYS - 1);
 }
 
 /**
- * Right and total answers per calendar day for the `days` days ending today,
- * in the device's time zone, oldest first (the last entry is today), D11.
+ * Right and total answers per calendar day for the ACCURACY_DAYS days ending
+ * today, in the device's time zone, oldest first (the last entry is today), D11.
  */
-export function accuracyByDay(answers: readonly Answer[], now: number, days: number = ACCURACY_DAYS): DayAccuracy[] {
-  const today = new Date(now);
+export function accuracyByDay(answers: readonly Answer[], now: number): DayAccuracy[] {
   const result: DayAccuracy[] = [];
   const byDate = new Map<string, DayAccuracy>();
-  for (let offset = days - 1; offset >= 0; offset--) {
-    const start = new Date(today.getFullYear(), today.getMonth(), today.getDate() - offset).getTime();
+  for (let offset = ACCURACY_DAYS - 1; offset >= 0; offset--) {
+    const start = dayStart(now, offset);
     const entry: DayAccuracy = { date: localDateKey(start), start, correct: 0, total: 0 };
     result.push(entry);
     byDate.set(entry.date, entry);

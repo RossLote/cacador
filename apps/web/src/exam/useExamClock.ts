@@ -15,10 +15,10 @@ export function formatClock(ms: number): string {
 /**
  * The exam's time left, ms, recomputed from its start time on every tick
  * (D3), so it is right after a reload and keeps running while the app is
- * closed. Wakes when the shown second changes, and calls `onExpire` once none
- * is left.
+ * closed. Wakes when the shown unit changes (a second by default, `tickMs`
+ * otherwise), and calls `onExpire` once none is left.
  */
-export function useExamClock(exam: Pick<Exam, 'startedAt'>, onExpire: () => void): number {
+export function useExamClock(exam: Pick<Exam, 'startedAt'>, onExpire: () => void, tickMs: number = SECOND_MS): number {
   const [now, setNow] = useState(Date.now);
   const left = examTimeLeft(exam, now);
   useEffect(() => {
@@ -26,8 +26,8 @@ export function useExamClock(exam: Pick<Exam, 'startedAt'>, onExpire: () => void
       onExpire();
       return;
     }
-    const timer = setTimeout(() => setNow(Date.now()), left % SECOND_MS || SECOND_MS);
+    const timer = setTimeout(() => setNow(Date.now()), left % tickMs || tickMs);
     return () => clearTimeout(timer);
-  }, [left, onExpire]);
+  }, [left, onExpire, tickMs]);
   return left;
 }

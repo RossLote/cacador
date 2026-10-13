@@ -1,15 +1,14 @@
-import 'fake-indexeddb/auto';
-import { questionById, translationFor, type OptionKey, type Question } from '@cacador/data';
+import { translationFor, type OptionKey } from '@cacador/data';
 import { act, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { IDBFactory } from 'fake-indexeddb';
 import { MemoryRouter, Route, Routes, useLocation } from 'react-router';
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import type { Locale } from '@/i18n/locales';
 import { MESSAGES } from '@/i18n/messages';
 import { drawExam, examDeadline, scoreExam, seededRandom } from '@/model';
 import { closeStorage, createExam, finishExam, getExam, listAnswers, listExams, saveExamAnswers, type Exam } from '@/storage';
 import { ExamPage } from './ExamPage';
+import { question, wrongOf } from '../../test/fixtures';
 
 const SECOND = 1000;
 const MINUTE = 60 * SECOND;
@@ -17,25 +16,20 @@ const T0 = Date.UTC(2026, 9, 13, 9, 0);
 const t = MESSAGES.en.exam;
 const card = MESSAGES.en.practice.card;
 const SEED = 7;
-/** The questions Start draws with the seeded source the tests pass. */
+/** The questions Start draws with Math.random seeded as renderExam seeds it. */
 const examIds = drawExam(seededRandom(SEED));
-
-function question(id: number): Question {
-  const q = questionById(id);
-  if (!q) throw new Error(`no question ${id}`);
-  return q;
-}
-const wrongOf = (q: Question): OptionKey => (q.answer === 'A' ? 'B' : 'A');
 
 function Where() {
   return <output data-testid="where">{useLocation().pathname}</output>;
 }
 
+/** The exam screens at `path`, with Math.random a fresh seeded source, so Start draws `examIds`. */
 function renderExam(path = '/exam') {
+  vi.spyOn(Math, 'random').mockImplementation(seededRandom(SEED));
   return render(
     <MemoryRouter initialEntries={[path]}>
       <Routes>
-        <Route path="exam/*" element={<ExamPage random={seededRandom(SEED)} />} />
+        <Route path="exam/*" element={<ExamPage />} />
       </Routes>
       <Where />
     </MemoryRouter>,
@@ -64,15 +58,8 @@ async function stored(): Promise<Exam> {
   return exam;
 }
 
-beforeEach(async () => {
-  await closeStorage();
-  vi.stubGlobal('indexedDB', new IDBFactory());
-});
-
-afterEach(async () => {
+afterEach(() => {
   vi.useRealTimers();
-  await closeStorage();
-  vi.unstubAllGlobals();
 });
 
 describe('the exam start screen', () => {
@@ -154,8 +141,8 @@ describe('the running exam', () => {
     await start(user);
     const q = question(examIds[0]!);
 
-    await user.click(optionFor(wrongOf(q)));
-    expect(optionFor(wrongOf(q))).toHaveAttribute('aria-pressed', 'true');
+    await user.click(optionFor(wrongOf(q.id)));
+    expect(optionFor(wrongOf(q.id))).toHaveAttribute('aria-pressed', 'true');
     for (const key of ['A', 'B', 'C'] as const) {
       expect(optionFor(key)).toBeEnabled();
       expect(optionFor(key)).not.toHaveAttribute('data-mark');
@@ -163,11 +150,11 @@ describe('the running exam', () => {
     for (const word of [card.right, card.wrong, card.correctAnswer]) expect(screen.queryByText(word)).not.toBeInTheDocument();
     expect(marker(1)).toHaveAttribute('data-answered', 'true');
     expect(marker(1)).toHaveAccessibleDescription(t.answered);
-    await waitFor(async () => expect((await stored()).answers).toEqual({ [q.id]: wrongOf(q) }));
+    await waitFor(async () => expect((await stored()).answers).toEqual({ [q.id]: wrongOf(q.id) }));
 
     await user.click(optionFor(q.answer));
     expect(optionFor(q.answer)).toHaveAttribute('aria-pressed', 'true');
-    expect(optionFor(wrongOf(q))).toHaveAttribute('aria-pressed', 'false');
+    expect(optionFor(wrongOf(q.id))).toHaveAttribute('aria-pressed', 'false');
     expect(screen.queryByText(card.right)).not.toBeInTheDocument();
     await waitFor(async () => expect((await stored()).answers).toEqual({ [q.id]: q.answer }));
     expect(await listAnswers()).toEqual([]);
@@ -247,7 +234,7 @@ describe('submitting', () => {
     await start(user);
     for (let n = 1; n <= 20; n++) {
       const q = question(shownId());
-      await user.click(optionFor(n % 2 === 0 ? q.answer : wrongOf(q)));
+      await user.click(optionFor(n % 2 === 0 ? q.answer : wrongOf(q.id)));
       if (n < 20) await user.click(screen.getByRole('button', { name: t.next }));
     }
     // Back to question 5 by its marker, and change it to the right answer.

@@ -1,11 +1,11 @@
 import { questionById, type OptionKey } from '@cacador/data';
 import { ArrowRight } from 'lucide-react';
-import { useCallback, useEffect, useRef, useState, type ReactNode } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { QuestionCard } from '@/components/question/QuestionCard';
 import { Button } from '@/components/ui/button';
 import { useI18n } from '@/i18n/useI18n';
-import type { RandomSource } from '@/model';
 import { getStates, recordAnswer } from '@/storage';
+import { FlagsRow } from './FlagsRow';
 import { drawPracticeQuestion } from './recent';
 import { usePracticeKeys } from './usePracticeKeys';
 
@@ -15,23 +15,16 @@ interface Shown {
   selected?: OptionKey;
 }
 
-export interface PracticeSessionProps {
-  /** The ids to draw from (usePracticePool). A new array starts a new draw. */
-  pool: readonly number[];
-  /** Injectable for tests; Math.random otherwise. */
-  random?: RandomSource;
-  /** Rendered under the result once the question is answered (the flags row of cac-eil.14). */
-  afterResult?: (questionId: number) => ReactNode;
-}
-
 /**
  * The practice loop (DESIGN.md § 6.4): one question drawn by weight from the
  * pool outside the recent window; tapping an option (or A, B, C, 1, 2, 3)
  * records it and reveals the result at once; Next (or Enter) draws the next.
  * The hint panel opens only when asked and closes on Next (D23); the peek is
- * shared by the card's hold button and Space (D9).
+ * shared by the card's hold button and Space (D9). Once answered, the flags
+ * row (D2) shows under the result. `pool` is the ids to draw from
+ * (usePracticePool); a new array starts a new draw.
  */
-export function PracticeSession({ pool, random = Math.random, afterResult }: PracticeSessionProps) {
+export function PracticeSession({ pool }: { pool: readonly number[] }) {
   const { t } = useI18n();
   const [shown, setShown] = useState<Shown>();
   const [peeking, setPeeking] = useState(false);
@@ -48,9 +41,9 @@ export function PracticeSession({ pool, random = Math.random, afterResult }: Pra
     async (isCurrent: () => boolean) => {
       await recording.current;
       const states = await getStates();
-      return isCurrent() ? drawPracticeQuestion(pool, states, random) : undefined;
+      return isCurrent() ? drawPracticeQuestion(pool, states) : undefined;
     },
-    [pool, random],
+    [pool],
   );
 
   /** A new question starts unanswered with the hint panel closed (D23). */
@@ -135,7 +128,7 @@ export function PracticeSession({ pool, random = Math.random, afterResult }: Pra
           )
         }
       />
-      {answered && afterResult?.(question.id)}
+      {answered && <FlagsRow key={question.id} questionId={question.id} />}
     </div>
   );
 }

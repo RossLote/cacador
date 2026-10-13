@@ -1,7 +1,6 @@
-import 'fake-indexeddb/auto';
-import { questionById, type OptionKey } from '@cacador/data';
+import type { OptionKey } from '@cacador/data';
 import { IDBFactory, IDBObjectStore } from 'fake-indexeddb';
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { drawExam, EXAM_DURATION_MS, seededRandom } from '@/model';
 import { finishExamRecords } from './finish';
 import { withoutLogId } from './state';
@@ -28,16 +27,11 @@ import {
   type Exam,
   type ExportFile,
 } from './index';
+import { correctOf, wrongOf } from '../../test/fixtures';
 
 const MINUTE = 60 * 1000;
 const T0 = Date.UTC(2026, 9, 13, 9, 0);
 
-const correctOf = (id: number): OptionKey => {
-  const q = questionById(id);
-  if (!q) throw new Error(`no question ${id}`);
-  return q.answer;
-};
-const wrongOf = (id: number): OptionKey => (correctOf(id) === 'A' ? 'B' : 'A');
 const allOf = (ids: readonly number[], pick: (id: number) => OptionKey): Record<number, OptionKey> =>
   Object.fromEntries(ids.map((id) => [id, pick(id)]));
 
@@ -67,14 +61,6 @@ async function makeProgress(): Promise<{ finished: Exam; running: Exam }> {
   await setFlag(40, 'hint', '', T0 + 6 * MINUTE);
   return { finished, running: (await getExam(running.id)) as Exam };
 }
-
-afterEach(async () => {
-  await closeStorage();
-  vi.restoreAllMocks();
-  vi.unstubAllGlobals();
-  sessionStorage.clear();
-  localStorage.clear();
-});
 
 describe.each([
   ['indexeddb', true],
@@ -296,11 +282,6 @@ describe.each([
 });
 
 describe('import on IndexedDB', () => {
-  beforeEach(async () => {
-    await closeStorage();
-    vi.stubGlobal('indexedDB', new IDBFactory());
-  });
-
   it('is all or nothing: a write that fails leaves every store as it was', async () => {
     await makeProgress();
     const before = { answers: await listAnswers(), exams: await listExams(), flags: await listFlags(), states: await getStates() };
@@ -323,7 +304,7 @@ describe('import on IndexedDB', () => {
 
 describe('exportFileName', () => {
   it('names the file by the device date', () => {
-    expect(exportFileName(new Date(2026, 9, 3, 23, 59))).toBe('cacador-progress-2026-10-03.json');
+    expect(exportFileName(new Date(2026, 9, 3, 23, 59).getTime())).toBe('cacador-progress-2026-10-03.json');
     expect(exportFileName(new Date(2026, 0, 31, 0, 1).getTime())).toBe('cacador-progress-2026-01-31.json');
   });
 });

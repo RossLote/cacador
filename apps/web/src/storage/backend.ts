@@ -18,10 +18,6 @@ export interface StorageBackend {
   addAnswer(answer: Answer): Promise<Answer>;
   /** The log in time order, from `since` (ms, inclusive) when given. */
   listAnswers(since?: number): Promise<Answer[]>;
-  /** One question's answers in time order. */
-  listAnswersFor(questionId: number): Promise<Answer[]>;
-
-  getState(questionId: number): Promise<QuestionState | undefined>;
   listStates(): Promise<QuestionState[]>;
 
   /** Saves a new exam; fails when the id is taken. */

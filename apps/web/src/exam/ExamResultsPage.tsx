@@ -1,29 +1,27 @@
 import { questionById, type OptionKey, type Question } from '@cacador/data';
 import { Check, X } from 'lucide-react';
-import { useEffect, useId, useState } from 'react';
-import { Link, useParams } from 'react-router';
+import { useCallback, useId, useState } from 'react';
+import { useParams } from 'react-router';
+import { LinkButton } from '@/components/LinkButton';
 import { QuestionCard } from '@/components/question/QuestionCard';
-import { buttonVariants } from '@/components/ui/button';
 import { useI18n } from '@/i18n/useI18n';
+import { useLoaded } from '@/lib/useLoaded';
 import { cn } from '@/lib/utils';
-import { EXAM_PASS_MARK, examPassed, examResults, scoreExam } from '@/model';
-import { getExam, type Exam } from '@/storage';
+import { EXAM_PASS_MARK, examPassed, examResults, isFinished, type FinishedExam } from '@/model';
+import { getExam } from '@/storage';
 
-/** The exam with this id once it is finished; null when there is none or it is still running, undefined while storage is read. */
-function useFinishedExam(id: string | undefined): Exam | null | undefined {
-  const [found, setFound] = useState<{ id: string | undefined; exam: Exam | null }>();
-  useEffect(() => {
-    let active = true;
-    const settle = (exam: Exam | null) => {
-      if (active) setFound({ id, exam });
-    };
-    if (id === undefined) settle(null);
-    else void getExam(id).then((exam) => settle(exam?.finishedAt === undefined ? null : exam), () => settle(null));
-    return () => {
-      active = false;
-    };
+/** The exam with this id once it is finished; null when there is none, it is still running or it cannot be read, undefined while storage is read. */
+function useFinishedExam(id: string | undefined): FinishedExam | null | undefined {
+  const load = useCallback(async (): Promise<FinishedExam | null> => {
+    if (id === undefined) return null;
+    try {
+      const exam = await getExam(id);
+      return exam !== undefined && isFinished(exam) ? exam : null;
+    } catch {
+      return null;
+    }
   }, [id]);
-  return found && found.id === id ? found.exam : undefined;
+  return useLoaded(load).data;
 }
 
 interface WrongAnswer {
@@ -57,9 +55,9 @@ function ReviewCard({ question, chosen }: WrongAnswer) {
 }
 
 /** The score out of 20 against the pass mark, and Passed or Not passed (D3). */
-function ScorePanel({ exam }: { exam: Exam }) {
+function ScorePanel({ exam }: { exam: FinishedExam }) {
   const { t } = useI18n();
-  const score = exam.score ?? scoreExam(exam);
+  const { score } = exam;
   const passed = examPassed(score);
   const Icon = passed ? Check : X;
   return (
@@ -75,7 +73,7 @@ function ScorePanel({ exam }: { exam: Exam }) {
 }
 
 /** The wrong ones, unanswered included, in exam order, each on its own card. */
-function WrongAnswers({ exam }: { exam: Exam }) {
+function WrongAnswers({ exam }: { exam: FinishedExam }) {
   const { t } = useI18n();
   const headingId = useId();
   const wrong = examResults(exam).flatMap(({ questionId, chosen, correct }): WrongAnswer[] => {
@@ -123,9 +121,9 @@ export function ExamResultsPage() {
         ) : (
           <>
             <p className="text-lg leading-snug">{t.exam.notFound}</p>
-            <Link to="/exam" className={cn(buttonVariants({ variant: 'outline', size: 'lg' }), 'h-11 text-base sm:self-start')}>
+            <LinkButton to="/exam" variant="outline" size="lg" className="h-11 text-base sm:self-start">
               {t.exam.toExam}
-            </Link>
+            </LinkButton>
           </>
         )}
       </section>

@@ -11,7 +11,7 @@ export const DB_VERSION = 1;
 
 const STORES = ['answers', 'questionState', 'exams', 'flags'] as const;
 
-export interface CacadorDB extends DBSchema {
+interface CacadorDB extends DBSchema {
   answers: { key: number; value: Answer; indexes: { questionId: number; at: number } };
   questionState: { key: number; value: QuestionState };
   exams: { key: string; value: Exam };
@@ -55,6 +55,24 @@ async function write<T>(db: IDBPDatabase<CacadorDB>, stores: Store[], work: (tx:
   return result;
 }
 
+/**
+ * Sends `requests` inside a running transaction without waiting between them
+ * (the transaction runs them in the order sent), then waits for them all. One
+ * that fails, or throws as it is sent, rejects here so `write` aborts the lot;
+ * every request already sent is awaited or caught, so none rejects unhandled.
+ */
+async function sendAll(requests: readonly (() => Promise<unknown>)[]): Promise<void> {
+  const sent: Promise<unknown>[] = [];
+  try {
+    for (const request of requests) sent.push(request());
+  } catch (error) {
+    // The abort that follows rejects the requests already sent.
+    for (const request of sent) request.catch(() => undefined);
+    throw error;
+  }
+  await Promise.all(sent);
+}
+
 /** Appends `answer` to the log and updates its question's state, inside `tx`. */
 async function appendAnswer(tx: WriteTx, answer: Answer): Promise<Answer> {
   const record = withoutLogId(answer);
@@ -73,9 +91,6 @@ function idbBackend(db: IDBPDatabase<CacadorDB>): StorageBackend {
 
     addAnswer: (answer) => write(db, ['answers', 'questionState'], (tx) => appendAnswer(tx, answer)),
     listAnswers: (since) => db.getAllFromIndex('answers', 'at', since === undefined ? undefined : IDBKeyRange.lowerBound(since)),
-    listAnswersFor: async (questionId) => (await db.getAllFromIndex('answers', 'questionId', questionId)).sort(compareAnswers),
-
-    getState: (questionId) => db.get('questionState', questionId),
     listStates: () => db.getAll('questionState'),
 
     addExam: async (exam) => {
@@ -128,13 +143,14 @@ function idbBackend(db: IDBPDatabase<CacadorDB>): StorageBackend {
         const states = tx.objectStore('questionState');
         const [deviceAnswers, deviceExams, deviceFlags] = await Promise.all([answers.getAll(), exams.getAll(), flags.getAll()]);
         const plan = planImport({ answers: deviceAnswers, exams: deviceExams, flags: deviceFlags }, file);
-        // One request at a time, so a failing one rejects here and aborts the lot with no request left unawaited.
-        for (const id of plan.removeAnswerIds) await answers.delete(id);
-        for (const answer of plan.addAnswers) await answers.add(withoutLogId(answer));
-        for (const exam of plan.putExams) await exams.put(exam);
-        for (const flag of plan.putFlags) await flags.put(flag);
-        await states.clear();
-        for (const state of plan.states) await states.put(state);
+        await sendAll([
+          ...plan.removeAnswerIds.map((id) => () => answers.delete(id)),
+          ...plan.addAnswers.map((answer) => () => answers.add(withoutLogId(answer))),
+          ...plan.putExams.map((exam) => () => exams.put(exam)),
+          ...plan.putFlags.map((flag) => () => flags.put(flag)),
+          () => states.clear(),
+          ...plan.states.map((state) => () => states.put(state)),
+        ]);
         return plan.added;
       }),
     clear: () =>

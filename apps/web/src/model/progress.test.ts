@@ -1,8 +1,9 @@
 import { questionsInTopic } from '@cacador/data';
 import { describe, expect, it } from 'vitest';
 import type { Answer, QuestionState } from '@/storage/types';
+import { localDateKey } from './dates';
 import { topicPool } from './pools';
-import { accuracyByDay, groupAccuracy, localDateKey, readiness } from './progress';
+import { accuracyByDay, groupAccuracy, readiness } from './progress';
 import { indexStates, recentShare } from './states';
 
 function seen(questionId: number, recent: boolean[]): QuestionState {

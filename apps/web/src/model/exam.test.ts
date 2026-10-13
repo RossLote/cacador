@@ -1,4 +1,4 @@
-import { questionById, type OptionKey } from '@cacador/data';
+import type { OptionKey } from '@cacador/data';
 import { describe, expect, it } from 'vitest';
 import type { Exam } from '@/storage/types';
 import {
@@ -11,13 +11,9 @@ import {
   scoreExam,
 } from './exam';
 import { seededRandom } from './random';
+import { correctOf } from '../../test/fixtures';
 
 const wrongOf = (answer: OptionKey): OptionKey => (answer === 'A' ? 'B' : 'A');
-const correctOf = (id: number): OptionKey => {
-  const q = questionById(id);
-  if (!q) throw new Error(`no question ${id}`);
-  return q.answer;
-};
 
 /** An exam over the first 20 ids with `right` right, `unanswered` left blank and the rest wrong. */
 function exam(right: number, unanswered: number): Exam {

@@ -6,8 +6,11 @@ import { bankPool } from './pools';
 /** Questions in a mock exam (D3). */
 export const EXAM_SIZE = 20;
 
+/** A minute, ms. */
+export const MINUTE_MS = 60 * 1000;
+
 /** The exam's time limit, ms (D3). */
-export const EXAM_DURATION_MS = 30 * 60 * 1000;
+export const EXAM_DURATION_MS = 30 * MINUTE_MS;
 
 /** Right answers out of 20 needed to pass (D3). */
 export const EXAM_PASS_MARK = 15;
@@ -23,6 +26,19 @@ export function drawExam(random: RandomSource = Math.random): number[] {
     ids[i] = picked;
   }
   return ids.slice(0, size);
+}
+
+/** An exam once submitted: its finish time and score are set (D3). */
+export type FinishedExam = Exam & { finishedAt: number; score: number };
+
+/** Whether the exam has been submitted. */
+export function isFinished(exam: Exam): exam is FinishedExam {
+  return exam.finishedAt !== undefined && exam.score !== undefined;
+}
+
+/** The results page of an exam: /exam/results/<id> (D19). */
+export function examResultsPath(id: string): string {
+  return `/exam/results/${encodeURIComponent(id)}`;
 }
 
 /** When the exam ends: its start plus 30 minutes, ms since the epoch (D3). */

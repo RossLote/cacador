@@ -1,7 +1,7 @@
 import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router';
-import { afterEach, describe, expect, it } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import App from './App';
 import { setLocale } from './i18n/locale';
 import type { Locale } from './i18n/locales';
@@ -27,10 +27,6 @@ const SCREENS = [
 const HOME_BUTTONS = SCREENS.filter(([path]) => path !== '/flagged');
 
 describe('routes', () => {
-  afterEach(() => {
-    act(() => setLocale('en'));
-  });
-
   for (const locale of ['en', 'pt'] satisfies Locale[]) {
     const t = MESSAGES[locale];
 

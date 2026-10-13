@@ -9,7 +9,7 @@ import tseslint from 'typescript-eslint';
  * Radix is banned (DESIGN.md § 8). UI primitives come from @base-ui/react via
  * the shadcn components in apps/web/src/components/ui/.
  */
-export const RADIX_IMPORT_PATTERNS = ['@radix-ui/*', 'radix-ui', 'radix-ui/*'];
+const RADIX_IMPORT_PATTERNS = ['@radix-ui/*', 'radix-ui', 'radix-ui/*'];
 
 export default defineConfig([
   globalIgnores([

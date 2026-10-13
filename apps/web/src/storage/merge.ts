@@ -18,7 +18,7 @@ export interface ImportCounts {
 }
 
 /** The writes an import makes, in one transaction. */
-export interface ImportPlan {
+interface ImportPlan {
   /** Log ids of the device's answers to an exam whose copy from the file replaced the device's own. */
   removeAnswerIds: number[];
   /** New log entries, without ids: the file's answers this device lacks, then the answers of exams the merge settled. */
@@ -58,7 +58,8 @@ function withNextIds(log: readonly Answer[], added: readonly Answer[]): Answer[]
 }
 
 const answerKey = (a: Pick<Answer, 'questionId' | 'at'>): string => `${a.questionId}@${a.at}`;
-const flagKey = (f: Pick<Flag, 'questionId' | 'kind'>): string => `${f.questionId}:${f.kind}`;
+/** A flag's key as a string, one per question and kind. */
+export const flagKey = (f: Pick<Flag, 'questionId' | 'kind'>): string => `${f.questionId}:${f.kind}`;
 
 /**
  * Merges `file` into the device's `device` records (D8):

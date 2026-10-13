@@ -1,27 +1,19 @@
-import 'fake-indexeddb/auto';
-import { hintFor, questionById, translationFor, type OptionKey, type Question } from '@cacador/data';
+import { hintFor, translationFor, type OptionKey } from '@cacador/data';
 import { act, fireEvent, render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { IDBFactory } from 'fake-indexeddb';
 import { MemoryRouter, Route, Routes } from 'react-router';
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import { setLocale } from '@/i18n/locale';
 import { MESSAGES } from '@/i18n/messages';
 import { drawExam, seededRandom } from '@/model';
-import { closeStorage, createExam, finishExam, getExam, saveExamAnswers } from '@/storage';
+import { createExam, finishExam, getExam, saveExamAnswers } from '@/storage';
 import { ExamPage } from './ExamPage';
+import { question, wrongOf } from '../../test/fixtures';
 
 const t = MESSAGES.en.exam;
 const card = MESSAGES.en.practice.card;
 const examIds = drawExam(seededRandom(11));
 const OPTIONS: readonly OptionKey[] = ['A', 'B', 'C'];
-
-function question(id: number): Question {
-  const q = questionById(id);
-  if (!q) throw new Error(`no question ${id}`);
-  return q;
-}
-const wrongOf = (q: Question): OptionKey => (q.answer === 'A' ? 'B' : 'A');
 
 /**
  * A finished exam over `examIds`: the first `right` answered right, the last
@@ -32,7 +24,7 @@ async function finishedExam(right: number, unanswered = 0) {
   const answers: Record<number, OptionKey> = {};
   examIds.slice(0, examIds.length - unanswered).forEach((id, index) => {
     const q = question(id);
-    answers[id] = index < right ? q.answer : wrongOf(q);
+    answers[id] = index < right ? q.answer : wrongOf(q.id);
   });
   await saveExamAnswers(exam.id, answers);
   expect(await finishExam(exam.id)).toBe(true);
@@ -53,17 +45,6 @@ const wrongList = () => screen.findByRole('list', { name: t.wrongAnswers });
 const optionsIn = (item: HTMLElement) => within(within(item).getByRole('group', { name: card.options })).getAllByRole('button');
 /** The bank id on an item's card, from its "Question <id>". */
 const idIn = (item: HTMLElement) => Number(within(item).getByText(/^Question \d+$/).textContent?.replace(/\D/g, ''));
-
-beforeEach(async () => {
-  await closeStorage();
-  vi.stubGlobal('indexedDB', new IDBFactory());
-});
-
-afterEach(async () => {
-  act(() => setLocale('en'));
-  await closeStorage();
-  vi.unstubAllGlobals();
-});
 
 describe('the results of a finished exam', () => {
   it('shows 14 out of 20 against 15, Not passed, and exactly the six wrong ones, the unanswered one with only the correct option', async () => {

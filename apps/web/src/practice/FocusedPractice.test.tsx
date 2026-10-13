@@ -1,33 +1,28 @@
-import 'fake-indexeddb/auto';
-import { hintFor, questionById, type OptionKey, type Question } from '@cacador/data';
+import { hintFor, type OptionKey } from '@cacador/data';
 import { fireEvent, render, renderHook, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { IDBFactory, IDBObjectStore } from 'fake-indexeddb';
+import { IDBObjectStore } from 'fake-indexeddb';
 import type { ReactNode } from 'react';
 import { MemoryRouter } from 'react-router';
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { MESSAGES } from '@/i18n/messages';
 import { getLocale, setLocale } from '@/i18n/locale';
 import { bankPool, patternPool, seededRandom, type RandomSource } from '@/model';
-import { closeStorage, getFlags, listAnswers, setFlag } from '@/storage';
+import { getFlags, listAnswers, setFlag } from '@/storage';
 import { PracticePage } from './PracticePage';
 import { usePracticePool } from './usePracticePool';
+import { question, wrongOf } from '../../test/fixtures';
 
 const t = MESSAGES.en.practice;
 const flagsT = t.flags;
 const first: RandomSource = () => 0;
 
-function question(id: number): Question {
-  const q = questionById(id);
-  if (!q) throw new Error(`no question ${id}`);
-  return q;
-}
-const wrongOf = (q: Question): OptionKey => (q.answer === 'A' ? 'B' : 'A');
-
+/** Practice at /practice<query>, drawing with `random` in place of Math.random. */
 function renderPractice(query = '', random: RandomSource = first) {
+  vi.spyOn(Math, 'random').mockImplementation(random);
   return render(
     <MemoryRouter initialEntries={[`/practice${query}`]}>
-      <PracticePage random={random} />
+      <PracticePage />
     </MemoryRouter>,
   );
 }
@@ -52,7 +47,7 @@ async function waitForChange(from: number): Promise<number> {
 /** Answers the question on screen wrongly. */
 async function answer(user: ReturnType<typeof userEvent.setup>): Promise<number> {
   const id = await shownId();
-  await user.click(optionFor(wrongOf(question(id))));
+  await user.click(optionFor(wrongOf(id)));
   return id;
 }
 
@@ -66,19 +61,6 @@ async function draws(user: ReturnType<typeof userEvent.setup>, count: number): P
   }
   return ids;
 }
-
-beforeEach(async () => {
-  await closeStorage();
-  vi.stubGlobal('indexedDB', new IDBFactory());
-  sessionStorage.clear();
-});
-
-afterEach(async () => {
-  setLocale('en');
-  await closeStorage();
-  vi.unstubAllGlobals();
-  vi.restoreAllMocks();
-});
 
 describe('focused practice (D4)', () => {
   it('?topic=patos draws only ids 228 to 255 and names the topic in a chip', async () => {

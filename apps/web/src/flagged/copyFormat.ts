@@ -7,9 +7,9 @@ import type { Flag, FlagKind } from '@/storage';
  * live here as constants and not in the messages files, the one exception to the
  * rule that components hold no user-facing text.
  */
-export const COPY_HEADER = 'Caçador flags';
+const COPY_HEADER = 'Caçador flags';
 
-export const COPY_KIND_LABEL: Record<FlagKind, string> = {
+const COPY_KIND_LABEL: Record<FlagKind, string> = {
   translation: 'English',
   hint: 'Hint',
 };

@@ -3,6 +3,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { useI18n } from '@/i18n/useI18n';
+import { useLoaded } from '@/lib/useLoaded';
 import { listFlags, removeFlag, type Flag } from '@/storage';
 import { formatFlags } from './copyFormat';
 
@@ -13,19 +14,9 @@ type CopyState = 'idle' | 'copied' | 'failed';
 /** Flagged (DESIGN.md § 6.7): every flag newest first, with Copy and Share of the same plain text and a clear on each. */
 export function FlaggedPage() {
   const { t } = useI18n();
-  const [flags, setFlags] = useState<Flag[] | undefined>();
+  const { data: flags, set: setFlags } = useLoaded(listFlags);
   const [copy, setCopy] = useState<CopyState>('idle');
   const canShare = typeof navigator.share === 'function';
-
-  useEffect(() => {
-    let active = true;
-    void listFlags().then((list) => {
-      if (active) setFlags(list);
-    });
-    return () => {
-      active = false;
-    };
-  }, []);
 
   useEffect(() => {
     if (copy === 'idle') return;
@@ -36,7 +27,7 @@ export function FlaggedPage() {
   const clear = useCallback(async (flag: Flag) => {
     await removeFlag(flag.questionId, flag.kind);
     setFlags(await listFlags());
-  }, []);
+  }, [setFlags]);
 
   const list = flags ?? [];
   const text = formatFlags(list);

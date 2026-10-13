@@ -1,28 +1,21 @@
-import 'fake-indexeddb/auto';
-import { questionById, type OptionKey } from '@cacador/data';
 import { act, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { IDBFactory } from 'fake-indexeddb';
 import { MemoryRouter, Route, Routes } from 'react-router';
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import { setLocale } from '@/i18n/locale';
 import type { Locale } from '@/i18n/locales';
 import { MESSAGES } from '@/i18n/messages';
 import { drawExam, seededRandom } from '@/model';
 import { closeStorage, createExam, listAnswers, recordAnswer, saveExamAnswers } from '@/storage';
 import { HomePage } from './HomePage';
+import { correctOf } from '../../test/fixtures';
 
 const SECOND = 1000;
 const MINUTE = 60 * SECOND;
 const T0 = Date.UTC(2026, 9, 13, 9, 0);
 const en = MESSAGES.en;
 const examIds = drawExam(seededRandom(7));
-
-const correctOf = (id: number): OptionKey => {
-  const q = questionById(id);
-  if (!q) throw new Error(`no question ${id}`);
-  return q.answer;
-};
 
 function renderHome() {
   return render(
@@ -38,16 +31,8 @@ function renderHome() {
 /** The exam card, once Home has read storage. */
 const examCard = () => screen.findByRole('link', { name: new RegExp(en.home.examInProgress) });
 
-beforeEach(async () => {
-  await closeStorage();
-  vi.stubGlobal('indexedDB', new IDBFactory());
-});
-
-afterEach(async () => {
+afterEach(() => {
   vi.useRealTimers();
-  await closeStorage();
-  vi.unstubAllGlobals();
-  act(() => setLocale('en'));
 });
 
 describe('Home', () => {

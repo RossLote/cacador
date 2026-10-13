@@ -1,36 +1,27 @@
-import 'fake-indexeddb/auto';
-import { hintFor, questionById, sectionOf, topicOf, translationFor, type OptionKey, type Question } from '@cacador/data';
+import { hintFor, sectionOf, topicOf, translationFor, type OptionKey } from '@cacador/data';
 import { act, fireEvent, render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { IDBFactory } from 'fake-indexeddb';
 import { MemoryRouter } from 'react-router';
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { MESSAGES } from '@/i18n/messages';
-import { RECENT_LIMIT, type RandomSource } from '@/model';
+import { RECENT_LIMIT } from '@/model';
 import { closeStorage, listAnswers, RECENT_KEY } from '@/storage';
 import { PracticePage } from './PracticePage';
+import { question, wrongOf } from '../../test/fixtures';
 
 const t = MESSAGES.en.practice;
 const card = t.card;
 
 /**
- * A random source of 0 always takes the first candidate in pool order, so on a
- * fresh device the draws run 1, 2, 3… and only the recent window stops the
- * first question coming back.
+ * Practice with Math.random at 0, which always takes the first candidate in
+ * pool order, so on a fresh device the draws run 1, 2, 3… and only the recent
+ * window stops the first question coming back.
  */
-const first: RandomSource = () => 0;
-
-function question(id: number): Question {
-  const q = questionById(id);
-  if (!q) throw new Error(`no question ${id}`);
-  return q;
-}
-const wrongOf = (q: Question): OptionKey => (q.answer === 'A' ? 'B' : 'A');
-
-function renderPractice(random: RandomSource = first) {
+function renderPractice() {
+  vi.spyOn(Math, 'random').mockReturnValue(0);
   return render(
     <MemoryRouter initialEntries={['/practice']}>
-      <PracticePage random={random} />
+      <PracticePage />
     </MemoryRouter>,
   );
 }
@@ -49,7 +40,7 @@ const hintPanel = () => screen.queryByRole('region', { name: card.hint });
 /** Answers the question on screen (wrongly) and waits for the next one; returns the new id. */
 async function answerAndNext(user: ReturnType<typeof userEvent.setup>): Promise<number> {
   const id = await shownId();
-  await user.click(optionFor(wrongOf(question(id))));
+  await user.click(optionFor(wrongOf(id)));
   await user.click(nextButton()!);
   return waitForChange(id);
 }
@@ -58,17 +49,6 @@ async function waitForChange(from: number): Promise<number> {
   await vi.waitFor(async () => expect(await shownId()).not.toBe(from));
   return shownId();
 }
-
-beforeEach(async () => {
-  await closeStorage();
-  vi.stubGlobal('indexedDB', new IDBFactory());
-  sessionStorage.clear();
-});
-
-afterEach(async () => {
-  await closeStorage();
-  vi.unstubAllGlobals();
-});
 
 describe('PracticePage', () => {
   it('keeps the Practice heading', async () => {
@@ -114,13 +94,13 @@ describe('PracticePage', () => {
     const user = userEvent.setup();
     renderPractice();
     const q = question(await shownId());
-    await user.click(optionFor(wrongOf(q)));
-    expect(within(optionFor(wrongOf(q))).getByText(card.wrong)).toBeInTheDocument();
+    await user.click(optionFor(wrongOf(q.id)));
+    expect(within(optionFor(wrongOf(q.id))).getByText(card.wrong)).toBeInTheDocument();
     expect(within(optionFor(q.answer)).getByText(card.correctAnswer)).toBeInTheDocument();
     for (const key of ['A', 'B', 'C'] as const) expect(optionFor(key)).toBeDisabled();
     await vi.waitFor(async () =>
       expect(await listAnswers()).toEqual([
-        expect.objectContaining({ questionId: q.id, chosen: wrongOf(q), correct: false, mode: 'practice' }),
+        expect.objectContaining({ questionId: q.id, chosen: wrongOf(q.id), correct: false, mode: 'practice' }),
       ]),
     );
     await user.click(nextButton()!);

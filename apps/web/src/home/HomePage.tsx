@@ -1,15 +1,13 @@
 import { ArrowRight } from 'lucide-react';
-import { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router';
-import { buttonVariants } from '@/components/ui/button';
+import { LinkButton } from '@/components/LinkButton';
 import { Card } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
+import { useExamClock } from '@/exam/useExamClock';
 import { useI18n } from '@/i18n/useI18n';
-import { cn } from '@/lib/utils';
-import { examTimeLeft, READINESS_TARGET_PERCENT, readiness, type Readiness } from '@/model';
+import { useLoaded } from '@/lib/useLoaded';
+import { MINUTE_MS, READINESS_TARGET_PERCENT, readiness, type Readiness } from '@/model';
 import { getStates, getUnfinishedExam, type Exam } from '@/storage';
-
-const MINUTE_MS = 60 * 1000;
 
 interface HomeData {
   readiness: Readiness;
@@ -24,45 +22,14 @@ async function loadHome(): Promise<HomeData> {
   return { exam, readiness: readiness(states) };
 }
 
-/** The home data, and a reload for when the exam in progress reaches its deadline while Home is open. */
-function useHomeData() {
-  const [data, setData] = useState<HomeData | undefined>();
-  const [version, setVersion] = useState(0);
-  useEffect(() => {
-    let active = true;
-    void loadHome().then((loaded) => {
-      if (active) setData(loaded);
-    });
-    return () => {
-      active = false;
-    };
-  }, [version]);
-  const reload = useCallback(() => setVersion((v) => v + 1), []);
-  return { data, reload };
-}
-
 /**
- * Whole minutes left in the exam, rounded up so 29:30 shows 30 and the last
- * seconds show 1. Wakes when the shown minute changes, and calls `onDeadline`
- * once none is left (0 is never shown).
+ * The exam in progress with its whole minutes left, rounded up so 29:30 shows
+ * 30 and the last seconds show 1. The clock wakes when the shown minute
+ * changes, and calls `onDeadline` once none is left (0 is never shown).
  */
-function useMinutesLeft(exam: Exam, onDeadline: () => void): number {
-  const [now, setNow] = useState(Date.now);
-  const left = examTimeLeft(exam, now);
-  useEffect(() => {
-    if (left <= 0) {
-      onDeadline();
-      return;
-    }
-    const timer = setTimeout(() => setNow(Date.now()), left % MINUTE_MS || MINUTE_MS);
-    return () => clearTimeout(timer);
-  }, [left, onDeadline]);
-  return Math.ceil(left / MINUTE_MS);
-}
-
 function ExamCard({ exam, onDeadline }: { exam: Exam; onDeadline: () => void }) {
   const { t } = useI18n();
-  const minutes = useMinutesLeft(exam, onDeadline);
+  const minutes = Math.ceil(useExamClock(exam, onDeadline, MINUTE_MS) / MINUTE_MS);
   if (minutes <= 0) return null;
   return (
     <Link to="/exam" className="rounded-xl outline-none focus-visible:ring-3 focus-visible:ring-ring/50">
@@ -113,7 +80,8 @@ function ReadinessPanel({ value }: { value: Readiness | undefined }) {
 /** Home (DESIGN.md § 6.3, D11): the hub. Readiness, the exam in progress when there is one, and the four buttons. */
 export function HomePage() {
   const { t } = useI18n();
-  const { data, reload } = useHomeData();
+  // Reloaded when the exam in progress reaches its deadline while Home is open.
+  const { data, reload } = useLoaded(loadHome);
   const buttons = [
     { to: '/practice', label: t.common.nav.practice, variant: 'default' },
     { to: '/exam', label: t.common.nav.exam, variant: 'outline' },
@@ -128,9 +96,9 @@ export function HomePage() {
       <ReadinessPanel value={data?.readiness} />
       <nav className="grid grid-cols-2 gap-3">
         {buttons.map(({ to, label, variant }) => (
-          <Link key={to} to={to} className={cn(buttonVariants({ variant, size: 'lg' }), 'h-12 text-base')}>
+          <LinkButton key={to} to={to} variant={variant} size="lg" className="h-12 text-base">
             {label}
-          </Link>
+          </LinkButton>
         ))}
       </nav>
     </section>

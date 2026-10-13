@@ -1,15 +1,14 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { useI18n } from '@/i18n/useI18n';
-import { drawExam, EXAM_DURATION_MS, EXAM_PASS_MARK, EXAM_SIZE, type RandomSource } from '@/model';
+import { useLoaded } from '@/lib/useLoaded';
+import { drawExam, EXAM_DURATION_MS, EXAM_PASS_MARK, EXAM_SIZE, MINUTE_MS } from '@/model';
 import { createExam, getUnfinishedExam, type Exam } from '@/storage';
 import { RunningExam } from './RunningExam';
 
-const MINUTE_MS = 60 * 1000;
-
-export interface ExamStartProps {
-  /** The source the exam draw uses; Math.random otherwise. */
-  random?: RandomSource;
+/** The exam to resume, or null when there is none. */
+async function loadUnfinished(): Promise<Exam | null> {
+  return (await getUnfinishedExam()) ?? null;
 }
 
 /**
@@ -18,25 +17,15 @@ export interface ExamStartProps {
  * always has time left), otherwise Start, which draws 20 questions uniformly,
  * saves the exam with its start time and runs it here.
  */
-export function ExamStart({ random = Math.random }: ExamStartProps) {
+export function ExamStart() {
   const { t } = useI18n();
-  /** undefined while storage is read, null when there is no exam to resume. */
-  const [exam, setExam] = useState<Exam | null>();
+  /** `exam` is undefined while storage is read, null when there is no exam to resume. */
+  const { data: exam, set: setExam } = useLoaded(loadUnfinished);
   const [starting, setStarting] = useState(false);
-
-  useEffect(() => {
-    let active = true;
-    void getUnfinishedExam().then((found) => {
-      if (active) setExam(found ?? null);
-    });
-    return () => {
-      active = false;
-    };
-  }, []);
 
   const start = () => {
     setStarting(true);
-    void createExam(drawExam(random)).then(setExam, () => setStarting(false));
+    void createExam(drawExam()).then(setExam, () => setStarting(false));
   };
 
   if (exam) return <RunningExam key={exam.id} exam={exam} />;

@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test';
-import { manifest } from '../packages/data/src/index';
+import { manifest } from '@cacador/data';
 
 // Phase 4 D12, ACCEPTANCE BAR step 12: after one online load and a reload, the app opens and shows every picture with
 // no network. The first load installs the service worker; it has no clientsClaim, so only the reload is controlled by it.

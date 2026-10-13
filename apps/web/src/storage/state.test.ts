@@ -1,17 +1,11 @@
-import { questionById, type OptionKey } from '@cacador/data';
 import { describe, expect, it } from 'vitest';
 import { EXAM_DURATION_MS } from '@/model';
 import { finishExamRecords, isRunning } from './finish';
 import { applyAnswer, deriveState, isInOrder, nextState } from './state';
 import type { Answer, Exam } from './types';
+import { correctOf } from '../../test/fixtures';
 
 const answer = (correct: boolean, at: number, id?: number): Answer => ({ questionId: 7, at, correct, mode: 'practice', id });
-
-const correctOf = (id: number): OptionKey => {
-  const q = questionById(id);
-  if (!q) throw new Error(`no question ${id}`);
-  return q.answer;
-};
 
 describe('applyAnswer', () => {
   it('starts a state from the first answer', () => {

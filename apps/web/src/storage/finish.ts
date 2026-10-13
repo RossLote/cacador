@@ -2,7 +2,7 @@ import { examDeadline, examResults, scoreExam } from '@/model';
 import type { Answer, Exam } from './types';
 
 /** An exam as submitted and the answers its submission logs. */
-export interface FinishedExam {
+interface ExamSubmission {
   exam: Exam;
   /** One per exam question, in order, all timed at the finish (D3). */
   answers: Answer[];
@@ -16,7 +16,7 @@ export interface FinishedExam {
  * 30:00 auto-submit firing late and the settling of a stale exam both land on
  * the deadline.
  */
-export function finishExamRecords(exam: Exam, at: number): FinishedExam {
+export function finishExamRecords(exam: Exam, at: number): ExamSubmission {
   const finishedAt = Math.min(at, examDeadline(exam));
   const answers = examResults(exam).map(
     ({ questionId, chosen, correct }): Answer => ({

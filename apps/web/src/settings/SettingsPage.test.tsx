@@ -1,12 +1,8 @@
-import 'fake-indexeddb/auto';
-import { questionById, type OptionKey } from '@cacador/data';
 import { act, render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { IDBFactory } from 'fake-indexeddb';
 import { MemoryRouter, Route, Routes } from 'react-router';
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { FlaggedPage } from '@/flagged/FlaggedPage';
-import { setLocale } from '@/i18n/locale';
 import type { Locale } from '@/i18n/locales';
 import { MESSAGES } from '@/i18n/messages';
 import { drawExam, readiness, seededRandom } from '@/model';
@@ -31,17 +27,11 @@ import {
 } from '@/storage';
 import { withoutLogId } from '@/storage/state';
 import { SettingsPage } from './SettingsPage';
+import { correctOf, wrongOf } from '../../test/fixtures';
 
 const MINUTE = 60 * 1000;
 const T0 = Date.UTC(2026, 9, 13, 9, 0);
 const en = MESSAGES.en.settings;
-
-const correctOf = (id: number): OptionKey => {
-  const q = questionById(id);
-  if (!q) throw new Error(`no question ${id}`);
-  return q.answer;
-};
-const wrongOf = (id: number): OptionKey => (correctOf(id) === 'A' ? 'B' : 'A');
 
 /** Some progress: six practice answers, a finished exam (20 more answers) and two flags. */
 async function makeProgress(): Promise<void> {
@@ -82,20 +72,6 @@ async function upload(text: string) {
   await user.upload(screen.getByLabelText(en.importFile), jsonFile(text));
   return user;
 }
-
-beforeEach(async () => {
-  await closeStorage();
-  vi.stubGlobal('indexedDB', new IDBFactory());
-});
-
-afterEach(async () => {
-  await closeStorage();
-  vi.restoreAllMocks();
-  vi.unstubAllGlobals();
-  act(() => setLocale('en'));
-  localStorage.clear();
-  sessionStorage.clear();
-});
 
 describe('Settings language', () => {
   it('switches the whole app to Portuguese, sets <html lang> and keeps the choice for the next visit', async () => {

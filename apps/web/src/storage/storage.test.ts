@@ -1,8 +1,6 @@
-import 'fake-indexeddb/auto';
-import { questionById, type OptionKey } from '@cacador/data';
 import { IDBFactory } from 'fake-indexeddb';
 import { openDB } from 'idb';
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { drawExam, EXAM_DURATION_MS, examDeadline, seededRandom } from '@/model';
 import { DB_NAME, DB_VERSION } from './idbBackend';
 import {
@@ -11,11 +9,9 @@ import {
   finishExam,
   getExam,
   getFlags,
-  getState,
   getStates,
   getUnfinishedExam,
   listAnswers,
-  listAnswersFor,
   listExams,
   listFlags,
   LOCALE_KEY,
@@ -26,26 +22,20 @@ import {
   setFlag,
   storageMode,
 } from './index';
+import { correctOf, wrongOf } from '../../test/fixtures';
 
 const MINUTE = 60 * 1000;
 const T0 = Date.UTC(2026, 9, 13, 9, 0);
 
-const correctOf = (id: number): OptionKey => {
-  const q = questionById(id);
-  if (!q) throw new Error(`no question ${id}`);
-  return q.answer;
-};
-const wrongOf = (id: number): OptionKey => (correctOf(id) === 'A' ? 'B' : 'A');
+/** One question's state, as the app reads states. */
+const stateOf = async (questionId: number) => (await getStates()).get(questionId);
+/** One question's answers in time order, as the app reads the log. */
+const answersFor = async (questionId: number) => (await listAnswers()).filter((a) => a.questionId === questionId);
 
 /** IndexedDB on a fresh fake factory, or no IndexedDB at all. */
 function useIndexedDb(available: boolean): void {
   vi.stubGlobal('indexedDB', available ? new IDBFactory() : undefined);
 }
-
-afterEach(async () => {
-  await closeStorage();
-  vi.unstubAllGlobals();
-});
 
 describe.each([
   ['indexeddb', true],
@@ -66,12 +56,12 @@ describe.each([
       await recordAnswer({ questionId: 30, chosen: wrongOf(30), correct: false, mode: 'practice', at: T0 + 1000 });
       expect(recorded.id).toEqual(expect.any(Number));
 
-      expect(await listAnswersFor(12)).toEqual([recorded]);
+      expect(await answersFor(12)).toEqual([recorded]);
       expect((await listAnswers()).map((a) => a.questionId)).toEqual([12, 30]);
       expect((await listAnswers(T0 + 1)).map((a) => a.questionId)).toEqual([30]);
 
-      expect(await getState(12)).toEqual({ questionId: 12, attempts: 1, correct: 1, streak: 1, recent: [true], lastSeenAt: T0 });
-      expect(await getState(1)).toBeUndefined();
+      expect(await stateOf(12)).toEqual({ questionId: 12, attempts: 1, correct: 1, streak: 1, recent: [true], lastSeenAt: T0 });
+      expect(await stateOf(1)).toBeUndefined();
       const states = await getStates();
       expect([...states.keys()].sort((a, b) => a - b)).toEqual([12, 30]);
       expect(states.get(30)).toMatchObject({ attempts: 1, correct: 0, streak: 0, recent: [false] });
@@ -81,15 +71,15 @@ describe.each([
       for (const [i, correct] of [true, true, true, false].entries()) {
         await recordAnswer({ questionId: 5, chosen: correct ? correctOf(5) : wrongOf(5), correct, mode: 'practice', at: T0 + i });
       }
-      expect(await getState(5)).toEqual({ questionId: 5, attempts: 4, correct: 3, streak: 0, recent: [true, true, false], lastSeenAt: T0 + 3 });
-      expect(await listAnswersFor(5)).toHaveLength(4);
+      expect(await stateOf(5)).toEqual({ questionId: 5, attempts: 4, correct: 3, streak: 0, recent: [true, true, false], lastSeenAt: T0 + 3 });
+      expect(await answersFor(5)).toHaveLength(4);
     });
 
     it('accepts an answer with no chosen option and counts it wrong', async () => {
       const recorded = await recordAnswer({ questionId: 8, correct: true, mode: 'exam', examId: 'x', at: T0 });
       expect(recorded).toMatchObject({ questionId: 8, correct: false });
       expect('chosen' in recorded).toBe(false);
-      expect(await getState(8)).toMatchObject({ attempts: 1, correct: 0, streak: 0, recent: [false] });
+      expect(await stateOf(8)).toMatchObject({ attempts: 1, correct: 0, streak: 0, recent: [false] });
     });
 
     it('stamps an answer with the current time when none is given', async () => {
@@ -132,9 +122,9 @@ describe.each([
       expect(logged).toHaveLength(20);
       expect(logged.every((a) => a.mode === 'exam' && a.examId === exam.id && a.at === T0 + 10 * MINUTE)).toBe(true);
       const first = questionIds[0] as number;
-      expect(await getState(first)).toMatchObject({ attempts: 1, correct: 1, streak: 1, lastSeenAt: T0 + 10 * MINUTE });
+      expect(await stateOf(first)).toMatchObject({ attempts: 1, correct: 1, streak: 1, lastSeenAt: T0 + 10 * MINUTE });
       const last = questionIds[19] as number;
-      expect(await getState(last)).toMatchObject({ attempts: 1, correct: 0, streak: 0 });
+      expect(await stateOf(last)).toMatchObject({ attempts: 1, correct: 0, streak: 0 });
     });
 
     it('settles an exam past its deadline when the unfinished exam is asked for', async () => {
@@ -168,7 +158,7 @@ describe.each([
       expect(await getUnfinishedExam(T0 + 50 * MINUTE)).toBeUndefined();
 
       // The exam's wrong answer at 30:00 comes before the practice answer at 45:00.
-      expect(await getState(id)).toEqual({
+      expect(await stateOf(id)).toEqual({
         questionId: id,
         attempts: 2,
         correct: 1,
@@ -176,7 +166,7 @@ describe.each([
         recent: [false, true],
         lastSeenAt: T0 + 45 * MINUTE,
       });
-      expect((await listAnswersFor(id)).map((a) => a.mode)).toEqual(['exam', 'practice']);
+      expect((await answersFor(id)).map((a) => a.mode)).toEqual(['exam', 'practice']);
     });
 
     it('returns the running exam, the newest when there are several, and lists exams newest first', async () => {
@@ -217,11 +207,6 @@ describe.each([
 });
 
 describe('IndexedDB', () => {
-  beforeEach(async () => {
-    await closeStorage();
-    useIndexedDb(true);
-  });
-
   it('opens database cacador version 1 with the four stores and their keys and indexes', async () => {
     await storageMode();
     const db = await openDB(DB_NAME, DB_VERSION);
@@ -241,7 +226,7 @@ describe('IndexedDB', () => {
     await recordAnswer({ questionId: 3, chosen: correctOf(3), correct: true, mode: 'practice', at: T0 });
     await setFlag(3, 'hint', 'x', T0);
     await closeStorage();
-    expect(await getState(3)).toMatchObject({ attempts: 1 });
+    expect(await stateOf(3)).toMatchObject({ attempts: 1 });
     expect(await listFlags()).toHaveLength(1);
   });
 
@@ -268,10 +253,6 @@ describe('IndexedDB', () => {
 });
 
 describe('memory fallback', () => {
-  beforeEach(async () => {
-    await closeStorage();
-  });
-
   it('serves from memory when IndexedDB refuses to open, and stays there', async () => {
     const factory = new IDBFactory();
     vi.spyOn(factory, 'open').mockImplementation(() => {
@@ -283,7 +264,7 @@ describe('memory fallback', () => {
 
     vi.stubGlobal('indexedDB', new IDBFactory());
     expect(await storageMode()).toBe('memory');
-    expect(await getState(2)).toMatchObject({ attempts: 1 });
+    expect(await stateOf(2)).toMatchObject({ attempts: 1 });
   });
 });
 

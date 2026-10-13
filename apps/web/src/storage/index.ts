@@ -13,13 +13,13 @@ import { openIdbBackend } from './idbBackend';
 import { RECENT_KEY } from './keys';
 import type { ImportCounts } from './merge';
 import { createMemoryBackend } from './memoryBackend';
-import type { Answer, AnswerMode, Exam, ExportFile, Flag, FlagKind, OptionKey, QuestionState } from './types';
+import type { Answer, AnswerMode, Exam, ExportFile, Flag, FlagKind, OptionKey } from './types';
 
 export { LOCALE_KEY, RECENT_KEY } from './keys';
-export { exportFileName, type ExportRefusal } from './exportFile';
+export { exportFileName } from './exportFile';
 export type { ImportCounts } from './merge';
-export type { StorageMode } from './backend';
-export type { Answer, AnswerMode, Exam, ExportFile, Flag, FlagKind, OptionKey, QuestionState } from './types';
+export { FLAG_KINDS, OPTION_KEYS } from './types';
+export type { Answer, Exam, ExportFile, Flag, FlagKind, OptionKey, QuestionState } from './types';
 
 let opening: Promise<StorageBackend> | undefined;
 
@@ -86,16 +86,6 @@ export async function recordAnswer(answer: NewAnswer): Promise<Answer> {
 /** The answers log in time order, from `since` (ms, inclusive) when given. */
 export async function listAnswers(since?: number): Promise<Answer[]> {
   return (await backend()).listAnswers(since);
-}
-
-/** One question's answers in time order. */
-export async function listAnswersFor(questionId: number): Promise<Answer[]> {
-  return (await backend()).listAnswersFor(questionId);
-}
-
-/** One question's state, or undefined while unseen. */
-export async function getState(questionId: number): Promise<QuestionState | undefined> {
-  return (await backend()).getState(questionId);
 }
 
 /** Every seen question's state by id, for the model's draw and readiness. */

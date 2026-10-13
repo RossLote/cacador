@@ -1,10 +1,8 @@
 import type { StorageBackend } from './backend';
 import { finishExamRecords, isRunning } from './finish';
-import { planImport } from './merge';
+import { flagKey, planImport } from './merge';
 import { compareAnswers, nextState } from './state';
-import type { Answer, Exam, Flag, FlagKind, QuestionState } from './types';
-
-const flagKey = (questionId: number, kind: FlagKind): string => `${questionId}:${kind}`;
+import type { Answer, Exam, Flag, QuestionState } from './types';
 
 /**
  * The same operations as the IndexedDB backend, kept in memory for as long as
@@ -40,12 +38,6 @@ export function createMemoryBackend(): StorageBackend {
         .filter((a) => since === undefined || a.at >= since)
         .sort(compareAnswers)
         .map((a) => copy(a)),
-    listAnswersFor: async (questionId) => answersFor(questionId),
-
-    getState: async (questionId) => {
-      const state = states.get(questionId);
-      return state && copy(state);
-    },
     listStates: async () => [...states.values()].map((s) => copy(s)),
 
     addExam: async (exam) => {
@@ -73,10 +65,10 @@ export function createMemoryBackend(): StorageBackend {
     },
 
     putFlag: async (flag) => {
-      flags.set(flagKey(flag.questionId, flag.kind), copy(flag));
+      flags.set(flagKey(flag), copy(flag));
     },
     deleteFlag: async (questionId, kind) => {
-      flags.delete(flagKey(questionId, kind));
+      flags.delete(flagKey({ questionId, kind }));
     },
     getFlags: async (questionId) => [...flags.values()].filter((f) => f.questionId === questionId).map((f) => copy(f)),
     listFlags: async () => [...flags.values()].map((f) => copy(f)),
@@ -92,7 +84,7 @@ export function createMemoryBackend(): StorageBackend {
       answers = answers.filter((a) => a.id === undefined || !removed.has(a.id));
       for (const answer of plan.addAnswers) answers.push({ ...answer, id: nextId++ });
       for (const exam of plan.putExams) exams.set(exam.id, exam);
-      for (const flag of plan.putFlags) flags.set(flagKey(flag.questionId, flag.kind), flag);
+      for (const flag of plan.putFlags) flags.set(flagKey(flag), flag);
       states.clear();
       for (const state of plan.states) states.set(state.questionId, state);
       return plan.added;

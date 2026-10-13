@@ -2,7 +2,7 @@ import { useId } from 'react';
 import { useI18n } from '@/i18n/useI18n';
 import { cn } from '@/lib/utils';
 
-export interface ExamMarkersProps {
+interface ExamMarkersProps {
   /** Whether each question, in exam order, has an answer. */
   answered: readonly boolean[];
   /** The index of the question on screen. */

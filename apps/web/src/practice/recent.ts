@@ -4,10 +4,10 @@
  * survives moving between screens and a reload in the same tab. Blocked or
  * garbled storage reads as an empty window and a failed write is dropped.
  */
-import { addToRecent, drawQuestion, type RandomSource, type StateMap } from '@/model';
+import { addToRecent, drawQuestion, type StateMap } from '@/model';
 import { RECENT_KEY } from '@/storage';
 
-export function readRecent(): number[] {
+function readRecent(): number[] {
   try {
     const parsed: unknown = JSON.parse(sessionStorage.getItem(RECENT_KEY) ?? '[]');
     return Array.isArray(parsed) ? parsed.filter((id): id is number => Number.isInteger(id)) : [];
@@ -16,7 +16,7 @@ export function readRecent(): number[] {
   }
 }
 
-export function writeRecent(ids: readonly number[]): void {
+function writeRecent(ids: readonly number[]): void {
   try {
     sessionStorage.setItem(RECENT_KEY, JSON.stringify(ids));
   } catch {
@@ -28,9 +28,9 @@ export function writeRecent(ids: readonly number[]): void {
  * Draws the next practice question from `pool` by the model's weights, outside
  * the recent window, and adds it to the window. Undefined only for an empty pool.
  */
-export function drawPracticeQuestion(pool: readonly number[], states: StateMap, random: RandomSource): number | undefined {
+export function drawPracticeQuestion(pool: readonly number[], states: StateMap): number | undefined {
   const recent = readRecent();
-  const id = drawQuestion(pool, states, recent, random);
+  const id = drawQuestion(pool, states, recent);
   if (id !== undefined) writeRecent(addToRecent(recent, id));
   return id;
 }

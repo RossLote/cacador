@@ -1,15 +1,13 @@
-import { useEffect, useId, useRef, useState } from 'react';
+import { useCallback, useId, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useI18n } from '@/i18n/useI18n';
-import { getFlags, removeFlag, setFlag, type Flag, type FlagKind } from '@/storage';
+import { useLoaded } from '@/lib/useLoaded';
+import { FLAG_KINDS, getFlags, removeFlag, setFlag, type Flag, type FlagKind } from '@/storage';
 import { OWN_KEYS_ATTRIBUTE } from './usePracticeKeys';
 
-const KINDS: readonly FlagKind[] = ['translation', 'hint'];
-
-/** One kind's flag on this question: its saved note, the draft in the field, and whether the field is open. */
+/** One kind's flag on this question: the draft in the note field, and whether the field is open. */
 interface KindState {
-  saved: string;
   draft: string;
   open: boolean;
   /** The saved note was just written by Save. */
@@ -18,10 +16,10 @@ interface KindState {
 
 type FlagState = Partial<Record<FlagKind, KindState>>;
 
-/** The row as stored: every stored kind set, its note saved and in the field, the field closed. */
+/** The row as stored: every stored kind set, its note in the field, the field closed. */
 function fromFlags(flags: readonly Flag[]): FlagState {
   const state: FlagState = {};
-  for (const flag of flags) state[flag.kind] = { saved: flag.note, draft: flag.note, open: false, justSaved: false };
+  for (const flag of flags) state[flag.kind] = { draft: flag.note, open: false, justSaved: false };
   return state;
 }
 
@@ -41,29 +39,17 @@ function fromFlags(flags: readonly Flag[]): FlagState {
 export function FlagsRow({ questionId }: { questionId: number }) {
   const { t } = useI18n();
   const words = t.practice.flags;
-  const [state, setState] = useState<FlagState>({});
-  const [loaded, setLoaded] = useState(false);
+  // A row whose flags cannot be read starts with none set.
+  const load = useCallback(() => getFlags(questionId).then(fromFlags, (): FlagState => ({})), [questionId]);
+  /** Undefined until the stored flags are read; the buttons wait for them. */
+  const { data: loadedState, set: setState } = useLoaded(load);
+  const state = loadedState ?? {};
   const idPrefix = useId();
   /** The row's writes, chained so they land in the order they were asked for. */
   const writes = useRef<Promise<void>>(Promise.resolve());
 
-  useEffect(() => {
-    let current = true;
-    void getFlags(questionId)
-      .then((flags) => {
-        if (current) setState(fromFlags(flags));
-      })
-      .catch(() => undefined)
-      .finally(() => {
-        if (current) setLoaded(true);
-      });
-    return () => {
-      current = false;
-    };
-  }, [questionId]);
-
   const patch = (kind: FlagKind, change: Partial<KindState>) =>
-    setState((previous) => {
+    setState((previous = {}) => {
       const kept = previous[kind];
       return kept === undefined ? previous : { ...previous, [kind]: { ...kept, ...change } };
     });
@@ -84,7 +70,7 @@ export function FlagsRow({ questionId }: { questionId: number }) {
 
   const toggle = (kind: FlagKind) => {
     if (state[kind] === undefined) {
-      setState((previous) => ({ ...previous, [kind]: { saved: '', draft: '', open: true, justSaved: false } }));
+      setState((previous) => ({ ...previous, [kind]: { draft: '', open: true, justSaved: false } }));
       queue(() => setFlag(questionId, kind, ''));
     } else {
       setState((previous) => ({ ...previous, [kind]: undefined }));
@@ -95,7 +81,7 @@ export function FlagsRow({ questionId }: { questionId: number }) {
   /** Stores the note in the field; "Saved" shows once the write has landed. */
   const save = (kind: FlagKind) => {
     const draft = state[kind]?.draft ?? '';
-    queue(() => setFlag(questionId, kind, draft).then(() => patch(kind, { saved: draft, justSaved: true })));
+    queue(() => setFlag(questionId, kind, draft).then(() => patch(kind, { justSaved: true })));
   };
 
   const label = (kind: FlagKind) => (kind === 'translation' ? words.englishOff : words.hintOff);
@@ -104,20 +90,20 @@ export function FlagsRow({ questionId }: { questionId: number }) {
   return (
     <div role="group" aria-label={words.group} {...{ [OWN_KEYS_ATTRIBUTE]: '' }} className="flex flex-col gap-3">
       <div className="flex flex-wrap gap-2">
-        {KINDS.map((kind) => (
+        {FLAG_KINDS.map((kind) => (
           <Button
             key={kind}
             type="button"
             variant={state[kind] === undefined ? 'outline' : 'default'}
             aria-pressed={state[kind] !== undefined}
-            disabled={!loaded}
+            disabled={loadedState === undefined}
             onClick={() => toggle(kind)}
           >
             {label(kind)}
           </Button>
         ))}
       </div>
-      {KINDS.map((kind) => {
+      {FLAG_KINDS.map((kind) => {
         const flag = state[kind];
         if (flag === undefined || !flag.open) return null;
         const inputId = `${idPrefix}-${kind}`;

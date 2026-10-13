@@ -1,15 +1,13 @@
-import 'fake-indexeddb/auto';
 import { questionById } from '@cacador/data';
 import { act, render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { IDBFactory } from 'fake-indexeddb';
 import { MemoryRouter } from 'react-router';
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { setLocale } from '@/i18n/locale';
 import type { Locale } from '@/i18n/locales';
 import { MESSAGES } from '@/i18n/messages';
 import { localDateKey } from '@/model';
-import { closeStorage, getFlags, setFlag } from '@/storage';
+import { getFlags, setFlag } from '@/storage';
 import { formatFlagLine, formatFlags } from './copyFormat';
 import { FlaggedPage } from './FlaggedPage';
 
@@ -29,17 +27,6 @@ const stem = (id: number) => {
   if (!q) throw new Error(`no question ${id}`);
   return q.question;
 };
-
-beforeEach(async () => {
-  await closeStorage();
-  vi.stubGlobal('indexedDB', new IDBFactory());
-});
-
-afterEach(async () => {
-  await closeStorage();
-  vi.unstubAllGlobals();
-  act(() => setLocale('en'));
-});
 
 describe('Flagged page', () => {
   it('lists the flags newest first with id, kind, note and Portuguese stem', async () => {

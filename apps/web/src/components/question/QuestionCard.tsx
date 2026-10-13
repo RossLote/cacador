@@ -5,11 +5,10 @@ import { Button } from '@/components/ui/button';
 import { useI18n } from '@/i18n/useI18n';
 import { cn } from '@/lib/utils';
 import { imageUrl } from '@/pwa/images';
+import { OPTION_KEYS } from '@/storage';
 import { HintPanel } from './HintPanel';
 import { nameIn } from './names';
 import { PeekButton } from './PeekButton';
-
-const OPTION_KEYS: readonly OptionKey[] = ['A', 'B', 'C'];
 
 /**
  * The question card (phase 4 D20, DESIGN.md § 8.6), a controlled component:
@@ -77,7 +76,10 @@ export function QuestionCard({
   const shown = english ?? question;
   const textLang = english ? 'en' : 'pt-PT';
   const picture = question.image === undefined ? undefined : imageUrl(question.image);
-  const place = [nameIn(sectionOf(question), locale), nameIn(topicOf(question), locale)].filter(Boolean).join(' · ');
+  const place = [sectionOf(question), topicOf(question)]
+    .map((entry) => entry && nameIn(entry, locale))
+    .filter(Boolean)
+    .join(' · ');
   const markLabel: Record<Mark, string> = { right: card.right, wrong: card.wrong, correct: card.correctAnswer };
 
   return (

@@ -4,8 +4,8 @@ import { Link } from 'react-router';
 import { Card } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useI18n } from '@/i18n/useI18n';
-import type { StateMap } from '@/model';
-import { GROUP_KINDS, groupRows, type GroupKind, type GroupRow } from './groups';
+import { GROUP_KINDS, type GroupKind, type StateMap } from '@/model';
+import { groupRows, type GroupRow } from './groups';
 
 function GroupList({ rows }: { rows: readonly GroupRow[] }) {
   const { t } = useI18n();

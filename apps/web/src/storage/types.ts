@@ -1,11 +1,15 @@
 /**
  * The records the app keeps on the device (phase 4 D15, DESIGN.md § 7) and the
- * export file (D8). Types only: the storage module (D16) reads and writes them.
+ * export file (D8), with the two lists of allowed values. The storage module
+ * (D16) reads and writes them.
  * Never widened inside a bead; a change is a CHANGE PROTOCOL item.
  */
 import type { OptionKey } from '@cacador/data';
 
 export type { OptionKey };
+
+/** A question's options, in the order the card shows them. */
+export const OPTION_KEYS: readonly OptionKey[] = ['A', 'B', 'C'];
 
 /** How an answer was given. */
 export type AnswerMode = 'practice' | 'exam';
@@ -53,8 +57,9 @@ export interface Exam {
   score?: number;
 }
 
-/** What a flag says is off (D2). */
-export type FlagKind = 'translation' | 'hint';
+/** What a flag can say is off (D2): the English, or the hint; in the order the flags row shows them. */
+export const FLAG_KINDS = ['translation', 'hint'] as const;
+export type FlagKind = (typeof FLAG_KINDS)[number];
 
 /** A flag on a question, one per question and kind (store `flags`, key [questionId, kind]). */
 export interface Flag {

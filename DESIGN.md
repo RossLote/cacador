@@ -832,9 +832,8 @@ precedent for every choice here, minus the server: this app has no backend.
 - `apps/web` (`@cacador/web`): Vite 8, React 19, TypeScript, Tailwind v4 through
   `@tailwindcss/vite`, react-router 7 (as Sumit pins it, not 8) with `BrowserRouter`,
   shadcn/ui on Base UI (`@base-ui/react`) with lucide icons, `idb` and vite-plugin-pwa
-  2.0.0; vitest with jsdom, Testing Library and fake-indexeddb. workbox-window, which
-  the scaffold installed, is not used (§ 8.8); the end-of-epic simplify pass removes it
-  from `apps/web/package.json`.
+  2.0.0; vitest with jsdom, Testing Library and fake-indexeddb. workbox-window is not a
+  dependency: the worker is registered by hand (§ 8.8).
   Scripts `dev`, `build`, `preview`, `typecheck` and `test`.
 - `e2e` (`@cacador/e2e`): Playwright (`@playwright/test`). Scripts `e2e` and
   `typecheck`, no `test` (§ 8.10).
@@ -877,24 +876,28 @@ apps/web/
     exam/                  ExamPage (the sub-routes), ExamStart (start or resume),
                            RunningExam with ExamMarkers and useExamClock, ExamResultsPage
                            (the score and the review)
-    progress/              ProgressPage, DayBars, GroupTabs and groups.ts (the three lists),
-                           PastExams
+    progress/              ProgressPage, DayBars, GroupTabs and groups.ts (the three lists'
+                           rows), PastExams
     settings/              SettingsPage, progressFile.ts (the download and the share sheet)
     flagged/               FlaggedPage, copyFormat.ts (the fixed copy text, § 6.7)
     components/question/   QuestionCard with PeekButton and HintPanel, names.ts (a name in
                            the interface language)
+    components/LinkButton.tsx  a router link drawn as a button
     components/ui/         the 11 generated shadcn components
     model/                 the study model: draw.ts (weights, window, recent list), states.ts,
                            progress.ts (readiness, group accuracy, day bars), pools.ts,
-                           exam.ts (draw, deadline, score), random.ts
+                           groups.ts (the topics, sections and patterns with their pools),
+                           exam.ts (draw, deadline, score), random.ts, dates.ts
     storage/               the storage module: index.ts (the API), backend.ts with
                            idbBackend.ts and memoryBackend.ts, state.ts (the derived state),
                            finish.ts (the exam finish), merge.ts (the import merge),
                            exportFile.ts, keys.ts, types.ts
     pwa/                   images.ts (the image map), registerServiceWorker.ts
     i18n/                  locales.ts, locale.ts (the store), useI18n.ts, messages/en/ and pt/
-    lib/utils.ts           the cn helper the shadcn components use
-  test/                    setup.ts (jest-dom, cleanup) and data.test.ts (the image import)
+    lib/                   utils.ts (the cn helper the shadcn components use), useLoaded.ts
+                           (a screen's read of storage)
+  test/                    setup.ts (jest-dom, fake-indexeddb, the resets before each test),
+                           fixtures.ts (bank lookups the tests share)
 e2e/
   package.json             @cacador/e2e, scripts e2e and typecheck
   playwright.config.ts     the production build under vite preview, locale en-GB
@@ -1391,8 +1394,8 @@ merge, or makes a screen judgement call.
 - **2026-10-13, The service worker is registered by hand.**
   `navigator.serviceWorker.register` in `apps/web/src/pwa/registerServiceWorker.ts`,
   after `load` and in production only, over workbox-window or `virtual:pwa-register`;
-  workbox-window, installed by the scaffold for D12, is then unused and the end-of-epic
-  simplify pass removes it from `apps/web/package.json` (§ 8.8). Reason: the hand
+  workbox-window, which the scaffold installed for D12, is not a dependency of
+  `apps/web` (§ 8.8). Reason: the hand
   registration leaves no reload path in the bundle, and the silent update wants none
   (orchestrator's choice during epic cac-eil, reversible; landed in cac-eil.5).
 - **2026-10-13, An imported exam brings its own answers.** When an import keeps the

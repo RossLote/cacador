@@ -5,7 +5,7 @@
  */
 import { localDateKey } from '@/model';
 import { withoutLogId } from './state';
-import type { Answer, Exam, ExportFile, Flag, FlagKind, OptionKey } from './types';
+import { FLAG_KINDS, OPTION_KEYS, type Answer, type Exam, type ExportFile, type Flag, type FlagKind, type OptionKey } from './types';
 
 /** The records an export holds: every store but questionState. */
 export interface ProgressRecords {
@@ -17,11 +17,11 @@ export interface ProgressRecords {
 /** Why a file was refused: not JSON, not a Caçador export, a version other than 1, or a record not well formed. */
 export type ExportRefusal = 'not-json' | 'not-cacador' | 'unsupported-version' | 'malformed';
 
-export type ReadExportResult = { ok: true; file: ExportFile } | { ok: false; reason: ExportRefusal };
+type ReadExportResult = { ok: true; file: ExportFile } | { ok: false; reason: ExportRefusal };
 
 /** The export's file name, cacador-progress-<YYYY-MM-DD>.json, in the device's date at `now` (D8). */
-export function exportFileName(now: number | Date = Date.now()): string {
-  return `cacador-progress-${localDateKey(typeof now === 'number' ? now : now.getTime())}.json`;
+export function exportFileName(now: number = Date.now()): string {
+  return `cacador-progress-${localDateKey(now)}.json`;
 }
 
 /** The export of `records` made at `exportedAt`; answers lose their log ids, which only mean something on this device. */
@@ -57,9 +57,9 @@ const isCount = (v: unknown): v is number => Number.isInteger(v) && (v as number
 const isBoolean = (v: unknown): v is boolean => typeof v === 'boolean';
 const isString = (v: unknown): v is string => typeof v === 'string';
 const isId = (v: unknown): v is string => typeof v === 'string' && v.length > 0;
-const isOption = (v: unknown): v is OptionKey => v === 'A' || v === 'B' || v === 'C';
+const isOption = (v: unknown): v is OptionKey => OPTION_KEYS.some((key) => key === v);
 const isMode = (v: unknown): v is Answer['mode'] => v === 'practice' || v === 'exam';
-const isKind = (v: unknown): v is FlagKind => v === 'translation' || v === 'hint';
+const isKind = (v: unknown): v is FlagKind => FLAG_KINDS.some((kind) => kind === v);
 
 function list<T>(value: unknown, read: (item: unknown) => T): T[] {
   if (!Array.isArray(value)) throw new Malformed();

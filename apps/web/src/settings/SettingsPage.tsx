@@ -1,5 +1,5 @@
-import { useEffect, useId, useRef, useState, type ChangeEvent } from 'react';
-import { Link } from 'react-router';
+import { useId, useRef, useState, type ChangeEvent } from 'react';
+import { LinkButton } from '@/components/LinkButton';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -11,11 +11,11 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
-import { Button, buttonVariants } from '@/components/ui/button';
+import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { LOCALE_NAMES, LOCALE_TAGS, LOCALES } from '@/i18n/locales';
 import { useI18n } from '@/i18n/useI18n';
-import { cn } from '@/lib/utils';
+import { useLoaded } from '@/lib/useLoaded';
 import { clearProgress, importProgress, storageMode, type ImportCounts } from '@/storage';
 import { canShareProgressFile, downloadFile, makeProgressFile } from './progressFile';
 
@@ -39,23 +39,13 @@ async function readText(file: File): Promise<string | undefined> {
  */
 export function SettingsPage() {
   const { t, locale, setLocale } = useI18n();
-  const [inMemory, setInMemory] = useState(false);
+  const inMemory = useLoaded(storageMode).data === 'memory';
   const [outcome, setOutcome] = useState<Outcome | undefined>();
   const [confirming, setConfirming] = useState(false);
   const [canShare] = useState(canShareProgressFile);
   const fileInput = useRef<HTMLInputElement>(null);
   const languageId = useId();
   const progressId = useId();
-
-  useEffect(() => {
-    let active = true;
-    void storageMode().then((mode) => {
-      if (active) setInMemory(mode === 'memory');
-    });
-    return () => {
-      active = false;
-    };
-  }, []);
 
   async function exportFile() {
     downloadFile(await makeProgressFile());
@@ -191,10 +181,9 @@ export function SettingsPage() {
 
       <Separator />
 
-      {/* buttonVariants alone does not merge classes, so outline's border would lose to the base's border-transparent. */}
-      <Link to="/flagged" className={cn(buttonVariants({ variant: 'outline', size: 'lg' }))}>
+      <LinkButton to="/flagged" variant="outline" size="lg">
         {t.settings.flaggedLink}
-      </Link>
+      </LinkButton>
     </section>
   );
 }

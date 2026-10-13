@@ -1,23 +1,23 @@
 /**
- * The study model (phase 4 D3, D5, D11): pure functions for the numbers and
+ * The study model (phase 4 D3, D4, D5, D11): pure functions for the numbers and
  * draws every screen and the storage module use. No DOM, storage or strings.
  */
 export { seededRandom, type RandomSource } from './random';
-export { indexStates, isSeen, recentShare, type StateMap } from './states';
-export { addToRecent, drawQuestion, drawWeight, noRepeatWindow, RECENT_LIMIT } from './draw';
+export { localDateKey } from './dates';
+export { indexStates, type StateMap } from './states';
+export { addToRecent, drawQuestion, RECENT_LIMIT } from './draw';
 export {
-  ACCURACY_DAYS,
   accuracyByDay,
+  accuracyWindowStart,
   groupAccuracy,
-  localDateKey,
   READINESS_TARGET_PERCENT,
   readiness,
-  UNSEEN_SHARE,
   type DayAccuracy,
   type GroupAccuracy,
   type Readiness,
 } from './progress';
-export { bankPool, patternPool, sectionPool, topicPool } from './pools';
+export { bankPool, patternPool } from './pools';
+export { findGroup, GROUP_KINDS, groupPath, GROUPS, type BilingualName, type Group, type GroupKind } from './groups';
 export {
   drawExam,
   EXAM_DURATION_MS,
@@ -26,7 +26,10 @@ export {
   examDeadline,
   examPassed,
   examResults,
+  examResultsPath,
   examTimeLeft,
+  isFinished,
+  MINUTE_MS,
   scoreExam,
-  type ExamQuestionResult,
+  type FinishedExam,
 } from './exam';

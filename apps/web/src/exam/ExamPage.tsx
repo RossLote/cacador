@@ -1,12 +1,6 @@
 import { Route, Routes } from 'react-router';
-import type { RandomSource } from '@/model';
 import { ExamResultsPage } from './ExamResultsPage';
 import { ExamStart } from './ExamStart';
-
-export interface ExamPageProps {
-  /** Injectable for tests: the source the exam draw uses; Math.random otherwise. */
-  random?: RandomSource;
-}
 
 /**
  * The Exam screen (DESIGN.md § 6.5), routed as /exam/* so this folder owns its
@@ -14,10 +8,10 @@ export interface ExamPageProps {
  * exam or becomes the running exam after Start, and /exam/results/<id> the
  * results.
  */
-export function ExamPage({ random }: ExamPageProps) {
+export function ExamPage() {
   return (
     <Routes>
-      <Route index element={<ExamStart random={random} />} />
+      <Route index element={<ExamStart />} />
       <Route path="results/:id" element={<ExamResultsPage />} />
     </Routes>
   );
