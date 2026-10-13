@@ -10,34 +10,28 @@
     ],
     "nudge": "The archer or crossbowman shoots from 'inferior a 30 metros', within 30 metres of the animal. The near miss keeps the same 30 metres and flips the side to 'superior a', and 40 metres is further still.",
     "patterns": ["above-below"],
-    "status": "draft"
+    "status": "checked"
   },
   {
     "id": 464,
     "language": [],
     "nudge": "The shot is aimed 'à cavidade torácica', the chest, where question 474 places 'órgãos vitais'. The spinal cord and the brain are the distractors, and question 474 rejects the spinal column as a target too.",
     "patterns": [],
-    "status": "draft"
+    "status": "checked"
   },
   {
     "id": 465,
     "language": [],
     "nudge": "Outside hunting, big-game arrow and bolt tips are stowed, 'acondicionadas na aljava', in the quiver. Wrapping them in paper is not the rule, and 'sempre visíveis' is the opposite of stowing them.",
     "patterns": [],
-    "status": "draft"
+    "status": "checked"
   },
   {
     "id": 466,
-    "language": [
-      {
-        "pt": "próximo do local do disparo",
-        "en": "close to the place of the shot",
-        "note": "próximo = near, close to; not 'next'."
-      }
-    ],
-    "nudge": "The bow or crossbow is armed only 'próximo do local do disparo', close to where the shot will be taken. Carrying it 'pronto a disparar' the whole time is what that rule avoids, and carrying two arrows in the hand is the other distractor.",
+    "language": [],
+    "nudge": "The bow or crossbow is armed 'próximo do local do disparo', close to where the shot will be taken, not carried 'pronto a disparar' all the while. Carrying two arrows or bolts in the hand is the other distractor.",
     "patterns": [],
-    "status": "draft"
+    "status": "checked"
   },
   {
     "id": 467,
@@ -55,14 +49,14 @@
     ],
     "nudge": "The condition on a crossbow for big game is a 'patilha de segurança', a safety catch. The two power limits, 'inferior a 125 libras' and 'inferior a 100 libras', are the distractors.",
     "patterns": [],
-    "status": "draft"
+    "status": "checked"
   },
   {
     "id": 468,
     "language": [],
     "nudge": "Big-game tips are 'com lâminas', bladed: at least two blades (question 473), cutting at least 25 mm (question 471). A barb, 'barbela', is the near miss, and question 473 rejects 'duas lâminas com barbela' too.",
     "patterns": [],
-    "status": "draft"
+    "status": "checked"
   },
   {
     "id": 469,
@@ -80,7 +74,7 @@
     ],
     "nudge": "Between hide positions, 'locais de espera', a bow or crossbow may travel out of its case only if they are no more than 100 metres apart. The number decides: 150 and 200 metres are the distractors.",
     "patterns": [],
-    "status": "draft"
+    "status": "checked"
   },
   {
     "id": 470,
@@ -94,23 +88,18 @@
         "pt": "pelo que deve",
         "en": "so the hunter must",
         "note": "pelo que = so, and therefore: what follows is what the hunter must do as a result."
-      },
-      {
-        "pt": "Esperar que",
-        "en": "Wait for",
-        "note": "esperar que = wait for … to, not 'hope that'."
       }
     ],
     "nudge": "The detail that decides is that the prey 'afasta-se', is moving away: the hunter does not shoot but waits 'que o animal se imobilize'. Both other options are shots at a moving animal, swinging with it or calculating where it will cross the projectile.",
     "patterns": ["case"],
-    "status": "draft"
+    "status": "checked"
   },
   {
     "id": 471,
     "language": [],
     "nudge": "Big-game arrow and bolt tips must cut at least 25 mm wide, the 'largura mínima de corte'. The number decides: 20 and 22 mm fall short.",
     "patterns": [],
-    "status": "draft"
+    "status": "checked"
   },
   {
     "id": 472,
@@ -128,14 +117,14 @@
     ],
     "nudge": "Before crossing an obstacle the arrows or bolts go back 'na aljava', in the quiver, as their tips do outside hunting (question 465). Jumping with one still 'montado na arma' leaves it on the weapon even with the bow undrawn, and throwing it across is the other distractor.",
     "patterns": [],
-    "status": "draft"
+    "status": "checked"
   },
   {
     "id": 473,
     "language": [],
     "nudge": "Big-game tips need at least 'duas lâminas', two blades, the bladed tip of question 468. Adding a barb, 'com barbela', is the near miss, and 'farpas', prongs, are not blades.",
     "patterns": [],
-    "status": "draft"
+    "status": "checked"
   },
   {
     "id": 474,
@@ -153,6 +142,6 @@
     ],
     "nudge": "From a high seat the hunter still aims at 'o tórax', 'onde se encontram órgãos vitais', the same chest cavity question 464 keys. Each distractor pins a plausible reason on another target, the spinal column or the kidney.",
     "patterns": [],
-    "status": "draft"
+    "status": "checked"
   }
 ]
