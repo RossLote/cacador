@@ -7,7 +7,7 @@
       "B": "A small omnivore",
       "C": "A small herbivore"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -18,7 +18,7 @@
       "B": "In long zigzags",
       "C": "In tight zigzags"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -29,7 +29,7 @@
       "B": "Areas of very dense woodland",
       "C": "Sandy and damp areas"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -40,7 +40,7 @@
       "B": "Herbaceous plants, roots, stems, grains and succulent bark",
       "C": "Herbaceous plants, roots and small amphibians"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -51,7 +51,7 @@
       "B": "Essentially diurnal",
       "C": "Essentially nocturnal"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -62,7 +62,7 @@
       "B": "Colonies, with extensive unbranched tunnels",
       "C": "Individual dwelling burrows"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -73,18 +73,18 @@
       "B": "In a special burrow away from the colony",
       "C": "In a shallow branch of the dwelling burrow"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
     "id": 66,
-    "question": "The breeding burrows of rabbits are formed by:",
+    "question": "The breeding burrows of rabbits are formed of:",
     "options": {
       "A": "A simple and deep tunnel",
       "B": "A complex and deep tunnel",
       "C": "A simple and shallow tunnel"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -95,7 +95,7 @@
       "B": "By both sexes",
       "C": "Only by the males"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -106,7 +106,7 @@
       "B": "A single opening, lined with the female's own fur",
       "C": "A single opening, lined with grass, leaves and dry bark"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -117,7 +117,7 @@
       "B": "2 Weeks",
       "C": "3 Weeks"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -128,7 +128,7 @@
       "B": "Six months",
       "C": "Twelve months"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -139,7 +139,7 @@
       "B": "Longer than the length of its head",
       "C": "Shorter than the length of its head"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -150,7 +150,7 @@
       "B": "March to August",
       "C": "Throughout the whole year"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -161,7 +161,7 @@
       "B": "27 to 30 days",
       "C": "28 to 30 days"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -172,7 +172,7 @@
       "B": "3 to 5",
       "C": "2 to 5"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -183,7 +183,7 @@
       "B": "With eyes open and with fur",
       "C": "Blind, deaf and with fur"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -194,7 +194,7 @@
       "B": "The hunter may skin the hunted rabbits in the field",
       "C": "If skinning the hunted rabbits, give the entrails to the dogs"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -203,9 +203,9 @@
     "options": {
       "A": "Burning the rabbits that are victims of diseases",
       "B": "Not carrying out stubble burning",
-      "C": "Building burrows or “morouços (artificial rabbit warrens)”"
+      "C": "Building burrows or “morouços” (artificial rabbit warrens)"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -216,7 +216,7 @@
       "B": "10 years",
       "C": "15 years"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -227,7 +227,7 @@
       "B": "Myxomatosis",
       "C": "Brucellosis"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -238,7 +238,7 @@
       "B": "10 days",
       "C": "15 days"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -249,7 +249,7 @@
       "B": "10 days",
       "C": "15 days"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -260,7 +260,7 @@
       "B": "Not transmissible to humans",
       "C": "Transmissible to other game species"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -271,7 +271,7 @@
       "B": "Leverets",
       "C": "Listados (striped boar piglets, under 6 months)"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -282,7 +282,7 @@
       "B": "It is a species of little importance in the ecological balance of the Mediterranean habitat",
       "C": "Myxomatosis is a disease that contributes to the decline of rabbit populations"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -293,7 +293,7 @@
       "B": "In open areas without scrub, preferring rugged and rocky ground",
       "C": "In areas where scrub is abundant, preferring dry and sandy ground"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -304,7 +304,7 @@
       "B": "In areas where scrub is abundant",
       "C": "In areas of fallow land and cultivated land"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -312,10 +312,10 @@
     "question": "Which of the measures can contribute positively to the management of the European rabbit:",
     "options": {
       "A": "Carrying out restocking regardless of the origin of the animals",
-      "B": "Building burrows or “morouços (artificial rabbit warrens)” on ground where it is difficult to dig",
+      "B": "Building burrows or “morouços” (artificial rabbit warrens) on ground where it is difficult to dig",
       "C": "Carrying out restocking with domestic rabbit females to increase the reproductive capacity"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -326,7 +326,7 @@
       "B": "Longer than the length of its head",
       "C": "Shorter than the length of its head"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -337,7 +337,7 @@
       "B": "Having large ears, black at the tip",
       "C": "Having large and rounded ears, shorter than the length of the head"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -348,7 +348,7 @@
       "B": "Having forelimbs larger than the hind limbs",
       "C": "Having a size similar to that of the rabbit"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -359,7 +359,7 @@
       "B": "Gain a good capacity for zigzag escape",
       "C": "Gain great speed"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -370,7 +370,7 @@
       "B": "In Beira Interior and south of the Tejo",
       "C": "In Beira Litoral and south of the Tejo"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -381,7 +381,7 @@
       "B": "Rugged and stony ground",
       "C": "Ground with dense cover"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -392,7 +392,7 @@
       "B": "Prefers ground with dense cover.",
       "C": "Prefers flat, damp ground with little cover."
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -403,7 +403,7 @@
       "B": "A carnivorous species",
       "C": "An omnivorous species"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -414,7 +414,7 @@
       "B": "An animal that lives in large colonies",
       "C": "An animal that lives in pairs"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -425,7 +425,7 @@
       "B": "Leverets",
       "C": "Listados (striped boar piglets, under 6 months)"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -436,7 +436,7 @@
       "B": "40 to 42 days",
       "C": "42 to 44 days"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -447,7 +447,7 @@
       "B": "Blind, deaf and with fur",
       "C": "With eyes closed and with fur"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -458,7 +458,7 @@
       "B": "3 weeks",
       "C": "4 weeks"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -469,7 +469,7 @@
       "B": "2 to 4",
       "C": "1 to 3"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -480,7 +480,7 @@
       "B": "2 to 3",
       "C": "2 to 4"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -491,7 +491,7 @@
       "B": "Having large ears with a black tip",
       "C": "Having small and pointed ears"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -502,7 +502,7 @@
       "B": "Open plains, cultivated or fallow",
       "C": "Rugged and stony areas"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   }
 ]
