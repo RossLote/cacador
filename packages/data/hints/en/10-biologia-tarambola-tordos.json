@@ -1,120 +1,126 @@
 [
   {
     "id": 304,
-    "language": [],
-    "nudge": "",
-    "patterns": [],
+    "language": [
+      {
+        "pt": "distingue-se do pombo-bravo por ser mais pequeno",
+        "en": "is distinguished from the stock dove by being smaller",
+        "note": "distinguir-se de X por ser … = to be told from X by being …: the comparison runs from the first bird named to the second. mais pequeno is the European Portuguese for menor, smaller."
+      }
+    ],
+    "nudge": "The true statement is that the narceja-comum is maior, with o bico mais comprido, than the narceja-galega; question 302 also gives it the larger wingspan. The pombo-torcaz is not mais pequeno but o maior dos três pombos (question 273), so that statement runs the wrong way.",
+    "patterns": ["which-statement", "comparative"],
     "status": "draft"
   },
   {
     "id": 305,
     "language": [],
-    "nudge": "",
+    "nudge": "The golden plover feeds sobretudo on insetos e larvas, insects and their larvae. Neither distractor has insects at all: one is worms, snails and grain, the other molluscs, crustaceans and worms.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 306,
     "language": [],
-    "nudge": "",
+    "nudge": "Two: the tarambola-dourada, a game species, and the tarambola-prateada, which cannot be hunted (question 342). Three and one are the distractors.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 307,
     "language": [],
-    "nudge": "",
-    "patterns": [],
+    "nudge": "Tarambolas visit Portugal apenas durante o inverno, in winter only. Each distractor adds a second season, the spring or the autumn.",
+    "patterns": ["only"],
     "status": "draft"
   },
   {
     "id": 308,
     "language": [],
-    "nudge": "",
+    "nudge": "The golden plover is found especialmente em zonas interiores, inland above all. Exclusivamente em áreas costeiras, only on the coast, gets the place wrong, and wooded ground is the thrushes' habitat (question 315), not the plover's.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 309,
     "language": [],
-    "nudge": "",
+    "nudge": "Thrushes are pássaros de tamanho médio, medium-sized birds, neither small nor large. The largest of them is the tordeia (question 312).",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 310,
     "language": [],
-    "nudge": "",
+    "nudge": "Four: the tordo-comum, the tordo-ruivo, the tordo-zornal and the tordeia, the species questions 312 to 316 ask about. The melro, the blackbird, is left out of the count.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 311,
     "language": [],
-    "nudge": "",
+    "nudge": "Thrushes eat invertebrados e frutos, invertebrates and fruit, as question 317 also keys. Insetos e larvas is the golden plover's diet (question 305), and neither distractor has any fruit.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 312,
     "language": [],
-    "nudge": "",
+    "nudge": "The tordeia, the mistle thrush, is the largest thrush; it is also the one that stays all year (question 313) and shows white underwings in flight (question 314). The tordo-zornal and the tordo-comum are the distractors.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 313,
     "language": [],
-    "nudge": "",
+    "nudge": "The resident thrush, sedentária, is the tordeia, the mistle thrush. The tordo-ruivo only winters here and nests in northern Europe (question 316).",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 314,
     "language": [],
-    "nudge": "",
+    "nudge": "The tordeia, the mistle thrush, shows a parte inferior das asas de cor branca, white underwings, in flight. The tordo-ruivo's name points to ruivo, rufous, not white; the tordeia is also the largest thrush (question 312).",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 315,
     "language": [],
-    "nudge": "",
+    "nudge": "Thrushes keep to zonas arborizadas ou às suas orlas, woodland and its edges, as question 318 also keys. Each distractor keeps the edges but changes the ground, to wetland or to cereal fields.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 316,
     "language": [],
-    "nudge": "",
+    "nudge": "The fieldfare and the redwing only winter here, invernantes, and nidificam em países do Norte da Europa, nest in northern Europe. The ducks of question 246 follow the same pattern, wintering here and breeding in northern and central Europe.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 317,
     "language": [],
-    "nudge": "",
-    "patterns": [],
+    "nudge": "The true statement is the thrushes' diet, invertebrados e frutos (question 311). The saca-rabos eats a muito variada diet, not mostly rabbit (question 122), and the perdigotos start on an essencialmente insectívora diet (question 183), unlike the adult partridge's grain and plant food (question 184).",
+    "patterns": ["which-statement"],
     "status": "draft"
   },
   {
     "id": 318,
     "language": [],
-    "nudge": "",
+    "nudge": "Thrushes are found in zonas arborizadas ou nas suas orlas, woodland and its edges (question 315). Waterlogged ground is the moorhen's kind of place (question 258), and large cultivated plains are more the hare's (question 104).",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 319,
     "language": [],
-    "nudge": "",
+    "nudge": "A Carrion crow: a big bird black all over, bill, legs and eye included, with a heavy, slightly arched black bill. The Common blackbird is far smaller, the male with an orange-yellow bill and eye-ring, and the Common starling is short-tailed, with a slim pointed bill and glossy, pale-spotted plumage.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 320,
     "language": [],
-    "nudge": "",
+    "nudge": "A Eurasian jay: pinkish-brown body, a black-streaked whitish crown, a black moustache stripe, a bright blue wing patch barred with black, a white rump and a black tail. The Eurasian magpie is black and white with a long tail, and the Common blackbird is plain black or brown.",
     "patterns": [],
     "status": "draft"
   }

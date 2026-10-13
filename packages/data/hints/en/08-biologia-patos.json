@@ -2,273 +2,321 @@
   {
     "id": 228,
     "language": [],
-    "nudge": "",
+    "nudge": "A Northern pintail drake: chocolate-brown head with a white stripe running up the side of a long, slender neck, grey flanks, a cream patch before the black tail end and long, pointed central tail feathers; question 251 makes the neck, comparativamente mais longo e esbelto, its mark. The Mallard drake has a glossy green head and white collar (question 229), and the Northern shoveler a green head over a huge, broad bill.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 229,
     "language": [],
-    "nudge": "",
+    "nudge": "A Mallard drake: glossy bottle-green head, yellow bill, a narrow white collar above a chestnut-brown breast, pale grey body and curled black central tail feathers; its speculum is the espelho azul of question 253. The Northern pintail has a brown head with a white neck stripe and a long pointed tail (question 228), and the Gadwall drake is grey all over with a black rear.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 230,
     "language": [],
-    "nudge": "",
+    "nudge": "Dabbling ducks are de tamanho pequeno a médio, small to medium. Question 240 gives diving ducks the same range, which is why question 254 rejects São maiores as the way to tell the two groups apart.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 231,
     "language": [],
-    "nudge": "",
+    "nudge": "Dabbling ducks have pescoço e patas de tamanho médio, a medium neck and legs. Pescoço, asas e patas curtas, all short, is the diving ducks' build (question 241), and long neck and legs fit neither group.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 232,
     "language": [],
-    "nudge": "",
+    "nudge": "The dabbling duck's mark is the espelho alar geralmente com brilho metálico, a speculum with a metallic gloss, as question 235 also keys it. The franja alar branca ou pálida, the pale wing bar, belongs to the diving ducks (question 239), and coloração quase sempre escura is keyed for neither group.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 233,
-    "language": [],
-    "nudge": "",
+    "language": [
+      {
+        "pt": "variável conforme as espécies",
+        "en": "variable according to the species",
+        "note": "conforme = depending on, not 'conforming': the dimorphism differs from one species to the next."
+      }
+    ],
+    "nudge": "Most dabbling ducks show dimorfismo sexual acentuado, a marked difference between drake and duck. Variável conforme as espécies is the diving ducks' answer (question 242), and Não apresentarem dimorfismo is wrong for both.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 234,
-    "language": [],
-    "nudge": "",
-    "patterns": [],
+    "language": [
+      {
+        "pt": "não apresenta",
+        "en": "does not show",
+        "note": "não before the verb turns the stem round: it asks for the one duck that lacks a speculum."
+      }
+    ],
+    "nudge": "The zarro-comum is a diving duck, and diving ducks carry a franja alar, a pale wing bar, in place of a speculum (question 239). The pato-real has its espelho azul (question 253) and the frisada drake a small white one (question 248); question 255 repeats this question.",
+    "patterns": ["negative-stem"],
     "status": "draft"
   },
   {
     "id": 235,
     "language": [],
-    "nudge": "",
+    "nudge": "The espelho alar geralmente com brilho metálico, the glossy speculum, belongs to the patos de superfície, the dabbling ducks (question 232). Diving ducks show a franja alar branca ou pálida instead (question 239).",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 236,
     "language": [],
-    "nudge": "",
+    "nudge": "A dabbling duck feeds by up-ending: it pulls up plantas do fundo com o terço posterior emerso, its rear third out of the water. Feeding através do mergulho, by diving, is what names the diving ducks, and the dabblers' food is microrganismos and plants, not animal (question 238).",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 237,
     "language": [],
-    "nudge": "",
+    "nudge": "Dabbling ducks spring off the water quase na vertical, almost straight up, the mark question 254 uses to tell them from diving ducks. Patinharem na água antes de levantar voo, pattering along the surface first, is the diving ducks' take-off (question 243), and a dabbler does not dive, so it does not emerge anywhere (question 236).",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 238,
     "language": [],
-    "nudge": "",
+    "nudge": "Dabbling ducks live on microrganismos em suspensão na água e plantas do fundo: food filtered from the water and plants from the bottom. Moluscos, vermes e plantas is the diving ducks' diet (question 245), and the fish list is keyed for neither.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 239,
     "language": [],
-    "nudge": "",
+    "nudge": "Diving ducks have a franja alar branca ou pálida, a white or pale wing bar. The espelho com reflexos metálicos is the dabbling ducks' (questions 232 and 235), and coloração quase sempre escura is keyed for neither group.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 240,
     "language": [],
-    "nudge": "",
+    "nudge": "Diving ducks are de tamanho pequeno a médio, small to medium. Question 230 gives dabbling ducks the very same range, so size does not separate the two groups.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 241,
     "language": [],
-    "nudge": "",
+    "nudge": "Diving ducks are built short: pescoço, asas e patas curtas, short neck, wings and legs. Pescoço e patas de tamanho médio is the dabbling ducks' build (question 231).",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 242,
-    "language": [],
-    "nudge": "",
+    "language": [
+      {
+        "pt": "variável conforme as espécies",
+        "en": "variable according to the species",
+        "note": "conforme = depending on, not 'conforming': the dimorphism differs from one species to the next."
+      }
+    ],
+    "nudge": "In diving ducks the dimorfismo sexual is variável conforme as espécies: marked in some species, slight in others. Acentuado na maioria das espécies, marked in most, is the dabbling ducks' answer (question 233).",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 243,
     "language": [],
-    "nudge": "",
+    "nudge": "A diving duck has to patinhar na água, patter along the surface, before it can take off. Levantarem voo quase na vertical, straight up, is the dabbling ducks' take-off (questions 237 and 254).",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 244,
-    "language": [],
-    "nudge": "",
-    "patterns": [],
+    "language": [
+      {
+        "pt": "é vulgar encontrar",
+        "en": "is it common to find",
+        "note": "vulgar = common, usual; not 'vulgar'."
+      }
+    ],
+    "nudge": "Every species in the keyed set lives on water: a duck, the galinha-d’água of charcos, lagoas e zonas alagadas (question 258) and the galeirão, which gathers in grandes bandos in winter (question 264). Each distractor slips in one land animal: the lebre, whose ground is pousios e terras cultivadas (question 93), or the pombo-torcaz.",
+    "patterns": ["list-options"],
     "status": "draft"
   },
   {
     "id": 245,
     "language": [],
-    "nudge": "",
-    "patterns": [],
+    "nudge": "Diving ducks eat moluscos, vermes e plantas: molluscs and worms, and plants too. The near-miss keeps the molluscs and worms but swaps the plants for peixes, and microrganismos with plantas do fundo is the dabbling ducks' diet (question 238).",
+    "patterns": ["list-options"],
     "status": "draft"
   },
   {
     "id": 246,
-    "language": [],
-    "nudge": "",
+    "language": [
+      {
+        "pt": "À exceção do pato-real e do marreco, as restantes",
+        "en": "With the exception of the mallard and the garganey, the remaining",
+        "note": "à exceção de = except for: the stem sets these two ducks aside and asks about all the rest, as restantes."
+      }
+    ],
+    "nudge": "The other ducks invernam em Portugal e criam no Norte e Centro da Europa: they winter here and breed in northern and central Europe. All three options share the wintering, so the breeding area decides; southern Europe is wrong in both distractors.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 247,
     "language": [],
-    "nudge": "",
+    "nudge": "Most of Portugal's mallard are sedentária, resident all year, which fits question 246 setting the pato-real aside from the ducks that only winter here. Migradora invernante and migradora de passagem are the distractors.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 248,
-    "language": [],
-    "nudge": "",
+    "language": [
+      {
+        "pt": "cujo macho possui",
+        "en": "whose male has",
+        "note": "cujo = whose: the speculum in the options is the male gadwall's."
+      }
+    ],
+    "nudge": "The gadwall drake's speculum is pequeno branco, small and white, edged above with black and bright rufous. Green speculums are not the gadwall's; the mallard's is the espelho azul (question 253).",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 249,
     "language": [],
-    "nudge": "",
+    "nudge": "The shoveler drake has a cabeça verde, peito branco, and a mancha castanha nos flancos e ventre: green head, white breast, chestnut flanks and belly. The near-miss keeps the green head but gives it a peito castanho, a brown breast, which the shoveler does not have.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 250,
     "language": [],
-    "nudge": "",
+    "nudge": "The pochard duck is brownish, with an anel cinzento-azulado à volta do bico, a blue-grey ring around the bill. The near-miss keeps the brownish colour but gives an orange bill, and a black spatulate bill is not hers either.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 251,
     "language": [],
-    "nudge": "",
+    "nudge": "The pintail's mark is its neck: comparativamente mais longo e esbelto, longer and slimmer than other ducks', as the photo in question 228 shows. A big spatulate bill and a brick-coloured breast are not the pintail's marks.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 252,
     "language": [],
-    "nudge": "",
+    "nudge": "The pochard drake has a cabeça e pescoço castanho avermelhado over a grey body, peito e corpo cinzentos. The other two keep a reddish or brick-coloured head but add a white eyebrow or a greyish-brown body; the drab brownish colouring is the female's (question 250).",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 253,
     "language": [],
-    "nudge": "",
+    "nudge": "The espelho azul, the blue speculum, is the pato-real's, the mallard's. The common pochard is a diving duck with no speculum at all (questions 234 and 255).",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 254,
     "language": [],
-    "nudge": "",
+    "nudge": "Dabbling ducks levantam voo quase na vertical, almost straight up, while diving ducks patter along the water first (questions 237 and 243). Size does not separate them, since both groups are pequeno a médio (questions 230 and 240).",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 255,
-    "language": [],
-    "nudge": "",
-    "patterns": [],
+    "language": [
+      {
+        "pt": "não apresenta",
+        "en": "does not show",
+        "note": "não before the verb turns the stem round: it asks for the one duck that lacks a speculum."
+      }
+    ],
+    "nudge": "As in question 234, the zarro-comum is a diving duck, with a franja alar in place of a speculum (question 239). The pato-real has its espelho azul (question 253) and the frisada drake a small white speculum (question 248).",
+    "patterns": ["negative-stem"],
     "status": "draft"
   },
   {
     "id": 256,
     "language": [],
-    "nudge": "",
+    "nudge": "The moorhen's bill is vermelho com a ponta amarela, red with a yellow tip. The near-miss swaps the two colours, and a white tip is wrong; the coot's bill is the white one (question 263).",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 257,
     "language": [],
-    "nudge": "",
+    "nudge": "The moorhen's frontal shield is vermelha, red, like the base of its bill (question 256). A white shield, placa frontal branca, is the coot's (question 263).",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 258,
     "language": [],
-    "nudge": "",
-    "patterns": [],
+    "nudge": "The moorhen is common in charcos, lagoas, zonas alagadas e cursos de água lentos: still and slow water. The near-misses keep most of the list but swap the slow watercourses for muito rápidos or temporários.",
+    "patterns": ["list-options"],
     "status": "draft"
   },
   {
     "id": 259,
     "language": [],
-    "nudge": "",
+    "nudge": "The moorhen lives on still and slow water: charcos, lagoas, zonas alagadas e cursos de água lentos, the same list as question 258. Fast streams with bare banks, and scrub with abundant trees, are the distractors.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 260,
     "language": [],
-    "nudge": "",
+    "nudge": "The moorhen is essencialmente crepuscular, active mostly at dusk and dawn. Essencialmente diurna, by day, and essencialmente noturna, by night, are the distractors.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 261,
     "language": [],
-    "nudge": "",
+    "nudge": "A Common moorhen: sooty black-brown body, a red frontal shield and a red bill with a yellow tip (questions 256 and 257), a white line along the flanks, white under the tail, and long greenish legs. The Eurasian coot is all black with a white bill and white shield (question 263), and the Northern lapwing is a black-and-white plover with a long wispy crest.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 262,
-    "language": [],
-    "nudge": "",
-    "patterns": [],
+    "language": [
+      {
+        "pt": "em relação à galinha-d’água",
+        "en": "in relation to the common moorhen",
+        "note": "em relação a = compared with: each option sets the coot against the moorhen. vivo in the options is lively, not 'alive'."
+      }
+    ],
+    "nudge": "Beside the moorhen the coot looks mais pesado e menos vivo, heavier and less lively. Each distractor flips one of the two directions, to menos pesado or to mais vivo.",
+    "patterns": ["comparative"],
     "status": "draft"
   },
   {
     "id": 263,
     "language": [],
-    "nudge": "",
+    "nudge": "The coot has a bico branco e placa frontal branca, a white bill and a white shield. The moorhen's shield is red (question 257) and its bill red with a yellow tip (question 256), so an option with red in it borrows from the moorhen.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 264,
     "language": [],
-    "nudge": "",
+    "nudge": "In winter coots constituem grandes bandos, gather in large flocks, as question 266 also keys. Pairs and solitary birds are wrong; in the breeding season they turn combativos e extremamente territoriais (question 265).",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 265,
     "language": [],
-    "nudge": "",
+    "nudge": "In the breeding season coots are combativos e extremamente territoriais, combative and fiercely territorial. Large flocks belong to the winter (questions 264 and 266), not the breeding season.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 266,
     "language": [],
-    "nudge": "",
+    "nudge": "Coots form grandes bandos in inverno, winter (question 264). In the breeding season they are territorial instead (question 265).",
     "patterns": [],
     "status": "draft"
   }
