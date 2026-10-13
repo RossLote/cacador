@@ -512,6 +512,20 @@ Four phases, each its own epic, in order.
        its count of entries with an empty `language` list, the constructions it left
        untagged for want of a pattern (or none) and the translation errors it found (or
        none); a checker's close reason lists the ids it changed.
+   11. Language notes are shown before answering, so together they must not single
+       out an option. A note may sit on a phrase found only in the keyed option when
+       another option also carries a note (in the precedent's entry 5 the other note,
+       'apenas é válida para algumas espécies', is on a distractor). An entry whose
+       option-level notes all sit on the keyed option singles it out: that note moves
+       to the near miss's matching phrase, is matched by a note there, or is dropped.
+   12. The Portuguese is the exam as the official PDF prints it, its own typos
+       included ('a Sul o Tejo' in question 92, 'até ás' in question 153). A printed
+       typo stays as printed, a language note's `pt` quotes it verbatim (§ 4 rule 5),
+       and it is not reported as a Portuguese error; the extractor's correction table
+       (rule 10) is for extraction slips only.
+   13. A nudge refers to an option by its Portuguese, quoted, never by its letter or
+       its place in the list (the first option, the third): the quote points at the
+       words that carry the fact, as rule 5 asks.
 4. **App**: § 6 to § 8.
 
 ## 6. App behaviour
@@ -737,3 +751,26 @@ precedent for every choice here, minus the server: this app has no backend.
 - **2026-10-13, Hint beads run on Opus.** Writer and checker beads run on Opus: content
   judgement is not extraction work. The scaffolding bead, which copies the phase 2
   wiring and counts, runs on Sonnet.
+- **2026-10-13, No positional tell in language notes.** A language note may sit on a
+  phrase found only in the keyed option when another option also carries a note (the
+  precedent's entry 5), but an entry whose option-level notes all sit on the keyed
+  option singles it out before answering, so that note is moved to the near miss's
+  matching phrase, matched there, or dropped (§ 5 step 3 rule 11). Chosen over
+  allowing every keyed-only note and over banning them all (cac-eyh.17's first
+  reading). Reason: notes are shown before answering and must not single out an
+  option, while across the checked files distractors carry more notes (77) than keyed
+  options (43), so no file-wide tell exists (orchestrator ruling, cac-eyh checker
+  pass).
+- **2026-10-13, Printed typos stay as printed.** A typo the official PDF itself prints
+  stays in `questions/` as the exam prints it and is not reported as a Portuguese
+  error: question 92 option C keeps 'a Sul o Tejo' and question 153 option A keeps
+  'até ás' (§ 5 step 3 rule 12). Chosen over a correction-table fix to 'a Sul do
+  Tejo'. Reason: the bank is reproduced as the exam prints it, the typo changes no
+  reading (the translation says 'south of the Tejo'), and the correction table exists
+  for extraction slips (orchestrator ruling, cac-eyh writer pass).
+- **2026-10-13, Options named by their Portuguese, never by position.** A nudge refers
+  to an option by its quoted Portuguese, never by its letter or its place in the list
+  (§ 5 step 3 rule 13). Reason: the content review found nudges that picked out a
+  distractor by its position, "the third option" in question 178 (fixed with 202 in
+  cac-eyh.25); a position names the option just as the letter does, and the quote is
+  what the nudge decision asks it to carry (cac-eyh content review).

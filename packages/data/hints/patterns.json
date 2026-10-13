@@ -9,7 +9,7 @@
     "slug": "only",
     "pt": "só, apenas",
     "en": "Only (só, apenas)",
-    "note": "só and apenas, like unicamente and a única, limit what follows to that and nothing else (só às narcejas, apenas é válida para algumas espécies). Tag when the answer turns on the limit: an option with só set against a wider one (só em zonas de caça against em todos os locais), or a stem that asks for the one case (só é eficaz … em que situação)."
+    "note": "só and apenas, like unicamente, exclusivamente, simplesmente and a única, limit what follows to that and nothing else (só às narcejas, apenas é válida para algumas espécies). Tag when the answer turns on the limit: an option with it set against a wider one (só em zonas de caça against em todos os locais; exclusivamente carnívora against omnívora), or a stem that asks for the one case or group it limits (só é eficaz … em que situação; composto só por rapinas diurnas); not when every option carries the same limit, which then decides nothing."
   },
   {
     "slug": "provided-that",
@@ -39,7 +39,7 @@
     "slug": "comparative",
     "pt": "mais … que, menos … que",
     "en": "Comparisons (mais, menos … que)",
-    "note": "mais X que and menos X que compare two things, often two at once (cabeça mais forte e menos afilada; mais pesado e menos vivo), and each distractor flips one direction. Tag when the answer turns on the direction of a comparison, or of a superlative in the stem (distribuição menos alargada); not when the options differ in a noun or a number."
+    "note": "mais X que and menos X que compare two things, often two at once (cabeça mais forte e menos afilada; mais pesado e menos vivo), and each distractor flips one direction; a superlative stem asks which ranks first (o maior dos três, maior envergadura, distribuição menos alargada, onde há maior probabilidade, a época de reprodução mais intensa). Tag when the answer turns on the direction of a comparison in the options or on a superlative ranking stem, whatever the options are; not for a maior parte (most of), not for mais de or menos de before a number (above-below), and not when a comparison is incidental and a noun or a number decides."
   },
   {
     "slug": "not-very",
@@ -75,7 +75,7 @@
     "slug": "name-question",
     "pt": "dá-se o nome de, designa-se",
     "en": "What it is called (dá-se o nome de, designa-se)",
-    "note": "The stem asks for a Portuguese name or for what a name denotes; dá-se o nome de X a Y reads 'Y is called X', so check which side the stem gives (dá-se o nome de navalhas aos dentes asks which teeth). Tag every question that asks for a name or its meaning; the name under test is never glossed in a language note."
+    "note": "The stem asks for a Portuguese name or for what a name denotes; dá-se o nome de X a Y reads 'Y is called X', so check which side the stem gives (dá-se o nome de navalhas aos dentes asks which teeth). Tag every stem that asks for a name or for what a name or term denotes, definition stems included (Consideram-se terrenos não cinegéticos, Época venatória é, O que é o processo de cetraria?), and stems that test what a term kept in Portuguese under § 5 step 2 rule 11 allows (No processo de caça a corricão não é permitido utilizar); the name under test is never glossed in a language note."
   },
   {
     "slug": "which-statement",
@@ -93,12 +93,12 @@
     "slug": "case",
     "pt": "Um caçador que …",
     "en": "A case to judge",
-    "note": "The stem sets out one hunter's situation (month, ground, method, quarry, number of dogs) and asks whether it is lawful, which licence it needs or which infraction it commits; several details are given and only one or two decide. Tag when the answer turns on spotting which detail of the case matters."
+    "note": "The stem names a hunter (um caçador, um grupo de caçadores), sets out the situation (month, ground, method, quarry, number of dogs) and asks whether it is lawful, which licence it needs or which infraction it commits; several details are given and only one or two decide. Tag when the answer turns on spotting which detail of the case matters; not a stem that gives the same details without naming a hunter (Em janeiro, em terrenos cinegéticos não ordenados, pode ser autorizada a caça às narcejas de salto?), nor one that names a hunter only to ask how to handle a single moment (o caçador ao preparar o disparo com arco ou besta)."
   },
   {
     "slug": "list-options",
     "pt": "opções em lista",
     "en": "Lists in the options",
-    "note": "Each option lists several species, places, days or methods, and a list is right only if every item in it is; a distractor usually shares all but one item with the keyed list (Patos, galinha-d’água e galeirão; Patos, galinhola e galeirão). Tag when the answer turns on the item that differs."
+    "note": "Each option lists like items (species, places, days, methods, foods), and a list is right only if every item in it is; a distractor is wrong by one item it adds, drops or swaps against the keyed list (Patos, galinha-d’água e galeirão against Patos, galinhola e galeirão). Tag when the answer turns on that one item; not when an option bundles attributes of one thing and a distractor flips one (Cegos, surdos e sem pelo against Cegos, surdos e com pelo), nor when each distractor carries two or more wrong items (Às narcejas e tarambola-dourada)."
   }
 ]
