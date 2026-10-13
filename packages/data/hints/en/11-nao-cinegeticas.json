@@ -1,289 +1,476 @@
 [
   {
     "id": 321,
-    "language": [],
-    "nudge": "",
+    "language": [
+      {
+        "pt": "a caça em particular",
+        "en": "on game in particular",
+        "note": "caça here is the game, the animals hunted, set against presas em geral; not the activity of hunting."
+      }
+    ],
+    "nudge": "Raptors have 'um efeito de seleção': they take mainly the old and sick (question 338) and leave the prey populations healthier. Extermínio overstates the effect and insignificante denies it, both rejected in questions 338 and 353.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 322,
-    "language": [],
-    "nudge": "",
-    "patterns": [],
+    "language": [
+      {
+        "pt": "Qual das frases está incorreta?",
+        "en": "Which of the sentences is incorrect?",
+        "note": "incorreta = incorrect, wrong: the stem asks for the one false sentence, so the two true ones are the distractors."
+      }
+    ],
+    "nudge": "The tawny owl, 'coruja-do-mato', is an owl and not 'uma ave de rapina diurna', so that sentence is the false one. The Eurasian goshawk does hunt by day, and the griffon vulture is 'um necrófago', a scavenger.",
+    "patterns": ["negative-stem", "which-statement"],
     "status": "draft"
   },
   {
     "id": 323,
-    "language": [],
-    "nudge": "",
-    "patterns": [],
+    "language": [
+      {
+        "pt": "só por rapinas diurnas",
+        "en": "only of diurnal birds of prey",
+        "note": "só = only: every bird in the group must be a diurnal raptor, so one bird that is not diurnal spoils a group."
+      }
+    ],
+    "nudge": "'Milhafres, falcões e peneireiros', kites, falcons and kestrels, are all diurnal raptors. Each distractor slips owls in: 'mochos' in one and 'bufos, corujas' in the other, and question 322 shows the tawny owl, an owl, is not diurnal.",
+    "patterns": ["only", "list-options"],
     "status": "draft"
   },
   {
     "id": 324,
     "language": [],
-    "nudge": "",
-    "patterns": [],
+    "nudge": "Raptors are 'importantes para a caça e para a agricultura', because they take mainly old and sick animals and keep populations healthy (question 338). A 'fator de desequilíbrio' and 'o principal fator de diminuição da caça' are harm the bank rejects, and question 330 keys the same sentence.",
+    "patterns": ["which-statement"],
     "status": "draft"
   },
   {
     "id": 325,
     "language": [],
-    "nudge": "",
+    "nudge": "The Iberian lynx is 'exclusivamente carnívora', a meat-eater whose diet rests on European rabbits (question 326). Omnívora would put plants in its diet, and insectívora gives it the wrong prey altogether.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 326,
     "language": [],
-    "nudge": "",
+    "nudge": "The Iberian lynx's diet rests on 'coelhos-bravos', the European rabbit. Hares and partridges are the near misses, other small game, but not what its diet is based on.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 327,
     "language": [],
-    "nudge": "",
+    "nudge": "Each Iberian lynx holds 'entre 500 e 800 hectares'. The three ranges overlap, so fix both ends: 500 to 800.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 328,
     "language": [],
-    "nudge": "",
+    "nudge": "In Portugal the great bustard is 'residente': it stays all year. Migradora de inverno and migradora de verão would make it a seasonal visitor, in winter or in summer.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 329,
     "language": [],
-    "nudge": "",
+    "nudge": "Great bustards are seen 'nas planícies cerealíferas abertas', open cereal-growing plains. Steep rocky ground and dense woodland are the opposite of that open country.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 330,
-    "language": [],
-    "nudge": "",
-    "patterns": [],
+    "language": [
+      {
+        "pt": "embora não seja permitida a sua caça",
+        "en": "although its hunting is not permitted",
+        "note": "embora = although, followed by the subjunctive seja: the option claims both that the bustard is game and that hunting it is banned."
+      }
+    ],
+    "nudge": "Raptors are 'importantes para a caça e para a agricultura', the sentence question 324 keys too. The great bustard is not game at all (question 331), and the calendário venatório lists what may be hunted (question 53), not what is 'protegida'.",
+    "patterns": ["which-statement"],
     "status": "draft"
   },
   {
     "id": 331,
     "language": [],
-    "nudge": "",
+    "nudge": "The great bustard 'não é uma espécie cinegética': it is protected, so no season and no ICNF public notice opens it. Both distractors call it 'uma espécie cinegética', one with an October to December season, one under an edital.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 332,
-    "language": [],
-    "nudge": "",
-    "patterns": [],
+    "language": [
+      {
+        "pt": "Durante a maior parte do ano",
+        "en": "During most of the year",
+        "note": "a maior parte de = most of: the stem asks for the usual grouping, not one that holds every month."
+      }
+    ],
+    "nudge": "For most of the year great bustards keep 'em bandos separados por sexo', males in one flock and females in another. Flocks 'dos dois sexos' and pairs are the near misses; question 357 asks the same.",
+    "patterns": ["both"],
     "status": "draft"
   },
   {
     "id": 333,
     "language": [],
-    "nudge": "",
+    "nudge": "The Iberian lynx is 'uma espécie não cinegética', a protected species that may not be hunted. Caça maior and caça menor are the two kinds of game, so both distractors make it huntable.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 334,
     "language": [],
-    "nudge": "",
+    "nudge": "The Iberian lynx lives in 'matagais densos, em áreas de escassa influência humana': thick scrub where people rarely go. Open cereal land is the great bustard's habitat (question 329), and rugged ground cut through with 'áreas cultivadas' brings people close.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 335,
-    "language": [],
-    "nudge": "",
-    "patterns": [],
+    "language": [
+      {
+        "pt": "pelo que",
+        "en": "and therefore",
+        "note": "pelo que = so, and therefore: the options give the consequence of full protection, not a means."
+      },
+      {
+        "pt": "sempre que provoquem prejuízos",
+        "en": "whenever they cause damage",
+        "note": "sempre que = whenever, each time that, with the subjunctive provoquem; not 'always that'."
+      }
+    ],
+    "nudge": "Full protection, 'integralmente protegidas', means they 'nunca podem ser caçadas', with no exception. Neither ICNF authorisation nor damage to farming opens them, as questions 348 and 361 confirm.",
+    "patterns": ["always-never"],
     "status": "draft"
   },
   {
     "id": 336,
-    "language": [],
-    "nudge": "",
+    "language": [
+      {
+        "pt": "indicadores seguros",
+        "en": "reliable indicators",
+        "note": "seguro here = reliable, sure: not 'safe' or 'insured'."
+      }
+    ],
+    "nudge": "Many raptors of many kinds show that a region 'possui comunidades animais ricas e sãs', rich and healthy animal life. Degraded habitat and thin prey populations point the other way: question 338 rejects the idea that degradation increases raptors.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 337,
-    "language": [],
-    "nudge": "",
-    "patterns": [],
+    "language": [
+      {
+        "pt": "Quando se pretende utilizar em cetraria",
+        "en": "When the intention is to use it in falconry",
+        "note": "pretender = to intend, a false friend: not 'pretend'."
+      },
+      {
+        "pt": "Desde que tenha carta de caçador de cetreiro",
+        "en": "Provided the hunter has a falconer's hunter's certificate",
+        "note": "desde que = provided that, followed by the subjunctive tenha: it turns the option into a condition, not a flat yes."
+      }
+    ],
+    "nudge": "The western osprey is a bird of prey, and birds of prey 'nunca podem ser caçadas' (question 335). Neither falconry nor a falconer's certificate is a way round that, so the 'Desde que' condition opens nothing.",
+    "patterns": ["always-never", "provided-that"],
     "status": "draft"
   },
   {
     "id": 338,
-    "language": [],
-    "nudge": "",
-    "patterns": [],
+    "language": [
+      {
+        "pt": "contribuindo para a sanidade das populações",
+        "en": "contributing to the health of the populations",
+        "note": "sanidade = health, soundness: a false friend, not 'sanity'."
+      }
+    ],
+    "nudge": "Raptors 'capturam, preferencialmente, animais velhos e doentes', so they keep prey populations healthy. They do not 'exterminam a caça' (question 321 calls their effect seleção), and habitat degradation does not increase them (question 336).",
+    "patterns": ["which-statement"],
     "status": "draft"
   },
   {
     "id": 339,
-    "language": [],
-    "nudge": "",
-    "patterns": [],
+    "language": [
+      {
+        "pt": "não é cinegética",
+        "en": "is not a game species",
+        "note": "não é = is not: the stem asks for the one species that is not game, the protected one."
+      }
+    ],
+    "nudge": "The Eurasian sparrowhawk, 'gavião', is a bird of prey and so protected. Jay and blackbird, 'gaio' and 'melro', are game birds, a corvid and a thrush.",
+    "patterns": ["negative-stem"],
     "status": "draft"
   },
   {
     "id": 340,
-    "language": [],
-    "nudge": "",
-    "patterns": [],
+    "language": [
+      {
+        "pt": "não é cinegética",
+        "en": "is not a game species",
+        "note": "não é = is not: the stem asks for the one species that is not game, the protected one."
+      }
+    ],
+    "nudge": "The northern lapwing, 'abibe', is protected and not game. The Egyptian mongoose is game, hunted by batida in January and February (question 436), and the blackbird is a game thrush.",
+    "patterns": ["negative-stem"],
     "status": "draft"
   },
   {
     "id": 341,
-    "language": [],
-    "nudge": "",
-    "patterns": [],
+    "language": [
+      {
+        "pt": "uma perdiz-cinzenta ou charrela",
+        "en": "a grey partridge",
+        "note": "ou here joins two Portuguese names for the same bird, so it is one species, not a choice of two."
+      }
+    ],
+    "nudge": "The grey partridge, 'perdiz-cinzenta ou charrela', is protected and may be hunted 'em nenhuma situação'. Neither managed ground nor an ICNF public notice opens it; question 347 asks the same.",
+    "patterns": ["always-never"],
     "status": "draft"
   },
   {
     "id": 342,
-    "language": [],
-    "nudge": "",
-    "patterns": [],
+    "language": [
+      {
+        "pt": "não pode ser autorizada a sua caça",
+        "en": "can hunting not be authorised",
+        "note": "não pode = cannot: the stem asks for the one species whose hunting can never be authorised, the protected one."
+      }
+    ],
+    "nudge": "The grey plover, 'tarambola-prateada', is protected, so its hunting cannot be authorised. Its near miss is the 'tarambola-dourada', the European golden plover, a game bird with biology questions of its own (questions 305 to 308).",
+    "patterns": ["negative-stem"],
     "status": "draft"
   },
   {
     "id": 343,
-    "language": [],
-    "nudge": "",
-    "patterns": [],
+    "language": [
+      {
+        "pt": "Quando se pretende",
+        "en": "When the intention is",
+        "note": "pretender = to intend, a false friend: not 'pretend'."
+      }
+    ],
+    "nudge": "The Eurasian goshawk, 'açor', is a bird of prey and 'nunca se pode caçar'. The falconry questions use it as a hunting bird (question 501), but neither falconry nor captive breeding is a reason to take one.",
+    "patterns": ["always-never"],
     "status": "draft"
   },
   {
     "id": 344,
-    "language": [],
-    "nudge": "",
-    "patterns": [],
+    "language": [
+      {
+        "pt": "não é cinegética",
+        "en": "is not a game species",
+        "note": "não é = is not: the stem asks for the one species that is not game, the protected one."
+      }
+    ],
+    "nudge": "The great bustard, 'abetarda', is protected and not game (question 331). Magpie and jay, 'pega' and 'gaio', are game corvids.",
+    "patterns": ["negative-stem"],
     "status": "draft"
   },
   {
     "id": 345,
-    "language": [],
-    "nudge": "",
-    "patterns": [],
+    "language": [
+      {
+        "pt": "Quando se pretende utilizar em cetraria",
+        "en": "When the intention is to use it in falconry",
+        "note": "pretender = to intend, a false friend: not 'pretend'."
+      },
+      {
+        "pt": "Desde que se tenha carta de cetreiro",
+        "en": "Provided the hunter has a falconer's certificate",
+        "note": "desde que = provided that, followed by the subjunctive tenha: it turns the option into a condition, not a flat yes."
+      }
+    ],
+    "nudge": "In no situation, 'Nenhuma', may a bird of prey be captured, falconry included. A 'carta de cetreiro' is for hunting with a bird, not for taking one; questions 337 and 343 ask the same of the osprey and the goshawk.",
+    "patterns": ["always-never", "provided-that"],
     "status": "draft"
   },
   {
     "id": 346,
-    "language": [],
-    "nudge": "",
-    "patterns": [],
+    "language": [
+      {
+        "pt": "não é cinegética",
+        "en": "is not a game species",
+        "note": "não é = is not: the stem asks for the one species that is not game, the protected one."
+      }
+    ],
+    "nudge": "The European badger, 'texugo', is protected and not game. Mouflon and roe deer are both caça maior, big game with biology questions of their own (questions 158 to 166).",
+    "patterns": ["negative-stem"],
     "status": "draft"
   },
   {
     "id": 347,
-    "language": [],
-    "nudge": "",
-    "patterns": [],
+    "language": [
+      {
+        "pt": "não pode ser caçada",
+        "en": "may not be hunted",
+        "note": "não pode = may not: the stem asks for the one protected species."
+      },
+      {
+        "pt": "Charrela ou perdiz-cinzenta",
+        "en": "Grey partridge",
+        "note": "ou here joins two Portuguese names for the same bird, so it is one species, not a choice of two."
+      }
+    ],
+    "nudge": "The grey partridge, 'charrela ou perdiz-cinzenta', may be hunted in no situation (question 341). Mouflon and fallow deer are caça maior, big game.",
+    "patterns": ["negative-stem"],
     "status": "draft"
   },
   {
     "id": 348,
-    "language": [],
-    "nudge": "",
-    "patterns": [],
+    "language": [
+      {
+        "pt": "desde que constem na portaria do calendário venatório",
+        "en": "provided they appear in the ministerial order of the hunting calendar",
+        "note": "desde que = provided that, followed by the subjunctive constem; constar de or em = to appear in, be listed in."
+      },
+      {
+        "pt": "caso provoquem prejuízos",
+        "en": "if they cause damage",
+        "note": "caso = if, in case, followed by the subjunctive provoquem: a condition, not 'case'."
+      }
+    ],
+    "nudge": "Birds of prey may not be hunted: a plain 'Não', with no condition. Each 'Sim' adds a condition, a listing in the calendário venatório or ICNF authorisation for damage, and neither makes it yes (questions 335 and 361).",
+    "patterns": ["yes-no-because", "provided-that"],
     "status": "draft"
   },
   {
     "id": 349,
-    "language": [],
-    "nudge": "",
+    "language": [
+      {
+        "pt": "cuja caça pode ser autorizada",
+        "en": "whose hunting may be authorised",
+        "note": "cuja = whose: the option still calls the bustard game, only with hunting by authorisation."
+      }
+    ],
+    "nudge": "As in question 331, the great bustard 'não é uma espécie cinegética', so it has no season and no edital opens it. The October to December option only softens the claim to 'pode ser autorizada', and still calls it game.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 350,
-    "language": [],
-    "nudge": "",
+    "language": [
+      {
+        "pt": "de que se alimentam",
+        "en": "on which they feed",
+        "note": "alimentar-se de = to feed on; de que = on which: the game populations here are the raptors' prey."
+      }
+    ],
+    "nudge": "Raptors have 'um efeito de seleção', taking the weak and leaving prey populations healthier (question 321). Both distractors call the effect 'prejudicial', by spreading disease or by cutting numbers hard, which questions 338 and 352 reject.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 351,
-    "language": [],
-    "nudge": "",
-    "patterns": [],
+    "language": [
+      {
+        "pt": "não é cinegética",
+        "en": "is not a game species",
+        "note": "não é = is not: the stem asks for the one species that is not game, the protected one."
+      }
+    ],
+    "nudge": "The common shelduck, 'pato branco', is the duck here that is not game. Piadeira and negrinha, Eurasian wigeon and tufted duck, are game ducks.",
+    "patterns": ["negative-stem"],
     "status": "draft"
   },
   {
     "id": 352,
     "language": [],
-    "nudge": "",
+    "nudge": "Raptors feed mainly on 'presas debilitadas', weakened prey, and so leave healthier populations. Both distractors flip it to the strongest animals, 'mais robustos' or 'mais saudáveis e robustas'.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 353,
     "language": [],
-    "nudge": "",
+    "nudge": "The statement is 'Verdadeiras', true, because raptors 'capturam preferencialmente animais doentes e velhos', keeping populations healthy (question 338). The two 'Falsa' options give opposite wrong reasons: that raptors cut game numbers drastically, or that they do not touch them at all.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 354,
     "language": [],
-    "nudge": "",
+    "nudge": "The lynx, 'lince', is protected: question 333 makes the Iberian lynx 'uma espécie não cinegética'. Fallow deer and mouflon are caça maior, big game.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 355,
-    "language": [],
-    "nudge": "",
-    "patterns": [],
+    "language": [
+      {
+        "pt": "não é cinegética",
+        "en": "is not a game species",
+        "note": "não é = is not: the stem asks for the one species that is not game, the protected one."
+      }
+    ],
+    "nudge": "The lynx, 'lince', is protected and not game, as question 354 has it. Fallow deer and mouflon are caça maior, big game.",
+    "patterns": ["negative-stem"],
     "status": "draft"
   },
   {
     "id": 356,
-    "language": [],
-    "nudge": "",
-    "patterns": [],
+    "language": [
+      {
+        "pt": "não é cinegética",
+        "en": "is not a game species",
+        "note": "não é = is not: the stem asks for the one species that is not game, the protected one."
+      }
+    ],
+    "nudge": "The grey wolf, 'lobo', is protected and not game. Jay and magpie, 'gaio' and 'pega-rabuda', are game corvids; decoys may even be used for the magpie (question 35).",
+    "patterns": ["negative-stem"],
     "status": "draft"
   },
   {
     "id": 357,
-    "language": [],
-    "nudge": "",
-    "patterns": [],
+    "language": [
+      {
+        "pt": "Durante a maior parte do ano",
+        "en": "During most of the year",
+        "note": "a maior parte de = most of: the stem asks for the usual grouping, not one that holds every month."
+      }
+    ],
+    "nudge": "As in question 332, great bustards spend most of the year 'em bandos do mesmo sexo', males and females apart. Flocks 'de ambos os sexos' and pairs are the near misses.",
+    "patterns": ["both"],
     "status": "draft"
   },
   {
     "id": 358,
-    "language": [],
-    "nudge": "",
-    "patterns": [],
+    "language": [
+      {
+        "pt": "não é cinegética",
+        "en": "is not a game species",
+        "note": "não é = is not: the stem asks for the one species that is not game, the protected one."
+      }
+    ],
+    "nudge": "The kite, 'milhafre', is a bird of prey and so protected. Northern pintail and northern shoveler, 'arrabio' and 'pato-trombeteiro', are game ducks.",
+    "patterns": ["negative-stem"],
     "status": "draft"
   },
   {
     "id": 359,
     "language": [],
-    "nudge": "",
+    "nudge": "The Spanish imperial eagle, 'águia-imperial', is a bird of prey and so fully protected. The European golden plover and the common snipe are both game (questions 342 and 302).",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 360,
-    "language": [],
-    "nudge": "",
-    "patterns": [],
+    "language": [
+      {
+        "pt": "unicamente por espécies cinegéticas",
+        "en": "solely of game species",
+        "note": "unicamente = solely, only: every species in the group must be game, so one protected species spoils a group."
+      }
+    ],
+    "nudge": "Jack snipe, magpie and Egyptian mongoose, 'narceja-galega, pega-rabuda, saca-rabos', are all game. Each other group holds a protected species: the great bustard and the grey plover in one (questions 331 and 342), the grey partridge in the other (question 341).",
+    "patterns": ["only", "list-options"],
     "status": "draft"
   },
   {
     "id": 361,
     "language": [],
-    "nudge": "",
-    "patterns": [],
+    "nudge": "Birds of prey may be hunted 'Nunca': not for damage to farming and not with ICNF authorisation. Questions 335 and 348 give the same answer.",
+    "patterns": ["always-never"],
     "status": "draft"
   }
 ]
