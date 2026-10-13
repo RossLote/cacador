@@ -2,260 +2,370 @@
   {
     "id": 267,
     "language": [],
-    "nudge": "",
+    "nudge": "Um pombo-torcaz: a big, plump grey pigeon with a white patch on each side of the neck and a white band across the wing, the duas manchas brancas of question 271, and the largest of the pigeons (question 273). The European turtle dove is smaller and slimmer, with scaly rufous-brown wings and a striped neck patch, and the Red-legged partridge is a round ground bird with a red bill, red legs and a black-edged white throat.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 268,
     "language": [],
-    "nudge": "",
+    "nudge": "Um pombo-da-rocha: a blue-grey pigeon with two black bars across each wing, a white rump and a glossy green and purple neck with no white patch. The Common wood pigeon is larger, with white neck and wing patches (question 271), and the European turtle dove is small and slim, with scaly rufous-brown wings.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 269,
     "language": [],
-    "nudge": "",
-    "patterns": [],
+    "nudge": "Pigeons are robust, with asas pontiagudas, cabeça pequena, cauda comprida e voo rápido: pointed wings, a small head, a long tail and fast flight. One distractor gives them rounded wings and a large head, the other a medium head, a short tail and voo muito rápido.",
+    "patterns": ["list-options"],
     "status": "draft"
   },
   {
     "id": 270,
-    "language": [],
-    "nudge": "",
+    "language": [
+      {
+        "pt": "fora da época de criação",
+        "en": "outside the breeding season",
+        "note": "fora de = outside: the stem asks about the part of the year when pigeons are not breeding."
+      }
+    ],
+    "nudge": "Outside the breeding season pigeons vivem em bandos: they live in flocks. Living aos pares, in pairs, or isolados, alone, are the distractors; the solitary bird of this file is the woodcock (question 283).",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 271,
     "language": [],
-    "nudge": "",
+    "nudge": "The Common wood pigeon's mark is white: duas manchas brancas nos lados do pescoço e das asas, a white patch on each side of the neck and on the wings. Black bars, barras pretas, and black wing tips with a white rump, uropígio branco, are not its marks.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 272,
-    "language": [],
-    "nudge": "",
+    "language": [
+      {
+        "pt": "maior envergadura",
+        "en": "the greatest wingspan",
+        "note": "After qual, maior is a superlative: the greatest of the set, not just 'greater'."
+      }
+    ],
+    "nudge": "The Common wood pigeon has the maior envergadura, the greatest wingspan: it is o maior dos três pombos (question 273). The Stock dove and the Rock dove are both smaller.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 273,
     "language": [],
-    "nudge": "",
-    "patterns": [],
+    "nudge": "The Common wood pigeon is o maior dos três pombos, the largest, with the greatest wingspan of question 272. O menor, the smallest, is the reverse, which question 304 also rejects, and it is not completamente escuro: it carries white neck and wing patches (question 271).",
+    "patterns": ["comparative"],
     "status": "draft"
   },
   {
     "id": 274,
-    "language": [],
-    "nudge": "",
+    "language": [
+      {
+        "pt": "que nos visita",
+        "en": "that visits us",
+        "note": "nos visita = visits us, comes to Portugal: the stem asks about the birds that arrive from elsewhere, not the ones that stay."
+      }
+    ],
+    "nudge": "Most of the Common wood pigeons that visit Portugal come do Norte da Europa, from northern Europe. Southern Europe and the Middle East are the distractors; the species is only parcialmente migrador (question 277), so some birds stay all year.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 275,
     "language": [],
-    "nudge": "",
+    "nudge": "The Common wood pigeon builds its nest in trees, a alturas geralmente elevadas, generally high up. Árvores baixas e falésias, low trees and cliffs, is the near-miss, and it does not nest in buracos, holes, in trees or buildings.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 276,
-    "language": [],
-    "nudge": "",
-    "patterns": [],
+    "language": [
+      {
+        "pt": "Dos pombos existentes entre nós",
+        "en": "Of the pigeons found in our country",
+        "note": "entre nós = in our country, here in Portugal; not 'between us'."
+      },
+      {
+        "pt": "menos alargada",
+        "en": "least widespread",
+        "note": "menos after qual deles is a superlative: the least widespread, the pigeon with the smallest range, not the largest."
+      }
+    ],
+    "nudge": "The pombo-bravo, the Stock dove, has the distribuição menos alargada: the smallest range of the three. The Rock dove and the Common wood pigeon are the more widespread pair.",
+    "patterns": ["comparative"],
     "status": "draft"
   },
   {
     "id": 277,
-    "language": [],
-    "nudge": "",
+    "language": [
+      {
+        "pt": "Dos pombos existentes entre nós",
+        "en": "Of the pigeons found in our country",
+        "note": "entre nós = in our country, here in Portugal; not 'between us'."
+      }
+    ],
+    "nudge": "The Common wood pigeon is parcialmente migrador: some birds stay all year and more arrive, most of them do Norte da Europa (question 274). The Rock dove and the Stock dove are not the partial migrants.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 278,
-    "language": [],
-    "nudge": "",
-    "patterns": [],
+    "language": [
+      {
+        "pt": "dos pombos existentes entre nós",
+        "en": "of the pigeons found in our country",
+        "note": "entre nós = in our country, here in Portugal; not 'between us'."
+      },
+      {
+        "pt": "também se dá o nome de",
+        "en": "is the name seixa also given",
+        "note": "dar o nome de X a = to call something X, and também = also: the stem gives a second, local name and asks which pigeon carries it."
+      }
+    ],
+    "nudge": "Seixa is another name for the pombo-bravo, the Stock dove, the least widespread of the three (question 276). It is not the pombo-torcaz or the pombo-da-rocha.",
+    "patterns": ["name-question"],
     "status": "draft"
   },
   {
     "id": 279,
     "language": [],
-    "nudge": "",
-    "patterns": [],
+    "nudge": "The Rock dove lives on grãos e sementes, grains and seeds. The near-miss adds bagas and bolotas, berries and acorns, and bolota e azeitona drops the grain altogether.",
+    "patterns": ["list-options"],
     "status": "draft"
   },
   {
     "id": 280,
     "language": [],
-    "nudge": "",
+    "nudge": "Uma galinhola: a plump, stocky wader with a long straight bill, dead-leaf brown plumage and dark bars running across the back of the crown, with the asas largas e arredondadas, bico comprido e direito of question 284. The Common snipe is slimmer, with stripes running lengthwise along the head and back, and the European golden plover has a short bill and gold-spangled upperparts.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 281,
-    "language": [],
-    "nudge": "",
-    "patterns": [],
+    "language": [
+      {
+        "pt": "está errada",
+        "en": "is wrong",
+        "note": "errada = wrong: the stem asks for the false statement, so the two true ones are the distractors."
+      },
+      {
+        "pt": "em todo o território nacional",
+        "en": "throughout the national territory",
+        "note": "em todo o território nacional = everywhere in Portugal, the islands included, as against Portugal Continental, the mainland only."
+      }
+    ],
+    "nudge": "The woodcock is migradora in Portugal Continental but sedentária nos Açores, resident in the Azores, so migradora em todo o território nacional is the false one. The other two statements are both true: a migrant on the mainland, a resident on the islands.",
+    "patterns": ["negative-stem", "which-statement", "always-never"],
     "status": "draft"
   },
   {
     "id": 282,
     "language": [],
-    "nudge": "",
+    "nudge": "The woodcock is active at dusk and by night: crepuscular e noturno. Each distractor slips in diurno, daytime, which it is not.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 283,
     "language": [],
-    "nudge": "",
+    "nudge": "The woodcock is a solitary bird, solitária, as question 291 also keys it. Pairs, aos casais, and flocks, em bandos, are the distractors; flocks are the pigeons' way outside the breeding season (question 270).",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 284,
     "language": [],
-    "nudge": "",
-    "patterns": [],
+    "nudge": "The woodcock has asas largas e arredondadas, bico comprido e direito: broad, rounded wings and a long, straight bill. One distractor narrows the wings to estreitas, the other shortens the bill to curto.",
+    "patterns": ["list-options"],
     "status": "draft"
   },
   {
     "id": 285,
     "language": [],
-    "nudge": "",
+    "nudge": "The woodcock flies fast and silently among the trees: rápido e silencioso entre as árvores. It does not fly straight, retilíneo, and the bill pointed at the ground belongs to its silhouette in flight (question 286), not to a slow flight.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 286,
     "language": [],
-    "nudge": "",
-    "patterns": [],
+    "nudge": "In flight the woodcock looks atarracada, stocky, with asas redondas and the bill pointed at the ground. Longilínea, long and slender, is the near-miss, and asas estreitas contradicts the broad, rounded wings of question 284.",
+    "patterns": ["list-options"],
     "status": "draft"
   },
   {
     "id": 287,
-    "language": [],
-    "nudge": "",
+    "language": [
+      {
+        "pt": "para a sua criação",
+        "en": "for its breeding",
+        "note": "criação here is breeding, not 'creation': the stem asks where the birds go to breed."
+      }
+    ],
+    "nudge": "The woodcock breeds in países do centro e norte da Europa and is a winter visitor on the mainland, an invernante (question 288). Centro e sul da Europa is the near-miss, and snipe breed in the same central and northern countries (question 298).",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 288,
-    "language": [],
-    "nudge": "",
+    "language": [
+      {
+        "pt": "em Portugal Continental",
+        "en": "in mainland Portugal",
+        "note": "Portugal Continental = mainland Portugal, without the Azores and Madeira."
+      }
+    ],
+    "nudge": "On the mainland the woodcock is a migradora invernante, a winter visitor that breeds in central and northern Europe (question 287). Estival, summer, is the opposite season, and question 281 gives the one exception, sedentária nos Açores.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 289,
     "language": [],
-    "nudge": "",
+    "nudge": "The woodcock is found em bosques com vegetação arbustiva, woods with a shrub layer, as question 292 also keys. Very dense, closed woods, muito densos e fechados, and woods beside farmland are the distractors.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 290,
     "language": [],
-    "nudge": "",
+    "nudge": "The woodcock feeds on terras frescas e húmidas, cool, damp ground, the terrenos frescos e húmidos of question 292. Pedregosas, stony, is the near-miss that keeps the damp, and argilosas e secas, clayey and dry, is wrong on both counts.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 291,
     "language": [],
-    "nudge": "",
+    "nudge": "The woodcock é uma ave solitária, a bird that lives alone, as in question 283. Both distractors put it in bandos, flocks, one large and one small.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 292,
     "language": [],
-    "nudge": "",
+    "nudge": "The woodcock's habitat joins the facts of questions 289 and 290: bosques com vegetação arbustiva, woods with shrubs, and terrenos frescos e húmidos, cool, damp ground. Zonas abertas e húmidas keeps the damp but loses the woods, and montados de azinho, holm-oak wood pasture, is the other distractor.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 293,
     "language": [],
-    "nudge": "",
+    "nudge": "Narceja-comum: a long straight bill, buff and dark-brown stripes running lengthwise along the crown and back, and a white belly; question 304 tells it from the narceja-galega by ser maior e ter o bico mais comprido. The Jack snipe is smaller and shorter-billed, with no pale stripe down the middle of the crown, and the Eurasian woodcock is bulkier, with bars across the back of its head instead of stripes along it.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 294,
     "language": [],
-    "nudge": "",
+    "nudge": "Snipe are tied to zonas com solos leves e húmidos, light, damp soils, where they probe for food with the bill (question 295). Woods with shrub cover are the woodcock's ground (question 289), the trap here.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 295,
     "language": [],
-    "nudge": "",
+    "nudge": "Snipe feed by probing: utilizam o bico para extraírem da terra os invertebrados, pulling them out of the soil with the bill. Scratching with the feet, esgravatam o solo com as patas, and chasing the prey, perseguem, are the distractors.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 296,
-    "language": [],
-    "nudge": "",
-    "patterns": [],
+    "language": [
+      {
+        "pt": "pernas e pescoço relativamente curtos",
+        "en": "relatively short legs and neck",
+        "note": "relativamente curtos follows the nouns and covers every noun of the list it closes; a word placed before the list, like grande, belongs to its own noun only."
+      }
+    ],
+    "nudge": "Snipe have a grande bico with pernas e pescoço relativamente curtos: a large bill on a short-legged, short-necked bird. Making the bill short too, or everything long, are the two distractors.",
+    "patterns": ["list-options"],
     "status": "draft"
   },
   {
     "id": 297,
-    "language": [],
-    "nudge": "",
+    "language": [
+      {
+        "pt": "Pouco sociáveis",
+        "en": "Not very sociable",
+        "note": "pouco before an adjective turns it down: not very, nearly its opposite; not 'a little sociable'."
+      }
+    ],
+    "nudge": "Snipe are pouco sociáveis, not very sociable, the opposite of muito sociáveis. They are not migradoras estivais either: here they are migradoras invernantes, winter visitors (question 299).",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 298,
-    "language": [],
-    "nudge": "",
+    "language": [
+      {
+        "pt": "para criação",
+        "en": "for breeding",
+        "note": "criação here is breeding, not 'creation': the stem asks where the birds go to breed."
+      }
+    ],
+    "nudge": "Snipe breed in países do centro e norte da Europa, like the woodcock (question 287), and come here for the winter (question 299). Centro e sul da Europa is the near-miss.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 299,
-    "language": [],
-    "nudge": "",
+    "language": [
+      {
+        "pt": "Entre nós",
+        "en": "In our country",
+        "note": "entre nós = in our country, here in Portugal; not 'between us'."
+      }
+    ],
+    "nudge": "Here the snipe is a migradora invernante, a winter visitor that breeds in central and northern Europe (question 298). Migradora estival is the opposite season, and parcialmente migrador is the Common wood pigeon (question 277).",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 300,
-    "language": [],
-    "nudge": "",
+    "language": [
+      {
+        "pt": "ocorrem entre nós",
+        "en": "occur in our country",
+        "note": "entre nós = in our country, here in Portugal; not 'between us'."
+      }
+    ],
+    "nudge": "Three snipe species occur here: the narceja-comum, the narceja-galega and the extremely rare narceja-grande (question 301). The number is the whole question.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 301,
     "language": [],
-    "nudge": "",
+    "nudge": "The extremely rare one is the narceja-grande, the Great snipe, one of the three snipe that occur here (question 300). The Common snipe and the Jack snipe are not the rare ones; question 304 compares those two.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 302,
-    "language": [],
-    "nudge": "",
+    "language": [
+      {
+        "pt": "que se podem caçar",
+        "en": "that can be hunted",
+        "note": "que se podem caçar limits the stem to the snipe that may be hunted: the comparison runs only among those."
+      },
+      {
+        "pt": "qual a que tem maior envergadura",
+        "en": "which is the one that has the greatest wingspan",
+        "note": "After qual, maior is a superlative: the greatest of the set, not just 'greater'."
+      }
+    ],
+    "nudge": "Of the snipe que se podem caçar, the Common snipe is the larger, maior than the Jack snipe as question 304 has it. The narceja-grande is the trap: its name says big, but the stem limits the choice to the huntable species and the bank keys the Common snipe.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 303,
     "language": [],
-    "nudge": "",
-    "patterns": [],
+    "nudge": "Snipe eat moluscos, insetos, fragmentos vegetais, grãos: molluscs and insects, the invertebrates of question 295, with some plant matter and grain. Sementes e plantas aquáticas, and arroz, milho, caracóis e pequenas rãs, with its rice, maize and small frogs, are the distractors.",
+    "patterns": ["list-options"],
     "status": "draft"
   }
 ]
