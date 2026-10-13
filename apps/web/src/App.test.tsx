@@ -23,6 +23,9 @@ const SCREENS = [
   ['/flagged', 'flagged'],
 ] as const;
 
+/** Home's four buttons (D11); Flagged is reached from Settings and Progress. */
+const HOME_BUTTONS = SCREENS.filter(([path]) => path !== '/flagged');
+
 describe('routes', () => {
   afterEach(() => {
     act(() => setLocale('en'));
@@ -36,9 +39,10 @@ describe('routes', () => {
       renderAt('/');
       expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(t.home.title);
       expect(screen.queryByRole('link', { name: t.common.backToHome })).not.toBeInTheDocument();
-      for (const [path, screenKey] of SCREENS) {
+      for (const [path, screenKey] of HOME_BUTTONS) {
         expect(screen.getByRole('link', { name: t.common.nav[screenKey] })).toHaveAttribute('href', path);
       }
+      expect(screen.queryByRole('link', { name: t.common.nav.flagged })).not.toBeInTheDocument();
     });
 
     for (const [path, screenKey] of SCREENS) {
