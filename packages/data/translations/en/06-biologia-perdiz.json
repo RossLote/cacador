@@ -1,0 +1,332 @@
+[
+  {
+    "id": 168,
+    "question": "The picture shows a:",
+    "options": {
+      "A": "Red-legged partridge",
+      "B": "Common pheasant",
+      "C": "European turtle dove"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 169,
+    "question": "The picture shows:",
+    "options": {
+      "A": "A common quail",
+      "B": "A red-legged partridge",
+      "C": "A common pheasant"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 170,
+    "question": "The red-legged partridge has:",
+    "options": {
+      "A": "Red bill and legs",
+      "B": "Yellow bill and red legs",
+      "C": "Red bill and yellow legs"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 171,
+    "question": "In the red-legged partridge, one of the ways of telling the males from the females is:",
+    "options": {
+      "A": "The males being smaller and less heavy than the females",
+      "B": "The males being larger and heavier than the females",
+      "C": "The males being the same size as the females"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 172,
+    "question": "In the red-legged partridge, one of the ways of telling the males from the females is:",
+    "options": {
+      "A": "The head of the males being bulkier than that of the females",
+      "B": "The head of the males being less bulky than that of the females",
+      "C": "The head of the females being bulkier than that of the males"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 173,
+    "question": "In the red-legged partridge, one of the ways of telling the males from the females is:",
+    "options": {
+      "A": "The females having shorter and more slender tarsi",
+      "B": "The females having the tarsi longer and thicker",
+      "C": "The females having the tarsi shorter and thicker"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 174,
+    "question": "In the red-legged partridge, one of the ways of telling the males from the females is:",
+    "options": {
+      "A": "The males having shorter and thicker tarsi",
+      "B": "The males having longer and thicker tarsi",
+      "C": "The males having shorter and more slender tarsi"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 175,
+    "question": "In the red-legged partridge, one of the ways of telling the males from the females is:",
+    "options": {
+      "A": "The males having spurs with a broad base and a rounded tip",
+      "B": "The males having spurs with a narrow base and a pointed tip",
+      "C": "The males having spurs with a broad base and a pointed tip"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 176,
+    "question": "In the red-legged partridge, one of the ways of telling the males from the females is:",
+    "options": {
+      "A": "The females, when they have spurs, these have a narrow base and are pointed",
+      "B": "The females, when they have spurs, these have a narrow base and are rounded",
+      "C": "The females, when they have spurs, these have a broad base and are pointed"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 177,
+    "question": "In the red-legged partridge, while juvenile, the moult of the feathers begins:",
+    "options": {
+      "A": "At the first month of life",
+      "B": "At the second month of life",
+      "C": "At the third month of life"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 178,
+    "question": "In the red-legged partridge, while juvenile, the last two flight feathers are:",
+    "options": {
+      "A": "Pointed and may show a small white spot at the tip",
+      "B": "Rounded and may show a small white spot at the tip",
+      "C": "Pointed and without showing a small white spot at the tip"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 179,
+    "question": "In the red-legged partridge, the adult begins the moult of all the primary flight feathers:",
+    "options": {
+      "A": "At the same time as the juvenile",
+      "B": "Two or three weeks before the juvenile",
+      "C": "Two or three weeks after the juvenile"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 180,
+    "question": "In the adult red-legged partridge, the last two feathers:",
+    "options": {
+      "A": "May show a small white spot at the tip",
+      "B": "Have a rounded tip",
+      "C": "Have a pointed tip"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 181,
+    "question": "The red-legged partridge is a bird that especially prefers:",
+    "options": {
+      "A": "Waterlogged and uncultivated areas",
+      "B": "Forested areas with scrub",
+      "C": "Areas of cereal crops"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 182,
+    "question": "Which of these actions contributes to the good management of a population of partridges?",
+    "options": {
+      "A": "The use of pesticides on crops",
+      "B": "The killing of more than 60% of the stock",
+      "C": "The killing of less than 50% of the stock"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 183,
+    "question": "In the red-legged partridge, the diet during the first month of life is:",
+    "options": {
+      "A": "Essentially insectivorous",
+      "B": "Essentially granivorous",
+      "C": "Essentially plant-based"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 184,
+    "question": "In the adult red-legged partridge, the diet is made up of:",
+    "options": {
+      "A": "Insects, berries, flowers and grains",
+      "B": "Grains, acorns, leaves, roots and insects",
+      "C": "Grains, acorns, leaves, shoots, berries, flowers and roots"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 185,
+    "question": "The red-legged partridge makes its nest, generally:",
+    "options": {
+      "A": "On the ground, with the bottom simply covered with dry plants",
+      "B": "On the ground, with the bottom simply covered with its own feathers",
+      "C": "On the ground, with the bottom covered with dry plants and its own feathers"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 186,
+    "question": "In the red-legged partridge, egg-laying, in the south of the country, takes place during the months of:",
+    "options": {
+      "A": "March to April",
+      "B": "April to May",
+      "C": "April to June"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 187,
+    "question": "Partridge chicks, as soon as they are born:",
+    "options": {
+      "A": "Remain in the nest for two weeks",
+      "B": "Remain in the nest for at least one week",
+      "C": "Abandon the nest"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 188,
+    "question": "In the red-legged partridge, the incubation of the eggs lasts about:",
+    "options": {
+      "A": "21 days",
+      "B": "23 days",
+      "C": "25 days"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 189,
+    "question": "On average, the nest of the red-legged partridge contains:",
+    "options": {
+      "A": "10 eggs",
+      "B": "12 eggs",
+      "C": "14 eggs"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 190,
+    "question": "The red-legged partridge, during the summer and until the new mating season, moves about:",
+    "options": {
+      "A": "In pairs",
+      "B": "Alone",
+      "C": "In flocks"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 191,
+    "question": "To manage a population of partridges well, certain rules must be followed. Which is right?",
+    "options": {
+      "A": "Put food, water and shelter at their disposal",
+      "B": "Kill, annually, 60% of the stock",
+      "C": "Eliminate all predators"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 192,
+    "question": "To maintain the level of the population of partridges, certain rules must be followed. Which is wrong?",
+    "options": {
+      "A": "Avoid the abuse of pesticides",
+      "B": "Take care over the way the harvesting is done",
+      "C": "Kill, annually, 60% of the stock"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 193,
+    "question": "To manage a population of partridges well, certain rules must be followed. Which is right?",
+    "options": {
+      "A": "Eliminate all predators",
+      "B": "Kill, annually, all predators",
+      "C": "Avoid the roaming of stray dogs and cats"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 194,
+    "question": "In a well-managed population, for each partridge nest, there reach adult age on average:",
+    "options": {
+      "A": "3 partridge chicks",
+      "B": "5 partridge chicks",
+      "C": "7 partridge chicks"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 195,
+    "question": "The red-legged partridge generally makes its nest:",
+    "options": {
+      "A": "In small-sized shrubs",
+      "B": "On the ground",
+      "C": "In holes in outdoor walls and building walls"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 196,
+    "question": "The adult red-legged partridge is distinguished from the juvenile:",
+    "options": {
+      "A": "By colour and size",
+      "B": "By observation of the primary flight feathers (the ten feathers at the tip of the wing)",
+      "C": "By the tarsi and spurs"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 197,
+    "question": "The red-legged partridge is a species that prefers:",
+    "options": {
+      "A": "Areas of cereal crops",
+      "B": "Areas with light and damp soils",
+      "C": "Rocky areas including the coastal fringe"
+    },
+    "status": "draft",
+    "notes": ""
+  }
+]
