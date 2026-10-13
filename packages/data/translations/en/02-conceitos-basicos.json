@@ -1,7 +1,7 @@
 [
   {
     "id": 11,
-    "question": "Hunting grounds are considered to be those where:",
+    "question": "Terrenos cinegéticos are considered to be those where:",
     "options": {
       "A": "The practice of hunting is permitted",
       "B": "Game species roam freely",
@@ -12,7 +12,7 @@
   },
   {
     "id": 12,
-    "question": "Non-hunting grounds are considered to be those where:",
+    "question": "Terrenos não cinegéticos are considered to be those where:",
     "options": {
       "A": "There are no game species",
       "B": "Game species neither breed nor feed",
@@ -23,7 +23,7 @@
   },
   {
     "id": 13,
-    "question": "Hunting grounds are considered to be:",
+    "question": "Terrenos cinegéticos are considered to be:",
     "options": {
       "A": "Those where the practice of hunting is permitted, including the areas under maritime jurisdiction and the inland waters",
       "B": "Those where the practice of hunting is not permitted",
@@ -34,7 +34,7 @@
   },
   {
     "id": 14,
-    "question": "Non-hunting grounds are considered to be:",
+    "question": "Terrenos não cinegéticos are considered to be:",
     "options": {
       "A": "Those where the practice of hunting is prohibited",
       "B": "The tourist hunting zones",
@@ -56,7 +56,7 @@
   },
   {
     "id": 16,
-    "question": "Non-hunting grounds are considered to be:",
+    "question": "Terrenos não cinegéticos are considered to be:",
     "options": {
       "A": "Only the game refuge areas and the livestock enclosures",
       "B": "Only the no-hunting areas and the hunting training grounds",
@@ -100,7 +100,7 @@
   },
   {
     "id": 20,
-    "question": "The hunting year is considered to be the annual period:",
+    "question": "The época venatória is considered to be the annual period:",
     "options": {
       "A": "That runs between 1 June of each year and 31 May of the following year",
       "B": "In which the practice of hunting may be carried out",
@@ -122,7 +122,7 @@
   },
   {
     "id": 22,
-    "question": "The hunting year is:",
+    "question": "The época venatória is:",
     "options": {
       "A": "The annual period that runs between 1 June of each year and 31 May of the following year",
       "B": "The span of time in which each of the species may be hunted",
@@ -166,7 +166,7 @@
   },
   {
     "id": 26,
-    "question": "The open season for a game species is:",
+    "question": "The período venatório of a game species is:",
     "options": {
       "A": "The span of time in which it may be hunted",
       "B": "The span of time in which a hunting licence is valid",
@@ -311,9 +311,9 @@
     "id": 39,
     "question": "The hunting method in which the hunter moves to capture a particular individual of big game is called:",
     "options": {
-      "A": "Walked-up",
-      "B": "Driven",
-      "C": "Stalking"
+      "A": "De salto",
+      "B": "De batida",
+      "C": "De aproximação"
     },
     "status": "checked",
     "notes": ""
@@ -322,9 +322,9 @@
     "id": 40,
     "question": "The hunting method in which the hunter waits for the species flushed by beaters is called:",
     "options": {
-      "A": "By montaria (driven big-game hunt with hounds)",
-      "B": "Driven",
-      "C": "From a hide"
+      "A": "De montaria",
+      "B": "De batida",
+      "C": "À espera"
     },
     "status": "checked",
     "notes": ""
@@ -353,7 +353,7 @@
   },
   {
     "id": 43,
-    "question": "The open season is considered to be the span of time:",
+    "question": "The período venatório is considered to be the span of time:",
     "options": {
       "A": "In which one may only hunt rabbits, Iberian hares and partridges",
       "B": "In which each of the species may be hunted",
@@ -443,9 +443,9 @@
     "id": 51,
     "question": "The hunting method in which game species are captured by a bird of prey trained for that purpose is called:",
     "options": {
-      "A": "Driven hunt",
-      "B": "Coursing",
-      "C": "Falconry"
+      "A": "Batida",
+      "B": "Corricão",
+      "C": "Cetraria"
     },
     "status": "checked",
     "notes": ""
