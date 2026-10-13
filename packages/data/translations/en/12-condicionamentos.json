@@ -1,0 +1,563 @@
+[
+  {
+    "id": 362,
+    "question": "In which places is it prohibited to hunt, as well as in a protection strip of 500 metres?",
+    "options": {
+      "A": "In settlements",
+      "B": "On land adjacent to hospital establishments",
+      "C": "On land occupied with fruit crops"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 363,
+    "question": "In which places is it prohibited to hunt, as well as in a protection strip of 500 metres?",
+    "options": {
+      "A": "On land adjacent to military or security-force installations",
+      "B": "Of the railway lines",
+      "C": "On land occupied with vegetable crops"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 364,
+    "question": "On national roads and railway lines, it is:",
+    "options": {
+      "A": "Prohibited to hunt, as well as in a protection strip of 100 metres",
+      "B": "Prohibited to hunt, as well as in a protection strip of 250 metres",
+      "C": "Prohibited to hunt, but only when there is traffic"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 365,
+    "question": "It is prohibited to hunt in settlements and in a protection strip of:",
+    "options": {
+      "A": "500 metres",
+      "B": "250 metres",
+      "C": "750 metres"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 366,
+    "question": "In which places is it prohibited to hunt, as well as in a protection strip of 500 metres?",
+    "options": {
+      "A": "National roads, main routes and motorways",
+      "B": "Bathing beaches and land adjacent to teaching establishments",
+      "C": "Aerodromes, regional roads and municipal roads"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 367,
+    "question": "In which places is it prohibited to hunt, as well as on any land surrounding them in a protection strip of 100 metres?",
+    "options": {
+      "A": "In duly signposted apiaries and dovecotes",
+      "B": "In duly signposted livestock enclosures",
+      "C": "In olive groves and orchards with drip irrigation installed"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 368,
+    "question": "It is prohibited to hunt in a protection strip of 500 metres on land adjacent to:",
+    "options": {
+      "A": "Aerodromes, cemeteries, regional roads and municipal roads",
+      "B": "Tourist installations, campsites and sports grounds",
+      "C": "Game refuge areas and duly signposted livestock enclosures"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 369,
+    "question": "It is always prohibited to hunt:",
+    "options": {
+      "A": "On aerodromes, cemeteries and municipal roads",
+      "B": "On land occupied with forest plantations with an average height greater than 1,50 metres",
+      "C": "In olive groves, orchards and vineyards"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 370,
+    "question": "It is prohibited to hunt:",
+    "options": {
+      "A": "At 300 metres from dwelling houses",
+      "B": "At 250 metres from a national road",
+      "C": "In livestock enclosures"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 371,
+    "question": "In a duly signposted livestock enclosure:",
+    "options": {
+      "A": "It is prohibited to hunt",
+      "B": "It is prohibited to hunt less than 250 metres from the animals",
+      "C": "It is prohibited to hunt less than 100 metres from wild cattle"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 372,
+    "question": "In the places indicated below it is prohibited to hunt without the consent of the person entitled, but there is one of them that necessarily requires signposting. Which is it?",
+    "options": {
+      "A": "Yards attached to dwelling houses",
+      "B": "Gardens attached to dwelling houses",
+      "C": "Hunting zones"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 373,
+    "question": "In an olive grove where this sign is, may one hunt?",
+    "options": {
+      "A": "No",
+      "B": "Yes",
+      "C": "Yes, provided that it has no olives"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 374,
+    "question": "The practice of hunting is prohibited on a national road, as well as in a protection strip of:",
+    "options": {
+      "A": "100 metres",
+      "B": "250 metres",
+      "C": "300 metres"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 375,
+    "question": "This sign indicates:",
+    "options": {
+      "A": "Tourist hunting zone",
+      "B": "No hunting",
+      "C": "Livestock enclosure"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 376,
+    "question": "From what distance from a school may one hunt?",
+    "options": {
+      "A": "150 metres",
+      "B": "200 metres",
+      "C": "500 metres"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 377,
+    "question": "It is prohibited to hunt in areas swept by fires as well as in a strip of 250 metres around them:",
+    "options": {
+      "A": "Only while the fire lasts",
+      "B": "While the fire lasts and during the following 30 days",
+      "C": "While the fire lasts and during the following 10 days"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 378,
+    "question": "In unmanaged hunting grounds, in walked-up hunting a line of hunters may not include more than:",
+    "options": {
+      "A": "2 hunters",
+      "B": "5 hunters",
+      "C": "10 hunters"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 379,
+    "question": "It is prohibited to hunt on bathing beaches as well as in a protection strip of:",
+    "options": {
+      "A": "500 metres",
+      "B": "150 metres",
+      "C": "100 metres"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 380,
+    "question": "The prohibition on hunting without the consent of the person entitled is only effective, and depends on signposting, in which situation?",
+    "options": {
+      "A": "On land surrounded along its whole extent by a wall 1,5 metres high",
+      "B": "In yards attached to dwelling houses",
+      "C": "In hunting zones"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 381,
+    "question": "Which of the statements is correct?",
+    "options": {
+      "A": "It is permitted to hunt more than 100 metres from railway lines",
+      "B": "It is permitted to hunt more than 100 metres from bathing beaches",
+      "C": "It is permitted to hunt more than 100 metres from airports"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 382,
+    "question": "The practice of hunting is prohibited on a railway line, as well as in a protection strip of:",
+    "options": {
+      "A": "100 metres",
+      "B": "150 metres",
+      "C": "200 metres"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 383,
+    "question": "In a strip of land of 100 metres along railway lines, the hunter:",
+    "options": {
+      "A": "May never hunt",
+      "B": "May hunt with the consent of the person entitled",
+      "C": "May hunt without a firearm"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 384,
+    "question": "Which of the statements is correct?",
+    "options": {
+      "A": "It is permitted to hunt at 250 metres from railway lines",
+      "B": "It is permitted to hunt at 250 metres from bathing beaches",
+      "C": "It is permitted to hunt at 250 metres from airports"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 385,
+    "question": "Which of the following sentences is correct?",
+    "options": {
+      "A": "It is a crime to hunt with a blood alcohol level lower than 1,2 g/l",
+      "B": "It is a crime to hunt wild boar on ground covered with snow",
+      "C": "It is a crime to hunt in hunting zones to which one does not legally have access"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 386,
+    "question": "What constitutes a hunting crime:",
+    "options": {
+      "A": "Hunting 50 metres from tarred municipal roads",
+      "B": "Using assistants outside the established conditions",
+      "C": "Using lure calls in the hunting of ducks"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 387,
+    "question": "Indicate which of the sentences is correct:",
+    "options": {
+      "A": "It is permitted to hunt the species that appear in the hunting calendar published annually",
+      "B": "It is permitted to hunt all species classified as game",
+      "C": "It is permitted to hunt any species that causes damage to agriculture"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 388,
+    "question": "The use of cartridges loaded with buckshot:",
+    "options": {
+      "A": "Is permitted to the members of association hunting zones in driven hunts for red foxes",
+      "B": "Is permitted to the hunters of municipal hunting zones in montarias (driven big-game hunts with hounds) for wild boar",
+      "C": "Is prohibited in hunting"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 389,
+    "question": "Cartridges loaded with shot of diameter greater than 4,5 mm, commonly called buckshot:",
+    "options": {
+      "A": "May be used in red fox hunting",
+      "B": "May not be used in hunting",
+      "C": "May be used in red deer hunting by stalking"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 390,
+    "question": "In the hunting of resident small-game species:",
+    "options": {
+      "A": "The use and the possession of cartridges loaded with a slug are prohibited",
+      "B": "The use and the possession of cartridges loaded with shot are prohibited",
+      "C": "The use of hunting dogs is prohibited"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 391,
+    "question": "The use of semi-automatic guns that hold more than three rounds:",
+    "options": {
+      "A": "Is permitted in the hunting of big-game species",
+      "B": "Is permitted in the hunting of thrushes",
+      "C": "Is prohibited"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 392,
+    "question": "In the hunting of big-game species:",
+    "options": {
+      "A": "The use of shotguns is prohibited",
+      "B": "The use and the possession of cartridges loaded with shot are prohibited",
+      "C": "The use and the possession of cartridges loaded with a slug are prohibited"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 393,
+    "question": "In olive groves it is prohibited to hunt:",
+    "options": {
+      "A": "Always",
+      "B": "Never",
+      "C": "If they are signposted with the no-hunting sign"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 394,
+    "question": "In an area bounded by this sign:",
+    "options": {
+      "A": "One may not hunt",
+      "B": "One may hunt with the consent of the person entitled",
+      "C": "One may hunt with the consent of the president of the parish council"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 395,
+    "question": "Which of the following acts does not constitute a hunting crime?",
+    "options": {
+      "A": "Hunting non-game species",
+      "B": "Hunting with a blood alcohol level lower than 1,2 g/l",
+      "C": "Hunting in no-hunting areas"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 396,
+    "question": "From what distance from a military installation may one hunt?",
+    "options": {
+      "A": "200 metres",
+      "B": "250 metres",
+      "C": "500 metres"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 397,
+    "question": "On land surrounded with this sign, it is not permitted:",
+    "options": {
+      "A": "To train hunting dogs",
+      "B": "To carry out hunting activities",
+      "C": "To hunt without the consent of the person entitled"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 398,
+    "question": "Indicate the correct sentence:",
+    "options": {
+      "A": "It is permitted to hunt in a pine wood in which the forest species have an average height greater than 80cm",
+      "B": "It is permitted to hunt in a game refuge provided that the hunter is a member of a hunters' club",
+      "C": "It is permitted to hunt less than 100 metres from a national road"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 399,
+    "question": "In a eucalyptus plantation with an average height of 1 metre:",
+    "options": {
+      "A": "It is always prohibited to hunt",
+      "B": "It is prohibited to hunt, provided that the diameter of the trunk is less than 5 cm",
+      "C": "It is permitted to hunt"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 400,
+    "question": "Which of the following acts constitutes a hunting crime?",
+    "options": {
+      "A": "Hunting without a hunting licence",
+      "B": "Hunting in areas under the right to no hunting",
+      "C": "Hunting without carrying the hunter's certificate"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 401,
+    "question": "Is it prohibited to hunt in olive groves?",
+    "options": {
+      "A": "Yes, it is always prohibited",
+      "B": "No",
+      "C": "Only when signposted with the no-hunting sign"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 402,
+    "question": "In a yard of a dwelling house, as well as in a surrounding strip of 250 metres, it is:",
+    "options": {
+      "A": "Always prohibited to hunt",
+      "B": "Always permitted to hunt",
+      "C": "Prohibited to hunt without the consent of the person entitled"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 403,
+    "question": "Which of the following situations does not constitute a hunting crime?",
+    "options": {
+      "A": "Hunting with a blood alcohol level higher than 1,2g/l",
+      "B": "Hunting with a blood alcohol level lower than 1,2g/l",
+      "C": "Hunting with a blood alcohol level equal to 1,2g/l"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 404,
+    "question": "The practice of hunting is prohibited on a national road, as well as in a protection strip of:",
+    "options": {
+      "A": "100 metres",
+      "B": "150 metres",
+      "C": "200 metres"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 405,
+    "question": "Which of the following acts does not constitute a hunting crime?",
+    "options": {
+      "A": "Keeping, transporting or using a ferret without authorisation",
+      "B": "Using assistants outside the established conditions",
+      "C": "Hunting with a blood alcohol level lower than 1,2g/l"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 406,
+    "question": "Hunting a non-game species is:",
+    "options": {
+      "A": "A serious administrative offence",
+      "B": "A hunting crime",
+      "C": "Negligent conduct"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 407,
+    "question": "Indicate on which of the lands the prohibition on hunting only becomes effective provided that they are signposted:",
+    "options": {
+      "A": "Game refuge areas",
+      "B": "Burnt areas and land swept by fires",
+      "C": "Tourist installations and campsites"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 408,
+    "question": "At 200 metres from a dwelling house may the act of hunting be carried out?",
+    "options": {
+      "A": "Yes, but only by the hide method",
+      "B": "Yes, without any restrictions",
+      "C": "Yes, but only with the authorisation of the person entitled"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 409,
+    "question": "What constitutes a hunting crime:",
+    "options": {
+      "A": "Hunting without being the bearer of an identity card",
+      "B": "Hunting without being qualified with a hunter's certificate",
+      "C": "Hunting 200 metres from a duly signposted dovecote"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 410,
+    "question": "What constitutes a hunting crime:",
+    "options": {
+      "A": "Hunting 50 metres from tarred municipal roads",
+      "B": "Using assistants outside the established conditions",
+      "C": "Using lure calls in the hunting of ducks"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 411,
+    "question": "What constitutes a hunting crime:",
+    "options": {
+      "A": "Abandoning the animals that assist and accompany the hunter in the practice of hunting",
+      "B": "Hunting ducks from a hide, up to 100 metres from the bodies of water, after 16 hours and until sunset",
+      "C": "Hunting with a blood alcohol level equal to 1,0 g/l"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 412,
+    "question": "The captive breeding of game species and subspecies not identified by ministerial order is:",
+    "options": {
+      "A": "Prohibited",
+      "B": "Permitted provided that the production is for food consumption",
+      "C": "Permitted provided that the production is intended for releases on hunting training grounds"
+    },
+    "status": "draft",
+    "notes": ""
+  }
+]

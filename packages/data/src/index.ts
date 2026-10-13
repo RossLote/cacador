@@ -30,6 +30,7 @@ import translation08 from '../translations/en/08-biologia-patos.json' with { typ
 import translation09 from '../translations/en/09-biologia-pombos-galinhola-narcejas.json' with { type: 'json' };
 import translation10 from '../translations/en/10-biologia-tarambola-tordos.json' with { type: 'json' };
 import translation11 from '../translations/en/11-nao-cinegeticas.json' with { type: 'json' };
+import translation12 from '../translations/en/12-condicionamentos.json' with { type: 'json' };
 
 export type OptionKey = 'A' | 'B' | 'C';
 
@@ -162,6 +163,7 @@ const translationFiles = [
   translation09,
   translation10,
   translation11,
+  translation12,
 ] as (readonly Translation[])[];
 const hintFiles: readonly (readonly Hint[])[] = [];
 
