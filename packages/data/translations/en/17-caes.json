@@ -1,0 +1,211 @@
+[
+  {
+    "id": 480,
+    "question": "Which is the hunting dog commonly called coelheiro?",
+    "options": {
+      "A": "The small podengo",
+      "B": "The medium podengo",
+      "C": "The large podengo"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 481,
+    "question": "Which of the following breeds of dogs is suited to the hunting of wild boar?",
+    "options": {
+      "A": "The medium podengo",
+      "B": "The large podengo",
+      "C": "The foxhound"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 482,
+    "question": "The small podengo and the medium podengo are dogs especially adapted to the hunting of:",
+    "options": {
+      "A": "Partridge and common quail",
+      "B": "European rabbit",
+      "C": "Ducks and Eurasian coot"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 483,
+    "question": "Indicate which of the statements is correct:",
+    "options": {
+      "A": "The Portuguese pointer is the only breed of dogs adapted to partridge hunting",
+      "B": "The small podengo is commonly called cão coelheiro",
+      "C": "The beagle is used in rabbit hunting"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 484,
+    "question": "The baixotes are considered:",
+    "options": {
+      "A": "Pack hounds",
+      "B": "Big-game blood-trail dogs",
+      "C": "Pointing dogs"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 485,
+    "question": "The podengos are dogs of a Portuguese breed adapted to the hunting of game species:",
+    "options": {
+      "A": "Furred",
+      "B": "Feathered",
+      "C": "Furred and feathered"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 486,
+    "question": "Which of the statements is correct?",
+    "options": {
+      "A": "The pointer is a dog of medium build, smooth-coated and fire-coloured",
+      "B": "The coelheiro is a dog of small build, smooth- or wire-coated",
+      "C": "The German pointer is a dog of good size, smooth- or wire-coated"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 487,
+    "question": "The fox terrier is especially suited to hunting?",
+    "options": {
+      "A": "Partridge",
+      "B": "Red fox",
+      "C": "Wild boar"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 488,
+    "question": "Which of the following sentences is correct?",
+    "options": {
+      "A": "The pointer is well adapted to hunting on very hilly ground",
+      "B": "The Irish setter retrieves well in water and on land",
+      "C": "The podengo is a dog adapted to the hunting of feathered game"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 489,
+    "question": "Foxhounds are considered:",
+    "options": {
+      "A": "Pack hounds",
+      "B": "Pointing dogs",
+      "C": "Dogs that retrieve well"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 490,
+    "question": "Which of the statements is correct?",
+    "options": {
+      "A": "The Portuguese pointer, as well as “pointing”, also retrieves well",
+      "B": "Greyhounds are not considered hunting dogs in Portugal",
+      "C": "The pointer is a dog of medium size and with a long coat"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 491,
+    "question": "The Portuguese pointer is a dog of a Portuguese breed adapted to the hunting of game species:",
+    "options": {
+      "A": "Furred",
+      "B": "Feathered",
+      "C": "Furred and feathered"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 492,
+    "question": "The baixotes are dogs mainly suited to:",
+    "options": {
+      "A": "Following blood trails of big game",
+      "B": "Chasing Iberian hares",
+      "C": "Chasing partridges"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 493,
+    "question": "Which of these breeds of dogs is the most suited to the hunting of feathered game?",
+    "options": {
+      "A": "Medium podengo",
+      "B": "Small podengo",
+      "C": "Portuguese pointer"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 494,
+    "question": "Which of the following breeds of dogs is suited to the hunting of wild boar?",
+    "options": {
+      "A": "Large podengo",
+      "B": "Foxhound",
+      "C": "Beagle"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 495,
+    "question": "Which of the following breeds of dogs is the most suited to the hunting of furred game?",
+    "options": {
+      "A": "German pointer",
+      "B": "Medium podengo",
+      "C": "Pointer"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 496,
+    "question": "Which of the statements is correct:",
+    "options": {
+      "A": "The Portuguese pointer is the only breed adapted for partridge hunting",
+      "B": "The Brittany retrieves well on land and in water",
+      "C": "The terrier is intended to follow blood trails of big game"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 497,
+    "question": "The medium podengo is a dog more adapted to hunting:",
+    "options": {
+      "A": "The rabbit",
+      "B": "The wild boar",
+      "C": "The red-legged partridge"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 498,
+    "question": "Indicate which of these breeds of dogs is the most suited to the hunting of feathered game:",
+    "options": {
+      "A": "Beagle",
+      "B": "English setter",
+      "C": "Fox terrier"
+    },
+    "status": "draft",
+    "notes": ""
+  }
+]

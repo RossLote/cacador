@@ -33,6 +33,10 @@ import translation11 from '../translations/en/11-nao-cinegeticas.json' with { ty
 import translation12 from '../translations/en/12-condicionamentos.json' with { type: 'json' };
 import translation13 from '../translations/en/13-terrenos.json' with { type: 'json' };
 import translation14 from '../translations/en/14-periodos-processos.json' with { type: 'json' };
+import translation15 from '../translations/en/15-arco-besta.json' with { type: 'json' };
+import translation16 from '../translations/en/16-campos-treino.json' with { type: 'json' };
+import translation17 from '../translations/en/17-caes.json' with { type: 'json' };
+import translation18 from '../translations/en/18-cetraria.json' with { type: 'json' };
 
 export type OptionKey = 'A' | 'B' | 'C';
 
@@ -168,6 +172,10 @@ const translationFiles = [
   translation12,
   translation13,
   translation14,
+  translation15,
+  translation16,
+  translation17,
+  translation18,
 ] as (readonly Translation[])[];
 const hintFiles: readonly (readonly Hint[])[] = [];
 

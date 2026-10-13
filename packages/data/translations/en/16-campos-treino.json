@@ -1,0 +1,57 @@
+[
+  {
+    "id": 475,
+    "question": "On hunting training grounds it is permitted to:",
+    "options": {
+      "A": "Train birds of prey",
+      "B": "Carry out driven hunts for wild boar",
+      "C": "Train hunting dogs using non-game species"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 476,
+    "question": "On hunting training grounds, which of the following activities may be practised?",
+    "options": {
+      "A": "Shooting practice with a firearm on partridges bred in captivity",
+      "B": "Montarias (driven big-game hunts with hounds) for wild boar",
+      "C": "Hunting game species of the wild fauna to train birds of prey"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 477,
+    "question": "Say which of the statements is correct?",
+    "options": {
+      "A": "On training grounds the users must ensure the collection of spent cartridges resulting from the practice of shooting",
+      "B": "On training grounds the users may not use hunting guns",
+      "C": "On training grounds the users must hold a hunting licence"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 478,
+    "question": "On hunting training grounds the practice of one of the following activities may be authorised:",
+    "options": {
+      "A": "Training of ferrets with domestic rabbits",
+      "B": "Shooting practice with a crossbow",
+      "C": "Training hunting dogs using wild game species"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 479,
+    "question": "On hunting training grounds, among other activities of a hunting nature, there may be authorised:",
+    "options": {
+      "A": "The training of birds of prey",
+      "B": "The holding of montarias (driven big-game hunts with hounds)",
+      "C": "The holding of driven hunts for red foxes"
+    },
+    "status": "draft",
+    "notes": ""
+  }
+]
