@@ -3,11 +3,11 @@
     "id": 1,
     "question": "Who may be exempted from the hunter's certificate?",
     "options": {
-      "A": "The officers of the authorities with competence in the enforcement of hunting",
+      "A": "The officers of the authorities with competence in hunting enforcement",
       "B": "The members of the Government, the Deputies to the Assembleia da República and the staff of the ICNF",
       "C": "Foreigners not resident in Portuguese territory, provided they are qualified to hunt in the country of their nationality or residence"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -18,7 +18,7 @@
       "B": "To be resident in national territory",
       "C": "To be over 16 years of age"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -29,7 +29,7 @@
       "B": "In the 18 months that precede the end of its validity",
       "C": "In the 24 months that precede the end of its expiry"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -40,7 +40,7 @@
       "B": "Lapses",
       "C": "Must be exchanged"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -51,7 +51,7 @@
       "B": "The regional hunting licence authorises the practice of hunting in the area of the hunting region to which it relates",
       "C": "The regional hunting licence is only valid for some species"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -62,7 +62,7 @@
       "B": "Over 12 months of age",
       "C": "Over 6 months of age"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -73,18 +73,18 @@
       "B": "Regional hunting licence or national hunting licence",
       "C": "Regional hunting licence and waterfowl licence"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
     "id": 8,
     "question": "Can a hunter, to carry out the act of hunting, be exempted from the hunting licence?",
     "options": {
-      "A": "No, he can never be exempted",
-      "B": "Yes, if he is a foreigner, not resident in national territory",
-      "C": "Yes, if he is a member of the diplomatic corps accredited in Portugal"
+      "A": "No, they can never be exempted",
+      "B": "Yes, if they are a foreigner, not resident in national territory",
+      "C": "Yes, if they are a member of the diplomatic corps accredited in Portugal"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -95,7 +95,7 @@
       "B": "Foreigners not resident in Portuguese territory, provided that they are qualified to hunt in the country of their nationality or residence",
       "C": "No one"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -106,7 +106,7 @@
       "B": "Regional hunting licence or national hunting licence",
       "C": "Regional hunting licence and waterfowl licence"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   }
 ]
