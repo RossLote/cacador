@@ -2,14 +2,14 @@
   {
     "id": 267,
     "language": [],
-    "nudge": "Um pombo-torcaz: a big grey pigeon with a white patch on each side of the neck and a white band across the wing, the duas manchas brancas of question 271, and the largest of the three pigeons (question 273). The European turtle dove is smaller and slimmer, with scaly rufous-brown wings and no white band across them.",
+    "nudge": "A Common wood pigeon, pombo-torcaz: a big grey pigeon with a white patch on each side of the neck and a white band across the wing, the duas manchas brancas of question 271, and the largest of the three pigeons (question 273). The European turtle dove is smaller and slimmer, with scaly rufous-brown wings and no white band across them.",
     "patterns": [],
     "status": "checked"
   },
   {
     "id": 268,
     "language": [],
-    "nudge": "Um pombo-da-rocha: a pale blue-grey pigeon with two black bars across each wing, black wing tips and a white rump. The Common wood pigeon has white neck and wing patches instead of the bars (question 271), and the European turtle dove is smaller, with scaly rufous-brown wings.",
+    "nudge": "A Rock dove, pombo-da-rocha: a pale blue-grey pigeon with two black bars across each wing, black wing tips and a white rump. The Common wood pigeon has white neck and wing patches instead of the bars (question 271), and the European turtle dove is smaller, with scaly rufous-brown wings.",
     "patterns": [],
     "status": "checked"
   },
@@ -139,7 +139,7 @@
   {
     "id": 280,
     "language": [],
-    "nudge": "Uma galinhola: a plump, stocky wader with a long straight bill, dead-leaf brown plumage and dark bars across the back of the crown, the bico comprido e direito of question 284. The Common snipe is slimmer, with stripes running lengthwise along the head and back instead of across it.",
+    "nudge": "A Eurasian woodcock, galinhola: a plump, stocky wader with a long straight bill, dead-leaf brown plumage and dark bars across the back of the crown, the bico comprido e direito of question 284. The Common snipe is slimmer, with stripes running lengthwise along the head and back instead of across it.",
     "patterns": [],
     "status": "checked"
   },
@@ -150,11 +150,6 @@
         "pt": "está errada",
         "en": "is wrong",
         "note": "errada = wrong: the stem asks for the false statement, so the two true ones are the distractors."
-      },
-      {
-        "pt": "em todo o território nacional",
-        "en": "throughout the national territory",
-        "note": "todo o + noun, with the article, is 'the whole': em todo o território nacional claims the same for the whole country at once."
       }
     ],
     "nudge": "The woodcock is migradora in Portugal Continental but sedentária nos Açores, resident in the Azores, so migradora em todo o território nacional is the false one. The other two statements are both true: a migrant on the mainland, a resident on the islands.",
@@ -247,7 +242,7 @@
   {
     "id": 293,
     "language": [],
-    "nudge": "Narceja-comum: a very long straight bill, buff stripes running lengthwise along the head and back, and a white belly. Question 304 tells it from the narceja-galega, the Jack snipe, by ser maior e ter o bico mais comprido, and the Eurasian woodcock is bulkier, with bars across the back of the head instead of stripes along it.",
+    "nudge": "A Common snipe, narceja-comum: a very long straight bill, buff stripes running lengthwise along the head and back, and a white belly. Question 304 tells it from the narceja-galega, the Jack snipe, by ser maior e ter o bico mais comprido, and the Eurasian woodcock is bulkier, with bars across the back of the head instead of stripes along it.",
     "patterns": [],
     "status": "checked"
   },
@@ -280,13 +275,7 @@
   },
   {
     "id": 297,
-    "language": [
-      {
-        "pt": "Pouco sociáveis",
-        "en": "Not very sociable",
-        "note": "pouco before an adjective turns it down: not very, nearly its opposite; not 'a little sociable'."
-      }
-    ],
+    "language": [],
     "nudge": "Snipe are pouco sociáveis, not very sociable, the opposite of muito sociáveis. They are not migradoras estivais either: here they are migradoras invernantes, winter visitors (question 299).",
     "patterns": ["not-very"],
     "status": "checked"
