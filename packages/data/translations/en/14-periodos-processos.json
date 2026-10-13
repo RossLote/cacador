@@ -7,7 +7,7 @@
       "B": "In the months of January and February",
       "C": "In hunting zones"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -18,7 +18,7 @@
       "B": "Is permitted on the conditions set in a public notice of the ICNF",
       "C": "Is permitted in hunting zones"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -29,7 +29,7 @@
       "B": "Walked-up, driven, stalking, falconry and with a ferret",
       "C": "Walked-up, from a hide, driven, by coursing, stalking and with a ferret"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -40,7 +40,7 @@
       "B": "Only of aquatic small-game species",
       "C": "Only of big-game species"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -51,7 +51,7 @@
       "B": "Is permitted in the months of January and February, but only in hunting zones",
       "C": "Is prohibited"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -62,7 +62,7 @@
       "B": "Stalking",
       "C": "Driven"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -73,7 +73,7 @@
       "B": "Stalking",
       "C": "Coursing"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -84,7 +84,7 @@
       "B": "September to December",
       "C": "October to December"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -95,7 +95,7 @@
       "B": "From a hide",
       "C": "Falconry"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -106,7 +106,7 @@
       "B": "From December to February",
       "C": "From October to March"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -117,7 +117,7 @@
       "B": "Coursing",
       "C": "From a hide"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -128,7 +128,7 @@
       "B": "In unmanaged hunting grounds all year",
       "C": "In unmanaged hunting grounds, from October to February in the places and on the conditions set in a public notice of the Instituto de Conservação da Natureza e das Florestas"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -139,7 +139,7 @@
       "B": "September to February",
       "C": "August to February"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -150,7 +150,7 @@
       "B": "For common quail",
       "C": "For European golden plover"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -161,7 +161,7 @@
       "B": "From August to December",
       "C": "From September to December"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -172,7 +172,7 @@
       "B": "From a hide",
       "C": "Falconry"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -183,7 +183,7 @@
       "B": "Walked-up and from a hide",
       "C": "Walked-up and driven"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -194,7 +194,7 @@
       "B": "From a hide",
       "C": "Falconry"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -205,7 +205,7 @@
       "B": "September to December",
       "C": "October to February"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -216,7 +216,7 @@
       "B": "In the places indicated in a public notice of the Instituto de Conservação da Natureza e das Florestas",
       "C": "In all places"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -227,7 +227,7 @@
       "B": "Rabbit",
       "C": "Egyptian mongoose"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -238,7 +238,7 @@
       "B": "Is not acting correctly because one may only hunt red fox in a driven hunt, in unmanaged grounds, in the months of January and February",
       "C": "Is not acting correctly because one may not hunt in a driven hunt in unmanaged grounds"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -249,7 +249,7 @@
       "B": "September to December",
       "C": "October to February"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -260,7 +260,7 @@
       "B": "No, because the walked-up method is prohibited",
       "C": "Yes, in the places and on the conditions set by public notice of the Instituto de Conservação da Natureza e das Florestas"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -271,7 +271,7 @@
       "B": "October to January",
       "C": "October to February"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -282,7 +282,7 @@
       "B": "They used a method that is not authorised",
       "C": "They hunted outside the species' open season"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -293,7 +293,7 @@
       "B": "They used a method that is not authorised",
       "C": "They hunted outside the species' open season"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -304,7 +304,7 @@
       "B": "No, because in August the hunting of ducks cannot be authorised",
       "C": "No, because ducks cannot be hunted from a hide"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -315,7 +315,7 @@
       "B": "They hunted outside the species' open season",
       "C": "None"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -324,9 +324,9 @@
     "options": {
       "A": "Yes, but only on the conditions and in the places set by public notice of the Instituto de Conservação da Natureza e das Florestas",
       "B": "Yes, but only in the months of August and November",
-      "C": "Yes, but only in hunting zones, provided that it is provided for in the game management and exploitation plan (POEC) or management plan (PG), duly approved"
+      "C": "Yes, but only in hunting zones, as long as it is provided for in the game management and exploitation plan (POEC) or management plan (PG), duly approved"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -337,7 +337,7 @@
       "B": "Snipe",
       "C": "Common quail"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -348,7 +348,7 @@
       "B": "Yes, but only in unmanaged hunting grounds",
       "C": "No, because it is a method prohibited for wild boar"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -359,7 +359,7 @@
       "B": "January and February, on the conditions and in the places set in a public notice of the Instituto de Conservação da Natureza e das Florestas",
       "C": "All year"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -370,7 +370,7 @@
       "B": "October to January",
       "C": "October to February"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -381,7 +381,7 @@
       "B": "August to February",
       "C": "August to December"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -392,7 +392,7 @@
       "B": "September to February",
       "C": "August to January"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -403,7 +403,7 @@
       "B": "Only in the municipalities set by ministerial order",
       "C": "Only in hunting zones"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -414,7 +414,7 @@
       "B": "Walked-up and from a hide",
       "C": "Walked-up and stalking"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -425,7 +425,7 @@
       "B": "In the places indicated in a public notice of the Instituto de Conservação da Natureza e das Florestas",
       "C": "In all places"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -436,7 +436,7 @@
       "B": "Walked-up and falconry",
       "C": "Walked-up and from a hide"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -447,7 +447,7 @@
       "B": "Driven",
       "C": "From a hide"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -458,7 +458,7 @@
       "B": "In managed grounds, in September, one may hunt only walked-up",
       "C": "The maximum limit of the open season is from September to December"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -469,7 +469,7 @@
       "B": "Is permitted only during the months of January and February",
       "C": "Is not permitted"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -480,7 +480,7 @@
       "B": "Only from August to February",
       "C": "All year"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -491,7 +491,7 @@
       "B": "From October to December",
       "C": "From October to January"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -502,7 +502,7 @@
       "B": "From a hide, from November to December",
       "C": "Walked-up and from a hide, from October to February"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -513,7 +513,7 @@
       "B": "From September to December",
       "C": "From October to January"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   }
 ]
