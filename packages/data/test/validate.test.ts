@@ -102,7 +102,7 @@ describe('validate on the real data', () => {
       images: 15,
       imageQuestions: 18,
       translations: translationsOnDisk(),
-      glossaries: { species: 99, terms: 166 },
+      glossaries: { species: 99, terms: 196 },
     });
   });
 });
