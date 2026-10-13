@@ -532,8 +532,10 @@ Four phases, each its own epic, in order.
 
 ## 6. App behaviour
 
-Built in phase 4 (epic cac-eil). Every rule in § 6 to § 8 is one of that epic's
-decisions D1 to D23, each recorded in § 9. The app is a static site with no backend:
+Built in phase 4 (epic cac-eil). The rules in § 6 to § 8 come from that epic's
+decisions D1 to D23 and from the choices the orchestrator made during the epic and
+marked reversible, which carry no D number; § 9 records both kinds, and the fixes from
+the epic's review fill in detail under them. The app is a static site with no backend:
 everything it knows about the learner stays on the device (§ 7).
 
 ### 6.1 Language
@@ -591,6 +593,8 @@ screen has a back control to Home; there is no bottom bar.
   and its picture when it has one.
 - **Peek**: press and hold a button to see the English question and options; release
   and the Portuguese returns. It is never a toggle, on any input, and cannot be left on.
+  A press on the button never takes the focus from where it was, so Enter still
+  advances afterwards.
 - **Hint**: a Hint button opens a panel with the `language` notes, or a line saying
   there are none when the list is empty, before or after answering. The panel opens
   only when tapped. After answering it adds the `nudge`, so a panel open at the moment
@@ -623,6 +627,10 @@ screen has a back control to Home; there is no bottom bar.
   and Next move one at a time, a marker jumps. Movement is free and an answer can be
   changed until Submit. The chosen option is shown and nothing is marked right or wrong.
   No peek and no Hint during the exam.
+- Each answer is saved at the tap, one question at a time, merged into the exam as
+  stored. It counts when it was chosen before the deadline, even when its save reaches
+  storage after it; an answer the storage module refuses because the exam is over ends
+  the exam on this screen too.
 - The clock counts down from 30:00, computed from the start time, so it keeps running
   while the app is closed. Reopening the app with an unfinished exam resumes it with
   its answers, from Home's card or from `/exam`, on its first unanswered question (the
@@ -640,7 +648,9 @@ screen has a back control to Home; there is no bottom bar.
   submitted as it stands, with its finish time and every logged answer's time set to
   the deadline, so it lands on the day it was taken. Home's card therefore never shows
   zero minutes, and an exam left overnight appears among the past exams with its score.
-- Results: the score out of 20 against the 15 line, Passed (15 or more) or Not passed,
+- Results: the score out of 20, worked out from the exam's answers with the current
+  answer key (so it always matches the wrong ones listed), against the 15 line, Passed
+  (15 or more) or Not passed,
   and the wrong ones, unanswered included, each on the question card revealed: the
   chosen option and the correct one marked (only the correct one for an unanswered
   question), with Hint and peek available and no flags row.
@@ -652,24 +662,30 @@ At `/progress`, top to bottom:
 - Readiness and the unseen count, worded as on Home.
 - Accuracy by day: one bar per calendar day for the last 30 days, in the device's time
   zone, each giving that day's answers, practice and exam, and how many were right;
-  today is labelled. Plain blocks, no chart library.
+  today is labelled. Plain blocks, no chart library. The bars and "today" follow the
+  date: the page reads progress again at local midnight and whenever it is shown again,
+  so a page left open overnight or resumed the next day moves on a day.
 - Three lists: topics (29, every topic the manifest holds, § 3.2), sections (11) and
   patterns (17, every entry of `hints/patterns.json`). Each row gives the name, the
   group accuracy (§ 6.2) and "seen x of y", or not started. Rows sort worst first with
   the not-started rows last, and each row links into focused practice for its group.
-- Past exams, newest first, finished exams only (an unfinished exam is Home's card,
-  never a row): date, score out of 20 and Passed or Not passed, each linking to its
-  results.
-- A link to Flagged with the number of flags.
+  The open list is kept in the address (`/progress?tab=section` or `?tab=pattern`, the
+  topics having none), so back from focused practice returns to the list the row was
+  in.
+- Past exams, newest finished first, finished exams only (an unfinished exam is Home's
+  card, never a row): date, score out of 20, worked out from the exam's answers as the
+  results page does, and Passed or Not passed, each linking to its results.
+- A link to Flagged with the number of flags (in Portuguese, `Assinalações (N)`).
 
 ### 6.7 Flagged
 
 At `/flagged`: every flag, newest first, with the question number, English or Hint, the
 note, and the question's Portuguese stem; a tap clears one flag once it is fixed. Copy
 puts the list on the clipboard as plain text: a header line `Caçador flags
-<YYYY-MM-DD>` with today's date, then one line per flag, `#<id> English: <note>` or
-`#<id> Hint: <note>`, the note part omitted when the note is empty. Share, shown only
-where the browser has `navigator.share`, shares the same text.
+<YYYY-MM-DD>` with the date of the tap, then one line per flag, `#<id> English: <note>`
+or `#<id> Hint: <note>`, the note part omitted when the note is empty. Share, shown only
+where the browser has `navigator.share`, shares the same text, made at its tap too. A
+clear that storage refuses shows the page's failure line in place of the list (§ 6.9).
 
 The copied text is a machine format for an agent to read: the same English in every
 interface language, its labels constants in one module, and the one exception to the
@@ -682,11 +698,14 @@ shape unused (§ 5 step 2 rule 10).
 ### 6.8 Settings
 
 At `/settings`: the language, English or Português (§ 6.1); Export, which downloads the
-progress file (§ 7); Import, which merges a progress file and reports the counts of
-answers, exams and flags added, or refuses a file that is not a Caçador export; Clear
-progress, behind a confirm, which empties every store and the no-repeat window and
-keeps the language; a line saying progress is not being saved on this device when
-storage is unavailable (§ 6.9); and a link to Flagged.
+progress file (§ 7); Share, shown only where the browser's share sheet takes a file
+(`navigator.canShare`), which hands the same file as Export to the share sheet, made
+at the tap with what the device holds and that day's date (it is started on the press,
+so the share still falls inside the tap); Import, which merges a progress file and
+reports the counts of answers, exams and flags added, or refuses a file that is not a
+Caçador export; Clear progress, behind a confirm, which empties every store and the
+no-repeat window and keeps the language; a line saying progress is not being saved on
+this device when storage is unavailable (§ 6.9); and a link to Flagged.
 
 ### 6.9 Empty and failure states
 
@@ -696,10 +715,24 @@ storage is unavailable (§ 6.9); and a link to Flagged.
 - **Storage unavailable**: when IndexedDB cannot be opened (a private window, blocked
   site data), the app runs on progress kept in memory for the visit, and Settings says
   progress is not being saved on this device. When localStorage is blocked, the
-  language choice holds for the visit only.
+  language choice holds for the visit only; when sessionStorage is blocked, the
+  no-repeat window is kept in memory for the page.
 - **A read or write that fails**: when the storage module rejects, the screen says so in
-  one plain line (Home, Practice, Exam, Progress and Flagged in place of their content,
-  Settings in its progress line) instead of loading for good.
+  one plain line, instead of loading for good or going on as if the write had landed:
+  - a failed read: Home, Practice, Exam, Progress and Flagged show the line in place of
+    their content;
+  - Practice: an answer whose write fails keeps its result on screen, the line says the
+    answer was not saved and does not count, and Next still draws;
+  - the flags row: a failed write says so in the row's own line and the row goes back
+    to what is stored, keeping an open note field and its draft; while the row's flags
+    cannot be read, at first or after a failed write, it says so and keeps its buttons
+    disabled;
+  - the exam: a Start that fails says so under Start. The running exam shows the line
+    under the question and keeps its content: an answer that could not be saved is
+    taken back to the answers stored, so what is on screen is what will be scored, and a
+    Submit that could not finish stays on the exam, where Submit can be pressed again;
+  - Flagged: a clear that fails shows the line in place of the list;
+  - Settings: an export, share, import or clear that fails shows in its progress line.
 - **A file that is not an export**: Import refuses anything that is not a version 1
   Caçador export, changes nothing, and says so.
 - **An exam past its deadline**: settled as it stands at its deadline the next time
@@ -742,7 +775,9 @@ Flag          { questionId: number, kind: "translation" | "hint", note: string, 
 ```
 
 - An Answer's `id` is assigned by IndexedDB on insert. `chosen` is absent only for an
-  exam question left unanswered; `examId` is set on an exam answer.
+  exam question left unanswered; `examId` is set on an exam answer, and only on an exam
+  answer; a practice answer always has `chosen`. Recording an answer, or importing one,
+  that breaks this is refused.
 - A QuestionState's `correct` counts the right attempts; `streak` is the right answers
   in a row up to the last answer, 0 after a wrong one; `recent` holds the last three
   answers, right or wrong, newest last, which is all readiness needs without reading
@@ -762,18 +797,20 @@ question's state in the same transaction. The question state is a cache of the l
 is always derivable from `answers`, import rebuilds it from the merged log, and it is
 never exported.
 
-**Exams.** A running exam's answers are saved on the exam record as they change; the
-module refuses the change, and reports that it did, once the exam is finished or its
-deadline has passed. Finishing an exam is conditional: the module finishes it only while
-it is still unfinished and reports whether it did, and the exam's answers are logged
-only when it did, so Submit runs once. The finish time is held to the deadline: it is
-the earlier of the moment of finishing and the start time plus 30 minutes, so an
-auto-submit that fires late and the settling of a stale exam both land on the deadline.
-Every read of progress (the states, the log, the exams, an exam by id, the export and the
-unfinished exam) first settles any exam past its deadline: finished as it
-stands, with `finishedAt` and every logged answer's `at` equal to the deadline and each
-unanswered question logged with no `chosen` and `correct` false. The deadline and the
-score come from the study model (`apps/web/src/model/`), which the storage module
+**Exams.** A running exam's answers are saved one question at a time, merged into the
+stored record; the module refuses the change, and reports that it did, once the exam is
+finished, when the moment the option was chosen is past its deadline, or for a question
+not in the exam. Starting an exam while one is running saves nothing and returns the
+running one. Finishing an exam is conditional: the module finishes it only while it is
+still unfinished and reports whether it did, and the exam's answers are logged only when
+it did, so Submit runs once. The finish time is held to the deadline: it is the earlier
+of the moment of finishing and the start time plus 30 minutes, and never before the
+start time, so an auto-submit that fires late and the settling of a stale exam both land
+on the deadline. Every read of progress (the states, the log, the exams, an exam by id,
+the export and the unfinished exam) first settles any exam past its deadline: finished
+as it stands, with `finishedAt` and every logged answer's `at` equal to the deadline and
+each unanswered question logged with no `chosen` and `correct` false. The deadline and
+the score come from the study model (`apps/web/src/model/`), which the storage module
 imports.
 
 **Flags.** Setting a flag that exists replaces its note and time; clearing removes it.
@@ -792,7 +829,8 @@ fake-indexeddb.
 - localStorage `cacador.locale`: the interface language, `en` or `pt`. Nothing else
   goes in localStorage: no theme (the system setting decides) and no last mode.
 - sessionStorage `cacador.recent`: the recent list the no-repeat window reads, the ten
-  most recently drawn question ids as a JSON array, oldest first (§ 6.2).
+  most recently drawn question ids as a JSON array, oldest first (§ 6.2); kept in memory
+  for the page when sessionStorage is blocked.
 
 **Export.** One JSON file, `cacador-progress-<YYYY-MM-DD>.json`, holding every store
 but `questionState`, each as an array of its records:
@@ -803,7 +841,15 @@ but `questionState`, each as an array of its records:
 ```
 
 **Import.** It validates the shape and refuses anything that is not a version 1 Caçador
-export without changing anything. Otherwise it merges:
+export without changing anything. It also refuses, changing nothing, a file holding a
+record the app never writes: an exam that is not 20 distinct bank questions, an exam
+whose `answers` name a question outside it, a finished exam without a score or a score
+without `finishedAt`, a question id outside the bank, an answer breaking the `chosen`
+and `examId` rule above, an exam answer whose exam is not finished in the same file, any
+time more than five minutes after the import's moment, or a `finishedAt` before
+`startedAt` or after `startedAt` plus 30 minutes. An answer's `correct` and a finished
+exam's `score` are worked out again from the bank's key, not taken from the file.
+Otherwise it merges:
 
 - answers by `(questionId, at)`;
 - exams by `id`: a finished copy wins over an unfinished one; between two finished
@@ -818,9 +864,9 @@ This is the one place the answers log is not append-only, and it keeps one exam 
 counting twice in the question states and the day bars.
 
 When the merge leaves more than one exam unfinished, only the most recently started
-stays unfinished and the others are settled as they stand under the deadline rule
-above. Every question state is then rebuilt from the merged log, and the counts of
-answers, exams and flags added are reported.
+stays unfinished and the others are submitted as they stand at the moment of the
+import, held to the deadline rule above. Every question state is then rebuilt from the
+merged log, and the counts of answers, exams and flags added are reported.
 
 **Clear progress** asks first, then empties every store and removes `cacador.recent`;
 it never touches `cacador.locale`.
@@ -841,13 +887,16 @@ precedent for every choice here, minus the server: this app has no backend.
   2.0.0; vitest with jsdom, Testing Library and fake-indexeddb. workbox-window is not a
   dependency: the worker is registered by hand (§ 8.8).
   Scripts `dev`, `build`, `preview`, `typecheck` and `test`.
-- `e2e` (`@cacador/e2e`): Playwright (`@playwright/test`). Scripts `e2e` and
+- `e2e` (`@cacador/e2e`): Playwright (`@playwright/test`), with `@cacador/data` for the
+  bank the specs read. Scripts `e2e`, `browsers` (`playwright install chromium`) and
   `typecheck`, no `test` (§ 8.10).
 - Root scripts: `pnpm dev` and `pnpm build` run apps/web's; `pnpm lint` is
   `eslint . --max-warnings 0`, then `tsc` in every workspace (`pnpm -r typecheck`), then
   the data validator (`pnpm validate`), then the Radix check
   (`node scripts/check-no-radix.mjs`); `pnpm test` is vitest in every workspace with a
-  `test` script (packages/data and apps/web); `pnpm e2e` runs the Playwright suite;
+  `test` script (packages/data and apps/web); `pnpm e2e` runs the Playwright suite and
+  `pnpm e2e:browsers` installs its Chromium, once before the first run and after each
+  Playwright bump;
   `pnpm extract` and `pnpm validate` are packages/data's. A bead is done when its
   acceptance holds and `pnpm lint` and `pnpm test` are green.
 - Radix is banned. Two checks run inside `pnpm lint`, copied from Sumit: ESLint's
@@ -883,9 +932,11 @@ apps/web/
                            RunningExam with ExamMarkers and useExamClock, ExamResultsPage
                            (the score and the review)
     progress/              ProgressPage, DayBars, GroupTabs and groups.ts (the three lists'
-                           rows), PastExams
+                           rows), PastExams and exams.ts (their order), useDayRefresh (the
+                           read again at midnight and when shown)
     settings/              SettingsPage, progressFile.ts (the download and the share sheet)
     flagged/               FlaggedPage, copyFormat.ts (the fixed copy text, § 6.7)
+    notfound/              NotFoundPage, for any address that names no screen
     components/question/   QuestionCard with PeekButton and HintPanel, names.ts (a name in
                            the interface language)
     components/LinkButton.tsx  a router link drawn as a button
@@ -905,12 +956,14 @@ apps/web/
   test/                    setup.ts (jest-dom, fake-indexeddb, the resets before each test),
                            fixtures.ts (bank lookups the tests share)
 e2e/
-  package.json             @cacador/e2e, scripts e2e and typecheck
+  package.json             @cacador/e2e, scripts e2e, browsers and typecheck
   playwright.config.ts     the production build under vite preview, locale en-GB
   tsconfig.json
+  acceptance.spec.ts       steps 2 to 11 of the phase 4 acceptance bar, in order
+  offline.spec.ts          step 12: Home, Practice and the 15 images from the cache, offline
   installable.spec.ts      the manifest and icons under /cacador/, Chrome's installability check
-  offline.spec.ts          Home, Practice and the 15 images from the cache, offline
-  *.spec.ts                the acceptance-bar suite: steps 2 to 12 of the phase 4 bar
+  build-output.spec.ts     the built dist: the 404.html copy, the waiting worker, the
+                           /cacador/ precache and URLs
 ```
 
 The study model holds the formulas of § 6.2 and the exam draw, deadline and score, as
@@ -922,10 +975,12 @@ Under the basename `/cacador/`, taken from Vite's `base` through
 `import.meta.env.BASE_URL`: `/` Home, `/practice` (query `topic`, `section` or
 `pattern`, § 6.4), `/exam/*` registered as a splat so the exam folder owns its
 sub-routes (`/exam`, which offers Start or resumes the unfinished exam and runs it in
-place, and `/exam/results/<id>`, the results and review), `/progress`, `/settings` and
-`/flagged`. Each page lives in `apps/web/src/<screen>/`. Home is the hub: the back
-control to Home on every other screen is a shared piece of the `Layout` in `App.tsx`, never part
-of a page, and there is no bottom bar.
+place, and `/exam/results/<id>`, the results and review), `/progress` (query `tab`,
+`section` or `pattern`, the open list, § 6.6), `/settings` and `/flagged`. Any other
+address, an unknown one under `/exam/` included, shows a not-found page inside the
+`Layout`, with the back control to Home. Each page lives in `apps/web/src/<screen>/`.
+Home is the hub: the back control to Home on every other screen is a shared piece of the
+`Layout` in `App.tsx`, never part of a page, and there is no bottom bar.
 
 ### 8.3 Messages
 
@@ -934,8 +989,9 @@ European Portuguese (`pt-PT`, never Brazilian). `apps/web/src/i18n/messages/en/`
 `pt/` each hold `common`, `home`, `practice`, `exam`, `progress`, `settings` and
 `flagged` `.ts` files. The English index defines the `Messages` type and each
 Portuguese file is typed by its English counterpart, so a key missing on either side
-fails `pnpm lint`. `common` holds the app name and the navigation labels (Home included,
-for the back control) and belongs to the scaffold. A screen's bead edits only its own
+fails `pnpm lint`. `common` holds the app name, the navigation labels (Home included,
+for the back control) and the not-found page's two strings, and belongs to the
+scaffold. A screen's bead edits only its own
 two files and duplicates a shared word rather than editing `common`. The language store
 is a module-level store in `i18n/locale.ts` read by `useI18n()`, which returns `t`, as
 in Sumit. The one exception to the no-text rule is the Flagged page's copy format
@@ -944,22 +1000,28 @@ in Sumit. The one exception to the no-text rule is the Flagged page's copy forma
 ### 8.4 Hot files
 
 A file every bead would touch makes beads serial, so the scaffold owns the shared files
-and no later bead edits them: the root `package.json`, `pnpm-workspace.yaml`,
-`pnpm-lock.yaml`, `eslint.config.js`, `.gitignore`, `scripts/check-no-radix.mjs`,
-`e2e/package.json`, and in `apps/web` the `package.json`, `components.json`,
-`tsconfig.json`, `src/App.tsx`, `src/index.css`, `src/components/ui/**`, the i18n store
-and index files (`locales.ts`, `locale.ts`, `useI18n.ts` and the three message
-indexes) and `src/storage/types.ts`. In phase 4 only the PWA bead (cac-eil.5) edited
-`apps/web/vite.config.ts`, `index.html` and `src/main.tsx` after the scaffold, and
-only the acceptance bead (cac-eil.11) could edit `e2e/playwright.config.ts`. The scaffold
-installed every dependency the phase needs, each in the workspace it belongs to
-(`apps/web` the app, shadcn and its components, `idb`, the PWA plugin and the test
-tools; the root `eslint-plugin-react-hooks` and `eslint-plugin-react-refresh`; `e2e`
-`@playwright/test`). A dependency a later bead needs is a bead of its own, run alone
-because it changes the lockfile, never an edit outside the bead's files. A new screen gets its own folder, its
-own two message files and a placeholder route added by a bead run alone, because
-`App.tsx` is a hot file. A bead's size cap of about a thousand lines does not count
-`pnpm-lock.yaml` or the generated shadcn components.
+and no bead running beside others edits them: the root `package.json`,
+`pnpm-workspace.yaml`, `pnpm-lock.yaml`, `eslint.config.js`, `.gitignore`,
+`scripts/check-no-radix.mjs`, `e2e/package.json`, and in `apps/web` the `package.json`,
+`components.json`, `tsconfig.json`, `src/App.tsx`, `src/index.css`,
+`src/components/ui/**`, the i18n store and index files (`locales.ts`, `locale.ts`,
+`useI18n.ts` and the three message indexes) and `src/storage/types.ts`. A change to one
+of them is a bead or pass of its own that names the file in its TOUCHES while no other
+worker holds it, never an edit outside a bead's files; so is a new dependency, because
+it changes the lockfile. A new screen gets its own folder, its own two message files and
+a route added by such a bead, because `App.tsx` is a hot file. A bead's size cap of about
+a thousand lines does not count `pnpm-lock.yaml` or the generated shadcn components.
+
+In phase 4 the scaffold (cac-eil.2) installed the dependencies, each in the workspace it
+belongs to (`apps/web` the app, shadcn and its components, `idb`, the PWA plugin and the
+test tools; the root `eslint-plugin-react-hooks` and `eslint-plugin-react-refresh`;
+`e2e` `@playwright/test`). After it, the PWA bead (cac-eil.5) edited
+`apps/web/vite.config.ts`, `index.html` and `src/main.tsx`; the end-of-epic simplify
+pass, run alone, narrowed the vitest include in `vite.config.ts`, removed workbox-window
+from `apps/web` (§ 8.8), added `@cacador/data` to `e2e` and touched `eslint.config.js`,
+`src/storage/types.ts` and the lockfile; and the review fixes added the browser install
+script to the root and `e2e` package files and the not-found route to `App.tsx` and
+`common`, each batch holding those files alone.
 
 ### 8.5 Look
 
@@ -1038,17 +1100,30 @@ no Dolt remote (§ 9).
 
 ### 8.10 End-to-end tests
 
-The `e2e` workspace runs `@playwright/test` against the production build: its web
-server builds `apps/web` and serves it with `vite preview` on port 4173 (`E2E_PORT`
-overrides it, so two worktrees can run at once) under `/cacador/`, with the browser
-locale `en-GB`. `pnpm e2e` at the root runs it; it is not part of `pnpm lint` or
-`pnpm test`, so the gates stay fast. The `e2e` script stays plain `playwright test`,
-never `--pass-with-no-tests`. The suite holds the acceptance-bar suite, which performs
-steps 2 to 12 of the phase 4 acceptance bar on a fresh browser profile, plus
-`installable.spec.ts` (the manifest and icons served under `/cacador/`, and Chrome's
-own installability check reporting no errors) and `offline.spec.ts` (after one online
-load and a reload, Home and Practice open offline and all 15 images answer from the
-cache).
+The `e2e` workspace runs `@playwright/test` in Chromium against the production build:
+its web server builds `apps/web` and serves it with `vite preview` on port 4173
+(`E2E_PORT` overrides it, so two worktrees can run at once) under `/cacador/`, with the
+browser locale `en-GB`. `pnpm e2e` at the root runs it; it is not part of `pnpm lint` or
+`pnpm test`, so the gates stay fast. `pnpm e2e:browsers` installs Chromium for it, once
+before the first run and again after each Playwright bump. The `e2e` script stays plain
+`playwright test`, never `--pass-with-no-tests`. The specs import the bank from
+`@cacador/data`. Four spec files:
+
+- `acceptance.spec.ts` performs steps 2 to 11 of the phase 4 acceptance bar, in order,
+  in one fresh browser context, with the page's random draws seeded so every run draws
+  the same questions;
+- `offline.spec.ts` is step 12: after one online load and a reload, Home and Practice
+  open offline and all 15 images answer from the cache;
+- `installable.spec.ts`: the manifest and icons served under `/cacador/`, and Chrome's
+  own installability check reporting no errors;
+- `build-output.spec.ts` reads the built `dist` rather than the served pages, because
+  `vite preview` answers any sub-route itself: `404.html` is a byte-for-byte copy of
+  `index.html`, the service worker waits (nothing claims clients or skips waiting, and
+  the app never asks it to), the precache holds every built file under `/cacador/`, and
+  every URL in `index.html` and the manifest starts with `/cacador/`.
+
+Step 1 of the bar, a fresh clone through install, lint, test and `pnpm e2e`, is run by
+hand, and step 13 is Ross's, on the phone after the first push.
 
 ### 8.11 Agents
 
@@ -1197,8 +1272,9 @@ merge, or makes a screen judgement call.
   construction cost answers (brief cac-bc2 D6).
 - **2026-10-13, Nudges may cite question numbers.** A nudge may cross-reference another
   question by number ("question 10 asks the same with rabbits"), with the fact always
-  stated in words too (§ 5 step 3 rule 7). Reason: ids are stable and the app can link
-  them later (brief cac-bc2 D7).
+  stated in words too (§ 5 step 3 rule 7). Reason: ids are stable, so the number finds
+  the question (brief cac-bc2 D7). The app does not link the number: that is out of
+  scope (§ 6.10, epic cac-eil D10).
 - **2026-10-13, Grammar named only when it recurs.** A language note names the grammar
   briefly only when the form recurs across the bank (the future subjunctive after se,
   the present subjunctive after desde que); elsewhere it gives the meaning only (§ 5
@@ -1364,7 +1440,8 @@ merge, or makes a screen judgement call.
   `App.tsx`, `index.css`, the shadcn components, the i18n store and index files and the
   storage types, and installs every dependency the phase needs; no later bead edits them
   (§ 8.4). Reason: phase 2's loader hot file made its beads serial (cac-qre D9, cac-eyh
-  D10; epic cac-eil D17).
+  D10; epic cac-eil D17). The end-of-epic simplify pass and the review fixes, each
+  holding the files it changed alone, later edited some of them; § 8.4 lists which.
 - **2026-10-13, Messages split per screen.** One English and one Portuguese message file
   per screen plus `common`, the Portuguese typed by the English so a missing key fails
   lint; a screen bead edits only its own two files; the Flagged copy format is the one
@@ -1422,3 +1499,11 @@ merge, or makes a screen judgement call.
   ran. Reason: the exam lasts 30 minutes however late the app gets to submit it, so it
   finishes, and lands on the day bars, at its deadline (orchestrator's choice during
   epic cac-eil, reversible; landed in cac-eil.3).
+- **2026-10-13, An import recomputes what the key decides.** An imported answer's
+  `correct` and a finished exam's `score` are worked out again from the bank's answer
+  key and stored, over refusing a file whose stated values disagree; an exam answer in
+  the file must name an exam finished in the same file, as every exam answer in an
+  export does (§ 7). Reason: an export made before an answer-key correction should still
+  import, and an exam answer with no finished exam beside it is not one the app writes
+  (orchestrator's choice during epic cac-eil, reversible; landed in cac-eil.29 and
+  cac-eil.30).

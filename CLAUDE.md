@@ -133,16 +133,17 @@ pnpm workspace of three packages: `packages/data`, `apps/web` and `e2e`
   style `base-nova` on `@base-ui/react` (the generated components in
   `src/components/ui/`). `src/main.tsx` mounts `BrowserRouter` with the basename from
   `import.meta.env.BASE_URL`; `src/App.tsx` holds the routes (`/`, `/practice`,
-  `/exam/*`, `/progress`, `/settings`, `/flagged`) and the shared layout with the back
-  control to Home. Under `src/`:
+  `/exam/*`, `/progress`, `/settings`, `/flagged`, and a not-found page for any other
+  address) and the shared layout with the back control to Home. Under `src/`:
   - one folder per screen, each with its page and its tests: `home` (readiness, the
     exam-in-progress card, the four buttons), `practice` (the session, the flags row,
     the laptop keys, the focused-practice pool from the query and `recent.ts`, the
     no-repeat window in sessionStorage), `exam` (`ExamPage` owns the sub-routes:
     `/exam` starts or resumes the running exam, `/exam/results/<id>` the results and
     review), `progress` (the day bars, the topic, section and pattern lists, past
-    exams), `settings` (language, export, import, clear) and `flagged` (the list and
-    `copyFormat.ts`, the fixed copy text);
+    exams), `settings` (language, export and share, import, clear), `flagged` (the list
+    and `copyFormat.ts`, the fixed copy text) and `notfound` (the page for an address
+    that names no screen);
   - `components/question/`: the question card, a controlled component with the peek
     button and the hint panel, shared by practice and the exam; `components/ui/`: the
     generated shadcn components;
@@ -163,11 +164,14 @@ pnpm workspace of three packages: `packages/data`, `apps/web` and `e2e`
 
   `public/` holds the web manifest and the icons, rendered from `public/favicon.svg`
   by `scripts/render-icons.sh`. `DESIGN.md` § 6 to § 8.
-- `e2e` (`@cacador/e2e`): the Playwright suite, run by `pnpm e2e` against the
-  production build served by `vite preview` under `/cacador/`: the acceptance-bar
-  suite, which performs steps 2 to 12 of phase 4's acceptance bar, plus
-  `installable.spec.ts` (Chrome's installability check) and `offline.spec.ts` (Home,
-  Practice and the 15 images from the cache). `DESIGN.md` § 8.10.
+- `e2e` (`@cacador/e2e`): the Playwright suite in Chromium, run by `pnpm e2e` against
+  the production build served by `vite preview` under `/cacador/`, with `@cacador/data`
+  for the bank. `acceptance.spec.ts` performs steps 2 to 11 of phase 4's acceptance bar
+  and `offline.spec.ts` is step 12 (Home, Practice and the 15 images from the cache);
+  `installable.spec.ts` runs Chrome's installability check, and `build-output.spec.ts`
+  reads the built `dist` (the `404.html` copy, the waiting service worker, the
+  `/cacador/` precache and URLs). `pnpm e2e:browsers` installs the browser.
+  `DESIGN.md` § 8.10.
 
 ## Conventions & Patterns
 
@@ -189,15 +193,17 @@ pnpm workspace of three packages: `packages/data`, `apps/web` and `e2e`
   `pt/<screen>.ts`. A screen's bead edits only its own two files and duplicates a shared
   word rather than editing `common`; the Portuguese is typed by the English, so a
   missing key fails `pnpm lint`.
-- Hot files have one owner: after the scaffold no bead edits the root `package.json`,
-  `pnpm-workspace.yaml`, `pnpm-lock.yaml`, `eslint.config.js`, `.gitignore`,
-  `scripts/check-no-radix.mjs`, `e2e/package.json`, or in `apps/web` the
-  `package.json`, `components.json`, `tsconfig.json`, `src/App.tsx`, `src/index.css`,
-  `src/components/ui/**`, the i18n store and index files and `src/storage/types.ts`. A new
-  dependency, route or screen is a bead of its own, run alone (`DESIGN.md` § 8.4).
+- Hot files have one owner: the scaffold lands them, and no bead running beside another
+  edits the root `package.json`, `pnpm-workspace.yaml`, `pnpm-lock.yaml`,
+  `eslint.config.js`, `.gitignore`, `scripts/check-no-radix.mjs`, `e2e/package.json`,
+  or in `apps/web` the `package.json`, `components.json`, `tsconfig.json`,
+  `src/App.tsx`, `src/index.css`, `src/components/ui/**`, the i18n store and index files
+  and `src/storage/types.ts`. A change to one of them, and a new dependency, route or
+  screen, is a bead or pass of its own that names the files in its TOUCHES while no
+  other worker holds them (`DESIGN.md` § 8.4).
 - Browser storage keys start with `cacador.`. There are two, `cacador.locale` in
   localStorage and `cacador.recent` in sessionStorage; their names come from
   `apps/web/src/storage/keys.ts`, and nothing outside `apps/web/src/storage/` touches
   IndexedDB.
 - Species names in English follow `packages/data/glossary/species.json`, never a
-  translator's guess; the validator enforces it once translations exist.
+  translator's guess; the validator enforces it (`DESIGN.md` § 4 rule 6).
