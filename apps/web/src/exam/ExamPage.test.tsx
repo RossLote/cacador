@@ -272,7 +272,8 @@ describe('submitting', () => {
     expect(log).toHaveLength(20);
     expect(log.every((a) => a.mode === 'exam' && a.examId === exam.id)).toBe(true);
     expect(log.find((a) => a.questionId === fifth.id)).toMatchObject({ chosen: fifth.answer, correct: true });
-  });
+    // Forty taps, then the results page draws nine cards: past the 5 s default on a loaded machine.
+  }, 15_000);
 
   it('asks first when questions are unanswered, stays on Back to the exam, and logs the unanswered ones as wrong with no option', async () => {
     const user = userEvent.setup();
@@ -358,9 +359,10 @@ describe('submitting', () => {
 });
 
 describe('the results route', () => {
-  it('shows the placeholder heading at /exam/results/<id>', () => {
+  it('routes /exam/results/<id> to the results, which say an unknown id is not a finished exam', async () => {
     renderExam('/exam/results/abc');
     expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(t.title);
+    expect(await screen.findByText(t.notFound)).toBeInTheDocument();
   });
 });
 

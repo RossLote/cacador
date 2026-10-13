@@ -1,4 +1,4 @@
-/** The mock exam (DESIGN.md § 6.5): the start screen and the running exam. The question card's own words are in practice.card. */
+/** The mock exam (DESIGN.md § 6.5): the start screen, the running exam and the results. The question card's own words are in practice.card. */
 export const exam = {
   title: 'Exam',
   loading: 'Loading the exam…',
@@ -24,4 +24,21 @@ export const exam = {
   unansweredBody: 'An unanswered question counts as wrong.',
   keepGoing: 'Back to the exam',
   confirmSubmit: 'Submit',
+  /** The results page (/exam/results/<id>). */
+  resultsTitle: 'Exam results',
+  /** The accessible name of the score panel. */
+  scoreLabel: 'Score',
+  /** The score, as "14 out of 20". */
+  score: (score: number, total: number) => `${score} out of ${total}`,
+  passMark: (passMark: number) => `Pass mark ${passMark}`,
+  passed: 'Passed',
+  notPassed: 'Not passed',
+  /** The heading and the accessible name of the list of wrong ones. */
+  wrongAnswers: 'Wrong answers',
+  noWrongAnswers: 'No wrong answers',
+  /** Shown above a wrong one that was left unanswered. */
+  notAnswered: 'Not answered',
+  /** An id that is not a finished exam, unknown or still running. */
+  notFound: 'There is no finished exam here.',
+  toExam: 'Go to the exam',
 };
