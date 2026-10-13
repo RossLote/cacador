@@ -82,7 +82,7 @@
       }
     ],
     "nudge": "The Egyptian mongoose tanto pode ser visto de dia como de noite: it is active both by day and by night. It is not solitário but bastante sociável (question 116), and it lives in vegetação densa, not pouco densa (question 118).",
-    "patterns": ["both"],
+    "patterns": ["both", "not-very"],
     "status": "checked"
   },
   {
@@ -114,7 +114,7 @@
       }
     ],
     "nudge": "The Egyptian mongoose is bastante sociável and moves em grupos when it hunts (question 117). Solitário is the red fox (question 105), and pouco sociável is the near miss, the opposite of bastante.",
-    "patterns": [],
+    "patterns": ["not-very"],
     "status": "checked"
   },
   {
@@ -140,7 +140,7 @@
       }
     ],
     "nudge": "The Egyptian mongoose habita locais com vegetação densa, thick cover. Pouco densa is the near miss: pouco turns densa into its opposite, and damp, waterlogged ground is not its habitat either.",
-    "patterns": [],
+    "patterns": ["not-very"],
     "status": "checked"
   },
   {
@@ -179,7 +179,7 @@
       }
     ],
     "nudge": "Its diet is muito variada: pequenas aves e mamíferos, invertebrados, répteis e frutos, as in questions 120 and 121. Both distractors fail on exclusivamente, one food and nothing else.",
-    "patterns": ["only"],
+    "patterns": ["only", "not-very"],
     "status": "checked"
   },
   {

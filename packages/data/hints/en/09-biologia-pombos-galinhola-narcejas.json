@@ -288,7 +288,7 @@
       }
     ],
     "nudge": "Snipe are pouco sociáveis, not very sociable, the opposite of muito sociáveis. They are not migradoras estivais either: here they are migradoras invernantes, winter visitors (question 299).",
-    "patterns": [],
+    "patterns": ["not-very"],
     "status": "checked"
   },
   {
