@@ -1,0 +1,80 @@
+import { readdirSync, readFileSync } from 'node:fs';
+import path from 'node:path';
+import { expect, test } from '@playwright/test';
+
+// The production build the web server has just made (playwright.config.ts builds before it serves). These rules live in
+// the files GitHub Pages serves, and vite preview hides some of them (its own SPA fallback answers any sub-route), so
+// they are read from dist, not over the network.
+const dist = path.resolve(import.meta.dirname, '../apps/web/dist');
+const read = (file: string) => readFileSync(path.join(dist, file), 'utf8');
+// Listed inside each test, not at load: the runner loads this file to collect the tests before the web server builds.
+function distFiles(): string[] {
+  return readdirSync(dist, { recursive: true, withFileTypes: true })
+    .filter((entry) => entry.isFile())
+    .map((entry) => path.relative(dist, path.join(entry.parentPath, entry.name)).split(path.sep).join('/'));
+}
+const isWorkbox = (file: string) => /^workbox-[\w-]+\.js$/.test(file);
+
+// The one listener generateSW always writes: it calls skipWaiting only when a page posts SKIP_WAITING.
+const skipWaitingListener =
+  /self\.addEventListener\("message",(\w+)=>\{\1\.data&&"SKIP_WAITING"===\1\.data\.type&&self\.skipWaiting\(\)\}\)/g;
+
+function precacheUrls(): string[] {
+  const list = /\.precacheAndRoute\((\[[^\]]*\])/.exec(read('sw.js'))?.[1];
+  expect(list, 'the precacheAndRoute list in sw.js').toBeDefined();
+  return [...list!.matchAll(/\{url:"([^"]+)",revision:/g)].map((match) => match[1]!);
+}
+
+test('D1: 404.html is byte-identical to index.html, so GitHub Pages boots the app on any sub-route', () => {
+  expect(distFiles()).toContain('404.html');
+  const index = readFileSync(path.join(dist, 'index.html'));
+  const notFound = readFileSync(path.join(dist, '404.html'));
+  expect(notFound.equals(index), '404.html differs from index.html').toBe(true);
+});
+
+test('D12: a new service worker waits; nothing claims clients, skips waiting unasked or asks it to', () => {
+  const files = distFiles();
+  const workboxFiles = files.filter(isWorkbox);
+  expect(workboxFiles).toHaveLength(1);
+  const sw = read('sw.js');
+  for (const [file, text] of [
+    ['sw.js', sw.replace(skipWaitingListener, '')],
+    [workboxFiles[0]!, read(workboxFiles[0]!)],
+  ] as const) {
+    expect(text.match(/.{0,40}(?:clientsClaim|skipWaiting).{0,40}/g), file).toBeNull();
+  }
+  expect(sw.match(skipWaitingListener)?.length, 'the SKIP_WAITING message listener').toBe(1);
+
+  // The app's own JS never posts SKIP_WAITING, so the waiting worker takes over only on the next cold open.
+  const appScripts = files.filter((file) => /^assets\/.+\.js$/.test(file));
+  expect(appScripts.length).toBeGreaterThan(0);
+  for (const file of appScripts) expect(read(file).match(/.{0,60}SKIP_WAITING.{0,20}/g), file).toBeNull();
+});
+
+test('D12: the precache holds every built file, the manifest and index.html among them, all under /cacador/', () => {
+  const urls = precacheUrls();
+  for (const url of urls) expect(url, 'precache').toMatch(/^\/cacador\//);
+  expect(urls).toEqual(expect.arrayContaining(['/cacador/manifest.webmanifest', '/cacador/index.html']));
+
+  const expected = distFiles()
+    .filter((file) => file !== 'sw.js' && !isWorkbox(file))
+    .map((file) => `/cacador/${file}`);
+  expect([...urls].sort()).toEqual(expected.sort());
+});
+
+test('D1: every URL in index.html and the manifest starts with /cacador/', () => {
+  const html = read('index.html');
+  const htmlUrls = [...html.matchAll(/\s(?:href|src)="([^"]*)"/g)].map((match) => match[1]!);
+  expect(htmlUrls.length).toBeGreaterThan(0);
+  for (const url of htmlUrls) expect(url, 'index.html').toMatch(/^\/cacador\//);
+
+  const manifest = JSON.parse(read('manifest.webmanifest')) as {
+    id: string;
+    start_url: string;
+    scope: string;
+    icons: { src: string }[];
+  };
+  const manifestUrls = [manifest.id, manifest.start_url, manifest.scope, ...manifest.icons.map((icon) => icon.src)];
+  expect(manifest.icons.length).toBeGreaterThan(0);
+  for (const url of manifestUrls) expect(url, 'manifest.webmanifest').toMatch(/^\/cacador\//);
+});

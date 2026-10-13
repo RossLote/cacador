@@ -12,6 +12,7 @@
     "lint": "eslint . --max-warnings 0 && pnpm -r typecheck && pnpm validate && node scripts/check-no-radix.mjs",
     "test": "pnpm -r test",
     "e2e": "pnpm --filter @cacador/e2e e2e",
+    "e2e:browsers": "pnpm --filter @cacador/e2e browsers",
     "extract": "pnpm --filter @cacador/data extract",
     "validate": "pnpm --filter @cacador/data validate"
   },

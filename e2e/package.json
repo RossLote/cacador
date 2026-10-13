@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "e2e": "playwright test",
+    "browsers": "playwright install chromium",
     "typecheck": "tsc -p tsconfig.json"
   },
   "devDependencies": {
