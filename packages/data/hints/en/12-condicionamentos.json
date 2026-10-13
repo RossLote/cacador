@@ -1,359 +1,708 @@
 [
   {
     "id": 362,
-    "language": [],
-    "nudge": "",
-    "patterns": [],
+    "language": [
+      {
+        "pt": "bem como numa faixa de proteção de 500 metros",
+        "en": "as well as in a protection strip of 500 metres",
+        "note": "bem como = as well as: the ban covers the place itself and the strip around it too; it is never a contrast."
+      }
+    ],
+    "nudge": "Land 'adjacentes a estabelecimentos hospitalares' carries the 500-metre strip, like schools and bathing beaches (questions 366 and 379). Settlements carry a narrower one, 250 metros (question 365), and fruit crops are not a 500-metre place.",
+    "patterns": ["as-well-as"],
     "status": "draft"
   },
   {
     "id": 363,
-    "language": [],
-    "nudge": "",
-    "patterns": [],
+    "language": [
+      {
+        "pt": "bem como numa faixa de proteção de 500 metros",
+        "en": "as well as in a protection strip of 500 metres",
+        "note": "bem como = as well as: the ban covers the place itself and the strip around it too; it is never a contrast."
+      }
+    ],
+    "nudge": "Land 'adjacentes a instalações militares ou de forças de segurança' carries the 500-metre strip, the same 500 metres question 396 asks for. Railway lines carry only 100 metros (question 382), and vegetable crops are not a 500-metre place.",
+    "patterns": ["as-well-as"],
     "status": "draft"
   },
   {
     "id": 364,
-    "language": [],
-    "nudge": "",
+    "language": [
+      {
+        "pt": "bem como numa faixa de proteção",
+        "en": "as well as in a protection strip",
+        "note": "bem como = as well as: the ban covers the place itself and the strip around it too; it is never a contrast."
+      },
+      {
+        "pt": "mas só quando existe trânsito",
+        "en": "but only when there is traffic",
+        "note": "mas só quando = but only when: a ban limited to the times traffic is passing."
+      }
+    ],
+    "nudge": "National roads and railway lines are banned 'bem como numa faixa de proteção de 100 metros', whether or not traffic is passing. Questions 374 and 382 ask the same width for each alone, and 250 metres is the strip round settlements (question 365).",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 365,
     "language": [],
-    "nudge": "",
+    "nudge": "Settlements, 'os povoados', carry a 250-metre strip. The 500-metre strip belongs to places such as hospitals, schools and bathing beaches (questions 362 and 366), and no question sets one at 750.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 366,
-    "language": [],
-    "nudge": "",
-    "patterns": [],
+    "language": [
+      {
+        "pt": "bem como numa faixa de proteção de 500 metros",
+        "en": "as well as in a protection strip of 500 metres",
+        "note": "bem como = as well as: the ban covers the place itself and the strip around it too; it is never a contrast."
+      }
+    ],
+    "nudge": "'Praias de banho' and land 'adjacentes a estabelecimentos de ensino' both carry the 500-metre strip (questions 376 and 379). National roads carry 100 metres (question 364) and aerodromes are banned ground in themselves (question 369), so neither road list is the 500-metre one.",
+    "patterns": ["as-well-as"],
     "status": "draft"
   },
   {
     "id": 367,
-    "language": [],
-    "nudge": "",
-    "patterns": [],
+    "language": [
+      {
+        "pt": "bem como em quaisquer terrenos que os circundem",
+        "en": "as well as on any land surrounding them",
+        "note": "bem como extends the ban from the places to the land around them; quaisquer = any, and os circundem = surround them, os standing for the places the options name."
+      }
+    ],
+    "nudge": "Apiaries and dovecotes, 'apiários e pombais devidamente sinalizados', are banned with a 100-metre strip around them. A signposted livestock enclosure is banned ground itself with no strip (question 371), and olive groves are banned only when signposted (question 401).",
+    "patterns": ["as-well-as"],
     "status": "draft"
   },
   {
     "id": 368,
     "language": [],
-    "nudge": "",
+    "nudge": "The 500-metre strip runs round 'Instalações turísticas, parques de campismo e desportivos'. Aerodromes, cemeteries and municipal roads are banned ground in themselves (question 369), and game refuges and signposted livestock enclosures are banned ground with no 500-metre strip (questions 371 and 407).",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 369,
-    "language": [],
-    "nudge": "",
-    "patterns": [],
+    "language": [
+      {
+        "pt": "É sempre proibido",
+        "en": "It is always prohibited",
+        "note": "sempre = always: the stem asks for the places banned without any condition, such as a sign."
+      }
+    ],
+    "nudge": "Aerodromes, cemeteries and municipal roads are banned 'sempre', with no condition attached. Olive groves are banned only when signposted (question 401), and question 398 allows hunting among trees averaging over 80cm, so tall plantations are no absolute ban.",
+    "patterns": ["always-never"],
     "status": "draft"
   },
   {
     "id": 370,
-    "language": [],
-    "nudge": "",
+    "language": [
+      {
+        "pt": "A 300 metros das casas de habitação",
+        "en": "At 300 metres from dwelling houses",
+        "note": "a 300 metros de = at a distance of 300 metres from: the hunter stands that far away, not anywhere within it."
+      }
+    ],
+    "nudge": "Livestock enclosures, 'aparcamentos de gado', are banned ground (question 371 adds 'devidamente sinalizado'). At 300 metres a hunter is outside the 250-metre strip round a dwelling (question 402), and at 250 metres outside the 100-metre strip of a national road (question 364).",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 371,
-    "language": [],
-    "nudge": "",
+    "language": [
+      {
+        "pt": "a menos de 250 metros dos animais",
+        "en": "less than 250 metres from the animals",
+        "note": "a menos de = at less than, within: the ban would reach only up to 250 metres from the animals."
+      }
+    ],
+    "nudge": "In a signposted livestock enclosure 'É proibido caçar' across the whole enclosure, with no distance from the animals involved. Fighting cattle and 250 metres do not come into it, and question 370 bans hunting 'Nos aparcamentos de gado' just as plainly.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 372,
-    "language": [],
-    "nudge": "",
-    "patterns": [],
+    "language": [
+      {
+        "pt": "sem consentimento de quem de direito",
+        "en": "without the consent of the person entitled",
+        "note": "sem = without: the ban holds only while the consent of the person entitled is missing, so with it hunting is allowed."
+      },
+      {
+        "pt": "há um deles que carece obrigatoriamente de sinalização",
+        "en": "there is one of them that necessarily requires signposting",
+        "note": "há um deles que = there is one of them that: the stem asks for the single exception. carecer de = to need, require."
+      }
+    ],
+    "nudge": "The consent rule needs signs only in 'Zonas de caça': question 380 puts it as 'só é eficaz e depende de sinalização' there. Yards and gardens 'anexos a casas de habitação' are consent ground with no sign required.",
+    "patterns": ["exception"],
     "status": "draft"
   },
   {
     "id": 373,
-    "language": [],
-    "nudge": "",
-    "patterns": [],
+    "language": [
+      {
+        "pt": "desde que não tenha azeitona",
+        "en": "provided that it has no olives",
+        "note": "desde que = provided that, with the present subjunctive tenha: a condition attached to the yes."
+      }
+    ],
+    "nudge": "An olive grove is banned only when it carries the no-hunting sign (questions 393 and 401), and this one does, so the answer is 'Não'. Whether the trees bear olives makes no difference.",
+    "patterns": ["provided-that"],
     "status": "draft"
   },
   {
     "id": 374,
-    "language": [],
-    "nudge": "",
+    "language": [
+      {
+        "pt": "bem como numa faixa de proteção de",
+        "en": "as well as in a protection strip of",
+        "note": "bem como = as well as: the ban covers the place itself and the strip around it too; it is never a contrast."
+      }
+    ],
+    "nudge": "A national road is banned 'bem como numa faixa de proteção de' 100 metros. The same 100 metres covers railway lines (questions 364 and 382), and 250 metres is the strip round settlements (question 365).",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 375,
     "language": [],
-    "nudge": "",
+    "nudge": "The red-over-white sign is the sinal de proibição de caçar: it marks 'Proibição de caçar'. It does not mark a tourist hunting zone or a livestock enclosure, and questions 373, 394 and 397 each key a ban on hunting where it stands.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 376,
-    "language": [],
-    "nudge": "",
+    "language": [
+      {
+        "pt": "A partir de que distância",
+        "en": "From what distance",
+        "note": "a partir de = from … onwards: the distance beyond which hunting is allowed, so the answer is the outer edge of the banned strip."
+      }
+    ],
+    "nudge": "Hunting is allowed from 500 metros of a school, since land 'adjacentes a estabelecimentos de ensino' carries the 500-metre strip (question 366). At 150 or 200 metres a hunter is still inside it.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 377,
-    "language": [],
-    "nudge": "",
-    "patterns": [],
+    "language": [
+      {
+        "pt": "bem como numa faixa de 250 metros em redor",
+        "en": "as well as in a strip of 250 metres around them",
+        "note": "bem como extends the ban to the strip; em redor = around the burnt area."
+      },
+      {
+        "pt": "Só enquanto dura o incêndio",
+        "en": "Only while the fire lasts",
+        "note": "só = only, enquanto = while: a ban that would end when the fire goes out."
+      }
+    ],
+    "nudge": "Burnt areas, with their 250-metre strip, stay closed 'Enquanto dura o incêndio e durante os 30 dias seguintes'. The ban outlasts the fire, so 'Só enquanto' is too short, and 10 days is the wrong count.",
+    "patterns": ["only", "before-after"],
     "status": "draft"
   },
   {
     "id": 378,
     "language": [],
-    "nudge": "",
+    "nudge": "In walked-up hunting on unmanaged ground a line may hold at most '5 caçadores'. The number decides; 2 and 10 are the distractors.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 379,
-    "language": [],
-    "nudge": "",
+    "language": [
+      {
+        "pt": "bem como numa faixa de proteção de",
+        "en": "as well as in a protection strip of",
+        "note": "bem como = as well as: the ban covers the place itself and the strip around it too; it is never a contrast."
+      }
+    ],
+    "nudge": "Bathing beaches carry the 500-metre strip, like schools and hospitals (questions 362 and 366). 100 metres belongs to national roads and railway lines (question 364).",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 380,
-    "language": [],
-    "nudge": "",
-    "patterns": [],
+    "language": [
+      {
+        "pt": "só é eficaz e depende de sinalização",
+        "en": "is only effective, and depends on signposting",
+        "note": "só = only; eficaz = in force, effective: the stem asks for the one case where the ban works only once signs are up."
+      },
+      {
+        "pt": "sem consentimento de quem de direito",
+        "en": "without the consent of the person entitled",
+        "note": "sem = without: the ban holds only while the consent of the person entitled is missing, so with it hunting is allowed."
+      }
+    ],
+    "nudge": "As question 372 keys, the case where the consent rule 'só é eficaz e depende de sinalização' is 'Nas zonas de caça'. Yards 'anexos a casas de habitação' are the near miss: question 372 lists them as consent ground that needs no sign.",
+    "patterns": ["only"],
     "status": "draft"
   },
   {
     "id": 381,
-    "language": [],
-    "nudge": "",
-    "patterns": [],
+    "language": [
+      {
+        "pt": "a mais de 100 metros",
+        "en": "more than 100 metres from",
+        "note": "a mais de = at more than, beyond: every option places the hunter outside a 100-metre line, and the question is whose strip that clears."
+      }
+    ],
+    "nudge": "Railway lines carry a 100-metre strip (question 382), so 'a mais de 100 metros', beyond it, hunting is allowed. Bathing beaches carry 500 metres (question 379), so 100 metres is still inside their strip, and the 100-metre rule is not given for airports.",
+    "patterns": ["which-statement"],
     "status": "draft"
   },
   {
     "id": 382,
-    "language": [],
-    "nudge": "",
+    "language": [
+      {
+        "pt": "bem como numa faixa de proteção de",
+        "en": "as well as in a protection strip of",
+        "note": "bem como = as well as: the ban covers the place itself and the strip around it too; it is never a contrast."
+      }
+    ],
+    "nudge": "A railway line is banned 'bem como numa faixa de proteção de' 100 metros, the same width as a national road (questions 364 and 374). 150 and 200 metres are distractors.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 383,
-    "language": [],
-    "nudge": "",
-    "patterns": [],
+    "language": [
+      {
+        "pt": "Nunca pode caçar",
+        "en": "May never hunt",
+        "note": "nunca = never: an absolute ban, set against two options that let the hunter in on a condition."
+      }
+    ],
+    "nudge": "The 100-metre strip along railway lines is a flat ban: the hunter 'Nunca pode caçar' there. Consent of the person entitled lifts the ban round a dwelling's yard (question 402), not this one, and going without a firearm changes nothing.",
+    "patterns": ["always-never", "without-consent"],
     "status": "draft"
   },
   {
     "id": 384,
-    "language": [],
-    "nudge": "",
-    "patterns": [],
+    "language": [
+      {
+        "pt": "a 250 metros das",
+        "en": "at 250 metres from",
+        "note": "a 250 metros de = at a distance of 250 metres from: the hunter stands that far away."
+      }
+    ],
+    "nudge": "At 250 metres a hunter is beyond the 100-metre strip of a railway line (question 382), so it is allowed. Bathing beaches carry 500 metres (question 379), so 250 metres from one is still inside the strip.",
+    "patterns": ["which-statement"],
     "status": "draft"
   },
   {
     "id": 385,
-    "language": [],
-    "nudge": "",
-    "patterns": [],
+    "language": [
+      {
+        "pt": "inferior a 1,2 g/l",
+        "en": "lower than 1,2 g/l",
+        "note": "inferior a = below, lower than a figure; not 'inferior' in quality."
+      },
+      {
+        "pt": "às quais não se tenha legalmente acesso",
+        "en": "to which one does not legally have access",
+        "note": "às quais = to which, referring back to the zonas de caça; não se tenha acesso = one has no access, impersonal se."
+      }
+    ],
+    "nudge": "Hunting 'em zonas de caça às quais não se tenha legalmente acesso' is a crime. A blood alcohol level 'inferior a 1,2 g/l' is no crime (question 403), and hunting wild boar on snow is allowed (question 27).",
+    "patterns": ["which-statement", "above-below"],
     "status": "draft"
   },
   {
     "id": 386,
-    "language": [],
-    "nudge": "",
+    "language": [
+      {
+        "pt": "fora das condições estabelecidas",
+        "en": "outside the established conditions",
+        "note": "fora de = outside: the assistants are used beyond what the rules allow, not merely outdoors."
+      }
+    ],
+    "nudge": "'Utilizar auxiliares fora das condições estabelecidas', using assistants outside the set rules, is a hunting crime, and question 410 is the same question. Lure calls are allowed for ducks (question 28), and 50 metres from a tarred municipal road is not keyed as a crime.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 387,
-    "language": [],
-    "nudge": "",
-    "patterns": [],
+    "language": [
+      {
+        "pt": "que constem do calendário venatório",
+        "en": "that appear in the hunting calendar",
+        "note": "constar de = to appear in, be listed in."
+      }
+    ],
+    "nudge": "Only species 'que constem do calendário venatório publicado anualmente' may be hunted. Being classed as game is not enough, and damage to farming does not by itself make a species huntable (question 53 is the same question).",
+    "patterns": ["which-statement", "always-never"],
     "status": "draft"
   },
   {
     "id": 388,
     "language": [],
-    "nudge": "",
+    "nudge": "Buckshot, zagalotes, 'É proibida na caça', with no exception for fox drives or boar montarias in any kind of zone. Question 389 says the same: such cartridges 'Não podem ser utilizados na caça'.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 389,
-    "language": [],
-    "nudge": "",
+    "language": [
+      {
+        "pt": "vulgarmente designados por",
+        "en": "commonly called",
+        "note": "vulgarmente = commonly, in everyday speech; a false friend, not 'vulgarly'. designados por = called."
+      }
+    ],
+    "nudge": "Shot over 4,5 mm, the zagalotes, 'Não podem ser utilizados na caça' at all, as question 388 also keys. Neither fox hunting nor stalking red deer is an exception.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 390,
-    "language": [],
-    "nudge": "",
+    "language": [
+      {
+        "pt": "a utilização e a detenção",
+        "en": "the use and the possession",
+        "note": "detenção = possession, keeping on one's person; a false friend, not 'detention'. The ban covers carrying the cartridges, not only firing them."
+      }
+    ],
+    "nudge": "For resident small game the ban falls on 'cartuchos carregados com bala', slug cartridges, both using and carrying them. Question 392 is the mirror, banning shot for big game, and hunting dogs are not banned here.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 391,
-    "language": [],
-    "nudge": "",
+    "language": [
+      {
+        "pt": "que comportem mais de três munições",
+        "en": "that hold more than three rounds",
+        "note": "comportar = to hold, take (of a magazine), not 'behave'; mais de três = more than three, so four or more."
+      }
+    ],
+    "nudge": "Semi-automatic guns 'que comportem mais de três munições' are banned outright: 'É proibida'. The two 'permitida' options invent exceptions for big game and thrushes that the keyed ban does not have.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 392,
-    "language": [],
-    "nudge": "",
+    "language": [
+      {
+        "pt": "a utilização e a detenção",
+        "en": "the use and the possession",
+        "note": "detenção = possession, keeping on one's person; a false friend, not 'detention'. The ban covers carrying the cartridges, not only firing them."
+      }
+    ],
+    "nudge": "For big game the ban falls on 'cartuchos carregados com chumbos', shot cartridges, both using and carrying them. Question 390 is the mirror, banning slugs for resident small game, and shotguns themselves are not banned.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 393,
-    "language": [],
-    "nudge": "",
-    "patterns": [],
+    "language": [
+      {
+        "pt": "Se estiverem sinalizados",
+        "en": "If they are signposted",
+        "note": "estiverem is the future subjunctive of estar after se: 'if they are' signposted, a condition."
+      }
+    ],
+    "nudge": "Olive groves are closed only 'Se estiverem sinalizados com o sinal de proibição de caçar'. 'Sempre' and 'Nunca' both ignore that condition, and question 401 asks the same.",
+    "patterns": ["always-never"],
     "status": "draft"
   },
   {
     "id": 394,
-    "language": [],
-    "nudge": "",
-    "patterns": [],
+    "language": [
+      {
+        "pt": "mediante consentimento",
+        "en": "with the consent",
+        "note": "mediante = by means of, upon: the two options make hunting depend on someone's consent."
+      }
+    ],
+    "nudge": "Ground marked with the no-hunting sign is closed to hunting: 'Não se pode caçar' (question 375). The two 'Pode-se caçar' options both let hunting go ahead there, and the president of the junta de freguesia has no say in it.",
+    "patterns": ["without-consent"],
     "status": "draft"
   },
   {
     "id": 395,
-    "language": [],
-    "nudge": "",
-    "patterns": [],
+    "language": [
+      {
+        "pt": "não constitui crime de caça",
+        "en": "does not constitute a hunting crime",
+        "note": "não constitui = does not constitute: the stem asks for the one act that is not a crime, so two of the options are crimes."
+      },
+      {
+        "pt": "inferior a 1,2 g/l",
+        "en": "lower than 1,2 g/l",
+        "note": "inferior a = below, lower than a figure; not 'inferior' in quality."
+      }
+    ],
+    "nudge": "A blood alcohol level 'inferior a 1,2 g/l', below the line, is no hunting crime (questions 403 and 405). Hunting non-game species is a crime (question 406), and so is hunting in no-hunting areas (question 400 keys it for areas under the right to no hunting).",
+    "patterns": ["negative-stem", "above-below"],
     "status": "draft"
   },
   {
     "id": 396,
-    "language": [],
-    "nudge": "",
+    "language": [
+      {
+        "pt": "A partir de que distância",
+        "en": "From what distance",
+        "note": "a partir de = from … onwards: the distance beyond which hunting is allowed, so the answer is the outer edge of the banned strip."
+      }
+    ],
+    "nudge": "Hunting is allowed from 500 metros of a military installation, the strip of question 363. At 200 or 250 metres a hunter is still inside it.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 397,
-    "language": [],
-    "nudge": "",
-    "patterns": [],
+    "language": [
+      {
+        "pt": "não é permitido",
+        "en": "it is not permitted",
+        "note": "não é permitido = is not permitted: the stem asks for the one thing the sign forbids."
+      },
+      {
+        "pt": "atividades de caráter cinegético",
+        "en": "hunting activities",
+        "note": "de caráter cinegético = of a hunting nature, hunting-related: any activity to do with game."
+      },
+      {
+        "pt": "sem consentimento de quem de direito",
+        "en": "without the consent of the person entitled",
+        "note": "sem = without: the ban holds only while the consent of the person entitled is missing, so with it hunting is allowed."
+      }
+    ],
+    "nudge": "The no-hunting sign (question 375) bans hunting, which the keyed answer words as 'Caçar sem consentimento de quem de direito'. Training dogs is not what the sign bans, and 'atividades de caráter cinegético' reaches wider than hunting itself.",
+    "patterns": ["negative-stem", "without-consent"],
     "status": "draft"
   },
   {
     "id": 398,
-    "language": [],
-    "nudge": "",
-    "patterns": [],
+    "language": [
+      {
+        "pt": "superior a 80cm",
+        "en": "greater than 80cm",
+        "note": "superior a = above, greater than a figure; not 'superior' in quality."
+      },
+      {
+        "pt": "desde que seja sócio",
+        "en": "provided that the hunter is a member",
+        "note": "desde que = provided that, with the present subjunctive seja: a condition attached to the permission."
+      },
+      {
+        "pt": "a menos de 100 metros",
+        "en": "less than 100 metres from",
+        "note": "a menos de = at less than, within 100 metres."
+      }
+    ],
+    "nudge": "Hunting is allowed in a pine wood whose trees average 'superior a 80cm', and question 399 allows it at 1 metre too. A game refuge is closed to hunting whatever club one belongs to, and 'a menos de 100 metros' of a national road is inside its strip (question 364).",
+    "patterns": ["which-statement", "above-below"],
     "status": "draft"
   },
   {
     "id": 399,
-    "language": [],
-    "nudge": "",
+    "language": [
+      {
+        "pt": "É sempre proibido caçar",
+        "en": "It is always prohibited to hunt",
+        "note": "sempre = always: a ban with no condition."
+      },
+      {
+        "pt": "desde que o diâmetro do tronco seja inferior a 5 cm",
+        "en": "provided that the diameter of the trunk is less than 5 cm",
+        "note": "desde que = provided that, with the present subjunctive seja: here it attaches a condition to the ban; inferior a = below."
+      }
+    ],
+    "nudge": "At an average of 1 metre the trees are above the 80cm of question 398, so 'É permitido caçar'. The ban is not 'sempre', and trunk diameter is no test anywhere in the bank.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 400,
-    "language": [],
-    "nudge": "",
+    "language": [
+      {
+        "pt": "sem trazer consigo",
+        "en": "without carrying",
+        "note": "sem trazer consigo = without having it on one's person: the hunter holds the certificate but has left it behind."
+      }
+    ],
+    "nudge": "Hunting 'em áreas de direito à não caça' is a hunting crime. Lacking a licence or not carrying the carta is not keyed as a crime, while question 409 makes hunting 'sem estar habilitado com carta de caçador', with no carta at all, one.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 401,
-    "language": [],
-    "nudge": "",
-    "patterns": [],
+    "language": [
+      {
+        "pt": "é sempre proibido",
+        "en": "it is always prohibited",
+        "note": "sempre = always: a ban with no condition."
+      },
+      {
+        "pt": "Só quando sinalizados",
+        "en": "Only when signposted",
+        "note": "só quando = only when: the ban applies on that condition alone."
+      }
+    ],
+    "nudge": "Olive groves are closed 'Só quando sinalizados com o sinal de proibição de caçar', as question 393 also keys. 'Sim, é sempre proibido' and a flat 'Não' both drop that condition.",
+    "patterns": ["only", "always-never"],
     "status": "draft"
   },
   {
     "id": 402,
-    "language": [],
-    "nudge": "",
-    "patterns": [],
+    "language": [
+      {
+        "pt": "bem como numa faixa envolvente de 250 metros",
+        "en": "as well as in a surrounding strip of 250 metres",
+        "note": "bem como = as well as: the same rule covers the yard and the 250-metre strip round it; envolvente = surrounding."
+      },
+      {
+        "pt": "sem consentimento de quem de direito",
+        "en": "without the consent of the person entitled",
+        "note": "sem = without: the ban holds only while the consent of the person entitled is missing, so with it hunting is allowed."
+      }
+    ],
+    "nudge": "A yard and its 250-metre strip are closed to hunting only 'sem consentimento de quem de direito', so with that consent hunting is allowed. Neither 'Sempre proibido' nor 'Sempre permitido' fits, and question 408 applies the same rule at 200 metres.",
+    "patterns": ["without-consent", "always-never"],
     "status": "draft"
   },
   {
     "id": 403,
-    "language": [],
-    "nudge": "",
-    "patterns": [],
+    "language": [
+      {
+        "pt": "não constitui crime de caça",
+        "en": "does not constitute a hunting crime",
+        "note": "não constitui = does not constitute: the stem asks for the one act that is not a crime, so two of the options are crimes."
+      },
+      {
+        "pt": "inferior a 1,2g/l",
+        "en": "lower than 1,2g/l",
+        "note": "inferior a = below, superior a = above, igual a = equal to: the options sit below, above and on the same figure."
+      }
+    ],
+    "nudge": "Only 'inferior a 1,2g/l', below the line, is no crime. 'superior a' and 'igual a 1,2g/l' are both crimes, so the line itself already counts.",
+    "patterns": ["negative-stem", "above-below"],
     "status": "draft"
   },
   {
     "id": 404,
-    "language": [],
-    "nudge": "",
+    "language": [
+      {
+        "pt": "bem como numa faixa de proteção de",
+        "en": "as well as in a protection strip of",
+        "note": "bem como = as well as: the ban covers the place itself and the strip around it too; it is never a contrast."
+      }
+    ],
+    "nudge": "As in question 374, a national road is banned 'bem como numa faixa de proteção de' 100 metros. 150 and 200 metres are distractors.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 405,
-    "language": [],
-    "nudge": "",
-    "patterns": [],
+    "language": [
+      {
+        "pt": "não constitui crime de caça",
+        "en": "does not constitute a hunting crime",
+        "note": "não constitui = does not constitute: the stem asks for the one act that is not a crime, so two of the options are crimes."
+      },
+      {
+        "pt": "inferior a 1,2g/l",
+        "en": "lower than 1,2g/l",
+        "note": "inferior a = below, lower than a figure; not 'inferior' in quality."
+      }
+    ],
+    "nudge": "A blood alcohol level 'inferior a 1,2g/l' is no crime (question 403). Keeping or using a ferret 'sem autorização' and using assistants outside the set conditions (question 386) are both hunting crimes.",
+    "patterns": ["negative-stem", "above-below"],
     "status": "draft"
   },
   {
     "id": 406,
     "language": [],
-    "nudge": "",
+    "nudge": "Hunting a non-game species is a 'Crime de caça', not merely an administrative offence. Question 395 counts it among the crimes too.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 407,
-    "language": [],
-    "nudge": "",
-    "patterns": [],
+    "language": [
+      {
+        "pt": "só se torna eficaz desde que sinalizados",
+        "en": "only becomes effective provided that they are signposted",
+        "note": "só = only; se torna eficaz = takes effect; desde que = provided that: the ban works only once the ground is signposted."
+      }
+    ],
+    "nudge": "Game refuges are banned only once signposted: the ban 'só se torna eficaz desde que sinalizados'. Burnt land is closed for the fire and 30 days after with no sign needed (question 377), and tourist installations and campsites carry a 500-metre strip (question 368).",
+    "patterns": ["only", "provided-that"],
     "status": "draft"
   },
   {
     "id": 408,
-    "language": [],
-    "nudge": "",
-    "patterns": [],
+    "language": [
+      {
+        "pt": "pode praticar-se o ato venatório",
+        "en": "may the act of hunting be carried out",
+        "note": "praticar-se = be carried out, passive se: the stem asks whether hunting is allowed there at all."
+      },
+      {
+        "pt": "Sim, mas só",
+        "en": "Yes, but only",
+        "note": "mas só = but only: a yes limited to one condition; two options share it, so read what follows."
+      }
+    ],
+    "nudge": "200 metres is inside the 250-metre strip round a dwelling, where hunting is banned 'sem consentimento de quem de direito' (question 402). So it is allowed 'mas só com autorização de quem de direito', not freely and not limited to hunting from a hide.",
+    "patterns": ["yes-no-because", "without-consent"],
     "status": "draft"
   },
   {
     "id": 409,
-    "language": [],
-    "nudge": "",
+    "language": [
+      {
+        "pt": "sem estar habilitado com",
+        "en": "without being qualified with",
+        "note": "habilitado com = qualified with, holding: the hunter has no certificate at all, not merely not carrying it."
+      }
+    ],
+    "nudge": "Hunting 'sem estar habilitado com carta de caçador', without holding a carta at all, is a hunting crime. An identity card is not the test, and 200 metres from a signposted dovecote is outside its 100-metre strip (question 367).",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 410,
-    "language": [],
-    "nudge": "",
+    "language": [
+      {
+        "pt": "fora das condições estabelecidas",
+        "en": "outside the established conditions",
+        "note": "fora de = outside: the assistants are used beyond what the rules allow, not merely outdoors."
+      }
+    ],
+    "nudge": "As in question 386, 'Utilizar auxiliares fora das condições estabelecidas' is a hunting crime. Lure calls are allowed for ducks (question 28), and 50 metres from a tarred municipal road is not keyed as a crime.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 411,
     "language": [],
-    "nudge": "",
+    "nudge": "'Abandonar os animais que auxiliam e acompanham o caçador', abandoning the hunter's working animals, is a hunting crime. A blood alcohol level of 1,0 g/l is below the 1,2 line (question 403), and the duck hide case is not keyed as a crime.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 412,
-    "language": [],
-    "nudge": "",
-    "patterns": [],
+    "language": [
+      {
+        "pt": "não identificadas em portaria",
+        "en": "not identified by ministerial order",
+        "note": "The não belongs to identificadas: the stem is about species and subspecies that the order does not list."
+      },
+      {
+        "pt": "desde que a produção",
+        "en": "provided that the production",
+        "note": "desde que = provided that, with the present subjunctive (seja, se destine): a condition attached to the permission."
+      }
+    ],
+    "nudge": "Captive breeding of game species 'não identificadas em portaria' is 'Proibida', whatever the production is for. Neither food nor releases on training grounds makes it lawful, despite the 'desde que' options.",
+    "patterns": ["provided-that"],
     "status": "draft"
   }
 ]
