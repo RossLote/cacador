@@ -15,7 +15,7 @@
     ],
     "nudge": "The one exemption from the carta de caçador is for non-resident foreigners, and only desde que they are qualified to hunt in their own country. Enforcement officers, politicians and ICNF staff get none.",
     "patterns": [],
-    "status": "draft"
+    "status": "checked"
   },
   {
     "id": 2,
@@ -33,7 +33,7 @@
     ],
     "nudge": "The extra requirement is age, mais de 16 anos. Citizenship and residence are not conditions: question 1 lets non-resident foreigners hunt here.",
     "patterns": [],
-    "status": "draft"
+    "status": "checked"
   },
   {
     "id": 3,
@@ -51,7 +51,7 @@
     ],
     "nudge": "Renewal opens in the 12 months before the carta runs out. The number is the whole question; 18 and 24 are the distractors.",
     "patterns": [],
-    "status": "draft"
+    "status": "checked"
   },
   {
     "id": 4,
@@ -69,7 +69,7 @@
     ],
     "nudge": "A conviction for a crime de caça makes the carta caducar: it lapses outright. There is no correcting or swapping it.",
     "patterns": [],
-    "status": "draft"
+    "status": "checked"
   },
   {
     "id": 5,
@@ -86,15 +86,15 @@
       }
     ],
     "nudge": "A regional licence covers a region, the região cinegética a que respeita, with no species limit. Nobody, diplomats included, is exempt from the licença de caça (questions 8 and 9).",
-    "patterns": ["only"],
-    "status": "draft"
+    "patterns": ["which-statement", "only"],
+    "status": "checked"
   },
   {
     "id": 6,
     "language": [],
     "nudge": "A hunting dog needs its own licence from mais de 6 meses, six months old. Pair it with the hunter's own age line in question 2: mais de 16 anos.",
     "patterns": [],
-    "status": "draft"
+    "status": "checked"
   },
   {
     "id": 7,
@@ -111,8 +111,8 @@
       }
     ],
     "nudge": "One region, so a licença regional is enough, and the nacional covers it too. Snipe need no waterfowl licence: question 10 asks the same with rabbits and has the same answer.",
-    "patterns": ["only"],
-    "status": "draft"
+    "patterns": ["only", "case"],
+    "status": "checked"
   },
   {
     "id": 8,
@@ -129,8 +129,8 @@
       }
     ],
     "nudge": "Nunca: no one is excused the licença de caça, whatever their nationality or diplomatic status. The exemption in question 1 is from the carta de caçador, a different document.",
-    "patterns": [],
-    "status": "draft"
+    "patterns": ["always-never"],
+    "status": "checked"
   },
   {
     "id": 9,
@@ -147,8 +147,8 @@
       }
     ],
     "nudge": "The licença de caça has no exemptions: ninguém. The non-resident foreigner clause belongs to the carta de caçador (question 1), not to the licence.",
-    "patterns": [],
-    "status": "draft"
+    "patterns": ["always-never"],
+    "status": "checked"
   },
   {
     "id": 10,
@@ -165,7 +165,7 @@
       }
     ],
     "nudge": "Rabbits in one region: a licença regional, or the nacional, is all that is needed. The waterfowl licence is only for aves aquáticas.",
-    "patterns": ["only"],
-    "status": "draft"
+    "patterns": ["only", "case"],
+    "status": "checked"
   }
 ]
