@@ -2,217 +2,270 @@
   {
     "id": 137,
     "language": [],
-    "nudge": "",
+    "nudge": "Fallow deer cast their armações in março a abril. Red deer cast theirs a month earlier, from late February into March (question 145).",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 138,
     "language": [],
-    "nudge": "",
+    "nudge": "Fallow does start giving birth in maio. Red deer hinds start a month earlier, in abril (question 151).",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 139,
-    "language": [],
-    "nudge": "",
+    "language": [
+      {
+        "pt": "arredondadas na base",
+        "en": "rounded at the base",
+        "note": "na base = at the base: the shape named last belongs to the bottom of the beam only. Two options use the same two shapes and swap which one sits at the base."
+      },
+      {
+        "pt": "mais ou menos ramificadas",
+        "en": "more or less branched",
+        "note": "mais ou menos = to a greater or lesser degree: branched, some more than others. Not a comparison with anything."
+      }
+    ],
+    "nudge": "The fallow buck's antlers are duas hastes espalmadas, arredondadas na base: flattened like a palm above, round at the base. The second option swaps the palm and the round, and hastes cilíndricas, mais ou menos ramificadas are the red deer's (question 152).",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 140,
-    "language": [],
-    "nudge": "",
+    "language": [
+      {
+        "pt": "A cabeça do gamo",
+        "en": "The head of the fallow deer buck",
+        "note": "cabeça here is the buck's antlers, as a hunter speaks of a deer's head; it is their shape that matures."
+      }
+    ],
+    "nudge": "A fallow buck's head, its antlers, reaches its full form aos 7 anos. The red deer's armação matures por volta dos 7 a 8 anos (question 146).",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 141,
     "language": [],
-    "nudge": "",
+    "nudge": "The fallow deer prefers zonas com abundante arvoredo e matagal, com áreas de pasto: wooded cover with grazing beside it. Open ground with pasture lacks the cover, and wet, waterlogged ground is not what it prefers.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 142,
     "language": [],
-    "nudge": "",
+    "nudge": "The fallow deer rut begins no princípio do outono. The roe deer is the one whose rut falls in summer, between julho e agosto (questions 159 and 163).",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 143,
     "language": [],
-    "nudge": "",
+    "nudge": "Um veado: a big, heavily built deer (question 155) with a reddish-brown coat, a pale buff rump patch and long, cylindrical, branched antlers (question 152). A gamo has flattened, palmate antlers and a spotted coat, and a corço is small, with short antlers of a few tines.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 144,
     "language": [],
-    "nudge": "",
-    "patterns": [],
+    "nudge": "The red deer female is the cerva, the hind. Corça is the roe doe, and gama or gamela the fallow doe (question 138).",
+    "patterns": ["name-question"],
     "status": "draft"
   },
   {
     "id": 145,
     "language": [],
-    "nudge": "",
+    "nudge": "Red deer cast their antlers from finais de fevereiro a março; question 157 asks the same of the stags, fins de fevereiro e março. The fallow deer is a month later, março a abril (question 137).",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 146,
     "language": [],
-    "nudge": "",
+    "nudge": "The red deer's armação reaches its characteristic form por volta dos 7 a 8 anos. The fallow buck's head matures aos 7 anos (question 140); the distractor ranges sit a year either side.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 147,
-    "language": [],
-    "nudge": "",
-    "patterns": [],
+    "language": [
+      {
+        "pt": "além de constituir um troféu de caça, é ainda",
+        "en": "besides constituting a hunting trophy, are also",
+        "note": "ainda here is 'also', not 'still' or 'yet': the stem asks what else the antlers are, on top of a trophy."
+      }
+    ],
+    "nudge": "The armação is ainda indicadora da idade do macho: the antlers are the stag's, so they tell the stag's age. Neither the hind's age nor that of ambos os sexos can be read from them.",
+    "patterns": ["both"],
     "status": "draft"
   },
   {
     "id": 148,
     "language": [],
-    "nudge": "",
-    "patterns": [],
+    "nudge": "The red deer likes bosques de folha caduca, com zonas abertas, e matagais: deciduous woods broken by open ground, with thickets. The near miss keeps the woods and thickets but makes them muito fechados, with no open areas.",
+    "patterns": ["list-options"],
     "status": "draft"
   },
   {
     "id": 149,
     "language": [],
-    "nudge": "",
+    "nudge": "Hinds can first breed at 2 anos. A wild boar breeds far younger, a partir dos 8 meses (question 123).",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 150,
     "language": [],
-    "nudge": "",
-    "patterns": [],
+    "nudge": "The brama, the roar, is the grito de desafio the stag lança aos seus rivais in the rut: a challenge to other males. The near miss makes it a call to the females, and the hinds calling their young is another sound.",
+    "patterns": ["name-question"],
     "status": "draft"
   },
   {
     "id": 151,
     "language": [],
-    "nudge": "",
+    "nudge": "Hinds begin calving in abril, a month before the fallow does, in maio (question 138). Mouflon births also fall in abril (question 166).",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 152,
-    "language": [],
-    "nudge": "",
+    "language": [
+      {
+        "pt": "mais ou menos ramificadas",
+        "en": "more or less branched",
+        "note": "mais ou menos = to a greater or lesser degree: branched, some more than others. Not a comparison with anything."
+      }
+    ],
+    "nudge": "The red deer's armação is duas hastes cilíndricas, mais ou menos ramificadas: round beams with branches. Hastes espalmadas, flattened like a palm, are the fallow deer's (question 139), and the red deer's beams are not palmate at the tips either.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 153,
     "language": [],
-    "nudge": "",
-    "patterns": [],
+    "nudge": "Veludo, velvet, is the cobertura de pele cinzenta com pelos that protects the stag's hastes while they grow. The roe deer's rump patch has its own name, escudo anal (question 164), and the calves' coat is not it either.",
+    "patterns": ["name-question"],
     "status": "draft"
   },
   {
     "id": 154,
-    "language": [],
-    "nudge": "",
-    "patterns": [],
+    "language": [
+      {
+        "pt": "Só caem até ao sexto ano de vida",
+        "en": "Fall only up to the sixth year of life",
+        "note": "só … até ao sexto ano = only up to the sixth year: it claims the antlers stop being cast after that."
+      }
+    ],
+    "nudge": "An adult stag's antlers caem todos os anos depois da época do cio: they are cast every year, after the rut, in late February and March (question 145). Durante a época do cio is the near miss, and they do not stop after the sixth year.",
+    "patterns": ["before-after"],
     "status": "draft"
   },
   {
     "id": 155,
-    "language": [],
-    "nudge": "",
+    "language": [
+      {
+        "pt": "é mais corpulento",
+        "en": "is the most heavily built",
+        "note": "After Qual dos, mais corpulento is a superlative: the most heavily built of the three, not just 'more'."
+      }
+    ],
+    "nudge": "The veado is the most corpulento of the Portuguese deer; question 156 uses the same fact, ser mais corpulento, to tell it from the roe deer. The corço and the gamo are both smaller.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 156,
     "language": [],
-    "nudge": "",
+    "nudge": "The red deer is told from the roe deer by ser mais corpulento: it is the most heavily built of the Portuguese deer (question 155). The antler options do not separate them, since the roe buck carries armações too (question 164).",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 157,
     "language": [],
-    "nudge": "",
+    "nudge": "Stags cast their armações in fins de fevereiro e março, the same window as question 145. Nunca is wrong: question 154 has them fall todos os anos.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 158,
     "language": [],
-    "nudge": "",
+    "nudge": "Roe deer births are frequentemente de gémeos: the roe doe often has twins. That is the corço's mark among the three, not the gamo's or the muflão's.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 159,
     "language": [],
-    "nudge": "",
+    "nudge": "The roe deer rut falls between julho e agosto, in summer (question 163). The fallow deer's begins only at the start of autumn (question 142).",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 160,
     "language": [],
-    "nudge": "",
+    "nudge": "Roe deer give birth generally in maio. With the rut in julho e agosto (question 159) and a 10-month gestation (question 161), the births come the following May.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 161,
     "language": [],
-    "nudge": "",
+    "nudge": "The roe doe's gestation is 10 meses. It spans the time from the summer rut, julho e agosto (question 159), to the births in maio (question 160).",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 162,
     "language": [],
-    "nudge": "",
+    "nudge": "The roe deer is fundamentalmente solitário: it lives mostly alone. Both distractors give it rebanhos, herds, one in winter and one in summer.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 163,
     "language": [],
-    "nudge": "",
+    "nudge": "The roe deer rut is no verão, between julho e agosto (question 159). The fallow deer's begins in autumn (question 142) and the mouflon's is in November (question 165).",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 164,
-    "language": [],
-    "nudge": "",
+    "language": [
+      {
+        "pt": "em que o corço não tem armações",
+        "en": "in which the roe deer has no antlers",
+        "note": "em que = in which, when: the stem limits the question to the part of the year when the buck has cast his antlers, so they cannot be the mark."
+      }
+    ],
+    "nudge": "Without antlers, buck and doe are told apart pelo escudo anal, the pale rump patch, which is shaped differently in the two sexes. Skin colour and ear size are not the marks.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 165,
     "language": [],
-    "nudge": "",
+    "nudge": "The mouflon rut falls no mês de novembro. Compare the roe deer's in summer (question 163) and the fallow deer's at the start of autumn (question 142).",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 166,
     "language": [],
-    "nudge": "",
+    "nudge": "Mouflon births are normally in abril, the same month as red deer hinds begin calving (question 151).",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 167,
-    "language": [],
-    "nudge": "",
+    "language": [
+      {
+        "pt": "grupos independentes",
+        "en": "independent groups",
+        "note": "independentes = separate, of their own: groups made up of the adult males alone."
+      }
+    ],
+    "nudge": "Adult mouflon males gather in groups of their own no verão. Their rut comes later, in November (question 165).",
     "patterns": [],
     "status": "draft"
   }
