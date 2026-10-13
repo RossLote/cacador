@@ -199,7 +199,7 @@
     "id": 124,
     "language": [],
     "nudge": "Groups of wild boar are varas or companhias, both 'sounders' in English. Rebanhos and manadas are herds of grazing mammals, and bandos ou companhias fails on bandos, flocks of birds.",
-    "patterns": ["name-question"],
+    "patterns": ["name-question", "list-options"],
     "status": "checked"
   },
   {

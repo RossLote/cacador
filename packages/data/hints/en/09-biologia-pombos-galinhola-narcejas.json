@@ -17,7 +17,7 @@
     "id": 269,
     "language": [],
     "nudge": "Pigeons are robust, with asas pontiagudas, cabeça pequena, cauda comprida e voo rápido: pointed wings, a small head, a long tail and fast flight. One distractor gives them rounded wings and a large head, the other a medium head, a short tail and voo muito rápido.",
-    "patterns": ["list-options"],
+    "patterns": [],
     "status": "checked"
   },
   {
@@ -133,7 +133,7 @@
     "id": 279,
     "language": [],
     "nudge": "The Rock dove lives on grãos e sementes, grains and seeds. The near-miss adds bagas and bolotas, berries and acorns, and bolota e azeitona drops the grain altogether.",
-    "patterns": ["list-options"],
+    "patterns": [],
     "status": "checked"
   },
   {
@@ -174,7 +174,7 @@
     "id": 284,
     "language": [],
     "nudge": "The woodcock has asas largas e arredondadas, bico comprido e direito: broad, rounded wings and a long, straight bill. One distractor narrows the wings to estreitas, the other shortens the bill to curto.",
-    "patterns": ["list-options"],
+    "patterns": [],
     "status": "checked"
   },
   {
@@ -188,7 +188,7 @@
     "id": 286,
     "language": [],
     "nudge": "In flight the woodcock looks atarracada, stocky, with asas redondas and the bill pointed at the ground. Longilínea, long and slender, is the near-miss, and asas estreitas contradicts the broad, rounded wings of question 284.",
-    "patterns": ["list-options"],
+    "patterns": [],
     "status": "checked"
   },
   {
@@ -201,7 +201,7 @@
       }
     ],
     "nudge": "The woodcock breeds in países do centro e norte da Europa and is a winter visitor on the mainland, an invernante (question 288). Centro e sul da Europa is the near-miss, and snipe breed in the same central and northern countries (question 298).",
-    "patterns": [],
+    "patterns": ["list-options"],
     "status": "checked"
   },
   {
@@ -270,7 +270,7 @@
       }
     ],
     "nudge": "Snipe have a grande bico with pernas e pescoço relativamente curtos: a large bill on a short-legged, short-necked bird. Making the bill short too, or everything long, are the two distractors.",
-    "patterns": ["list-options"],
+    "patterns": [],
     "status": "checked"
   },
   {
@@ -290,7 +290,7 @@
       }
     ],
     "nudge": "Snipe breed in países do centro e norte da Europa, like the woodcock (question 287), and come here for the winter (question 299). Centro e sul da Europa is the near-miss.",
-    "patterns": [],
+    "patterns": ["list-options"],
     "status": "checked"
   },
   {
@@ -348,7 +348,7 @@
     "id": 303,
     "language": [],
     "nudge": "Snipe eat moluscos, insetos, fragmentos vegetais, grãos: molluscs and insects, the invertebrates of question 295, with some plant matter and grain. Insetos, sementes e plantas aquáticas drops the molluscs, and arroz, milho, caracóis e pequenas rãs brings in rice, maize and small frogs.",
-    "patterns": ["list-options"],
+    "patterns": [],
     "status": "checked"
   }
 ]

@@ -91,7 +91,7 @@
       }
     ],
     "nudge": "The detail that decides is that the prey 'afasta-se', is moving away: the hunter does not shoot but waits 'que o animal se imobilize'. Both other options are shots at a moving animal, swinging with it or calculating where it will cross the projectile.",
-    "patterns": ["case"],
+    "patterns": [],
     "status": "checked"
   },
   {

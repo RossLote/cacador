@@ -37,7 +37,7 @@
     "id": 308,
     "language": [],
     "nudge": "The golden plover is found especialmente em zonas interiores, inland above all. Exclusivamente em áreas costeiras, only on the coast, gets the place wrong, and wooded ground is the thrushes' habitat (question 315), not the plover's.",
-    "patterns": [],
+    "patterns": ["only"],
     "status": "checked"
   },
   {

@@ -167,7 +167,7 @@
       }
     ],
     "nudge": "An adult stag's antlers caem todos os anos depois da época do cio: they are cast every year, after the rut, in late February and March (question 145). Durante a época do cio is the near miss, and they do not stop after the sixth year.",
-    "patterns": ["before-after"],
+    "patterns": ["before-after", "only"],
     "status": "checked"
   },
   {

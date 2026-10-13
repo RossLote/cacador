@@ -133,7 +133,7 @@
       }
     ],
     "nudge": "Every species in the keyed set lives on water: a duck, the galinha-d’água of charcos, lagoas e zonas alagadas (question 258) and the galeirão, which gathers in grandes bandos in winter (question 264). Each distractor slips in one land animal: the lebre, whose ground is pousios e terras cultivadas (question 93), or the pombo-torcaz.",
-    "patterns": ["list-options"],
+    "patterns": [],
     "status": "checked"
   },
   {
@@ -181,7 +181,7 @@
     "id": 250,
     "language": [],
     "nudge": "The female pochard is brownish, with an anel cinzento-azulado à volta do bico, a blue-grey ring around the bill. The near-miss keeps the brownish colour but gives her an orange bill, and a black spatulate bill is not hers either.",
-    "patterns": ["list-options"],
+    "patterns": [],
     "status": "checked"
   },
   {
@@ -289,7 +289,7 @@
     "id": 263,
     "language": [],
     "nudge": "The coot has a bico branco e placa frontal branca, a white bill and a white shield. The moorhen's shield is red (question 257) and its bill red with a yellow tip (question 256), so an option with red in it borrows from the moorhen.",
-    "patterns": ["list-options"],
+    "patterns": [],
     "status": "checked"
   },
   {
