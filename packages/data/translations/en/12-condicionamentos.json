@@ -7,7 +7,7 @@
       "B": "On land adjacent to hospital establishments",
       "C": "On land occupied with fruit crops"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -18,7 +18,7 @@
       "B": "Of the railway lines",
       "C": "On land occupied with vegetable crops"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -29,7 +29,7 @@
       "B": "Prohibited to hunt, as well as in a protection strip of 250 metres",
       "C": "Prohibited to hunt, but only when there is traffic"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -40,7 +40,7 @@
       "B": "250 metres",
       "C": "750 metres"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -51,7 +51,7 @@
       "B": "Bathing beaches and land adjacent to teaching establishments",
       "C": "Aerodromes, regional roads and municipal roads"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -62,7 +62,7 @@
       "B": "In duly signposted livestock enclosures",
       "C": "In olive groves and orchards with drip irrigation installed"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -73,7 +73,7 @@
       "B": "Tourist installations, campsites and sports grounds",
       "C": "Game refuge areas and duly signposted livestock enclosures"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -84,7 +84,7 @@
       "B": "On land occupied with forest plantations with an average height greater than 1,50 metres",
       "C": "In olive groves, orchards and vineyards"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -95,7 +95,7 @@
       "B": "At 250 metres from a national road",
       "C": "In livestock enclosures"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -104,9 +104,9 @@
     "options": {
       "A": "It is prohibited to hunt",
       "B": "It is prohibited to hunt less than 250 metres from the animals",
-      "C": "It is prohibited to hunt less than 100 metres from wild cattle"
+      "C": "It is prohibited to hunt less than 100 metres from fighting cattle"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -117,7 +117,7 @@
       "B": "Gardens attached to dwelling houses",
       "C": "Hunting zones"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -128,7 +128,7 @@
       "B": "Yes",
       "C": "Yes, provided that it has no olives"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -139,7 +139,7 @@
       "B": "250 metres",
       "C": "300 metres"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -150,7 +150,7 @@
       "B": "No hunting",
       "C": "Livestock enclosure"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -161,7 +161,7 @@
       "B": "200 metres",
       "C": "500 metres"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -172,7 +172,7 @@
       "B": "While the fire lasts and during the following 30 days",
       "C": "While the fire lasts and during the following 10 days"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -183,7 +183,7 @@
       "B": "5 hunters",
       "C": "10 hunters"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -194,7 +194,7 @@
       "B": "150 metres",
       "C": "100 metres"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -205,7 +205,7 @@
       "B": "In yards attached to dwelling houses",
       "C": "In hunting zones"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -216,7 +216,7 @@
       "B": "It is permitted to hunt more than 100 metres from bathing beaches",
       "C": "It is permitted to hunt more than 100 metres from airports"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -227,7 +227,7 @@
       "B": "150 metres",
       "C": "200 metres"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -238,7 +238,7 @@
       "B": "May hunt with the consent of the person entitled",
       "C": "May hunt without a firearm"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -249,7 +249,7 @@
       "B": "It is permitted to hunt at 250 metres from bathing beaches",
       "C": "It is permitted to hunt at 250 metres from airports"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -260,18 +260,18 @@
       "B": "It is a crime to hunt wild boar on ground covered with snow",
       "C": "It is a crime to hunt in hunting zones to which one does not legally have access"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
     "id": 386,
-    "question": "What constitutes a hunting crime:",
+    "question": "The following constitutes a hunting crime:",
     "options": {
       "A": "Hunting 50 metres from tarred municipal roads",
       "B": "Using assistants outside the established conditions",
       "C": "Using lure calls in the hunting of ducks"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -282,7 +282,7 @@
       "B": "It is permitted to hunt all species classified as game",
       "C": "It is permitted to hunt any species that causes damage to agriculture"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -293,7 +293,7 @@
       "B": "Is permitted to the hunters of municipal hunting zones in montarias (driven big-game hunts with hounds) for wild boar",
       "C": "Is prohibited in hunting"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -304,7 +304,7 @@
       "B": "May not be used in hunting",
       "C": "May be used in red deer hunting by stalking"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -315,7 +315,7 @@
       "B": "The use and the possession of cartridges loaded with shot are prohibited",
       "C": "The use of hunting dogs is prohibited"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -326,7 +326,7 @@
       "B": "Is permitted in the hunting of thrushes",
       "C": "Is prohibited"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -337,7 +337,7 @@
       "B": "The use and the possession of cartridges loaded with shot are prohibited",
       "C": "The use and the possession of cartridges loaded with a slug are prohibited"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -348,7 +348,7 @@
       "B": "Never",
       "C": "If they are signposted with the no-hunting sign"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -359,7 +359,7 @@
       "B": "One may hunt with the consent of the person entitled",
       "C": "One may hunt with the consent of the president of the parish council"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -370,7 +370,7 @@
       "B": "Hunting with a blood alcohol level lower than 1,2 g/l",
       "C": "Hunting in no-hunting areas"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -381,7 +381,7 @@
       "B": "250 metres",
       "C": "500 metres"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -392,7 +392,7 @@
       "B": "To carry out hunting activities",
       "C": "To hunt without the consent of the person entitled"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -403,7 +403,7 @@
       "B": "It is permitted to hunt in a game refuge provided that the hunter is a member of a hunters' club",
       "C": "It is permitted to hunt less than 100 metres from a national road"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -414,7 +414,7 @@
       "B": "It is prohibited to hunt, provided that the diameter of the trunk is less than 5 cm",
       "C": "It is permitted to hunt"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -425,7 +425,7 @@
       "B": "Hunting in areas under the right to no hunting",
       "C": "Hunting without carrying the hunter's certificate"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -436,7 +436,7 @@
       "B": "No",
       "C": "Only when signposted with the no-hunting sign"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -447,7 +447,7 @@
       "B": "Always permitted to hunt",
       "C": "Prohibited to hunt without the consent of the person entitled"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -458,7 +458,7 @@
       "B": "Hunting with a blood alcohol level lower than 1,2g/l",
       "C": "Hunting with a blood alcohol level equal to 1,2g/l"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -469,7 +469,7 @@
       "B": "150 metres",
       "C": "200 metres"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -480,7 +480,7 @@
       "B": "Using assistants outside the established conditions",
       "C": "Hunting with a blood alcohol level lower than 1,2g/l"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -491,7 +491,7 @@
       "B": "A hunting crime",
       "C": "Negligent conduct"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -502,7 +502,7 @@
       "B": "Burnt areas and land swept by fires",
       "C": "Tourist installations and campsites"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -513,40 +513,40 @@
       "B": "Yes, without any restrictions",
       "C": "Yes, but only with the authorisation of the person entitled"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
     "id": 409,
-    "question": "What constitutes a hunting crime:",
+    "question": "The following constitutes a hunting crime:",
     "options": {
       "A": "Hunting without being the bearer of an identity card",
       "B": "Hunting without being qualified with a hunter's certificate",
       "C": "Hunting 200 metres from a duly signposted dovecote"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
     "id": 410,
-    "question": "What constitutes a hunting crime:",
+    "question": "The following constitutes a hunting crime:",
     "options": {
       "A": "Hunting 50 metres from tarred municipal roads",
       "B": "Using assistants outside the established conditions",
       "C": "Using lure calls in the hunting of ducks"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
     "id": 411,
-    "question": "What constitutes a hunting crime:",
+    "question": "The following constitutes a hunting crime:",
     "options": {
       "A": "Abandoning the animals that assist and accompany the hunter in the practice of hunting",
-      "B": "Hunting ducks from a hide, up to 100 metres from the bodies of water, after 16 hours and until sunset",
+      "B": "Hunting ducks from a hide, up to 100 metres from the bodies of water, after 16:00 and until sunset",
       "C": "Hunting with a blood alcohol level equal to 1,0 g/l"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -557,7 +557,7 @@
       "B": "Permitted provided that the production is for food consumption",
       "C": "Permitted provided that the production is intended for releases on hunting training grounds"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   }
 ]
