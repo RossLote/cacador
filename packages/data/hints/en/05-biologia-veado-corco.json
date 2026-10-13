@@ -109,7 +109,7 @@
   {
     "id": 149,
     "language": [],
-    "nudge": "Hinds can first breed at 2 anos. A wild boar breeds far younger, a partir dos 8 meses (question 123).",
+    "nudge": "Hinds can first breed at 2 anos: 1 ano is too young, and 3 anos is a year after that first chance. A wild boar breeds far younger, a partir dos 8 meses (question 123).",
     "patterns": [],
     "status": "checked"
   },
@@ -131,9 +131,19 @@
     "id": 152,
     "language": [
       {
+        "pt": "arredondadas na base",
+        "en": "rounded at the base",
+        "note": "na base = at the base: the shape named last belongs to the bottom of the beam only."
+      },
+      {
         "pt": "mais ou menos ramificadas",
         "en": "more or less branched",
         "note": "mais ou menos = to a greater or lesser degree: branched, some more than others. Not a comparison with anything."
+      },
+      {
+        "pt": "espalmadas nas pontas",
+        "en": "palmate at the tips",
+        "note": "nas pontas = at the tips: the shape named last belongs to the ends of the beams only."
       }
     ],
     "nudge": "The red deer's armação is duas hastes cilíndricas, mais ou menos ramificadas: round beams with branches. Hastes espalmadas, flattened like a palm, are the fallow deer's (question 139), and the red deer's beams are not palmate at the tips either.",
@@ -245,14 +255,14 @@
   {
     "id": 165,
     "language": [],
-    "nudge": "The mouflon rut falls no mês de novembro. Compare the roe deer's in summer (question 163) and the fallow deer's at the start of autumn (question 142).",
+    "nudge": "The mouflon rut falls no mês de novembro; outubro and dezembro are the months either side. Compare the roe deer's in summer (question 163) and the fallow deer's at the start of autumn (question 142).",
     "patterns": [],
     "status": "checked"
   },
   {
     "id": 166,
     "language": [],
-    "nudge": "Mouflon births are normally in abril, the same month as red deer hinds begin calving (question 151).",
+    "nudge": "Mouflon births are normally in abril, the same month as red deer hinds begin calving (question 151). Março and maio are the months either side.",
     "patterns": [],
     "status": "checked"
   },

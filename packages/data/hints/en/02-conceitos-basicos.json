@@ -65,7 +65,7 @@
         "note": "The se makes the verb passive, 'are considered (to be)', not 'consider themselves'; what is so considered comes in the options."
       }
     ],
-    "nudge": "'As áreas de proteção' are ground where hunting is banned, one kind of terreno não cinegético. National hunting zones and areas under maritime jurisdiction are hunting grounds (questions 13 and 18).",
+    "nudge": "'As áreas de proteção' are ground where hunting is banned, one kind of terreno não cinegético. Areas under maritime jurisdiction are hunting ground (questions 13 and 18), and 'zonas de caça nacionais' are hunting zones, managed hunting ground like the municipal one of question 17.",
     "patterns": ["name-question"],
     "status": "checked"
   },
@@ -179,13 +179,7 @@
   },
   {
     "id": 25,
-    "language": [
-      {
-        "pt": "superior ao permitido",
-        "en": "greater than that permitted",
-        "note": "superior a = above, greater than: a count over the limit, not 'better'."
-      }
-    ],
+    "language": [],
     "nudge": "October is inside the partridge season (question 462) and walked-up is a partridge method (question 455), so neither the month nor the method is the offence. Ten dogs walked-up is the rabbit allowance (questions 29 and 30), and for partridge it is 'um número de cães superior ao permitido'.",
     "patterns": ["case"],
     "status": "checked"
@@ -252,13 +246,7 @@
   },
   {
     "id": 32,
-    "language": [
-      {
-        "pt": "de qualquer espécie, cinegética ou não",
-        "en": "of any species, game or not",
-        "note": "qualquer = any; cinegética ou não = game or not, so non-game species are included."
-      }
-    ],
+    "language": [],
     "nudge": "Taking 'crias ou ovos de qualquer espécie, cinegética ou não' is banned. Sunrise to sunset is when hunting is normally allowed (question 33), and Thursday is a hunting day on unmanaged ground (question 57).",
     "patterns": ["which-statement", "always-never"],
     "status": "checked"
@@ -318,13 +306,7 @@
   },
   {
     "id": 38,
-    "language": [
-      {
-        "pt": "a cada lebre",
-        "en": "for each Iberian hare",
-        "note": "a cada lebre = for each hare, the same as por cada lebre in question 37."
-      }
-    ],
+    "language": [],
     "nudge": "Hare coursing allows 'Dois cães galgos e dois cães de busca a cada lebre', as in question 37. Ten dogs for rabbit is the limit for methods other than batida (question 30), so 'pelo processo de batida' makes that option wrong.",
     "patterns": [],
     "status": "checked"
@@ -332,11 +314,6 @@
   {
     "id": 39,
     "language": [
-      {
-        "pt": "se desloca",
-        "en": "moves",
-        "note": "deslocar-se = to move, go from place to place: the hunter goes to the game."
-      },
       {
         "pt": "designa-se",
         "en": "is called",
@@ -454,19 +431,13 @@
         "note": "só limits the stick to the methods asked for; em que processos? = in which methods?, the question word comes late."
       }
     ],
-    "nudge": "The pau is carried in coursing and walked-up hunting, so 'Corricão e de salto' is the pair; question 505 adds falconry, 'com ou sem pau'. Every option has salto, and batida and montaria are the wrong partners.",
+    "nudge": "The pau is allowed only in coursing and walked-up hunting: 'Corricão e de salto'. Every option has salto, so the partner decides, and batida and montaria are the wrong ones.",
     "patterns": ["list-options"],
     "status": "checked"
   },
   {
     "id": 50,
-    "language": [
-      {
-        "pt": "não há limite de número de cães",
-        "en": "there is no limit on the number of dogs",
-        "note": "não há = there is no: the number of dogs is left open."
-      }
-    ],
+    "language": [],
     "nudge": "Montarias have no cap on dogs: 'não há limite de número de cães'. Boats are not for snipe or woodcock (question 24), and decoys are not for snipe or plovers (question 35).",
     "patterns": ["which-statement"],
     "status": "checked"

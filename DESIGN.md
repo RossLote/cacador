@@ -484,7 +484,10 @@ Four phases, each its own epic, in order.
       while every legal claim and every non-visual biological claim stays within the
       bank and the glossaries; the four `sinal.jpg` questions are not species photos,
       and their nudges state what the sign means only as their keyed answers establish
-      it.
+      it. A species-photo nudge may also name the distinguishing visible marks of the
+      near-miss species in the options, because rule 5 asks what separates the near
+      miss and a plumage mark is checkable against any field guide, unlike a
+      recollection of the law.
    7. A nudge may cross-reference another question by number ("question 10 asks the
       same with rabbits"), with the fact always stated in words too.
    8. A `patterns` tag is a `slug` of `hints/patterns.json` (§ 4 rule 8) and is applied
@@ -689,7 +692,11 @@ precedent for every choice here, minus the server: this app has no backend.
   nudge decision asks for field marks and neither the bank's text nor the glossaries
   describe plumage, so a strict limit would empty every photo nudge; a visible feature
   is checkable against the photo itself, which a recollection of the law is not
-  (orchestrator ruling, cac-eyh.1).
+  (orchestrator ruling, cac-eyh.1). The exception also lets a species-photo nudge name
+  the distinguishing visible marks of the near-miss species in the options, because the
+  nudge decision asks what separates the near miss and a plumage mark is checkable
+  against any field guide, unlike a recollection of the law (orchestrator ruling,
+  cac-eyh content review).
 - **2026-10-13, Hint precedent.** `hints/en/01-documentos.json`, hand-written in the
   brief and read by Ross, is the precedent every writer and checker reads first; it
   goes through the checker's pass like any other file (§ 5 step 3 rule 1). Reason:
