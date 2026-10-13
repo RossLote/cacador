@@ -133,20 +133,40 @@ pnpm workspace of three packages: `packages/data`, `apps/web` and `e2e`
   `src/components/ui/`). `src/main.tsx` mounts `BrowserRouter` with the basename from
   `import.meta.env.BASE_URL`; `src/App.tsx` holds the routes (`/`, `/practice`,
   `/exam/*`, `/progress`, `/settings`, `/flagged`) and the shared layout with the back
-  control to Home. One folder per screen (`home`, `practice`, `exam`, `progress`,
-  `settings`, `flagged`). `src/i18n/` holds the language store (`locale.ts`,
-  `useI18n.ts`) and `messages/en/` and `messages/pt/`, one file per screen plus
-  `common`. `src/storage/` holds the record and export types (`types.ts`), the two
-  browser key names (`keys.ts`); the scaffold landed those and a placeholder page per
-  screen. Phase 4's beads add the storage module there, the only code that touches
-  IndexedDB (cac-eil.3), `src/model/` the study model (cac-eil.4),
-  `src/components/question/` the question card (cac-eil.6), and `src/pwa/` the image
-  map with the vite-plugin-pwa service worker that makes it installable and offline
-  (cac-eil.5). `DESIGN.md` § 6 to § 8.
+  control to Home. Under `src/`:
+  - one folder per screen, each with its page and its tests: `home` (readiness, the
+    exam-in-progress card, the four buttons), `practice` (the session, the flags row,
+    the laptop keys, the focused-practice pool from the query and `recent.ts`, the
+    no-repeat window in sessionStorage), `exam` (`ExamPage` owns the sub-routes:
+    `/exam` starts or resumes the running exam, `/exam/results/<id>` the results and
+    review), `progress` (the day bars, the topic, section and pattern lists, past
+    exams), `settings` (language, export, import, clear) and `flagged` (the list and
+    `copyFormat.ts`, the fixed copy text);
+  - `components/question/`: the question card, a controlled component with the peek
+    button and the hint panel, shared by practice and the exam; `components/ui/`: the
+    generated shadcn components;
+  - `model/`: the study model, pure functions for the draw weights and the no-repeat
+    window, readiness, group accuracy, the day bars, the pools and the exam draw,
+    deadline and score;
+  - `storage/`: the storage module, the only code that touches IndexedDB. `index.ts`
+    is the API every screen uses, over an IndexedDB backend and a memory fallback
+    with the same behaviour; it also holds the record and export types (`types.ts`),
+    the two browser key names (`keys.ts`), the exam finish (`finish.ts`), the import
+    merge (`merge.ts`) and the export file (`exportFile.ts`);
+  - `pwa/`: the image map that puts the 15 pictures in `dist` and the precache, and
+    `registerServiceWorker.ts`, which registers vite-plugin-pwa's service worker by
+    hand;
+  - `i18n/`: the language store (`locale.ts`, `useI18n.ts`) and `messages/en/` and
+    `messages/pt/`, one file per screen plus `common`;
+  - `lib/utils.ts`: the `cn` helper the shadcn components use.
+
+  `public/` holds the web manifest and the icons, rendered from `public/favicon.svg`
+  by `scripts/render-icons.sh`. `DESIGN.md` § 6 to § 8.
 - `e2e` (`@cacador/e2e`): the Playwright suite, run by `pnpm e2e` against the
-  production build served by `vite preview` under `/cacador/`. The scaffold landed
-  `package.json`, `playwright.config.ts` and `tsconfig.json`; the specs arrive with
-  cac-eil.5 and cac-eil.11. `DESIGN.md` § 8.10.
+  production build served by `vite preview` under `/cacador/`: the acceptance-bar
+  suite, which performs steps 2 to 12 of phase 4's acceptance bar, plus
+  `installable.spec.ts` (Chrome's installability check) and `offline.spec.ts` (Home,
+  Practice and the 15 images from the cache). `DESIGN.md` § 8.10.
 
 ## Conventions & Patterns
 
