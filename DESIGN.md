@@ -361,11 +361,15 @@ Four phases, each its own epic, in order.
       every stem and option. A species or term a glossary lacks is not added inside
       the bead: write the name the glossary would hold (rule 9 for a species) and list
       it in the bead's close reason, for one "Glossary additions" bead at the end of
-      the phase.
+      the phase. Where a terms note's combined form names a species, the species
+      glossary's `en` wins ("in the hunting of ducks", "Iberian hare coursing").
    3. Register is literal-leaning: keep the Portuguese order and structure where
       English allows, so the English maps onto the sentence the learner is reading.
       British spelling (licence, metres, colour). Numbers, units and times as the
-      Portuguese has them; a bare number or a proper name is copied unchanged.
+      Portuguese has them; a bare number or a proper name is copied unchanged. A time
+      of day is written on the 24-hour clock ("depois das 16 horas" → "after 16:00");
+      a duration stays in hours. Where the Portuguese verb has no stated subject and
+      English needs one, write "the hunter" or "they", never "he".
    4. A Portuguese term with no English equivalent (montaria, listado, farropo,
       morouços, terçó) stays in Portuguese, followed in parentheses by the gloss the
       terms glossary gives it.
