@@ -41,7 +41,7 @@
   {
     "id": 324,
     "language": [],
-    "nudge": "Raptors are 'importantes para a caça e para a agricultura'; for game, because they take mainly old and sick animals and keep populations healthy (question 338). Calling them a 'fator de desequilíbrio' or 'o principal fator de diminuição da caça' gets it backwards, and question 330 keys the same sentence.",
+    "nudge": "Raptors are 'importantes para a caça e para a agricultura', since they take mainly old and sick animals and keep populations healthy (question 338). Calling them a 'fator de desequilíbrio' or 'o principal fator de diminuição da caça' gets it backwards, and question 330 keys the same sentence.",
     "patterns": ["which-statement"],
     "status": "checked"
   },
@@ -197,7 +197,7 @@
         "note": "não é = is not: the stem asks for the one species that is not game, the protected one."
       }
     ],
-    "nudge": "The Eurasian sparrowhawk, 'gavião', is a bird of prey and so protected. Jay and blackbird, 'gaio' and 'melro', are game birds, a corvid and a thrush.",
+    "nudge": "The Eurasian sparrowhawk, 'gavião', is a bird of prey and so protected. Jay and blackbird, 'gaio' and 'melro', are both game birds.",
     "patterns": ["negative-stem"],
     "status": "checked"
   },
@@ -210,7 +210,7 @@
         "note": "não é = is not: the stem asks for the one species that is not game, the protected one."
       }
     ],
-    "nudge": "The northern lapwing, 'abibe', is protected and not game. The Egyptian mongoose is game, hunted by batida in January and February (question 436), and the blackbird is a game thrush.",
+    "nudge": "The northern lapwing, 'abibe', is protected and not game. The Egyptian mongoose is game, hunted by batida in January and February (question 436), and the blackbird, 'melro', is a game bird.",
     "patterns": ["negative-stem"],
     "status": "checked"
   },

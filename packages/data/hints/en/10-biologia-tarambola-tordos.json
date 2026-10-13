@@ -28,13 +28,7 @@
   },
   {
     "id": 307,
-    "language": [
-      {
-        "pt": "Apenas durante o inverno",
-        "en": "Only during the winter",
-        "note": "apenas = only: one season and no other, where the other two options each name two."
-      }
-    ],
+    "language": [],
     "nudge": "Tarambolas visit Portugal apenas durante o inverno, in winter only. Each distractor adds a second season, the spring or the autumn.",
     "patterns": ["only"],
     "status": "checked"
@@ -70,7 +64,7 @@
   {
     "id": 312,
     "language": [],
-    "nudge": "The tordeia, the mistle thrush, is the largest thrush; it is also the one that stays all year (question 313) and shows white underwings in flight (question 314). The tordo-zornal and the tordo-comum are the distractors.",
+    "nudge": "The tordeia, the mistle thrush, is 'a maior', the largest of the four thrushes counted in question 310. The tordo-zornal, the fieldfare, and the tordo-comum, the song thrush, are both smaller.",
     "patterns": ["comparative"],
     "status": "checked"
   },

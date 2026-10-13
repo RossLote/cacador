@@ -89,7 +89,7 @@
       {
         "pt": "É sempre proibido",
         "en": "It is always prohibited",
-        "note": "sempre = always: the stem asks for the places banned without any condition, such as a sign."
+        "note": "sempre = always: a ban with no condition."
       }
     ],
     "nudge": "Aerodromes, cemeteries and municipal roads are banned 'sempre', with no condition attached. Olive groves are banned only when signposted (question 401), and question 398 allows hunting among trees averaging over 80cm, so tall plantations are no absolute ban.",
@@ -340,7 +340,7 @@
     "language": [
       {
         "pt": "a utilização e a detenção",
-        "en": "the use and the possession",
+        "en": "The use and the possession",
         "note": "detenção = possession, keeping on one's person; a false friend, not 'detention'. The ban covers carrying the cartridges, not only firing them."
       }
     ],
@@ -366,7 +366,7 @@
     "language": [
       {
         "pt": "a utilização e a detenção",
-        "en": "the use and the possession",
+        "en": "The use and the possession",
         "note": "detenção = possession, keeping on one's person; a false friend, not 'detention'. The ban covers carrying the cartridges, not only firing them."
       }
     ],
@@ -427,11 +427,6 @@
         "pt": "não é permitido",
         "en": "it is not permitted",
         "note": "não é permitido = is not permitted: the stem asks for the one thing the sign forbids."
-      },
-      {
-        "pt": "atividades de caráter cinegético",
-        "en": "hunting activities",
-        "note": "de caráter cinegético = of a hunting nature, hunting-related: any activity to do with game."
       }
     ],
     "nudge": "The no-hunting sign of question 375 forbids hunting, which this question words as 'Caçar sem consentimento de quem de direito' and question 394 as a flat 'Não se pode caçar'. Training dogs and the wider 'atividades de caráter cinegético' are not what the keyed answer forbids.",

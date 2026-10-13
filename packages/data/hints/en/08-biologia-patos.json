@@ -2,7 +2,7 @@
   {
     "id": 228,
     "language": [],
-    "nudge": "A Northern pintail drake: chocolate-brown head, a white stripe running up a long, slender neck, the comparativamente mais longo e esbelto neck of question 251, and long, pointed central tail feathers. The Mallard drake has a glossy green head and white collar (question 229), and the Northern shoveler a green head over a huge, broad bill.",
+    "nudge": "A Northern pintail drake: chocolate-brown head, a white stripe running up a long, slender neck, the comparativamente mais longo e esbelto neck of question 251, and long, pointed central tail feathers. The Mallard drake has a glossy green head and white collar (question 229), and the Northern shoveler a green head over a broad, spoon-shaped bill.",
     "patterns": [],
     "status": "checked"
   },
@@ -111,13 +111,7 @@
   },
   {
     "id": 242,
-    "language": [
-      {
-        "pt": "variável conforme as espécies",
-        "en": "variable according to the species",
-        "note": "conforme = depending on, not 'conforming': the dimorphism differs from one species to the next."
-      }
-    ],
+    "language": [],
     "nudge": "In diving ducks the dimorfismo sexual is variável conforme as espécies: it differs from one species to the next. Acentuado na maioria das espécies, marked in most, is the dabbling ducks' answer (question 233).",
     "patterns": [],
     "status": "checked"
