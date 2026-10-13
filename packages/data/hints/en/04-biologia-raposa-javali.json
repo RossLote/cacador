@@ -42,14 +42,14 @@
   {
     "id": 109,
     "language": [],
-    "nudge": "The fox comes into heat in janeiro. With a gestation of 50 a 60 dias (question 110), the cubs follow about two months later.",
+    "nudge": "The fox comes into heat in janeiro, and with a gestation of 50 a 60 dias (question 110) the cubs follow about two months later. Fevereiro and março are a month or two too late.",
     "patterns": [],
     "status": "checked"
   },
   {
     "id": 110,
     "language": [],
-    "nudge": "A vixen carries her young 50 a 60 dias, about two months. The wild boar's 120 dias (question 130) is twice that.",
+    "nudge": "A vixen carries her young 50 a 60 dias, about two months. The ranges share their ends, so read both numbers: 40 a 50 dias is too short and 60 a 70 dias too long.",
     "patterns": [],
     "status": "checked"
   },
@@ -280,9 +280,14 @@
     "id": 133,
     "language": [
       {
+        "pt": "durante toda a sua vida",
+        "en": "throughout its whole life",
+        "note": "toda a = the whole of: an absolute, with no stage of life left out."
+      },
+      {
         "pt": "não ocorre sempre numa época fixa",
         "en": "does not always occur in a fixed season",
-        "note": "não … sempre = not always: the timing varies; it does not say the rut never comes in a set season."
+        "note": "não … sempre = not always, which is weaker than nunca, never."
       }
     ],
     "nudge": "The boar's cio não ocorre sempre numa época fixa: its rut does not always fall in a fixed season. It is not sociable all its life, since old males isolar-se progressivamente (question 129), and its trophy is not a cabeça.",
@@ -304,13 +309,7 @@
   },
   {
     "id": 135,
-    "language": [
-      {
-        "pt": "presas mais desenvolvidas",
-        "en": "larger tusks",
-        "note": "Of a boar, presas are its tusks, not prey (the presa of ave de presa)."
-      }
-    ],
+    "language": [],
     "nudge": "The adult male has presas mais desenvolvidas, bigger tusks: the navalhas and amoladeiras of questions 126 and 127. A lighter coat and a longer tail are not the marks.",
     "patterns": [],
     "status": "checked"

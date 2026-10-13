@@ -6,14 +6,9 @@
         "pt": "Poderão ser dispensados da",
         "en": "may be exempted from the",
         "note": "The future poderão asks who can be, not who will be; the stem names no subject, the options supply it. dispensado de = excused from needing."
-      },
-      {
-        "pt": "desde que habilitados a caçarem",
-        "en": "provided they are qualified to hunt",
-        "note": "desde que = provided that: a condition on the group, not a second group."
       }
     ],
-    "nudge": "The one exemption from the carta de caçador is for non-resident foreigners, and only desde que they are qualified to hunt in their own country. Enforcement officers, politicians and ICNF staff get none.",
+    "nudge": "Of these three groups, only non-resident foreigners may be exempted from the carta de caçador, and only desde que they are qualified to hunt in their own country. Enforcement officers, politicians and ICNF staff are not.",
     "patterns": [],
     "status": "checked"
   },
@@ -24,14 +19,9 @@
         "pt": "além de outros requisitos, é ainda necessário",
         "en": "besides other requirements, it is also necessary",
         "note": "ainda here is 'also', not 'still' or 'yet': the stem asks for one more requirement on top of the others."
-      },
-      {
-        "pt": "mais de 16 anos",
-        "en": "over 16 years of age",
-        "note": "mais de = more than; the same form as mais de 6 meses in the dog licence question."
       }
     ],
-    "nudge": "The extra requirement is age, mais de 16 anos. Citizenship and residence are not conditions: question 1 lets non-resident foreigners hunt here.",
+    "nudge": "The extra requirement is age: ter mais de 16 anos, more than 16. Ser cidadão nacional and ser residente em território nacional are the distractors, not the requirement this stem asks for.",
     "patterns": [],
     "status": "checked"
   },
@@ -49,7 +39,7 @@
         "note": "caducidade is the lapse of validity; validade and caducidade point at the same end date, the number in front is what differs."
       }
     ],
-    "nudge": "Renewal opens in the 12 months before the carta runs out. The number is the whole question; 18 and 24 are the distractors.",
+    "nudge": "Renewal opens nos 12 meses que antecedem o final da sua validade, the 12 months before the carta runs out. The number is the whole question; 18 and 24 are the distractors.",
     "patterns": [],
     "status": "checked"
   },
@@ -59,12 +49,7 @@
       {
         "pt": "o seu titular",
         "en": "its holder",
-        "note": "seu refers back to the carta, so 'its', not 'your' or 'his'."
-      },
-      {
-        "pt": "Caduca",
-        "en": "Lapses",
-        "note": "A verb, from caducar: the carta ceases to be valid by itself. Not a noun, and nothing to do with deciduous."
+        "note": "seu points ahead to the carta de caçador, named at the end of the stem, so 'its', not 'your' or 'his'."
       }
     ],
     "nudge": "A conviction for a crime de caça makes the carta caducar: it lapses outright. There is no correcting or swapping it.",
@@ -92,7 +77,7 @@
   {
     "id": 6,
     "language": [],
-    "nudge": "A hunting dog needs its own licence from mais de 6 meses, six months old. Pair it with the hunter's own age line in question 2: mais de 16 anos.",
+    "nudge": "A hunting dog needs its own licence once it is mais de 6 meses de idade, over six months of age. Pair it with the hunter's own age line in question 2: mais de 16 anos.",
     "patterns": [],
     "status": "checked"
   },
@@ -135,11 +120,6 @@
   {
     "id": 9,
     "language": [
-      {
-        "pt": "Ninguém",
-        "en": "No one",
-        "note": "ninguém = nobody; Portuguese needs no second negative with it here."
-      },
       {
         "pt": "desde que estejam habilitados a caçar",
         "en": "provided that they are qualified to hunt",

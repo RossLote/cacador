@@ -58,7 +58,7 @@
   {
     "id": 202,
     "language": [],
-    "nudge": "The turtle dove inverna no continente africano and nidifica na Europa: it winters in Africa and nests in Europe. The second option swaps the two continents, and America plays no part.",
+    "nudge": "The turtle dove inverna no continente africano and nidifica na Europa: it winters in Africa and nests in Europe. 'No continente europeu e nidifica em África' swaps the two continents, and the continente americano plays no part.",
     "patterns": [],
     "status": "checked"
   },
@@ -71,7 +71,7 @@
         "note": "a partir de = from … on: the month the arrivals start, not the only month."
       }
     ],
-    "nudge": "Turtle doves start entering Europe a partir de abril, from April. The first nests follow in maio (question 208), so March is too early and May is when they nest, not when they arrive.",
+    "nudge": "Turtle doves start entering Europe a partir de abril, from April on. Março is too early, and maio is the month the first nests follow (question 208), not the month arrivals begin.",
     "patterns": [],
     "status": "checked"
   },
@@ -178,13 +178,7 @@
   },
   {
     "id": 212,
-    "language": [
-      {
-        "pt": "alternando com",
-        "en": "alternating with",
-        "note": "alternando com = alternating with: a patchwork of the two kinds of ground, not one or the other."
-      }
-    ],
+    "language": [],
     "nudge": "The turtle dove's habitat is matas densas alternando com campos abertos: thick woods in a patchwork with open fields, as question 204 puts it with searas e pastos. Plain forest lacks the open ground, and wetlands are not its habitat.",
     "patterns": [],
     "status": "checked"
@@ -231,14 +225,8 @@
   },
   {
     "id": 217,
-    "language": [
-      {
-        "pt": "Quer de dia quer de noite",
-        "en": "Both by day and by night",
-        "note": "quer … quer = both … and, whether … or; quer here is not 'wants'."
-      }
-    ],
-    "nudge": "The quail's call can be heard quer de dia quer de noite, by day and by night alike. Each distractor confines it to one half of the day plus a twilight.",
+    "language": [],
+    "nudge": "The quail's call can be heard quer de dia quer de noite, both by day and by night (quer … quer = both … and, not 'wants'). Each distractor confines it to one half of the day plus a twilight.",
     "patterns": ["both"],
     "status": "checked"
   },

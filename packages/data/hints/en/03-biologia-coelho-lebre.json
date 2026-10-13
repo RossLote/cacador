@@ -116,13 +116,7 @@
   },
   {
     "id": 72,
-    "language": [
-      {
-        "pt": "A época de reprodução mais intensa",
-        "en": "The most intense breeding season",
-        "note": "mais intensa = the peak: the stem asks when breeding is heaviest, not every month in which it occurs."
-      }
-    ],
+    "language": [],
     "nudge": "The peak, the época mais intensa, is março a maio, in spring. Março a agosto runs on into summer, and durante todo o ano names no peak at all.",
     "patterns": ["comparative"],
     "status": "checked"
