@@ -7,7 +7,7 @@
       "B": "It is one of selection",
       "C": "It is insignificant"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -18,7 +18,7 @@
       "B": "The griffon vulture is a scavenger",
       "C": "The tawny owl is a diurnal bird of prey"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -29,7 +29,7 @@
       "B": "Eagle-owls, owls and vultures",
       "C": "Kites, falcons and kestrels"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -40,7 +40,7 @@
       "B": "Birds of prey are a factor of imbalance in animal populations",
       "C": "Birds of prey are the main factor in the decrease of game"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -51,7 +51,7 @@
       "B": "Exclusively carnivorous",
       "C": "Omnivorous"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -62,7 +62,7 @@
       "B": "Iberian hares",
       "C": "Partridges"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -73,7 +73,7 @@
       "B": "Between 500 and 800 hectares",
       "C": "Between 700 and 900 hectares"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -81,10 +81,10 @@
     "question": "In Portugal, the great bustard is a bird:",
     "options": {
       "A": "Resident",
-      "B": "Winter migrant",
-      "C": "Summer migrant"
+      "B": "Winter visitor",
+      "C": "Summer visitor"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -95,7 +95,7 @@
       "B": "In open cereal-growing plains",
       "C": "In densely wooded areas"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -106,7 +106,7 @@
       "B": "Birds of prey are important for game and for agriculture",
       "C": "The species that do not appear in the hunting calendar are considered protected"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -117,18 +117,18 @@
       "B": "Is not a game species",
       "C": "Is a game species and may be hunted on the conditions set in a public notice of the Instituto de Conservação da Natureza e das Florestas"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
     "id": 332,
-    "question": "During most of the year, great bustards normally keep:",
+    "question": "During most of the year, great bustards normally remain:",
     "options": {
       "A": "In flocks separated by sex",
       "B": "In pairs",
       "C": "In flocks with individuals of both sexes"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -139,7 +139,7 @@
       "B": "A small-game species",
       "C": "A non-game species"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -150,7 +150,7 @@
       "B": "Cereal-growing areas, interspersed with woods of deciduous trees",
       "C": "Very rugged land, interspersed with cultivated areas"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -161,7 +161,7 @@
       "B": "They may be hunted whenever they cause damage to agriculture",
       "C": "They may never be hunted"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -172,7 +172,7 @@
       "B": "Has a high degradation of the habitat",
       "C": "Has a low density of the prey populations"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -183,7 +183,7 @@
       "B": "Provided the hunter has a falconer's hunter's certificate",
       "C": "Never"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -194,7 +194,7 @@
       "B": "Birds of prey exterminate game",
       "C": "Habitat degradation causes the increase of the populations of birds of prey"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -205,7 +205,7 @@
       "B": "The common blackbird",
       "C": "The Eurasian sparrowhawk"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -216,18 +216,18 @@
       "B": "Egyptian mongoose",
       "C": "Common blackbird"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
     "id": 341,
-    "question": "Indicate the situation in which a grey partridge (perdiz-cinzenta or charrela) may be hunted?",
+    "question": "Indicate the situation in which a grey partridge may be hunted?",
     "options": {
       "A": "On the conditions set in a public notice of the Instituto da Conservação da Natureza e das Florestas",
       "B": "In managed hunting grounds",
       "C": "In no situation"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -238,7 +238,7 @@
       "B": "European golden plover",
       "C": "Grey plover"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -249,7 +249,7 @@
       "B": "When the intention is to practise falconry",
       "C": "It may never be hunted"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -260,7 +260,7 @@
       "B": "Eurasian jay",
       "C": "Great bustard"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -271,7 +271,7 @@
       "B": "None",
       "C": "Provided the hunter has a falconer's certificate"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -282,7 +282,7 @@
       "B": "European badger",
       "C": "Roe deer"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -291,9 +291,9 @@
     "options": {
       "A": "Mouflon",
       "B": "Fallow deer",
-      "C": "Grey partridge (charrela or perdiz-cinzenta)"
+      "C": "Grey partridge"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -304,7 +304,7 @@
       "B": "Yes, provided they appear in the ministerial order of the hunting calendar",
       "C": "Yes, with an authorisation from the Instituto de Conservação da Natureza e das Florestas if they cause damage"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -315,7 +315,7 @@
       "B": "Is not a game species",
       "C": "Is a game species and may be hunted on the conditions set in a public notice of the Instituto de Conservação da Natureza e das Florestas"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -326,7 +326,7 @@
       "B": "A harmful effect, contributing to the increase of diseases",
       "C": "A harmful effect, because they greatly reduce the game populations"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -337,7 +337,7 @@
       "B": "Eurasian wigeon",
       "C": "Tufted duck"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -348,7 +348,7 @@
       "B": "Healthier and more robust prey",
       "C": "Weakened prey, thus contributing to healthier populations"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -356,10 +356,10 @@
     "question": "“Birds of prey are important for game” is a statement:",
     "options": {
       "A": "False, because birds of prey drastically reduce game populations",
-      "B": "False, because birds of prey do not interfere in the populations of game species",
+      "B": "False, because birds of prey do not interfere with the populations of game species",
       "C": "True, because they preferentially capture sick and old animals, contributing to the health of the populations"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -370,7 +370,7 @@
       "B": "Lynx",
       "C": "Mouflon"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -381,7 +381,7 @@
       "B": "Mouflon",
       "C": "Lynx"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -392,7 +392,7 @@
       "B": "Grey wolf",
       "C": "Eurasian magpie"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -403,7 +403,7 @@
       "B": "Live in flocks of both sexes",
       "C": "Live in pairs"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -414,7 +414,7 @@
       "B": "Kite",
       "C": "Northern shoveler"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -425,7 +425,7 @@
       "B": "European golden plover",
       "C": "Common snipe"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -436,7 +436,7 @@
       "B": "Grey partridge, Eurasian wigeon, great snipe",
       "C": "Jack snipe, Eurasian magpie, Egyptian mongoose"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -447,7 +447,7 @@
       "B": "When the Instituto da Conservação da Natureza e das Florestas authorises it",
       "C": "Never"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   }
 ]
