@@ -277,12 +277,11 @@ function checkHint(rel, e, pt) {
 /**
  * Rule 5: translations and hints mirror the question files, with the fields of DESIGN.md § 3.3.
  * Only files that exist are checked.
- * Returns the translations and the hints by id, each with the file it came from; a translation also
- * carries its lowercased text with quotes straightened, for rule 6. Both feed the counts.
+ * Returns the translations and the hints by id, each with the file it came from, for rules 6 and 8 and the counts.
  */
 function checkMirrors(dir, files) {
-  const translations = new Map();
-  const hints = new Map();
+  const check = { translations: checkTranslation, hints: checkHint };
+  const byKind = { translations: new Map(), hints: new Map() };
   for (const kind of ['translations', 'hints']) {
     const sub = join(kind, 'en');
     for (const name of visibleFiles(join(dir, sub))) {
@@ -299,20 +298,15 @@ function checkMirrors(dir, files) {
         const pt = inFile.get(e.id);
         if (!pt) failAt(rel, e.id, `is not an id of questions/${name}`);
         if (!STATUSES.includes(e.status)) failAt(rel, e.id, `status "${e.status}" is not one of ${STATUSES.join(', ')}`);
-        if (kind === 'translations') {
-          checkTranslation(rel, e, pt);
-          translations.set(e.id, { ...e, file: rel, text: straighten(textOf(e)).toLowerCase() });
-        } else {
-          checkHint(rel, e, pt);
-          hints.set(e.id, { ...e, file: rel });
-        }
+        check[kind](rel, e, pt);
+        byKind[kind].set(e.id, { ...e, file: rel });
       }
       for (const id of inFile.keys()) {
         if (!ids.has(id)) failAt(rel, id, 'is missing, the file must carry the same ids as the question file');
       }
     }
   }
-  return { translations, hints };
+  return byKind;
 }
 
 const escapeRegExp = (text) => text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -355,6 +349,7 @@ function readGlossary(dir, rel, label, spec) {
 function checkGlossary(files, translations, glossary) {
   const ptText = new Map([...files.values()].flat().map((q) => [q.id, straighten(textOf(q))]));
   const ptLower = new Map([...ptText].map(([id, text]) => [id, text.toLowerCase()]));
+  const enLower = new Map([...translations].map(([id, t]) => [id, straighten(textOf(t)).toLowerCase()]));
   for (const entry of glossary) {
     const name = straighten(entry.pt);
     const needle = name.toLowerCase();
@@ -363,7 +358,7 @@ function checkGlossary(files, translations, glossary) {
     for (const [id, translation] of translations) {
       // The substring test is a cheap filter; the word-boundary regex decides.
       if (translation.status === 'draft' || !ptLower.get(id).includes(needle) || !word.test(ptText.get(id))) continue;
-      if (!translation.text.includes(en)) {
+      if (!enLower.get(id).includes(en)) {
         failAt(translation.file, id, `"${entry.pt}" must appear as "${entry.en}" (glossary/species.json)`);
       }
     }

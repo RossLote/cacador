@@ -58,25 +58,14 @@ describe('loader', () => {
     if (onDisk.length === 0) for (const id of [1, 229, 506]) expect(lookup(id)).toBeUndefined();
   });
 
-  it('resolves a hint for the last question, a draft until a checker bead moves it on', () => {
-    const hint = hintFor(506);
-    expect(hint?.id).toBe(506);
-    expect(['draft', 'checked', 'reviewed']).toContain(hint?.status);
+  it('exports the pattern list of hints/patterns.json', () => {
+    expect(patterns).toEqual(JSON.parse(readFileSync(new URL('../hints/patterns.json', import.meta.url), 'utf8')));
   });
 
-  it('exports the pattern list, and every tag a hint uses is one of its slugs', () => {
-    const onDisk = JSON.parse(readFileSync(new URL('../hints/patterns.json', import.meta.url), 'utf8')) as unknown[];
-    expect(patterns).toHaveLength(onDisk.length);
-    const slugs = new Set(patterns.map((p) => p.slug));
-    const unknown = questions.flatMap((q) => (hintFor(q.id)?.patterns ?? []).filter((tag) => !slugs.has(tag)));
-    expect(unknown).toEqual([]);
-  });
-
-  it('resolves translations that have passed the meaning pass', () => {
-    for (const id of [1, 229, 506]) expect(['checked', 'reviewed']).toContain(translationFor(id)?.status);
-  });
-
-  it('resolves hints that have passed the check', () => {
-    for (const id of [1, 229, 506]) expect(['checked', 'reviewed']).toContain(hintFor(id)?.status);
+  it.each([
+    ['translations', translationFor],
+    ['hints', hintFor],
+  ] as const)('resolves %s that have passed the meaning pass or the check', (_, lookup) => {
+    for (const id of [1, 229, 506]) expect(['checked', 'reviewed']).toContain(lookup(id)?.status);
   });
 });

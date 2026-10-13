@@ -1,4 +1,4 @@
-import { cpSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
+import { cpSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -7,8 +7,6 @@ import { ValidationError, validate } from '../scripts/lib/validate.mjs';
 
 /** The tiny valid data directory (4 questions, 2 files) the tests copy and break. */
 const base = fileURLToPath(new URL('./fixtures/valid', import.meta.url));
-/** The real data directory (packages/data). */
-const realDir = fileURLToPath(new URL('..', import.meta.url));
 const temps: string[] = [];
 
 afterEach(() => {
@@ -89,18 +87,13 @@ describe('validate on the real data', () => {
     // Phase 2 leaves every entry translated and none draft; reviewed grows as Ross studies.
     expect(translations).toMatchObject({ entries: 506, files: 18, draft: 0 });
     expect(translations.checked + translations.reviewed).toBe(506);
-    // Every writer and checker bead of phase 3 changes the hint statuses, so only the totals are pinned
-    // and the per-status counts are read from the files on disk.
-    const onDisk = readdirSync(join(realDir, 'hints/en'))
-      .filter((name) => name.endsWith('.json'))
-      .flatMap((name) => JSON.parse(readFileSync(join(realDir, 'hints/en', name), 'utf8')) as { status: string }[]);
-    const atStatus = (status: string) => onDisk.filter((h) => h.status === status).length;
-    expect(hints).toEqual({ entries: 506, files: 18, draft: atStatus('draft'), checked: atStatus('checked'), reviewed: atStatus('reviewed') });
-    expect(hints.draft + hints.checked + hints.reviewed).toBe(506);
+    // Phase 3 leaves every hint checked and none draft; the pattern list is closed at 25 (DESIGN.md § 3.3).
+    expect(hints).toMatchObject({ entries: 506, files: 18, draft: 0 });
+    expect(hints.checked + hints.reviewed).toBe(506);
     expect(glossaries.species).toBeGreaterThan(0);
     expect(glossaries.terms).toBeGreaterThan(0);
-    // The tail bead may add patterns, so the count is read from the file, not pinned.
-    expect(patterns).toBe((JSON.parse(readFileSync(join(realDir, 'hints/patterns.json'), 'utf8')) as unknown[]).length);
+    expect(patterns).toBeGreaterThan(0);
+    expect(patterns).toBeLessThanOrEqual(25);
   });
 });
 
@@ -120,37 +113,28 @@ describe('validate on the tiny fixture', () => {
     });
   });
 
-  it('counts no hints when the files do not exist, and the hints of each status', () => {
-    const dir = copyBase();
-    editRows(dir, 'hints/en/02-beta.json', (h) => (h[1].status = 'checked'));
-    expect(validate(dir)).toMatchObject({ hints: { entries: 2, files: 1, draft: 1, checked: 1, reviewed: 0 } });
-    remove(dir, 'hints');
-    expect(validate(dir)).toMatchObject({ hints: { entries: 0, files: 0, draft: 0, checked: 0, reviewed: 0 } });
-  });
-
-  it('counts no patterns when the pattern list does not exist', () => {
-    const dir = copyBase();
-    remove(dir, 'hints/patterns.json');
-    expect(validate(dir)).toMatchObject({ patterns: 0 });
-  });
-
-  it('counts no translations and empty glossaries when the files do not exist', () => {
+  it('counts no translations, hints, glossaries or patterns when the files do not exist', () => {
     const dir = copyBase();
     remove(dir, 'translations');
+    remove(dir, 'hints');
     remove(dir, 'glossary');
     expect(validate(dir)).toMatchObject({
       translations: { entries: 0, files: 0, draft: 0, checked: 0, reviewed: 0 },
+      hints: { entries: 0, files: 0, draft: 0, checked: 0, reviewed: 0 },
       glossaries: { species: 0, terms: 0 },
+      patterns: 0,
     });
   });
 
-  it('counts the translations of each file and each status, and the glossary entries', () => {
+  it('counts the translations and hints of each file and each status, and the glossary entries', () => {
     const dir = copyBase();
     remove(dir, 'translations/en/02-beta.json');
     editRows(dir, 'translations/en/01-alfa.json', (t) => (t[1].status = 'reviewed'));
+    editRows(dir, 'hints/en/02-beta.json', (h) => (h[1].status = 'checked'));
     addSpecies(dir, { pt: 'Abetarda', en: 'Great bustard' });
     expect(validate(dir)).toMatchObject({
       translations: { entries: 2, files: 1, draft: 0, checked: 1, reviewed: 1 },
+      hints: { entries: 2, files: 1, draft: 1, checked: 1, reviewed: 0 },
       glossaries: { species: 3, terms: 2 },
     });
   });
