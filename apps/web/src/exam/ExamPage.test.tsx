@@ -1,12 +1,12 @@
 import { translationFor, type OptionKey } from '@cacador/data';
 import { act, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { MemoryRouter, Route, Routes, useLocation } from 'react-router';
+import { Link, MemoryRouter, Route, Routes, useLocation } from 'react-router';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import type { Locale } from '@/i18n/locales';
 import { MESSAGES } from '@/i18n/messages';
 import { drawExam, examDeadline, scoreExam, seededRandom } from '@/model';
-import { closeStorage, createExam, finishExam, getExam, listAnswers, listExams, saveExamAnswers, type Exam } from '@/storage';
+import { closeStorage, createExam, finishExam, getExam, listAnswers, listExams, saveExamAnswer, type Exam } from '@/storage';
 import { ExamPage } from './ExamPage';
 import { question, wrongOf } from '../../test/fixtures';
 
@@ -58,6 +58,16 @@ async function stored(): Promise<Exam> {
   return exam;
 }
 
+/** Makes the next `count` writes to the exams store throw, as a full or broken IndexedDB would; the other stores work. Restore it before calling it again. */
+function failExamWrites(count: number) {
+  const put = IDBObjectStore.prototype.put;
+  let left = count;
+  return vi.spyOn(IDBObjectStore.prototype, 'put').mockImplementation(function (this: IDBObjectStore, ...args) {
+    if (this.name === 'exams' && left-- > 0) throw new DOMException('full', 'QuotaExceededError');
+    return put.apply(this, args);
+  });
+}
+
 afterEach(() => {
   vi.useRealTimers();
 });
@@ -74,7 +84,7 @@ describe('the exam start screen', () => {
   it('shows Start, and logs nothing more, when the only exam started more than 30 minutes ago', async () => {
     const startedAt = Date.now() - 31 * MINUTE;
     const exam = await createExam(examIds, startedAt);
-    await saveExamAnswers(exam.id, { [examIds[0]!]: 'A' }, startedAt + MINUTE);
+    await saveExamAnswer(exam.id, examIds[0]!, 'A', startedAt + MINUTE);
 
     const first = renderExam();
     expect(await startButton()).toBeInTheDocument();
@@ -213,6 +223,56 @@ describe('the running exam', () => {
     expect(marker(4)).toHaveAttribute('data-answered', 'false');
   });
 
+  it('takes back an answer that could not be saved, says so, and saves the next tap', async () => {
+    const user = userEvent.setup();
+    await start(user);
+    const q = question(examIds[0]!);
+    await user.click(optionFor('A'));
+    await waitFor(async () => expect((await stored()).answers).toEqual({ [q.id]: 'A' }));
+
+    let failing = failExamWrites(1);
+    await user.click(optionFor('B'));
+    // What is on screen is what Submit would score: the stored A, not the B that was not saved.
+    expect(await screen.findByText(t.answerNotSaved)).toBeInTheDocument();
+    expect(optionFor('A')).toHaveAttribute('aria-pressed', 'true');
+    expect(optionFor('B')).toHaveAttribute('aria-pressed', 'false');
+    expect((await stored()).answers).toEqual({ [q.id]: 'A' });
+    failing.mockRestore();
+
+    await user.click(marker(2));
+    failing = failExamWrites(1);
+    await user.click(optionFor('C'));
+    expect(await screen.findByText(t.answerNotSaved)).toBeInTheDocument();
+    await waitFor(() => expect(optionFor('C')).toHaveAttribute('aria-pressed', 'false'));
+    expect(marker(2)).toHaveAttribute('data-answered', 'false');
+    failing.mockRestore();
+
+    await user.click(optionFor('C'));
+    await waitFor(async () => expect((await stored()).answers).toEqual({ [q.id]: 'A', [examIds[1]!]: 'C' }));
+    expect(screen.queryByText(t.answerNotSaved)).not.toBeInTheDocument();
+    expect(optionFor('C')).toHaveAttribute('aria-pressed', 'true');
+    expect(marker(2)).toHaveAttribute('data-answered', 'true');
+  });
+
+  it('saves an answer tapped before 30:00 whose save reaches storage after it', async () => {
+    vi.useFakeTimers({ toFake: ['Date'] });
+    vi.setSystemTime(T0 + 30 * MINUTE - 50);
+    const exam = await createExam(examIds, T0);
+    renderExam();
+    await screen.findByText('1 of 20');
+
+    vi.setSystemTime(examDeadline(exam) - 1);
+    fireEvent.click(optionFor('B'));
+    // The save runs after the tap, by which time the deadline has passed.
+    vi.setSystemTime(examDeadline(exam) + 1);
+    await waitFor(() => expect(where()).toBe(`/exam/results/${exam.id}`));
+
+    const finished = await getExam(exam.id);
+    expect(finished?.answers).toEqual({ [examIds[0]!]: 'B' });
+    expect(finished?.finishedAt).toBe(examDeadline(exam));
+    expect((await listAnswers()).find((a) => a.questionId === examIds[0])).toMatchObject({ chosen: 'B' });
+  });
+
   it('counts down each second while open', async () => {
     vi.useFakeTimers({ toFake: ['Date', 'setTimeout', 'clearTimeout'], shouldAdvanceTime: true });
     vi.setSystemTime(T0);
@@ -319,11 +379,64 @@ describe('submitting', () => {
     expect(await listAnswers()).toHaveLength(20);
   });
 
+  it('stays on the exam and says so when Submit cannot finish it, and Submit again opens the results', async () => {
+    const user = userEvent.setup();
+    await start(user);
+    await user.click(optionFor('A'));
+    await waitFor(async () => expect(Object.keys((await stored()).answers)).toHaveLength(1));
+
+    failExamWrites(1);
+    await user.click(screen.getByRole('button', { name: t.submit }));
+    await user.click(within(await screen.findByRole('alertdialog')).getByRole('button', { name: t.confirmSubmit }));
+    expect(await screen.findByText(t.submitFailed)).toBeInTheDocument();
+    expect(where()).toBe('/exam');
+    expect((await stored()).finishedAt).toBeUndefined();
+    expect(await listAnswers()).toEqual([]);
+    expect(screen.getByRole('button', { name: t.submit })).toBeEnabled();
+    expect(optionFor('A')).toBeEnabled();
+
+    await user.click(screen.getByRole('button', { name: t.submit }));
+    await user.click(within(await screen.findByRole('alertdialog')).getByRole('button', { name: t.confirmSubmit }));
+    const exam = await stored();
+    await waitFor(() => expect(where()).toBe(`/exam/results/${exam.id}`));
+    expect((await stored()).finishedAt).toBeTypeOf('number');
+    expect(await listAnswers()).toHaveLength(20);
+  });
+
+  it('leaves the learner where they went when the finish settles after they left the exam', async () => {
+    vi.spyOn(Math, 'random').mockImplementation(seededRandom(SEED));
+    const user = userEvent.setup();
+    render(
+      <MemoryRouter initialEntries={['/exam']}>
+        <Link to="/">Home</Link>
+        <Routes>
+          <Route index element={<p>Home page</p>} />
+          <Route path="exam/*" element={<ExamPage />} />
+        </Routes>
+        <Where />
+      </MemoryRouter>,
+    );
+    await user.click(await startButton());
+    await screen.findByText(t.position(1, 20));
+    await user.click(screen.getByRole('button', { name: t.submit }));
+    const confirm = within(await screen.findByRole('alertdialog')).getByRole('button', { name: t.confirmSubmit });
+
+    // Submit, then Home before the finish has reached storage.
+    fireEvent.click(confirm);
+    fireEvent.click(screen.getByRole('link', { name: 'Home' }));
+    expect(where()).toBe('/');
+    await waitFor(async () => expect((await stored()).finishedAt).toBeTypeOf('number'));
+    await act(() => new Promise((resolve) => setTimeout(resolve, 50)));
+    expect(where()).toBe('/');
+    expect(screen.getByText('Home page')).toBeInTheDocument();
+  });
+
   it('submits itself as it stands when the clock reaches zero with the page open', async () => {
     vi.useFakeTimers({ toFake: ['Date', 'setTimeout', 'clearTimeout'], shouldAdvanceTime: true });
     vi.setSystemTime(T0 + 29 * MINUTE + 58 * SECOND);
     const exam = await createExam(examIds, T0);
-    await saveExamAnswers(exam.id, { [examIds[0]!]: question(examIds[0]!).answer, [examIds[1]!]: 'C' });
+    await saveExamAnswer(exam.id, examIds[0]!, question(examIds[0]!).answer);
+    await saveExamAnswer(exam.id, examIds[1]!, 'C');
     renderExam();
     await screen.findByText('3 of 20');
     expect(clock()).toHaveTextContent('00:02');

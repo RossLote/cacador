@@ -20,6 +20,8 @@ export const exam: Messages['exam'] = {
   unansweredBody: 'Uma pergunta sem resposta conta como errada.',
   keepGoing: 'Voltar ao exame',
   confirmSubmit: 'Entregar',
+  answerNotSaved: 'Não foi possível guardar essa resposta neste dispositivo. As respostas mostradas são as que vão ser corrigidas.',
+  submitFailed: 'Não foi possível entregar o exame neste dispositivo. Carregue em Entregar para tentar de novo.',
   resultsTitle: 'Resultados do exame',
   scoreLabel: 'Pontuação',
   score: (score, total) => `${score} em ${total}`,

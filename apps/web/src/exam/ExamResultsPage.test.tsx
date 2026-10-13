@@ -1,12 +1,14 @@
 import { hintFor, translationFor, type OptionKey } from '@cacador/data';
 import { act, fireEvent, render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { openDB } from 'idb';
 import { MemoryRouter, Route, Routes } from 'react-router';
 import { describe, expect, it } from 'vitest';
 import { setLocale } from '@/i18n/locale';
 import { MESSAGES } from '@/i18n/messages';
 import { drawExam, seededRandom } from '@/model';
-import { createExam, finishExam, getExam, saveExamAnswers } from '@/storage';
+import { createExam, finishExam, getExam, saveExamAnswer, type Exam } from '@/storage';
+import { DB_NAME, DB_VERSION } from '@/storage/idbBackend';
 import { ExamPage } from './ExamPage';
 import { question, wrongOf } from '../../test/fixtures';
 
@@ -26,7 +28,7 @@ async function finishedExam(right: number, unanswered = 0) {
     const q = question(id);
     answers[id] = index < right ? q.answer : wrongOf(q.id);
   });
-  await saveExamAnswers(exam.id, answers);
+  for (const [id, option] of Object.entries(answers)) expect(await saveExamAnswer(exam.id, Number(id), option)).toBe(true);
   expect(await finishExam(exam.id)).toBe(true);
   return { id: exam.id, answers };
 }
@@ -109,6 +111,23 @@ describe('the results of a finished exam', () => {
     expect(screen.queryByRole('list', { name: t.wrongAnswers })).not.toBeInTheDocument();
   });
 
+  it('shows the score its answers earn, not a stored score that disagrees with them, so it matches the wrong ones', async () => {
+    const { id } = await finishedExam(14, 1);
+    // A stored score that no longer matches the answers (an earlier answer key, an old import).
+    const db = await openDB(DB_NAME, DB_VERSION);
+    const record = (await db.get('exams', id)) as Exam;
+    await db.put('exams', { ...record, score: 20 });
+    db.close();
+    expect((await getExam(id))?.score).toBe(20);
+
+    renderResults(id);
+    const items = within(await wrongList()).getAllByRole('listitem');
+    expect(items).toHaveLength(6);
+    expect(screen.getByText('14 out of 20')).toBeInTheDocument();
+    expect(screen.getByText('Not passed')).toBeInTheDocument();
+    expect(screen.queryByText('20 out of 20')).not.toBeInTheDocument();
+  });
+
   it('peeks one card at a time while its button is held, and opens its own hint, with no keys', async () => {
     const { id } = await finishedExam(14, 1);
     renderResults(id);
@@ -166,7 +185,7 @@ describe('an id that is not a finished exam', () => {
 
   it('says so for an exam still running', async () => {
     const exam = await createExam(examIds);
-    await saveExamAnswers(exam.id, { [examIds[0]!]: 'A' });
+    await saveExamAnswer(exam.id, examIds[0]!, 'A');
     renderResults(exam.id);
     expect(await screen.findByText(t.notFound)).toBeInTheDocument();
     expect(screen.queryByRole('list', { name: t.wrongAnswers })).not.toBeInTheDocument();

@@ -1,6 +1,6 @@
 import { questionById, type OptionKey } from '@cacador/data';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { QuestionCard } from '@/components/question/QuestionCard';
 import {
@@ -16,7 +16,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { useI18n } from '@/i18n/useI18n';
 import { examResultsPath } from '@/model';
-import { finishExam, saveExamAnswers, type Exam } from '@/storage';
+import { finishExam, getExam, saveExamAnswer, type Exam } from '@/storage';
 import { ExamMarkers } from './ExamMarkers';
 import { formatClock, useExamClock } from './useExamClock';
 
@@ -37,50 +37,123 @@ function firstUnanswered(exam: Exam): number {
   return Math.max(0, index);
 }
 
+/** A tapped option whose save has not settled; each tap is its own object, so a later tap on the same question replaces it. */
+interface Tap {
+  option: OptionKey;
+}
+
+/** What the page's one failure line reports (DESIGN.md § 6.9): an answer that was not saved, or a Submit that did not go through. */
+type Failure = 'answer' | 'submit';
+
 /**
  * The running mock exam (DESIGN.md § 6.5, D3): one question at a time on the
  * card with the selection shown and nothing revealed, no peek, no hint and no
  * keys (D9, D20); markers, Previous and Next move freely; every answer change
- * is saved at once; the clock counts down from the start time. Submit, after
- * asking when questions are unanswered, and the clock reaching zero both
- * finish the exam through the storage module's once-only finish and open its
- * results, whether this page's finish ran or an earlier one had.
+ * is saved at once, checked against the deadline at the moment of the tap;
+ * the clock counts down from the start time. Submit, after asking when
+ * questions are unanswered, and the clock reaching zero both finish the exam
+ * through the storage module's once-only finish and open its results, whether
+ * this page's finish ran or an earlier one had. What the page shows is what
+ * Submit scores: an answer the storage module rejects is taken back to the
+ * stored exam, read again, and a Submit that fails stays here; either says so
+ * in one line (DESIGN.md § 6.9), and Submit can be pressed again.
  */
 export function RunningExam({ exam }: { exam: Exam }) {
   const { t } = useI18n();
   const navigate = useNavigate();
-  const [answers, setAnswers] = useState<Record<number, OptionKey>>(exam.answers);
+  /** The answers as last saved or read back: what Submit will score. */
+  const [stored, setStored] = useState<Record<number, OptionKey>>(exam.answers);
+  /** Options tapped whose save has not settled yet, by question; shown over the stored ones. */
+  const [pending, setPending] = useState<Record<number, Tap>>({});
   const [current, setCurrent] = useState(() => firstUnanswered(exam));
   const [confirming, setConfirming] = useState(false);
   const [ending, setEnding] = useState(false);
-  /** The answer saves in order; the finish waits for the last. */
+  const [failure, setFailure] = useState<Failure>();
+  /** The answer saves in order; the finish waits for the last. Never rejects. */
   const saving = useRef<Promise<unknown>>(Promise.resolve());
   const ended = useRef(false);
+  /** False once the page has gone, so a finish that settles later does not pull the learner back to the results. */
+  const mounted = useRef(true);
+
+  useEffect(() => {
+    mounted.current = true;
+    return () => {
+      mounted.current = false;
+    };
+  }, []);
 
   const end = useCallback(() => {
     if (ended.current) return;
     ended.current = true;
     setEnding(true);
     setConfirming(false);
+    setFailure(undefined);
     void saving.current
       .then(() => finishExam(exam.id))
-      .catch(() => undefined)
-      .then(() => navigate(examResultsPath(exam.id), { replace: true }));
+      .then(
+        () => {
+          if (mounted.current) navigate(examResultsPath(exam.id), { replace: true });
+        },
+        () => {
+          // Not submitted: the exam stays open here, and Submit may run again, the finish being once-only.
+          ended.current = false;
+          setEnding(false);
+          setFailure('submit');
+        },
+      );
   }, [exam.id, navigate]);
+
+  /** Takes the screen back to the exam as stored; one finished meanwhile, here or elsewhere, ends the page. */
+  const reread = useCallback(async () => {
+    const now = await getExam(exam.id);
+    if (now === undefined || now.finishedAt !== undefined) end();
+    else setStored(now.answers);
+  }, [exam.id, end]);
 
   const total = exam.questionIds.length;
   const questionId = exam.questionIds[current] as number;
   const question = questionById(questionId);
+  const answers: Record<number, OptionKey> = { ...stored };
+  for (const id of exam.questionIds) {
+    const tap = pending[id];
+    if (tap) answers[id] = tap.option;
+  }
   const unanswered = exam.questionIds.filter((id) => answers[id] === undefined).length;
+
+  /** Drops the question's pending tap once its save has settled, unless a later tap has replaced it. */
+  const settle = (id: number, tap: Tap) =>
+    setPending((taps) => {
+      if (taps[id] !== tap) return taps;
+      const rest = { ...taps };
+      delete rest[id];
+      return rest;
+    });
 
   const select = (option: OptionKey) => {
     if (ended.current) return;
-    const next = { ...answers, [questionId]: option };
-    setAnswers(next);
-    const save = saving.current.then(() => saveExamAnswers(exam.id, next));
-    saving.current = save.catch(() => undefined);
-    // Refused: the exam was finished elsewhere or its time is up, so it ends here too.
-    void save.then((saved) => saved || end(), () => undefined);
+    // The deadline is checked against the tap, not against when a queued save reaches storage.
+    const at = Date.now();
+    const id = questionId;
+    const tap: Tap = { option };
+    setFailure(undefined);
+    setPending((taps) => ({ ...taps, [id]: tap }));
+    saving.current = saving.current
+      .then(() => saveExamAnswer(exam.id, id, option, at))
+      .then(
+        (saved) => {
+          settle(id, tap);
+          if (saved) setStored((answers) => ({ ...answers, [id]: option }));
+          // Refused: the exam was finished elsewhere or its time is up, so it ends here too.
+          else end();
+        },
+        () => {
+          settle(id, tap);
+          setFailure('answer');
+          return reread();
+        },
+      )
+      // A failed read back leaves the answers last known to be stored on screen.
+      .catch(() => undefined);
   };
 
   const move = (index: number) => {
@@ -117,6 +190,12 @@ export function RunningExam({ exam }: { exam: Exam }) {
           peekEnabled={false}
           hintEnabled={false}
         />
+      )}
+
+      {failure && (
+        <p role="status" className="text-sm text-destructive">
+          {failure === 'answer' ? t.exam.answerNotSaved : t.exam.submitFailed}
+        </p>
       )}
 
       <div className="flex gap-2">

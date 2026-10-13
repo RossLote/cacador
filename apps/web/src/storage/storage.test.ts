@@ -20,9 +20,9 @@ import {
   RECENT_KEY,
   removeFlag,
   saveExamAnswer,
-  saveExamAnswers,
   setFlag,
   storageMode,
+  type OptionKey,
 } from './index';
 import { correctOf, wrongOf } from '../../test/fixtures';
 
@@ -33,6 +33,11 @@ const T0 = Date.UTC(2026, 9, 13, 9, 0);
 const stateOf = async (questionId: number) => (await getStates()).get(questionId);
 /** One question's answers in time order, as the app reads the log. */
 const answersFor = async (questionId: number) => (await listAnswers()).filter((a) => a.questionId === questionId);
+
+/** Saves each of `answers` on the running exam, chosen at `at`. */
+async function saveAnswers(examId: string, answers: Record<number, OptionKey>, at: number): Promise<void> {
+  for (const [id, option] of Object.entries(answers)) expect(await saveExamAnswer(examId, Number(id), option, at)).toBe(true);
+}
 
 /** IndexedDB on a fresh fake factory, or no IndexedDB at all. */
 function useIndexedDb(available: boolean): void {
@@ -114,26 +119,16 @@ describe.each([
       vi.useRealTimers();
     });
 
-    it('creates an exam and saves answers only while it runs', async () => {
+    it('creates an exam with no answers', async () => {
       const exam = await createExam(questionIds, T0);
       expect(exam).toEqual({ id: expect.any(String), startedAt: T0, questionIds, answers: {} });
       expect(await getExam(exam.id)).toEqual(exam);
-
-      const first = questionIds[0] as number;
-      expect(await saveExamAnswers(exam.id, { [first]: 'B' }, T0 + MINUTE)).toBe(true);
-      expect((await getExam(exam.id))?.answers).toEqual({ [first]: 'B' });
-      expect(await saveExamAnswers(exam.id, { [first]: 'C' }, examDeadline(exam))).toBe(false);
-      expect(await saveExamAnswers('missing', {}, T0)).toBe(false);
-
-      expect(await finishExam(exam.id, T0 + 2 * MINUTE)).toBe(true);
-      expect(await saveExamAnswers(exam.id, { [first]: 'C' }, T0 + 3 * MINUTE)).toBe(false);
-      expect((await getExam(exam.id))?.answers).toEqual({ [first]: 'B' });
     });
 
     it('finishes an exam once: the second call does nothing and reports it', async () => {
       const exam = await createExam(questionIds, T0);
       const answers = Object.fromEntries(questionIds.slice(0, 16).map((id) => [id, correctOf(id)]));
-      await saveExamAnswers(exam.id, answers, T0 + MINUTE);
+      await saveAnswers(exam.id, answers, T0 + MINUTE);
 
       expect(await finishExam(exam.id, T0 + 10 * MINUTE)).toBe(true);
       expect(await finishExam(exam.id, T0 + 11 * MINUTE)).toBe(false);
@@ -152,7 +147,7 @@ describe.each([
     it('settles an exam past its deadline when the unfinished exam is asked for', async () => {
       const exam = await createExam(questionIds, T0);
       const answered = questionIds.slice(0, 12);
-      await saveExamAnswers(exam.id, Object.fromEntries(answered.map((id) => [id, correctOf(id)])), T0 + MINUTE);
+      await saveAnswers(exam.id, Object.fromEntries(answered.map((id) => [id, correctOf(id)])), T0 + MINUTE);
 
       expect(await getUnfinishedExam(T0 + 31 * MINUTE)).toBeUndefined();
 
@@ -192,7 +187,7 @@ describe.each([
     it('keeps a question state equal to its log when a settled exam lands before later practice', async () => {
       const exam = await createExam(questionIds, T0);
       const id = questionIds[0] as number;
-      await saveExamAnswers(exam.id, { [id]: wrongOf(id) }, T0 + MINUTE);
+      expect(await saveExamAnswer(exam.id, id, wrongOf(id), T0 + MINUTE)).toBe(true);
       await recordAnswer({ questionId: id, chosen: correctOf(id), correct: true, mode: 'practice', at: T0 + 45 * MINUTE });
 
       expect(await getUnfinishedExam(T0 + 50 * MINUTE)).toBeUndefined();

@@ -20,7 +20,7 @@ import {
   LOCALE_KEY,
   recordAnswer,
   RECENT_KEY,
-  saveExamAnswers,
+  saveExamAnswer,
   setFlag,
   storageMode,
   type Answer,
@@ -34,6 +34,11 @@ const T0 = Date.UTC(2026, 9, 13, 9, 0);
 
 const allOf = (ids: readonly number[], pick: (id: number) => OptionKey): Record<number, OptionKey> =>
   Object.fromEntries(ids.map((id) => [id, pick(id)]));
+
+/** Saves each of `answers` on the running exam, chosen at `at`. */
+async function saveAnswers(examId: string, answers: Record<number, OptionKey>, at: number): Promise<void> {
+  for (const [id, option] of Object.entries(answers)) expect(await saveExamAnswer(examId, Number(id), option, at)).toBe(true);
+}
 
 const questionIds = drawExam(seededRandom(7));
 const otherIds = drawExam(seededRandom(8));
@@ -53,10 +58,10 @@ async function makeProgress(): Promise<{ finished: Exam; running: Exam }> {
     await recordAnswer({ questionId: id, chosen: right ? correctOf(id) : wrongOf(id), correct: right, mode: 'practice', at: T0 + i * MINUTE });
   }
   const finished = await createExam(questionIds, T0 + 10 * MINUTE);
-  await saveExamAnswers(finished.id, allOf(questionIds.slice(0, 15), correctOf), T0 + 11 * MINUTE);
+  await saveAnswers(finished.id, allOf(questionIds.slice(0, 15), correctOf), T0 + 11 * MINUTE);
   await finishExam(finished.id, T0 + 20 * MINUTE);
   const running = await createExam(otherIds, T0 + 22 * MINUTE);
-  await saveExamAnswers(running.id, allOf(otherIds.slice(0, 2), wrongOf), T0 + 23 * MINUTE);
+  await saveAnswers(running.id, allOf(otherIds.slice(0, 2), wrongOf), T0 + 23 * MINUTE);
   await setFlag(3, 'translation', 'says deer', T0 + 5 * MINUTE);
   await setFlag(40, 'hint', '', T0 + 6 * MINUTE);
   return { finished, running: (await getExam(running.id)) as Exam };
@@ -177,7 +182,7 @@ describe.each([
 
     it('submits the device own at the moment of the import when the file one started later', async () => {
       const own = await createExam(questionIds, T0);
-      await saveExamAnswers(own.id, allOf(questionIds.slice(0, 2), correctOf), T0 + MINUTE);
+      await saveAnswers(own.id, allOf(questionIds.slice(0, 2), correctOf), T0 + MINUTE);
       const other: Exam = { id: 'from-laptop', startedAt: T0 + 10 * MINUTE, questionIds: otherIds, answers: {} };
 
       expect(await importProgress(fileText({ exams: [other] }))).toEqual({ ok: true, added: { answers: 20, exams: 1, flags: 0 } });
@@ -192,7 +197,7 @@ describe.each([
     /** The device's exam finished at `finishAt` with every answer right, and the same exam as the file has it. */
     async function deviceExam(finishAt?: number): Promise<Exam> {
       const exam = await createExam(questionIds, T0);
-      await saveExamAnswers(exam.id, allOf(questionIds.slice(0, 3), correctOf), T0 + MINUTE);
+      await saveAnswers(exam.id, allOf(questionIds.slice(0, 3), correctOf), T0 + MINUTE);
       if (finishAt !== undefined) await finishExam(exam.id, finishAt);
       return (await getExam(exam.id)) as Exam;
     }
