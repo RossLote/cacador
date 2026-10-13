@@ -273,11 +273,12 @@ function checkHint(rel, e, pt) {
 /**
  * Rule 5: translations and hints mirror the question files, with the fields of DESIGN.md § 3.3.
  * Only files that exist are checked.
- * Returns the translations by id, each with the file it came from and its lowercased text with quotes
- * straightened, for rule 6 and the counts.
+ * Returns the translations and the hints by id, each with the file it came from; a translation also
+ * carries its lowercased text with quotes straightened, for rule 6. Both feed the counts.
  */
 function checkMirrors(dir, files) {
   const translations = new Map();
+  const hints = new Map();
   for (const kind of ['translations', 'hints']) {
     const sub = join(kind, 'en');
     for (const name of visibleFiles(join(dir, sub))) {
@@ -299,6 +300,7 @@ function checkMirrors(dir, files) {
           translations.set(e.id, { ...e, file: rel, text: straighten(textOf(e)).toLowerCase() });
         } else {
           checkHint(rel, e, pt);
+          hints.set(e.id, { ...e, file: rel });
         }
       }
       for (const id of inFile.keys()) {
@@ -306,7 +308,7 @@ function checkMirrors(dir, files) {
       }
     }
   }
-  return translations;
+  return { translations, hints };
 }
 
 const escapeRegExp = (text) => text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -355,11 +357,11 @@ function checkGlossary(files, translations, glossary) {
   }
 }
 
-/** The translation counts `validate` reports: entries, files, and entries at each status. */
-function countTranslations(translations) {
-  const entries = [...translations.values()];
-  const counts = { entries: entries.length, files: new Set(entries.map((t) => t.file)).size };
-  for (const status of STATUSES) counts[status] = entries.filter((t) => t.status === status).length;
+/** The counts `validate` reports for translations or hints: entries, files, and entries at each status. */
+function countEntries(byId) {
+  const entries = [...byId.values()];
+  const counts = { entries: entries.length, files: new Set(entries.map((e) => e.file)).size };
+  for (const status of STATUSES) counts[status] = entries.filter((e) => e.status === status).length;
   return counts;
 }
 
@@ -373,7 +375,7 @@ export function validate(dir = dataDir) {
   checkSectionsAndTopics(manifest, files);
   checkText(manifest, files);
   checkImages(dir, manifest, files);
-  const translations = checkMirrors(dir, files);
+  const { translations, hints } = checkMirrors(dir, files);
   const species = readGlossary(dir, 'glossary/species.json', 'species', { pt: 'string', scientific: 'string', en: 'string', group: 'string' });
   if (species) checkGlossary(files, translations, species);
   // Rule 7 (DESIGN.md § 4): only the terms glossary's shape is checked; a term's use in translations
@@ -388,7 +390,8 @@ export function validate(dir = dataDir) {
     topics: manifest.topics.length,
     images: manifest.images.length,
     imageQuestions: all.filter((q) => q.image !== undefined).length,
-    translations: countTranslations(translations),
+    translations: countEntries(translations),
+    hints: countEntries(hints),
     glossaries: { species: species?.length ?? 0, terms: terms?.length ?? 0 },
   };
 }

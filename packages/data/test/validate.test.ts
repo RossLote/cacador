@@ -1,4 +1,4 @@
-import { cpSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { cpSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -7,6 +7,8 @@ import { ValidationError, validate } from '../scripts/lib/validate.mjs';
 
 /** The tiny valid data directory (4 questions, 2 files) the tests copy and break. */
 const base = fileURLToPath(new URL('./fixtures/valid', import.meta.url));
+/** The real data directory (packages/data). */
+const realDir = fileURLToPath(new URL('..', import.meta.url));
 const temps: string[] = [];
 
 afterEach(() => {
@@ -82,11 +84,19 @@ function expectFailure(change: (dir: string) => void, message: RegExp): void {
 
 describe('validate on the real data', () => {
   it('passes and returns the counts of DESIGN.md § 2 and § 3, the translations on disk and the glossary sizes', () => {
-    const { translations, glossaries, ...bank } = validate();
+    const { translations, hints, glossaries, ...bank } = validate();
     expect(bank).toEqual({ questions: 506, files: 18, sections: 11, topics: 29, images: 15, imageQuestions: 18 });
     // Phase 2 leaves every entry translated and none draft; reviewed grows as Ross studies.
     expect(translations).toMatchObject({ entries: 506, files: 18, draft: 0 });
     expect(translations.checked + translations.reviewed).toBe(506);
+    // Every writer and checker bead of phase 3 changes the hint statuses, so only the totals are pinned
+    // and the per-status counts are read from the files on disk.
+    const onDisk = readdirSync(join(realDir, 'hints/en'))
+      .filter((name) => name.endsWith('.json'))
+      .flatMap((name) => JSON.parse(readFileSync(join(realDir, 'hints/en', name), 'utf8')) as { status: string }[]);
+    const atStatus = (status: string) => onDisk.filter((h) => h.status === status).length;
+    expect(hints).toEqual({ entries: 506, files: 18, draft: atStatus('draft'), checked: atStatus('checked'), reviewed: atStatus('reviewed') });
+    expect(hints.draft + hints.checked + hints.reviewed).toBe(506);
     expect(glossaries.species).toBeGreaterThan(0);
     expect(glossaries.terms).toBeGreaterThan(0);
   });
@@ -102,8 +112,17 @@ describe('validate on the tiny fixture', () => {
       images: 2,
       imageQuestions: 3,
       translations: { entries: 4, files: 2, draft: 1, checked: 2, reviewed: 1 },
+      hints: { entries: 2, files: 1, draft: 2, checked: 0, reviewed: 0 },
       glossaries: { species: 2, terms: 2 },
     });
+  });
+
+  it('counts no hints when the files do not exist, and the hints of each status', () => {
+    const dir = copyBase();
+    editRows(dir, 'hints/en/02-beta.json', (h) => (h[1].status = 'checked'));
+    expect(validate(dir)).toMatchObject({ hints: { entries: 2, files: 1, draft: 1, checked: 1, reviewed: 0 } });
+    remove(dir, 'hints');
+    expect(validate(dir)).toMatchObject({ hints: { entries: 0, files: 0, draft: 0, checked: 0, reviewed: 0 } });
   });
 
   it('counts no translations and empty glossaries when the files do not exist', () => {

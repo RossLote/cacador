@@ -5,8 +5,8 @@ export class ValidationError extends Error {
 /** A plain object: not null, not an array. */
 export function isObject(value: unknown): value is Record<string, unknown>;
 
-/** The translations/en/ files: how many entries, in how many files, and how many at each status. */
-export interface TranslationCounts {
+/** The translations/en/ or hints/en/ files: how many entries, in how many files, and how many at each status. */
+export interface EntryCounts {
   entries: number;
   files: number;
   draft: number;
@@ -27,7 +27,8 @@ export interface ValidationCounts {
   topics: number;
   images: number;
   imageQuestions: number;
-  translations: TranslationCounts;
+  translations: EntryCounts;
+  hints: EntryCounts;
   glossaries: GlossaryCounts;
 }
 
