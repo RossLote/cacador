@@ -1,0 +1,530 @@
+[
+  {
+    "id": 11,
+    "question": "Terrenos cinegéticos are considered to be those where:",
+    "options": {
+      "A": "The practice of hunting is permitted",
+      "B": "Game species roam freely",
+      "C": "Game species breed and feed"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 12,
+    "question": "Terrenos não cinegéticos are considered to be those where:",
+    "options": {
+      "A": "There are no game species",
+      "B": "Game species neither breed nor feed",
+      "C": "The practice of hunting is prohibited"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 13,
+    "question": "Terrenos cinegéticos are considered to be:",
+    "options": {
+      "A": "Those where the practice of hunting is permitted, including the areas under maritime jurisdiction and the inland waters",
+      "B": "Those where the practice of hunting is not permitted",
+      "C": "The hunting training grounds and the game refuge areas"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 14,
+    "question": "Terrenos não cinegéticos are considered to be:",
+    "options": {
+      "A": "Those where the practice of hunting is prohibited",
+      "B": "The tourist hunting zones",
+      "C": "The areas under maritime jurisdiction"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 15,
+    "question": "Terrenos não cinegéticos are considered to be:",
+    "options": {
+      "A": "The protection areas",
+      "B": "The national hunting zones",
+      "C": "The areas under maritime jurisdiction"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 16,
+    "question": "Terrenos não cinegéticos are considered to be:",
+    "options": {
+      "A": "Only the game refuge areas and the livestock enclosures",
+      "B": "Only the no-hunting areas and the hunting training grounds",
+      "C": "All the grounds where the practice of hunting is prohibited"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 17,
+    "question": "Which of the following areas is considered a hunting ground?",
+    "options": {
+      "A": "Hunting training ground",
+      "B": "Game refuge area",
+      "C": "Municipal hunting zone"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 18,
+    "question": "Which of the following areas may be considered hunting grounds?",
+    "options": {
+      "A": "Hunting training grounds",
+      "B": "Areas under maritime jurisdiction",
+      "C": "Protection areas"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 19,
+    "question": "The houndsmen are hunter's assistants whose function is:",
+    "options": {
+      "A": "To search for, pursue and flush small-game species with the help of dogs",
+      "B": "To search for, pursue and flush big-game species with the help of dogs",
+      "C": "To search for, pursue and flush big-game species without the help of dogs"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 20,
+    "question": "The época venatória is considered to be the annual period:",
+    "options": {
+      "A": "That runs between 1 June of each year and 31 May of the following year",
+      "B": "In which the practice of hunting may be carried out",
+      "C": "That runs between 15 August and the last Sunday of the month of February of the following year"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 21,
+    "question": "Of the hunting assistants listed, there is one who may not pursue game with the help of dogs:",
+    "options": {
+      "A": "Batedores",
+      "B": "Negaceiros",
+      "C": "Matilheiros"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 22,
+    "question": "The época venatória is:",
+    "options": {
+      "A": "The annual period that runs between 1 June of each year and 31 May of the following year",
+      "B": "The span of time in which each of the species may be hunted",
+      "C": "The period stipulated in the hunting calendar for the practice of hunting small-game species"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 23,
+    "question": "The use of the boat in the hunting of ducks:",
+    "options": {
+      "A": "Is permitted provided that the boat is in motion",
+      "B": "Is permitted only when moving between hide positions and in the hides",
+      "C": "Is permitted provided that one shoots with the engine running"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 24,
+    "question": "Which of the following groups of species may be hunted from a boat?",
+    "options": {
+      "A": "Ducks, common moorhen and Eurasian coot",
+      "B": "Ducks, Eurasian woodcock and Eurasian coot",
+      "C": "Ducks, snipe and Eurasian coot"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 25,
+    "question": "What offence does a hunter commit who, in the month of October, in a hunting zone, uses ten dogs in partridge hunting by the walked-up method?",
+    "options": {
+      "A": "They use a number of dogs greater than that permitted",
+      "B": "They hunt in a month in which the hunting of this species cannot be authorised",
+      "C": "They use a hunting method prohibited for the species in the month of October"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 26,
+    "question": "The período venatório of a game species is:",
+    "options": {
+      "A": "The span of time in which it may be hunted",
+      "B": "The span of time in which a hunting licence is valid",
+      "C": "The period that runs between 1 June and 31 May of the following year"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 27,
+    "question": "On ground covered with snow, for which of the following species is hunting not prohibited?",
+    "options": {
+      "A": "Rabbit",
+      "B": "Red fox",
+      "C": "Wild boar"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 28,
+    "question": "For which of the following species is the use of lure calls in hunting permitted?",
+    "options": {
+      "A": "Thrushes",
+      "B": "Pigeons",
+      "C": "Ducks"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 29,
+    "question": "Which game species can a hunter hunt by the walked-up method with the help of 10 dogs?",
+    "options": {
+      "A": "Red fox",
+      "B": "Iberian hare",
+      "C": "Rabbit"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 30,
+    "question": "On the mainland, in European rabbit hunting by a method other than the driven method, each hunter or group of hunters may use at most:",
+    "options": {
+      "A": "10 dogs",
+      "B": "15 dogs and 2 puppies",
+      "C": "50 dogs"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 31,
+    "question": "What is the maximum number of dogs that may be used in red fox coursing?",
+    "options": {
+      "A": "50",
+      "B": "100",
+      "C": "Unlimited"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 32,
+    "question": "Mark the correct statement:",
+    "options": {
+      "A": "It is prohibited to capture young or eggs of any species, game or not",
+      "B": "It is prohibited to hunt ducks between sunrise and sunset",
+      "C": "It is prohibited to hunt in unmanaged hunting grounds on Thursdays"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 33,
+    "question": "As a rule, the practice of hunting is only permitted between sunrise and sunset, except:",
+    "options": {
+      "A": "In the hunting of ducks, by the hide method, when carried out up to 200 m from bodies of water",
+      "B": "In the hunting of big-game species, by the hide method, which is authorised in the period of the full moon",
+      "C": "In the hunting of pigeons, thrushes and common starling, which is only permitted until 17:00"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 34,
+    "question": "Stalking is a hunting method authorised for:",
+    "options": {
+      "A": "Big-game species",
+      "B": "Small-game species",
+      "C": "Waterfowl"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 35,
+    "question": "The use of decoys is permitted in the hunting of:",
+    "options": {
+      "A": "Pigeons, ducks, the Eurasian magpie and the carrion crow",
+      "B": "Snipe and European golden plover",
+      "C": "The Eurasian coot and common moorhen"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 36,
+    "question": "During the practice of hunting, the hunter may be helped by assistants who:",
+    "options": {
+      "A": "May not be part of the line of hunters",
+      "B": "May not transport ammunition",
+      "C": "May not transport firearms, bow or crossbow packed in a case or bag"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 37,
+    "question": "In Iberian hare coursing, at most the following may be used:",
+    "options": {
+      "A": "Two search dogs and two greyhounds for each Iberian hare",
+      "B": "One search dog and three greyhounds for each Iberian hare",
+      "C": "Three search dogs and one greyhound for each Iberian hare"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 38,
+    "question": "In the practice of hunting, each hunter may use, at most:",
+    "options": {
+      "A": "Three dogs in red-legged partridge hunting",
+      "B": "Ten dogs in European rabbit hunting, by the driven method",
+      "C": "Two greyhounds and two search dogs for each Iberian hare, in Iberian hare coursing"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 39,
+    "question": "The hunting method in which the hunter moves to capture a particular individual of big game is called:",
+    "options": {
+      "A": "De salto",
+      "B": "De batida",
+      "C": "De aproximação"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 40,
+    "question": "The hunting method in which the hunter waits for the species flushed by beaters is called:",
+    "options": {
+      "A": "De montaria",
+      "B": "De batida",
+      "C": "À espera"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 41,
+    "question": "Devices that run on batteries to attract game species:",
+    "options": {
+      "A": "May be used in the hunting of ducks",
+      "B": "May be used in the control of predators",
+      "C": "May not be used in hunting"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 42,
+    "question": "Devices that run on batteries to attract game species:",
+    "options": {
+      "A": "May be used in the hunting of ducks",
+      "B": "May be used in the hunting of thrushes",
+      "C": "May not be used in hunting"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 43,
+    "question": "The período venatório is considered to be the span of time:",
+    "options": {
+      "A": "In which one may only hunt rabbits, Iberian hares and partridges",
+      "B": "In which each of the species may be hunted",
+      "C": "In which one may only hunt migratory species"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 44,
+    "question": "In the corricão hunting method, it is not permitted to use:",
+    "options": {
+      "A": "Stick and horse",
+      "B": "Hunting dogs and horse",
+      "C": "Firearms"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 45,
+    "question": "Each hunter may kill per hunting day:",
+    "options": {
+      "A": "50 rabbits.",
+      "B": "There is no limit.",
+      "C": "That set in the annual hunting calendar."
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 46,
+    "question": "The use of lure calls in hunting:",
+    "options": {
+      "A": "Is always prohibited",
+      "B": "Is permitted in the hunting of ducks and thrushes",
+      "C": "Is permitted in the hunting of ducks, red fox, red deer and roe deer"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 47,
+    "question": "The use of the horse as a means of hunting is permitted:",
+    "options": {
+      "A": "Only in red fox coursing",
+      "B": "In the hunting of big-game species, red fox and Iberian hare, and in falconry",
+      "C": "Only in the hunting of Iberian hare by falconry"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 48,
+    "question": "In the corricão hunting method, it is not permitted to use:",
+    "options": {
+      "A": "Stick and horse",
+      "B": "Dogs and horse",
+      "C": "Firearms"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 49,
+    "question": "As a means of hunting, the use of the stick is only permitted in which hunting methods?",
+    "options": {
+      "A": "Coursing and walked-up",
+      "B": "Driven hunt and walked-up",
+      "C": "Montaria (driven big-game hunt with hounds) and walked-up"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 50,
+    "question": "Which of the following sentences is correct:",
+    "options": {
+      "A": "The use of a boat is permitted in the hunting of snipe and Eurasian woodcock",
+      "B": "The use of decoys for snipe and plovers is permitted",
+      "C": "In montarias (driven big-game hunts with hounds) there is no limit on the number of dogs to be used"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 51,
+    "question": "The hunting method in which game species are captured by a bird of prey trained for that purpose is called:",
+    "options": {
+      "A": "Batida",
+      "B": "Corricão",
+      "C": "Cetraria"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 52,
+    "question": "A hunter may not use a firearm when they intend to hunt by the method of:",
+    "options": {
+      "A": "Corricão",
+      "B": "Montaria",
+      "C": "Salto"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 53,
+    "question": "Indicate which of the sentences is correct:",
+    "options": {
+      "A": "It is permitted to hunt the species that appear in the hunting calendar published annually",
+      "B": "It is permitted to hunt all species classified as game",
+      "C": "It is permitted to hunt any species that causes damage to agriculture"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 54,
+    "question": "In unmanaged hunting grounds, each hunter may be accompanied by:",
+    "options": {
+      "A": "Five assistants",
+      "B": "Three assistants",
+      "C": "One assistant"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 55,
+    "question": "The houndsmen are hunter's assistants whose function is:",
+    "options": {
+      "A": "To search for, pursue and flush small-game species with the help of dogs",
+      "B": "To search for, pursue and flush big-game species with the help of dogs",
+      "C": "To search for, pursue and flush big-game species without the help of dogs"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 56,
+    "question": "For unmanaged hunting grounds, which of the statements is correct?",
+    "options": {
+      "A": "It is permitted to hunt wild boar by stalking",
+      "B": "Driven hunts for red foxes may be held on Wednesdays",
+      "C": "Red fox coursing may be carried out on Wednesdays and Saturdays"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 57,
+    "question": "In unmanaged hunting grounds, the hunting days permitted for hunting with a firearm are:",
+    "options": {
+      "A": "Thursdays, Saturdays and Sundays",
+      "B": "Thursdays, Sundays and compulsory national public holidays",
+      "C": "Thursdays, Sundays, compulsory national public holidays and municipal public holidays"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 58,
+    "question": "In managed hunting grounds, the hunting of big-game species:",
+    "options": {
+      "A": "Is permitted on the days provided for in the respective game management or exploitation plans",
+      "B": "Is only permitted on three days of the week of the concession holder's choosing",
+      "C": "Is permitted on any day of the week only in tourist hunting zones"
+    },
+    "status": "checked",
+    "notes": ""
+  }
+]

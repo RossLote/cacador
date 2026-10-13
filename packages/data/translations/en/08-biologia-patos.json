@@ -1,0 +1,431 @@
+[
+  {
+    "id": 228,
+    "question": "The picture shows:",
+    "options": {
+      "A": "A northern pintail",
+      "B": "A northern shoveler",
+      "C": "A mallard"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 229,
+    "question": "The picture shows a:",
+    "options": {
+      "A": "Northern pintail",
+      "B": "Gadwall",
+      "C": "Mallard"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 230,
+    "question": "One of the characteristics of dabbling ducks is:",
+    "options": {
+      "A": "Having a small to medium size",
+      "B": "Having a medium size",
+      "C": "Having a medium to large size"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 231,
+    "question": "One of the characteristics of dabbling ducks is:",
+    "options": {
+      "A": "Having a short neck, wings and legs",
+      "B": "Having a neck and legs of medium size",
+      "C": "Having a long neck and legs"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 232,
+    "question": "One of the characteristics of dabbling ducks is:",
+    "options": {
+      "A": "Having a speculum generally with a metallic gloss",
+      "B": "Having a white or pale wing bar",
+      "C": "Having an almost always dark colouring"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 233,
+    "question": "One of the characteristics of dabbling ducks is:",
+    "options": {
+      "A": "Showing sexual dimorphism variable according to the species",
+      "B": "Not showing sexual dimorphism",
+      "C": "Showing marked sexual dimorphism in most species"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 234,
+    "question": "Which of the following species of ducks does not show a “speculum”?",
+    "options": {
+      "A": "Mallard",
+      "B": "Gadwall",
+      "C": "Common pochard"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 235,
+    "question": "The ducks that show a “speculum” generally with a metallic gloss are the:",
+    "options": {
+      "A": "Dabbling ducks",
+      "B": "Sea ducks",
+      "C": "Diving ducks"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 236,
+    "question": "One of the characteristics of dabbling ducks is:",
+    "options": {
+      "A": "Having a preferentially animal diet",
+      "B": "Obtaining their food by diving",
+      "C": "Pulling up the plants from the bottom with the rear third out of the water"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 237,
+    "question": "One of the characteristics of dabbling ducks is:",
+    "options": {
+      "A": "Taking off almost vertically",
+      "B": "Pattering on the water before taking off",
+      "C": "Emerging practically at the place where they submerged"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 238,
+    "question": "The diet of dabbling ducks is made up chiefly of:",
+    "options": {
+      "A": "Micro-organisms suspended in the water and plants from the bottom",
+      "B": "Molluscs, worms and plants",
+      "C": "Molluscs, worms and fish"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 239,
+    "question": "One of the characteristics of diving ducks is:",
+    "options": {
+      "A": "Having a white or pale wing bar",
+      "B": "Having an almost always dark colouring",
+      "C": "Having a speculum with a metallic sheen"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 240,
+    "question": "One of the characteristics of diving ducks is:",
+    "options": {
+      "A": "Having a small to medium size",
+      "B": "Having a medium size",
+      "C": "Having a medium to large size"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 241,
+    "question": "One of the characteristics of diving ducks is:",
+    "options": {
+      "A": "Having a long neck and legs",
+      "B": "Having a short neck, wings and legs",
+      "C": "Having a neck and legs of medium size"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 242,
+    "question": "One of the characteristics of diving ducks is:",
+    "options": {
+      "A": "Showing sexual dimorphism variable according to the species",
+      "B": "Showing marked sexual dimorphism in most species",
+      "C": "Not showing sexual dimorphism"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 243,
+    "question": "One of the characteristics of diving ducks is:",
+    "options": {
+      "A": "Pattering on the water before taking off",
+      "B": "Taking off almost vertically",
+      "C": "Emerging a few metres from the place where they dived"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 244,
+    "question": "Of the following sets of species, which of them is it common to find in the month of January, in a habitat classified as a wetland?",
+    "options": {
+      "A": "Northern shoveler, common moorhen and Eurasian coot",
+      "B": "European golden plover, mallard and Iberian hare",
+      "C": "Northern pintail, common wood pigeon and Eurasian coot"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 245,
+    "question": "In diving ducks, the diet is made up chiefly of:",
+    "options": {
+      "A": "Molluscs, worms and fish",
+      "B": "Molluscs, worms and plants",
+      "C": "Micro-organisms suspended in the water and plants from the bottom"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 246,
+    "question": "With the exception of the mallard and the garganey, the remaining species of ducks occurring in the country:",
+    "options": {
+      "A": "Winter in Portugal and breed in northern and central Europe",
+      "B": "Winter in Portugal and breed in northern and southern Europe",
+      "C": "Winter in Portugal and breed in southern and central Europe"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 247,
+    "question": "Most of the population of mallard occurring in our country is:",
+    "options": {
+      "A": "Winter visitor",
+      "B": "Passage migrant",
+      "C": "Resident"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 248,
+    "question": "The gadwall is a dabbling duck, whose male has a speculum:",
+    "options": {
+      "A": "Small, white, edged above with black and bright rufous",
+      "B": "Bright green",
+      "C": "Bronze green"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 249,
+    "question": "The male northern shoveler is distinguished by having:",
+    "options": {
+      "A": "Grey back, brick-coloured neck, head and breast, yellow forehead",
+      "B": "Green head, white breast, brown patch on the flanks and belly",
+      "C": "Greyish back, green head, brown breast, pale underparts"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 250,
+    "question": "The female of the common pochard is distinguished from the male by having:",
+    "options": {
+      "A": "Brownish colouring, with a blue-grey ring around the bill",
+      "B": "A black spatulate bill",
+      "C": "A brownish colouring, with an orange bill"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 251,
+    "question": "The northern pintail is a dabbling duck that can be distinguished from the other ducks by:",
+    "options": {
+      "A": "Having a very well-developed spatulate bill",
+      "B": "Having a white neck and brick-coloured breast",
+      "C": "Having a comparatively longer and more slender neck"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 252,
+    "question": "The male common pochard is a diving duck that can be distinguished by:",
+    "options": {
+      "A": "Having a reddish-brown head and neck, grey breast and body",
+      "B": "Having a reddish head with a white eyebrow",
+      "C": "General colour greyish brown, brick-coloured neck, head and breast"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 253,
+    "question": "Which of the following species shows a “blue speculum”?",
+    "options": {
+      "A": "Common pochard",
+      "B": "Mallard",
+      "C": "Northern shoveler"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 254,
+    "question": "How are dabbling ducks distinguished from diving ducks?",
+    "options": {
+      "A": "They are larger",
+      "B": "They take off almost vertically",
+      "C": "They have less bright colours"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 255,
+    "question": "Which of the following species of ducks does not show a “speculum”?",
+    "options": {
+      "A": "Mallard",
+      "B": "Gadwall",
+      "C": "Common pochard"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 256,
+    "question": "The common moorhen has:",
+    "options": {
+      "A": "Red bill with a yellow tip",
+      "B": "Yellow bill with a red tip",
+      "C": "Red bill with a white tip"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 257,
+    "question": "The common moorhen has:",
+    "options": {
+      "A": "White frontal shield",
+      "B": "Yellow frontal shield",
+      "C": "Red frontal shield"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 258,
+    "question": "The common moorhen is very common in:",
+    "options": {
+      "A": "Pools, lakes, flooded areas and slow watercourses",
+      "B": "Pools, lakes and very fast watercourses",
+      "C": "Lakes, flooded areas and temporary watercourses"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 259,
+    "question": "The common moorhen is very common in:",
+    "options": {
+      "A": "Pools, lakes, flooded areas and slow watercourses",
+      "B": "Very fast watercourses without vegetation on the banks",
+      "C": "Areas of scrub and abundant trees"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 260,
+    "question": "The activity of the common moorhen is:",
+    "options": {
+      "A": "Essentially diurnal",
+      "B": "Essentially nocturnal",
+      "C": "Essentially crepuscular"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 261,
+    "question": "The picture shows:",
+    "options": {
+      "A": "A Eurasian coot",
+      "B": "A common moorhen",
+      "C": "A northern lapwing"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 262,
+    "question": "The Eurasian coot, in relation to the common moorhen, has an appearance:",
+    "options": {
+      "A": "Heavier and less lively",
+      "B": "Less heavy and less lively",
+      "C": "Heavier and more lively"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 263,
+    "question": "The Eurasian coot is distinguished from the common moorhen by having:",
+    "options": {
+      "A": "White bill and red frontal shield",
+      "B": "White bill and white frontal shield",
+      "C": "Red bill and white frontal shield"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 264,
+    "question": "Eurasian coots, during the winter:",
+    "options": {
+      "A": "Form large flocks",
+      "B": "Are seen in pairs",
+      "C": "Are solitary animals"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 265,
+    "question": "Eurasian coots, during the breeding season:",
+    "options": {
+      "A": "Are very sociable animals, forming large flocks",
+      "B": "Are combative and extremely territorial animals",
+      "C": "Are animals that go about alone or in small groups"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 266,
+    "question": "In which season of the year can Eurasian coots be observed in large flocks?",
+    "options": {
+      "A": "Winter",
+      "B": "Spring",
+      "C": "Autumn"
+    },
+    "status": "checked",
+    "notes": ""
+  }
+]

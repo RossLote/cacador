@@ -1,0 +1,982 @@
+[
+  {
+    "pt": "processo de caça",
+    "en": "hunting method",
+    "note": "One of the legal ways of hunting: salto, espera, batida, montaria, corricão, aproximação, cetraria, com furão (each its own entry). 'processo' alone in this sense → 'method'; 'processos de caça' → 'hunting methods'; 'pelo processo de X' → 'by the X method', X as its entry gives it."
+  },
+  {
+    "pt": "meio de caça",
+    "en": "means of hunting",
+    "note": "Anything a hunter uses to take game, such as a horse, a stick or a dog. 'como meio de caça' → 'as a means of hunting'."
+  },
+  {
+    "pt": "salto",
+    "en": "walked-up hunting",
+    "note": "Method in which the hunter walks the ground, alone or in a line, with or without dogs, and shoots the game it flushes. 'de salto' → 'walked-up'; 'caça de salto' → 'walked-up hunting'; 'caçar de salto' → 'hunt walked-up'; 'pelo processo de salto' → 'by the walked-up method'; a bare option ('De salto', 'Salto') → 'Walked-up'. Never 'jump', 'jump hunting', 'walk-up' or 'rough shooting'. In a question whose answer its English would give away (39, 52), it stays in Portuguese, unglossed (rule 11)."
+  },
+  {
+    "pt": "espera",
+    "en": "hunting from a hide",
+    "note": "Method in which the hunter waits at a fixed post (a hide, a high seat, a stand by water) for the game to come to him. 'à espera', 'de espera' → 'from a hide'; 'caça à espera' → 'hunting from a hide'; 'pelo processo de espera' → 'by the hide method'; 'locais de espera' → 'hide positions'; 'as esperas', 'nas esperas' → 'the hides', 'in the hides'; a bare option ('À espera', 'De espera') → 'From a hide'. Never 'waiting' or 'ambush'. In a question whose answer its English would give away (40), it stays in Portuguese, unglossed (rule 11)."
+  },
+  {
+    "pt": "batida",
+    "en": "driven hunt",
+    "note": "Method in which the hunters stand at fixed posts while beaters (batedores), with or without dogs, drive the game towards them. 'de batida' → 'driven'; 'caça de batida' → 'driven hunting'; 'pelo processo de batida' → 'by the driven method'; 'caçar de batida' → 'hunt in a driven hunt'; 'batidas às raposas' → 'driven hunts for red foxes'; a bare option ('Batida', 'De batida') → 'Driven hunt', 'Driven'. Not montaria, which is a big-game drive with packs of hounds. In a question whose answer its English would give away (39, 40, 51), it stays in Portuguese, unglossed (rule 11)."
+  },
+  {
+    "pt": "montaria",
+    "en": "montaria (driven big-game hunt with hounds)",
+    "note": "Portuguese big-game hunt, chiefly wild boar and deer, in which packs of hounds worked by houndsmen (matilheiros) drive the game towards hunters at fixed posts. No English equivalent, so it stays in Portuguese (D4): give the gloss in parentheses at its first use in a sentence, plain 'montaria' after. 'montarias' → 'montarias'; 'montarias aos javalis' → 'montarias for wild boar'; 'de montaria' → 'by montaria'. In a question whose answer its English would give away (40, 52), it stays in Portuguese, unglossed (rule 11)."
+  },
+  {
+    "pt": "corricão",
+    "en": "coursing",
+    "note": "Method in which game (hare, fox) is chased down by dogs, the hunter on foot or on horseback, with or without a stick (pau) and never with a firearm. 'a corricão' → 'by coursing'; 'caça à lebre a corricão' → 'Iberian hare coursing'; 'caça à raposa a corricão' → 'red fox coursing'; 'processo de caça a corricão' → 'coursing'; a bare option ('Corricão', 'A corricão') → 'Coursing'. In a question whose answer its English would give away (44, 48, 51, 52), it stays in Portuguese, unglossed (rule 11)."
+  },
+  {
+    "pt": "aproximação",
+    "en": "stalking",
+    "note": "Big-game method in which the hunter moves towards a particular animal (exemplar) to shoot it. 'de aproximação', 'caça de aproximação' → 'stalking'; 'processo de aproximação' → 'stalking method'; 'pelo processo de aproximação' → 'by stalking'; a bare option ('De aproximação') → 'Stalking'. In a question whose answer its English would give away (39), it stays in Portuguese, unglossed (rule 11)."
+  },
+  {
+    "pt": "cetraria",
+    "en": "falconry",
+    "note": "Method in which game is taken by a trained bird of prey (ave de presa); the hunter may use hunting dogs and a stick, never a firearm. 'de cetraria', 'caça de cetraria' → 'falconry'; 'pelo processo de cetraria' → 'by falconry'; a bare option ('Cetraria', 'De cetraria') → 'Falconry'. The person is a cetreiro (falconer). In a question whose answer its English would give away (51, 505), it stays in Portuguese, unglossed (rule 11)."
+  },
+  {
+    "pt": "furão",
+    "en": "ferret",
+    "note": "The domestic ferret, used to bolt rabbits from their burrows, and the hunting method that uses it. 'com furão' in a list of methods → 'with a ferret'; 'furões' → 'ferrets'; 'deter, transportar ou usar furão' → 'keep, transport or use a ferret'."
+  },
+  {
+    "pt": "batedores",
+    "en": "beaters",
+    "note": "Assistants (auxiliares) who walk through cover to drive game towards the hunters in a batida or montaria. Singular 'batedor' → 'beater'. In a question whose answer its English would give away (21), it stays in Portuguese, unglossed (rule 11)."
+  },
+  {
+    "pt": "matilheiros",
+    "en": "houndsmen",
+    "note": "Assistants who search for, pursue and flush big game with a pack of hounds (matilha), as in a montaria. Singular 'matilheiro' → 'houndsman'; 'matilha' → 'pack'. In a question whose answer its English would give away (21), it stays in Portuguese, unglossed (rule 11)."
+  },
+  {
+    "pt": "negaceiros",
+    "en": "decoy handlers",
+    "note": "Assistants who set and work the decoys (negaças); they do not pursue game with dogs. Singular 'negaceiro' → 'decoy handler'. In a question whose answer its English would give away (21), it stays in Portuguese, unglossed (rule 11)."
+  },
+  {
+    "pt": "auxiliar",
+    "en": "assistant",
+    "note": "A person who helps a hunter while hunting without being one of the line of hunters: beaters, houndsmen, decoy handlers. 'auxiliares' → 'assistants'; 'auxiliares do caçador', 'auxiliares de caça' → 'hunter's assistants', 'hunting assistants'. 'auxílio' is a different word → 'help' ('com o auxílio de 10 cães' → 'with the help of 10 dogs')."
+  },
+  {
+    "pt": "linha de caçadores",
+    "en": "line of hunters",
+    "note": "The hunters walking abreast in walked-up hunting, or standing at their posts in a drive. 'fazer parte da linha de caçadores' → 'be part of the line of hunters'."
+  },
+  {
+    "pt": "cetreiro",
+    "en": "falconer",
+    "note": "A person who hunts by falconry. 'carta de caçador de cetreiro', 'carta de cetreiro' → 'falconer's hunter's certificate', 'falconer's certificate'."
+  },
+  {
+    "pt": "besteiro",
+    "en": "crossbowman",
+    "note": "A hunter who uses a crossbow (besta). Paired in the bank with 'arqueiro' → 'archer': 'O Arqueiro ou Besteiro' → 'The archer or crossbowman'."
+  },
+  {
+    "pt": "concessionário",
+    "en": "concession holder",
+    "note": "The body or person granted a hunting zone (zona de caça) by the state and running it under its management plan."
+  },
+  {
+    "pt": "quem de direito",
+    "en": "the person entitled",
+    "note": "Whoever holds the legal right over the land: owner, tenant or manager. 'sem consentimento de quem de direito' → 'without the consent of the person entitled'; 'com autorização de quem de direito' → 'with the authorisation of the person entitled'."
+  },
+  {
+    "pt": "carta de caçador",
+    "en": "hunter's certificate",
+    "note": "The permanent qualification issued after passing this exam, renewed at intervals, that a person must hold to hunt; the subject of this app. Not the licença de caça, the hunting licence bought for a period. 'titular da carta de caçador' → 'holder of the hunter's certificate'."
+  },
+  {
+    "pt": "licença de caça",
+    "en": "hunting licence",
+    "note": "The permit, bought for a period and a region or the whole country, needed on top of the hunter's certificate to hunt. Kinds: licença regional de caça, licença nacional de caça, licença de aves aquáticas (each its own entry). 'licenças de caça' → 'hunting licences'. British spelling 'licence' for the noun."
+  },
+  {
+    "pt": "licença regional de caça",
+    "en": "regional hunting licence",
+    "note": "A hunting licence valid in one hunting region (região cinegética)."
+  },
+  {
+    "pt": "licença nacional de caça",
+    "en": "national hunting licence",
+    "note": "A hunting licence valid throughout the country, in every hunting region."
+  },
+  {
+    "pt": "licença de aves aquáticas",
+    "en": "waterfowl licence",
+    "note": "The extra licence needed to hunt waterfowl (aves aquáticas), on top of a regional or national hunting licence. The bank also writes 'licença para caçar aves aquáticas' → 'licence to hunt waterfowl'."
+  },
+  {
+    "pt": "licença de cão de caça",
+    "en": "hunting dog licence",
+    "note": "The licence a hunting dog must have once it is older than the age the law sets."
+  },
+  {
+    "pt": "região cinegética",
+    "en": "hunting region",
+    "note": "One of the regions the mainland is divided into for hunting licences and rules. 'numa única região cinegética' → 'in a single hunting region'."
+  },
+  {
+    "pt": "período venatório",
+    "en": "open season",
+    "note": "The span of time in which a given species may be hunted, set in the hunting calendar. 'o período venatório de uma espécie' → 'the open season for a species'; 'limite máximo do período venatório' → 'maximum limit of the open season'; 'fora do período venatório da espécie' → 'outside the species' open season'. Not época venatória (the hunting year). In a question whose answer its English would give away (26, 43), it stays in Portuguese, unglossed (rule 11)."
+  },
+  {
+    "pt": "época venatória",
+    "en": "hunting year",
+    "note": "The annual period from 1 June to 31 May of the following year to which the hunting rules and calendar apply. Not período venatório (the open season of one species). Never 'hunting season'. In a question whose answer its English would give away (20, 22), it stays in Portuguese, unglossed (rule 11)."
+  },
+  {
+    "pt": "calendário venatório",
+    "en": "hunting calendar",
+    "note": "The ministerial order (portaria) published each year that lists the species that may be hunted, their open seasons, methods and bag limits. 'calendário venatório anual' → 'annual hunting calendar'."
+  },
+  {
+    "pt": "exercício da caça",
+    "en": "practice of hunting",
+    "note": "Legal phrase for the activity of hunting. 'É proibido o exercício da caça' → 'The practice of hunting is prohibited'; 'no exercício da caça', 'durante o exercício da caça' → 'in the practice of hunting', 'during the practice of hunting'; 'fora do exercício da caça' → 'outside the practice of hunting'. 'exercício venatório' means the same → 'practice of hunting'."
+  },
+  {
+    "pt": "ato venatório",
+    "en": "act of hunting",
+    "note": "Legal phrase for hunting itself. 'exercer o ato venatório', 'praticar o ato venatório' → 'carry out the act of hunting'. 'venatório', 'venatória' as an adjective → 'hunting' ('atividades de carácter venatório' → 'activities of a hunting nature')."
+  },
+  {
+    "pt": "edital",
+    "en": "public notice",
+    "note": "A notice issued and posted by the authority (here the ICNF) setting local conditions, such as where and when a method may be used. 'definidos em edital do ICNF' → 'set in a public notice of the ICNF'; 'nos locais e condições definidos em edital' → 'in the places and on the conditions set in a public notice'; 'por edital' → 'by public notice'."
+  },
+  {
+    "pt": "portaria",
+    "en": "ministerial order",
+    "note": "A regulation issued by a minister; the hunting calendar and the lists of game species are set by portaria. 'em portaria' → 'by ministerial order'; 'portaria do calendário venatório' → 'ministerial order of the hunting calendar'. When cited by number (Portaria 67/2024) the name is copied unchanged."
+  },
+  {
+    "pt": "ICNF",
+    "en": "ICNF",
+    "note": "Acronym of the Instituto da Conservação da Natureza e das Florestas, the state body for nature, forests and hunting that issues licences and public notices. Copied unchanged (D4, proper name)."
+  },
+  {
+    "pt": "Instituto de Conservação da Natureza e das Florestas",
+    "en": "Instituto de Conservação da Natureza e das Florestas",
+    "note": "Proper name of the ICNF (in English, the Institute for Nature Conservation and Forests), copied unchanged as the question writes it (D4); the bank spells it both 'Instituto de Conservação…' and 'Instituto da Conservação…'."
+  },
+  {
+    "pt": "plano de ordenamento e exploração cinegética",
+    "en": "game management and exploitation plan",
+    "note": "The approved plan under which a hunting zone is run, setting what may be hunted, when and how. Acronym 'POEC' copied unchanged. The bank also writes 'planos de ordenamento cinegético ou exploração' → 'game management or exploitation plans'."
+  },
+  {
+    "pt": "plano de gestão",
+    "en": "management plan",
+    "note": "A simpler approved plan for a hunting zone, the alternative to the POEC. Acronym 'PG' copied unchanged."
+  },
+  {
+    "pt": "ordenamento",
+    "en": "management",
+    "note": "Planned management of game and its habitat. 'ordenamento do coelho-bravo' → 'management of the European rabbit'; 'ordenamento cinegético' → 'game management'. The participle 'ordenados' → 'managed' (see terrenos cinegéticos ordenados)."
+  },
+  {
+    "pt": "crime de caça",
+    "en": "hunting crime",
+    "note": "A criminal offence under the hunting law (hunting without a certificate, in an area where one has no right of access, non-game species, and so on), as against a contra ordenação. 'constitui crime de caça' → 'constitutes a hunting crime'."
+  },
+  {
+    "pt": "contra ordenação",
+    "en": "administrative offence",
+    "note": "A breach punished by a fine, not a crime. The bank writes it as two words; standard spelling is 'contraordenação'. 'contra ordenação grave' → 'serious administrative offence'."
+  },
+  {
+    "pt": "infração",
+    "en": "offence",
+    "note": "Any breach of the hunting law, crime or administrative offence. 'Que infração cometeu?' → 'What offence did they commit?'. British spelling 'offence'."
+  },
+  {
+    "pt": "caduca",
+    "en": "lapses",
+    "note": "Of a certificate or licence: ceases to be valid by law. 'A carta de caçador caduca' → 'The hunter's certificate lapses'; 'caducidade' → 'expiry' ('o final da sua caducidade' → 'the end of its expiry'). Of leaves, 'folha caduca' → 'deciduous' ('bosques de folha caduca' → 'deciduous woods')."
+  },
+  {
+    "pt": "taxa de álcool no sangue",
+    "en": "blood alcohol level",
+    "note": "'com uma taxa de álcool no sangue superior a 1,2 g/l' → 'with a blood alcohol level higher than 1,2 g/l'."
+  },
+  {
+    "pt": "clube de caçadores",
+    "en": "hunters' club",
+    "note": "'sócio de um clube de caçadores' → 'member of a hunters' club'."
+  },
+  {
+    "pt": "exemplar",
+    "en": "individual",
+    "note": "A single animal or bird of a species. 'determinado exemplar de caça maior' → 'a particular individual of big game'; 'exemplares dos dois sexos' → 'individuals of both sexes'. Never 'specimen' or 'copy'."
+  },
+  {
+    "pt": "sorteio público",
+    "en": "public draw",
+    "note": "The lottery by which places to hunt in a municipal hunting zone are allotted. 'contemplado em sorteio público' → 'drawn in a public draw'."
+  },
+  {
+    "pt": "feriados nacionais obrigatórios",
+    "en": "compulsory national public holidays",
+    "note": "The public holidays fixed by law for the whole country, as against 'feriados municipais' → 'municipal public holidays'."
+  },
+  {
+    "pt": "terrenos cinegéticos",
+    "en": "hunting grounds",
+    "note": "Land where hunting is permitted. Singular 'terreno cinegético' → 'hunting ground'. Split into managed (ordenados) and unmanaged (não ordenados), each its own entry. In a question whose answer its English would give away (11, 13), it stays in Portuguese, unglossed (rule 11)."
+  },
+  {
+    "pt": "terrenos não cinegéticos",
+    "en": "non-hunting grounds",
+    "note": "Land where hunting is prohibited, such as protection areas, game refuges and no-hunting areas. Singular 'terreno não cinegético' → 'non-hunting ground'. In a question whose answer its English would give away (12, 14, 15, 16), it stays in Portuguese, unglossed (rule 11)."
+  },
+  {
+    "pt": "terrenos cinegéticos ordenados",
+    "en": "managed hunting grounds",
+    "note": "Hunting grounds organised as hunting zones (zonas de caça) and run under an approved plan. The bank also shortens it to 'terrenos ordenados' → 'managed grounds'."
+  },
+  {
+    "pt": "terrenos cinegéticos não ordenados",
+    "en": "unmanaged hunting grounds",
+    "note": "Hunting grounds outside any hunting zone, where the general rules apply (with a firearm, only on Thursdays, Sundays and compulsory national public holidays). The bank also shortens it to 'terrenos não ordenados' → 'unmanaged grounds'."
+  },
+  {
+    "pt": "zona de caça",
+    "en": "hunting zone",
+    "note": "A managed area granted for hunting under an approved plan; the kinds are national, municipal, tourist and association hunting zones. 'zonas de caça' → 'hunting zones'; 'em zonas de caça' → 'in hunting zones'."
+  },
+  {
+    "pt": "zonas de caça nacionais",
+    "en": "national hunting zones",
+    "note": "Hunting zones run by the state. Singular 'zona de caça nacional' → 'national hunting zone'."
+  },
+  {
+    "pt": "zona de caça municipal",
+    "en": "municipal hunting zone",
+    "note": "A hunting zone open to hunters in general, run by a local body, where places are allotted by public draw. Plural 'zonas de caça municipais' → 'municipal hunting zones'."
+  },
+  {
+    "pt": "zona de caça turística",
+    "en": "tourist hunting zone",
+    "note": "A commercially run hunting zone open to any hunter who pays and keeps its own rules. Plural 'zonas de caça turísticas' → 'tourist hunting zones'."
+  },
+  {
+    "pt": "zonas de caça associativas",
+    "en": "association hunting zones",
+    "note": "Hunting zones run by a hunters' association for its members and their guests. Singular 'zona de caça associativa' → 'association hunting zone'."
+  },
+  {
+    "pt": "áreas de proteção",
+    "en": "protection areas",
+    "note": "Areas where the law bans hunting for protection; one kind of non-hunting ground. Singular 'área de proteção' → 'protection area'. Not 'protected areas' (nature reserves)."
+  },
+  {
+    "pt": "refúgio de caça",
+    "en": "game refuge",
+    "note": "An area closed to hunting so that game can breed and shelter; the ban applies only where it is signposted. 'áreas de refúgio de caça' → 'game refuge areas'."
+  },
+  {
+    "pt": "terrenos percorridos por incêndios",
+    "en": "land swept by fires",
+    "note": "Burnt land, where the hunting ban takes effect only when signposted. 'Queimadas' beside it → 'Burnt areas'."
+  },
+  {
+    "pt": "campo de treino de caça",
+    "en": "hunting training ground",
+    "note": "An area licensed for training dogs and birds of prey and for shooting practice on farmed game. 'campos de treino de caça' → 'hunting training grounds'; the bank also shortens it to 'campos de treino' → 'training grounds'."
+  },
+  {
+    "pt": "exercício de tiro",
+    "en": "shooting practice",
+    "note": "Shooting at farmed game or targets, as on a hunting training ground. Not exercício da caça (practice of hunting)."
+  },
+  {
+    "pt": "áreas de não caça",
+    "en": "no-hunting areas",
+    "note": "Land closed to hunting at the request of its owner, who has exercised the right to no hunting (direito à não caça). Singular 'área de não caça' → 'no-hunting area'."
+  },
+  {
+    "pt": "direito à não caça",
+    "en": "right to no hunting",
+    "note": "A landowner's legal right to keep hunting off his land. 'áreas de direito à não caça' → 'areas under the right to no hunting'."
+  },
+  {
+    "pt": "aparcamento de gado",
+    "en": "livestock enclosure",
+    "note": "A fenced area holding livestock; hunting there is banned where it is signposted. 'aparcamentos de gado' → 'livestock enclosures'."
+  },
+  {
+    "pt": "gado bravo",
+    "en": "fighting cattle",
+    "note": "Cattle bred for bullfighting, as against livestock (gado) in general. Never 'wild cattle'."
+  },
+  {
+    "pt": "faixa de proteção",
+    "en": "protection strip",
+    "note": "The strip of land around a place in which hunting is also banned. 'bem como numa faixa de proteção de 500 metros' → 'as well as in a protection strip of 500 metres'. 'faixa envolvente' → 'surrounding strip'."
+  },
+  {
+    "pt": "povoados",
+    "en": "settlements",
+    "note": "Towns and villages, inhabited places. 'nos povoados' → 'in settlements'."
+  },
+  {
+    "pt": "casas de habitação",
+    "en": "dwelling houses",
+    "note": "Houses people live in. Singular 'casa de habitação' → 'dwelling house'; 'anexos a casas de habitação' → 'attached to dwelling houses'."
+  },
+  {
+    "pt": "quintais",
+    "en": "yards",
+    "note": "Enclosed ground beside a house, where hunting needs the consent of the person entitled. 'Quintais anexos a casas de habitação' → 'Yards attached to dwelling houses'; 'jardins' beside it → 'gardens'."
+  },
+  {
+    "pt": "devidamente sinalizado",
+    "en": "duly signposted",
+    "note": "Marked with the legal signs. Agrees with its noun: 'devidamente sinalizados', 'devidamente sinalizadas' → 'duly signposted'. 'sinalização' → 'signposting'; 'sinalizados com o sinal de proibição de caçar' → 'signposted with the no-hunting sign'."
+  },
+  {
+    "pt": "sinal de proibição de caçar",
+    "en": "no-hunting sign",
+    "note": "The official sign that closes land to hunting (the picture in questions 373, 375, 394 and 397). 'Proibição de caçar' as an option → 'No hunting'."
+  },
+  {
+    "pt": "jurisdição marítima",
+    "en": "maritime jurisdiction",
+    "note": "'áreas de jurisdição marítima' → 'areas under maritime jurisdiction': coastal and tidal areas under the maritime authority, which count as hunting grounds."
+  },
+  {
+    "pt": "águas interiores",
+    "en": "inland waters",
+    "note": "Rivers, lakes and reservoirs, as against maritime areas."
+  },
+  {
+    "pt": "planos de água",
+    "en": "bodies of water",
+    "note": "Lakes, ponds, reservoirs and the like. 'até 200 m dos planos de água' → 'up to 200 m from bodies of water'."
+  },
+  {
+    "pt": "zona húmida",
+    "en": "wetland",
+    "note": "'zonas húmidas' → 'wetlands'. Not 'humid zone'."
+  },
+  {
+    "pt": "caça",
+    "en": "hunting",
+    "note": "Means both the activity (hunting) and the animals hunted (game). Activity: 'a caça à perdiz' → 'partridge hunting'; 'na caça aos patos' → 'in the hunting of ducks'; 'caça de salto' and the other methods as their entries give them. Animals: 'a caça' in biology and raptor questions → 'game'; 'espécies de caça' → 'game species'; 'caça maior', 'caça menor' → 'big game', 'small game'. 'caçar à', 'caçar aos' + species → 'hunt' + species ('caçar só às narcejas' → 'hunt only snipe')."
+  },
+  {
+    "pt": "caça maior",
+    "en": "big game",
+    "note": "Wild boar, deer, mouflon and the like. 'espécies de caça maior' → 'big-game species'; 'na caça maior' → 'in big-game hunting'."
+  },
+  {
+    "pt": "caça menor",
+    "en": "small game",
+    "note": "Rabbit, hare, fox, partridge, quail, pigeons, ducks and the like. 'espécies de caça menor' → 'small-game species'; 'caça menor sedentária' → 'resident small game'; 'caça menor aquáticas' → 'aquatic small game'."
+  },
+  {
+    "pt": "espécies cinegéticas",
+    "en": "game species",
+    "note": "Species that the law allows to be hunted. Singular 'espécie cinegética' → 'game species'. The adjective 'cinegético' → 'game' for animals and populations ('populações cinegéticas' → 'game populations') and 'hunting' for land and administration ('terrenos cinegéticos' → 'hunting grounds', 'região cinegética' → 'hunting region', 'atividades de caráter cinegético' → 'hunting activities')."
+  },
+  {
+    "pt": "espécies não cinegéticas",
+    "en": "non-game species",
+    "note": "Species that may not be hunted. Singular 'espécie não cinegética' → 'non-game species'; 'não é cinegética' → 'is not a game species'."
+  },
+  {
+    "pt": "caça de pelo",
+    "en": "furred game",
+    "note": "Game mammals. 'de pelo' as an option → 'Furred game', or 'Furred' when the stem already ends 'game species:' (485); 'de pelo e de pena' → 'furred and feathered game'. The bank also spells it 'pêlo'. Of a dog's coat, 'pelo' → 'coat' ('de pelo liso' → 'smooth-coated')."
+  },
+  {
+    "pt": "caça de pena",
+    "en": "feathered game",
+    "note": "Game birds. 'de pena' as an option → 'Feathered game', or 'Feathered' when the stem already ends 'game species:' (485)."
+  },
+  {
+    "pt": "aves aquáticas",
+    "en": "waterfowl",
+    "note": "Ducks and the other water birds that need the waterfowl licence. 'caçar aves aquáticas' → 'hunt waterfowl'."
+  },
+  {
+    "pt": "sedentária",
+    "en": "resident",
+    "note": "Of a species: present all year, not migrating. 'sedentário', 'sedentárias', 'sedentários' → 'resident'; 'caça menor sedentária' → 'resident small game'."
+  },
+  {
+    "pt": "migradora invernante",
+    "en": "winter visitor",
+    "note": "A migrant that spends the winter in Portugal and breeds elsewhere. 'invernante' alone → 'wintering'; 'invernam em Portugal' → 'winter in Portugal'. 'migradora', 'migrador' alone → 'migratory'; 'parcialmente migrador' → 'partially migratory'. 'migradora de inverno' means the same → 'winter visitor'."
+  },
+  {
+    "pt": "migradora estival",
+    "en": "summer visitor",
+    "note": "A migrant that comes to Portugal to breed in spring and summer. 'estival' alone → 'summer'; 'migradoras estivais' → 'summer visitors'. 'migradora de verão' means the same → 'summer visitor'."
+  },
+  {
+    "pt": "migradora de passagem",
+    "en": "passage migrant",
+    "note": "A migrant seen only on passage, in spring or autumn, between its breeding and wintering grounds."
+  },
+  {
+    "pt": "migradora de inverno",
+    "en": "winter visitor",
+    "note": "Same as migradora invernante. 'Migradora de inverno' as an option → 'Winter visitor'. Never 'winter migrant'."
+  },
+  {
+    "pt": "migradora de verão",
+    "en": "summer visitor",
+    "note": "Same as migradora estival. 'Migradora de verão' as an option → 'Summer visitor'. Never 'summer migrant'."
+  },
+  {
+    "pt": "integralmente protegidas",
+    "en": "fully protected",
+    "note": "Of species: protected by law in every circumstance, so never hunted. 'espécies integralmente protegidas' → 'fully protected species'."
+  },
+  {
+    "pt": "necrófago",
+    "en": "scavenger",
+    "note": "An animal that feeds on carrion. 'O grifo é um necrófago' → 'The griffon vulture is a scavenger'."
+  },
+  {
+    "pt": "abater",
+    "en": "kill",
+    "note": "To kill game by hunting. 'abateu 10 codornizes' → 'killed 10 common quail'; 'pode abater por dia de caça' → 'may kill per hunting day'; 'o abate' → 'the killing' ('o abate de menos de 50% dos efetivos' → 'the killing of less than 50% of the stock')."
+  },
+  {
+    "pt": "efetivos",
+    "en": "stock",
+    "note": "The number of animals in a game population. 'abater 60% dos efetivos' → 'kill 60% of the stock'."
+  },
+  {
+    "pt": "repovoamentos",
+    "en": "restocking",
+    "note": "Releasing animals to rebuild a wild population. 'realizar repovoamentos' → 'carry out restocking'; 'nos repovoamentos' → 'in restocking'."
+  },
+  {
+    "pt": "largadas",
+    "en": "releases",
+    "note": "Releases of farmed game, for example for shooting on a hunting training ground."
+  },
+  {
+    "pt": "criação em cativeiro",
+    "en": "captive breeding",
+    "note": "Breeding animals in captivity. 'A criação em cativeiro de espécies cinegéticas' → 'The captive breeding of game species'; 'fazer criação em cativeiro' → 'breed in captivity'; 'criadas em cativeiro' → 'bred in captivity'."
+  },
+  {
+    "pt": "levantar",
+    "en": "flush",
+    "note": "To make game break cover. 'levantar espécies de caça maior' → 'flush big-game species'; 'espécies levantadas por batedores' → 'species flushed by beaters'. Not 'levantar voo' → 'take off', said of birds."
+  },
+  {
+    "pt": "chamarizes",
+    "en": "lure calls",
+    "note": "Devices worked by the hunter to imitate the voice of game and draw it in (duck, fox, deer calls). Singular 'chamariz' → 'lure call'. Battery-powered devices to attract game are banned. Not negaças (decoys)."
+  },
+  {
+    "pt": "negaças",
+    "en": "decoys",
+    "note": "Figures of birds, real or artificial, set out to draw birds within range. 'uso de negaças' → 'use of decoys'. Not chamarizes (lure calls)."
+  },
+  {
+    "pt": "pau",
+    "en": "stick",
+    "note": "The stick a hunter may carry in coursing, walked-up hunting and falconry. 'com ou sem pau' → 'with or without a stick'; 'Pau e cavalo' → 'Stick and horse'."
+  },
+  {
+    "pt": "zagalotes",
+    "en": "buckshot",
+    "note": "Lead shot over 4,5 mm in diameter; banned for hunting. 'cartuchos carregados com zagalotes' → 'cartridges loaded with buckshot'."
+  },
+  {
+    "pt": "chumbos",
+    "en": "shot",
+    "note": "Small pellets in a shotgun cartridge. 'cartuchos carregados com chumbos' → 'cartridges loaded with shot'; 'chumbos de diâmetro superior a 4,5 mm' → 'shot of diameter greater than 4,5 mm'."
+  },
+  {
+    "pt": "bala",
+    "en": "slug",
+    "note": "A single projectile in a shotgun cartridge, used for big game. 'cartuchos carregados com bala' → 'cartridges loaded with a slug'."
+  },
+  {
+    "pt": "cartuchos",
+    "en": "cartridges",
+    "note": "Shotgun ammunition. British 'cartridges', never 'shells'. 'cartuchos vazios' → 'spent cartridges'."
+  },
+  {
+    "pt": "espingardas caçadeiras",
+    "en": "shotguns",
+    "note": "Smooth-bore hunting guns. Singular 'espingarda caçadeira' → 'shotgun'."
+  },
+  {
+    "pt": "arma de fogo",
+    "en": "firearm",
+    "note": "'armas de fogo' → 'firearms'; 'sem arma de fogo' → 'without a firearm'. 'armas de caça' → 'hunting guns'; 'armas semiautomáticas' → 'semi-automatic guns'."
+  },
+  {
+    "pt": "besta",
+    "en": "crossbow",
+    "note": "'arco ou besta' → 'bow or crossbow'. In this bank it never means 'beast'."
+  },
+  {
+    "pt": "armar",
+    "en": "arm",
+    "note": "Of a bow or crossbow: make it ready to shoot. 'Armar o arco ou besta' → 'Arm the bow or crossbow'. Never 'load'."
+  },
+  {
+    "pt": "virotões",
+    "en": "bolts",
+    "note": "The arrows shot from a crossbow. 'flechas ou virotões' → 'arrows or bolts'; singular 'virotão' → 'bolt'."
+  },
+  {
+    "pt": "aljava",
+    "en": "quiver",
+    "note": "The case in which arrows or bolts are carried."
+  },
+  {
+    "pt": "patilha de segurança",
+    "en": "safety catch",
+    "note": "The catch that stops a crossbow from being fired by accident."
+  },
+  {
+    "pt": "lâminas",
+    "en": "blades",
+    "note": "The cutting blades of a broadhead arrow or bolt tip, required for big game. 'Com lâminas' → 'With blades'; 'duas lâminas com barbela' → 'two blades with a barb'."
+  },
+  {
+    "pt": "barbela",
+    "en": "barb",
+    "note": "A backward-pointing hook on an arrow or bolt tip. 'Com barbela' → 'With a barb'. Not farpas (prongs)."
+  },
+  {
+    "pt": "farpas",
+    "en": "prongs",
+    "note": "Sharp points on an arrow tip. 'Duas farpas' → 'Two prongs'. Not barbela (barb)."
+  },
+  {
+    "pt": "ogival",
+    "en": "ogival",
+    "note": "Of an arrow or bolt tip: bullet-shaped, without blades (a field point); not permitted for big game."
+  },
+  {
+    "pt": "largura mínima de corte",
+    "en": "minimum cutting width",
+    "note": "Of the bladed tips of arrows and bolts for big game: the least width the blades cut. 'largura de corte' → 'cutting width'."
+  },
+  {
+    "pt": "correndo a mão",
+    "en": "swinging with the animal",
+    "note": "Of a shot at a moving animal: following it with the bow, crossbow or gun as one shoots. 'Disparar correndo a mão' → 'Shoot, swinging with the animal'."
+  },
+  {
+    "pt": "plataforma elevada",
+    "en": "high seat",
+    "note": "A raised platform from which the hunter waits for and shoots game. 'a partir de uma plataforma elevada' → 'from a high seat'."
+  },
+  {
+    "pt": "cão de busca",
+    "en": "search dog",
+    "note": "In hare coursing, the dog that finds and starts the hare before the greyhounds run it. 'cães de busca' → 'search dogs'."
+  },
+  {
+    "pt": "galgos",
+    "en": "greyhounds",
+    "note": "Sighthounds that run game down by speed, used in coursing. 'cão galgo', 'cães galgos' → 'greyhound', 'greyhounds'."
+  },
+  {
+    "pt": "cães de parar",
+    "en": "pointing dogs",
+    "note": "Dogs that freeze to show where game is hiding. The verb 'parar' in this sense → 'point' ('além de \"parar\"' → 'as well as \"pointing\"')."
+  },
+  {
+    "pt": "cobra",
+    "en": "retrieves",
+    "note": "From 'cobrar': of a dog, to bring back shot game. 'cobra bem na água e em terra' → 'retrieves well in water and on land'; 'cães que cobram bem' → 'dogs that retrieve well'. Never 'snake'."
+  },
+  {
+    "pt": "cães de equipagem",
+    "en": "pack hounds",
+    "note": "Hounds that hunt as a pack (equipagem), as in a montaria."
+  },
+  {
+    "pt": "pista de sangue",
+    "en": "blood trail",
+    "note": "The trail left by wounded game. 'cães de pista de sangue de caça maior' → 'big-game blood-trail dogs'; 'seguir pistas de sangue de caça maior' → 'follow blood trails of big game'."
+  },
+  {
+    "pt": "cachorros",
+    "en": "puppies",
+    "note": "Young dogs, counted apart from hunting dogs in the limits on dogs. '15 cães e 2 cachorros' → '15 dogs and 2 puppies'."
+  },
+  {
+    "pt": "coelheiro",
+    "en": "coelheiro (rabbit dog)",
+    "note": "Popular name for the medium podengo, the rabbit-hunting dog; it stays in Portuguese with its gloss (D4). In a question whose answer its English would give away (480, 483, 486), it stays in Portuguese, unglossed (rule 11). 'cão coelheiro' there → 'the coelheiro dog'."
+  },
+  {
+    "pt": "podengo",
+    "en": "podengo",
+    "note": "Portuguese hound breed (in English, the Portuguese Podengo), used for furred game. 'podengo pequeno', 'podengo médio', 'podengo grande' → 'small podengo', 'medium podengo', 'large podengo'; 'podengos' → 'podengos'."
+  },
+  {
+    "pt": "perdigueiro",
+    "en": "Portuguese pointer",
+    "note": "Portuguese pointing breed, used for feathered game. 'perdigueiro português' → 'Portuguese pointer'. Not the English breed 'pointer', which the bank names 'pointer'."
+  },
+  {
+    "pt": "braco alemão",
+    "en": "German pointer",
+    "note": "German pointing breed, smooth or wire-coated ('de pelo liso ou cerdoso' → 'smooth- or wire-coated')."
+  },
+  {
+    "pt": "baixotes",
+    "en": "baixotes (short-legged scent hounds)",
+    "note": "Short-legged scent hounds used to follow the blood trail of wounded big game; no single English breed name, so it stays in Portuguese with its gloss (D4). Singular 'baixote'. In a question whose answer its English would give away (484, 492), it stays in Portuguese, unglossed (rule 11)."
+  },
+  {
+    "pt": "epagneul breton",
+    "en": "Brittany",
+    "note": "The French pointing breed known in Britain as the Brittany. Other breed names in the bank are English already: 'setter irlandês' → 'Irish setter', 'setter inglês' → 'English setter', 'pointer', 'beagle', 'fox-terrier' → 'fox terrier'."
+  },
+  {
+    "pt": "fox-hound",
+    "en": "foxhound",
+    "note": "English pack hound. 'Os Fox-hound' → 'Foxhounds'. Question 494 misspells it 'Fox-houd'; render that as 'foxhound' too."
+  },
+  {
+    "pt": "terrenos muito dobrados",
+    "en": "very hilly ground",
+    "note": "Of land, 'dobrado' → 'hilly' ('terrenos dobrados' → 'hilly ground'). 'caçar em terrenos muito dobrados' → 'hunting on very hilly ground'."
+  },
+  {
+    "pt": "espelho alar",
+    "en": "speculum",
+    "note": "The bright, often metallic patch on the wing of many ducks. 'espelho' alone in the same sense → 'speculum' ('espelho azul' → 'blue speculum'; 'espelho com reflexos metálicos' → 'speculum with a metallic sheen'). Never 'wing mirror'."
+  },
+  {
+    "pt": "franja alar",
+    "en": "wing bar",
+    "note": "A pale band along the wing of diving ducks. 'franja alar branca ou pálida' → 'white or pale wing bar'."
+  },
+  {
+    "pt": "bico espatulado",
+    "en": "spatulate bill",
+    "note": "A broad, spoon-shaped bill, as of the Northern shoveler. 'Um bico espatulado negro' → 'A black spatulate bill'."
+  },
+  {
+    "pt": "dimorfismo sexual",
+    "en": "sexual dimorphism",
+    "note": "A visible difference between male and female of the same species. 'dimorfismo sexual acentuado' → 'marked sexual dimorphism'."
+  },
+  {
+    "pt": "patos de superfície",
+    "en": "dabbling ducks",
+    "note": "Ducks that feed at the surface by up-ending, such as the mallard and gadwall. Singular 'pato de superfície' → 'dabbling duck'. Never 'surface ducks'."
+  },
+  {
+    "pt": "patos mergulhadores",
+    "en": "diving ducks",
+    "note": "Ducks that feed by diving, such as the common pochard. Singular 'pato mergulhador' → 'diving duck'."
+  },
+  {
+    "pt": "patos marinhos",
+    "en": "sea ducks",
+    "note": "Ducks of the open sea and coast."
+  },
+  {
+    "pt": "patinharem na água",
+    "en": "pattering on the water",
+    "note": "Of diving ducks: running along the surface to gain speed before take-off. 'Patinharem na água antes de levantar voo' → 'Pattering on the water before taking off'."
+  },
+  {
+    "pt": "cio",
+    "en": "rut",
+    "note": "The mating season of mammals. Of deer, boar and mouflon → 'rut' ('o cio do corço' → 'the roe deer rut'; 'época do cio' → 'rutting season'). Of the fox, and 'o cio das fêmeas' → 'heat' ('durante o cio das fêmeas' → 'while the females are in heat')."
+  },
+  {
+    "pt": "brama",
+    "en": "roar",
+    "note": "The bellowing call of the red deer stag in the rut. In a question whose answer its English would give away (150), it stays in Portuguese, unglossed (rule 11)."
+  },
+  {
+    "pt": "armação",
+    "en": "antlers",
+    "note": "The pair of antlers of a deer, as a whole. 'armações' → 'antlers' ('perdem as armações' → 'cast their antlers'). 'A cabeça do gamo', meaning its antlers → 'the head of the fallow deer buck'."
+  },
+  {
+    "pt": "troféu",
+    "en": "trophy",
+    "note": "'troféu de caça' → 'hunting trophy'."
+  },
+  {
+    "pt": "hastes",
+    "en": "beams",
+    "note": "The two main branches that make up a deer's antlers. 'duas hastes espalmadas' → 'two palmate beams'; 'hastes cilíndricas' → 'cylindrical beams'; 'hastes ramificadas' → 'branched beams'."
+  },
+  {
+    "pt": "veludo",
+    "en": "velvet",
+    "note": "The furred skin that covers a deer's antlers while they grow. In a question whose answer its English would give away (153), it stays in Portuguese, unglossed (rule 11)."
+  },
+  {
+    "pt": "escudo anal",
+    "en": "rump patch",
+    "note": "The pale patch round the tail of the roe deer, shaped differently in buck and doe."
+  },
+  {
+    "pt": "navalhas",
+    "en": "tusks",
+    "note": "The wild boar's lower canines, its main weapons. Paired with amoladeiras (whetters), the upper canines that sharpen them. In a question whose answer its English would give away (126), it stays in Portuguese, unglossed (rule 11)."
+  },
+  {
+    "pt": "amoladeiras",
+    "en": "whetters",
+    "note": "The wild boar's upper canines, against which the lower tusks (navalhas) are sharpened. In a question whose answer its English would give away (127), it stays in Portuguese, unglossed (rule 11)."
+  },
+  {
+    "pt": "presa",
+    "en": "prey",
+    "note": "The animal hunted by a predator or a hunter. 'ave de presa' → 'bird of prey'; 'populações presa' → 'prey populations'. Of the wild boar, 'presas' → 'tusks' ('presas mais desenvolvidas nos machos' → 'larger tusks in the males')."
+  },
+  {
+    "pt": "varas",
+    "en": "sounders",
+    "note": "Groups of wild boar. Singular 'vara' → 'sounder'. In a question whose answer its English would give away (124), it stays in Portuguese, unglossed (rule 11)."
+  },
+  {
+    "pt": "companhias",
+    "en": "companhias (sounders)",
+    "note": "Another name for groups of wild boar, beside varas; no separate English word, so it stays in Portuguese with its gloss (D4). Singular 'companhia'. In a question whose answer its English would give away (124), it stays in Portuguese, unglossed (rule 11)."
+  },
+  {
+    "pt": "bandos",
+    "en": "flocks",
+    "note": "Groups of birds. 'em bandos' → 'in flocks'; 'grandes bandos' → 'large flocks'. In a question whose answer its English would give away (124), it stays in Portuguese, unglossed (rule 11)."
+  },
+  {
+    "pt": "rebanhos",
+    "en": "herds",
+    "note": "Groups of grazing mammals. 'forma rebanhos' → 'forms herds'. In a question whose answer its English would give away (124), it stays in Portuguese, unglossed (rule 11)."
+  },
+  {
+    "pt": "manadas",
+    "en": "herds",
+    "note": "Groups of large grazing mammals, the same English as rebanhos. In a question whose answer its English would give away (124), it stays in Portuguese, unglossed (rule 11)."
+  },
+  {
+    "pt": "aos casais",
+    "en": "in pairs",
+    "note": "'vive aos casais', 'se desloca aos casais' → 'lives in pairs', 'moves in pairs'."
+  },
+  {
+    "pt": "listado",
+    "en": "listado (striped boar piglet, under 6 months)",
+    "note": "A wild boar piglet under six months old, named after its striped coat (pelagem raiada → 'striped coat'). No English equivalent; stays in Portuguese with its gloss (D4). Plural 'listados'. In a question whose answer its English would give away (83, 97, 131, 132), it stays in Portuguese, unglossed (rule 11)."
+  },
+  {
+    "pt": "farropo",
+    "en": "farropo (young boar, 6 to 12 months)",
+    "note": "A young wild boar between six months and one year old. No English equivalent; stays in Portuguese with its gloss (D4). In a question whose answer its English would give away (131, 132), it stays in Portuguese, unglossed (rule 11)."
+  },
+  {
+    "pt": "bácoro",
+    "en": "bácoro (young pig)",
+    "note": "A young pig, offered beside listado and farropo as a name for the boar's young. In a question whose answer its English would give away (132), it stays in Portuguese, unglossed (rule 11)."
+  },
+  {
+    "pt": "leitão",
+    "en": "piglet",
+    "note": "A young pig, here offered as a name for the boar's young. In a question whose answer its English would give away (131), it stays in Portuguese, unglossed (rule 11)."
+  },
+  {
+    "pt": "láparos",
+    "en": "rabbit kits",
+    "note": "Young rabbits. Singular 'láparo' → 'rabbit kit'. Not lebrachos (leverets). In a question whose answer its English would give away (83, 97), it stays in Portuguese, unglossed (rule 11)."
+  },
+  {
+    "pt": "lebrachos",
+    "en": "leverets",
+    "note": "Young hares. Singular 'lebracho' → 'leveret'. In a question whose answer its English would give away (83, 97), it stays in Portuguese, unglossed (rule 11)."
+  },
+  {
+    "pt": "perdigotos",
+    "en": "partridge chicks",
+    "note": "Young partridges. Singular 'perdigoto' → 'partridge chick'."
+  },
+  {
+    "pt": "crias",
+    "en": "young",
+    "note": "The young of an animal. 'crias ou ovos' → 'young or eggs'; 'a cria de javali' → 'the young of the wild boar'. The verb 'criar' → 'breed' ('época de criação' → 'breeding season')."
+  },
+  {
+    "pt": "ninhada",
+    "en": "litter",
+    "note": "The young born together to a mammal. 'ninhadas por ano' → 'litters a year'."
+  },
+  {
+    "pt": "parições",
+    "en": "births",
+    "note": "The giving birth of deer and other mammals in a season. 'as parições no muflão' → 'births in the mouflon'; singular 'parição' → 'birth'."
+  },
+  {
+    "pt": "coelhas",
+    "en": "female rabbits",
+    "note": "'coelhas prenhes' → 'pregnant female rabbits'. Not 'does', which the bank's deer questions use."
+  },
+  {
+    "pt": "toca de habitação",
+    "en": "dwelling burrow",
+    "note": "The rabbits' everyday burrow in the warren, as against the breeding burrow. Plural 'tocas de habitação' → 'dwelling burrows'; 'toca' alone → 'burrow'."
+  },
+  {
+    "pt": "tocas de reprodução",
+    "en": "breeding burrows",
+    "note": "The short burrows a female rabbit digs away from the warren to give birth in. Singular 'toca de reprodução' → 'breeding burrow'."
+  },
+  {
+    "pt": "cerva",
+    "en": "hind",
+    "note": "The female red deer. 'cervas' → 'hinds'. The male is a stag ('veado macho' → 'red deer stag'). In a question whose answer its English would give away (144), it stays in Portuguese, unglossed (rule 11)."
+  },
+  {
+    "pt": "gamela",
+    "en": "fallow doe",
+    "note": "The female fallow deer. 'gamelas' → 'fallow does'; 'gama' is a synonym. In a question whose answer its English would give away (144), it stays in Portuguese, unglossed (rule 11)."
+  },
+  {
+    "pt": "corça",
+    "en": "roe doe",
+    "note": "The female roe deer. In a question whose answer its English would give away (144), it stays in Portuguese, unglossed (rule 11)."
+  },
+  {
+    "pt": "terçó",
+    "en": "terçó (tiercel, the male bird of prey)",
+    "note": "In falconry, the male of a bird of prey, smaller than the female. Stays in Portuguese with its gloss (D4), since question 503 names it."
+  },
+  {
+    "pt": "morouços",
+    "en": "morouços (artificial rabbit warrens)",
+    "note": "Mounds of stones, branches and earth built to give rabbits burrows where the ground is hard to dig. No English equivalent; stays in Portuguese with its gloss (D4)."
+  },
+  {
+    "pt": "rémiges primárias",
+    "en": "primary flight feathers",
+    "note": "The ten long feathers at the tip of the wing. 'rémiges' alone → 'flight feathers'."
+  },
+  {
+    "pt": "tarsos",
+    "en": "tarsi",
+    "note": "The bare lower legs of a bird. Singular 'tarso' → 'tarsus'."
+  },
+  {
+    "pt": "esporões",
+    "en": "spurs",
+    "note": "The horny spikes on the back of a partridge's legs."
+  },
+  {
+    "pt": "muda",
+    "en": "moult",
+    "note": "The replacing of a bird's feathers. 'a muda das penas' → 'the moult of the feathers'. British spelling 'moult'."
+  },
+  {
+    "pt": "uropígio",
+    "en": "rump",
+    "note": "The lower back of a bird, above the tail. 'uropígio branco' → 'white rump'."
+  },
+  {
+    "pt": "placa frontal",
+    "en": "frontal shield",
+    "note": "The bare plate above the bill of the moorhen and the coot."
+  },
+  {
+    "pt": "pelagem",
+    "en": "coat",
+    "note": "A mammal's fur. 'pelagem raiada' → 'striped coat'."
+  },
+  {
+    "pt": "galináceo",
+    "en": "galliform",
+    "note": "A bird of the order of fowl, partridges and quail. 'o mais pequeno galináceo europeu' → 'the smallest European galliform'."
+  },
+  {
+    "pt": "cervídeos",
+    "en": "deer",
+    "note": "The deer family. 'os cervídeos portugueses' → 'the Portuguese deer'."
+  },
+  {
+    "pt": "pousios",
+    "en": "fallow land",
+    "note": "Farmland left unsown for a season. 'pousios e terras cultivadas' → 'fallow land and cultivated land'. Not fallow deer (gamo)."
+  },
+  {
+    "pt": "montados de azinho",
+    "en": "holm-oak wood pasture",
+    "note": "Open grazed woodland of holm oak, typical of the south."
+  },
+  {
+    "pt": "mato",
+    "en": "scrub",
+    "note": "Low dense shrubs. 'zonas de mato abundante' → 'areas of abundant scrub'; 'matos' → 'scrub'. Not matagais (thickets)."
+  },
+  {
+    "pt": "matagais",
+    "en": "thickets",
+    "note": "Dense tall scrub. Singular 'matagal' → 'thicket'."
+  },
+  {
+    "pt": "searas",
+    "en": "cereal fields",
+    "note": "Fields of growing cereal. 'zonas cerealíferas', 'culturas cerealíferas' → 'cereal-growing areas', 'cereal crops'."
+  },
+  {
+    "pt": "coberto",
+    "en": "cover",
+    "note": "Vegetation in which game hides. 'grande densidade de coberto' → 'dense cover'. As a participle, 'coberto de' → 'covered with' ('coberto de plantas secas' → 'covered with dry plants')."
+  },
+  {
+    "pt": "restolhos",
+    "en": "stubble",
+    "note": "The stalks left after harvest. 'queima de restolhos' → 'stubble burning'."
+  },
+  {
+    "pt": "ave de presa",
+    "en": "bird of prey",
+    "note": "In falconry, the trained bird. 'aves de presa' → 'birds of prey'. Same meaning as aves de rapina."
+  },
+  {
+    "pt": "aves de rapina",
+    "en": "birds of prey",
+    "note": "Hawks, eagles, falcons, kites, owls and vultures, all fully protected. 'rapinas diurnas' → 'diurnal birds of prey'; 'ave de rapina' → 'bird of prey'. Same meaning as ave de presa."
+  },
+  {
+    "pt": "baixo-voo",
+    "en": "baixo-voo (low flight, with short-winged hawks)",
+    "note": "Falconry with short-winged hawks such as the goshawk and sparrowhawk, flown from the fist straight at the quarry. Stays in Portuguese with its gloss (D4). 'caça em baixo-voo' → 'hunting in baixo-voo'. In a question whose answer its English would give away (502), it stays in Portuguese, unglossed (rule 11)."
+  },
+  {
+    "pt": "alto-voo",
+    "en": "alto-voo (high flight, with long-winged falcons)",
+    "note": "Falconry with long-winged falcons that climb and stoop on the quarry from above. Stays in Portuguese with its gloss (D4). In a question whose answer its English would give away (502), it stays in Portuguese, unglossed (rule 11)."
+  },
+  {
+    "pt": "amansamento",
+    "en": "manning",
+    "note": "In falconry, taming a new bird to people and handling."
+  }
+]

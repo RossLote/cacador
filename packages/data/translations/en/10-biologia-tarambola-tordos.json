@@ -1,0 +1,189 @@
+[
+  {
+    "id": 304,
+    "question": "Which of these statements is correct?",
+    "options": {
+      "A": "The Iberian hare has ears and size different from the rabbit, but the same colouring",
+      "B": "The common wood pigeon is distinguished from the stock dove by being smaller",
+      "C": "The common snipe is distinguished from the jack snipe by being larger and having a longer bill"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 305,
+    "question": "The diet of the European golden plover is based above all on:",
+    "options": {
+      "A": "Worms, snails and grains",
+      "B": "Insects and larvae",
+      "C": "Molluscs, crustaceans and worms"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 306,
+    "question": "How many species of tarambolas (plovers of the genus Pluvialis) can be found in Portugal?",
+    "options": {
+      "A": "3",
+      "B": "2",
+      "C": "1"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 307,
+    "question": "Tarambolas (plovers of the genus Pluvialis) visit Portugal:",
+    "options": {
+      "A": "During the winter and spring",
+      "B": "During the autumn and winter",
+      "C": "Only during the winter"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 308,
+    "question": "The European golden plover is found:",
+    "options": {
+      "A": "In forest areas",
+      "B": "Especially in inland areas",
+      "C": "Exclusively in coastal areas"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 309,
+    "question": "Thrushes are:",
+    "options": {
+      "A": "Small-sized birds",
+      "B": "Large-sized birds",
+      "C": "Medium-sized birds"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 310,
+    "question": "How many species of tordos (thrushes; the melros, such as the blackbird, are not tordos) can be found in Portugal?",
+    "options": {
+      "A": "5",
+      "B": "4",
+      "C": "3"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 311,
+    "question": "The diet of thrushes is based on:",
+    "options": {
+      "A": "Invertebrates and fruits",
+      "B": "Insects, molluscs and snails",
+      "C": "Insects and larvae"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 312,
+    "question": "Which of the species of thrushes is the largest?",
+    "options": {
+      "A": "Mistle thrush",
+      "B": "Fieldfare",
+      "C": "Song thrush"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 313,
+    "question": "Which of the species of thrushes is resident?",
+    "options": {
+      "A": "Song thrush",
+      "B": "Redwing",
+      "C": "Mistle thrush"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 314,
+    "question": "Which of the following species of thrushes can be identified, in flight, by showing the underside of the wings white in colour?",
+    "options": {
+      "A": "Redwing",
+      "B": "Mistle thrush",
+      "C": "Song thrush"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 315,
+    "question": "The habitat of thrushes is generally linked to:",
+    "options": {
+      "A": "Wooded areas or to their edges",
+      "B": "Wetlands or to their edges",
+      "C": "Cereal-growing areas or to their edges"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 316,
+    "question": "The fieldfare and the redwing are wintering birds in Portugal that nest:",
+    "options": {
+      "A": "In countries of southern Europe",
+      "B": "In countries of northern Europe",
+      "C": "In countries of North Africa"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 317,
+    "question": "Indicate which sentence is correct:",
+    "options": {
+      "A": "Egyptian mongooses have a diet based essentially on European rabbit",
+      "B": "Partridge chicks have a diet similar to that of the adult partridge",
+      "C": "Thrushes have a diet based on invertebrates and fruits"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 318,
+    "question": "Thrushes are frequently found in:",
+    "options": {
+      "A": "Waterlogged ground",
+      "B": "Large cultivated plains",
+      "C": "Wooded areas or on their edges"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 319,
+    "question": "The picture shows a:",
+    "options": {
+      "A": "Carrion crow",
+      "B": "Common blackbird",
+      "C": "Common starling"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 320,
+    "question": "The picture shows a:",
+    "options": {
+      "A": "Eurasian magpie",
+      "B": "Eurasian jay",
+      "C": "Common blackbird"
+    },
+    "status": "checked",
+    "notes": ""
+  }
+]

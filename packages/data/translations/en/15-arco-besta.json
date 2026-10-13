@@ -1,0 +1,134 @@
+[
+  {
+    "id": 463,
+    "question": "The archer or crossbowman, when shooting at an animal, must be at a distance:",
+    "options": {
+      "A": "Less than 30 metres",
+      "B": "Greater than 30 metres",
+      "C": "Greater than 40 metres"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 464,
+    "question": "The archer or crossbowman must shoot at the animal, aiming:",
+    "options": {
+      "A": "At the spinal cord",
+      "B": "At the brain",
+      "C": "At the thoracic cavity"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 465,
+    "question": "Outside the practice of hunting, the tips of arrows or bolts for big game must:",
+    "options": {
+      "A": "Be packed in the quiver",
+      "B": "Wrapped in paper",
+      "C": "Always be visible"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 466,
+    "question": "The hunter in the act of hunting, when using a bow or crossbow, must:",
+    "options": {
+      "A": "Arm the bow or crossbow, close to the place of the shot",
+      "B": "Have the bow or crossbow ready to shoot",
+      "C": "Always carry two arrows or bolts in the hand"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 467,
+    "question": "The hunter may only use a crossbow, in big-game hunting, if it has:",
+    "options": {
+      "A": "A safety catch",
+      "B": "A power of less than 125 pounds",
+      "C": "A power of less than 100 pounds"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 468,
+    "question": "In hunting with a bow or crossbow, what type of tip is permitted in big-game hunting?",
+    "options": {
+      "A": "With a barb",
+      "B": "With blades",
+      "C": "Ogival"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 469,
+    "question": "Outside the practice of hunting, the transport of a bow or crossbow must be done in its own case, with the exception of cases of movement between hide positions, provided that the distance between them does not exceed:",
+    "options": {
+      "A": "100 metres",
+      "B": "150 metres",
+      "C": "200 metres"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 470,
+    "question": "The hunter, when preparing the shot with a bow or crossbow, finds that the prey has sensed the hunter's presence and is moving away, so the hunter must:",
+    "options": {
+      "A": "Shoot, swinging with the animal",
+      "B": "Wait for the animal to stand still",
+      "C": "Shoot, calculating the point where the animal crosses the projectile"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 471,
+    "question": "In the practice of hunting with a bow or crossbow, what is the minimum cutting width of the tips of arrows or bolts to be used in big-game hunting?",
+    "options": {
+      "A": "20 mm",
+      "B": "22 mm",
+      "C": "25 mm"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 472,
+    "question": "In the practice of hunting with a bow or crossbow, when crossing an obstacle, the hunter must:",
+    "options": {
+      "A": "Throw the arrow or bolt to the other side of the obstacle",
+      "B": "Put the arrows or bolts in the quiver",
+      "C": "Jump with the arrow or bolt mounted on the weapon but without carrying the bow under tension"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 473,
+    "question": "In hunting with a bow or crossbow, the tips of arrows or bolts to be used in big-game hunting must have, at minimum:",
+    "options": {
+      "A": "Two prongs",
+      "B": "Two blades",
+      "C": "Two blades with a barb"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 474,
+    "question": "In hunting with a bow or crossbow from a high seat, the hunter must aim at:",
+    "options": {
+      "A": "The spinal column, because it causes instant death",
+      "B": "The thorax, because it is the place where the vital organs are found",
+      "C": "The kidney, because it is a poorly protected area"
+    },
+    "status": "checked",
+    "notes": ""
+  }
+]

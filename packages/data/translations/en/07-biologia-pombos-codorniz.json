@@ -1,0 +1,332 @@
+[
+  {
+    "id": 198,
+    "question": "The picture shows:",
+    "options": {
+      "A": "A common wood pigeon",
+      "B": "A stock dove",
+      "C": "A European turtle dove"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 199,
+    "question": "The European turtle dove is distinguished from pigeons by:",
+    "options": {
+      "A": "Being smaller and of a more slender silhouette",
+      "B": "Being smaller and of a less slender silhouette",
+      "C": "Being smaller and of a stockier silhouette"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 200,
+    "question": "The European turtle dove is distinguished from pigeons by:",
+    "options": {
+      "A": "In flight, having a less irregular wingbeat",
+      "B": "In flight, having a more irregular wingbeat",
+      "C": "In flight, having a slower wingbeat"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 201,
+    "question": "The European turtle dove is distinguished from pigeons by:",
+    "options": {
+      "A": "In flight, the black tail with a dark terminal band being noticeable",
+      "B": "In flight, the white tail with a dark terminal band being noticeable",
+      "C": "In flight, the black tail with a white terminal band being noticeable"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 202,
+    "question": "The European turtle dove is a migratory bird that winters:",
+    "options": {
+      "A": "On the African continent and nests in Europe",
+      "B": "On the European continent and nests in Africa",
+      "C": "On the American continent and nests in Europe"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 203,
+    "question": "The entry of turtle doves into Europe takes place from the month of:",
+    "options": {
+      "A": "March",
+      "B": "April",
+      "C": "May"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 204,
+    "question": "The European turtle dove is a species that prefers:",
+    "options": {
+      "A": "Not very dense woodland alternating with waterlogged areas",
+      "B": "Dense woodland alternating with cereal fields and pastures",
+      "C": "Waterlogged areas alternating with cereal fields and pastures"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 205,
+    "question": "The European turtle dove, in terms of diet, is:",
+    "options": {
+      "A": "An insectivorous bird",
+      "B": "An insectivorous and granivorous bird",
+      "C": "A granivorous bird"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 206,
+    "question": "The European turtle dove bases its diet on:",
+    "options": {
+      "A": "Seeds, cereals and also insects, although in a small percentage",
+      "B": "Seeds, young shoots and also insects, although in a small percentage",
+      "C": "Cereals, young shoots and also insects, although in a small percentage"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 207,
+    "question": "The European turtle dove is normally sighted:",
+    "options": {
+      "A": "In pairs or in large groups",
+      "B": "In pairs or alone",
+      "C": "In pairs or in very small groups"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 208,
+    "question": "The first nests of the European turtle dove are made in:",
+    "options": {
+      "A": "May",
+      "B": "April",
+      "C": "June"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 209,
+    "question": "The clutch of the European turtle dove is of:",
+    "options": {
+      "A": "Three eggs, rarely one",
+      "B": "Two eggs, rarely one",
+      "C": "Four eggs, rarely two"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 210,
+    "question": "The incubation of the eggs, in the case of the European turtle dove:",
+    "options": {
+      "A": "Is done only by the females",
+      "B": "Is done only by the males",
+      "C": "Is done by both sexes"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 211,
+    "question": "In flight, the European turtle dove is distinguished from pigeons by there being noticeable:",
+    "options": {
+      "A": "The black tail with a dark terminal band",
+      "B": "The white tail with a dark terminal band",
+      "C": "The black tail with a white terminal band"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 212,
+    "question": "What is the preferred habitat of the European turtle dove:",
+    "options": {
+      "A": "Dense woodland alternating with open fields",
+      "B": "Forests",
+      "C": "Wetlands"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 213,
+    "question": "The common quail is a species:",
+    "options": {
+      "A": "Winter visitor throughout the country",
+      "B": "Summer visitor throughout the country",
+      "C": "Winter visitor in the north of the country"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 214,
+    "question": "It can be stated that the common quail is:",
+    "options": {
+      "A": "The smallest European animal",
+      "B": "The smallest European herbivore",
+      "C": "The smallest European galliform"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 215,
+    "question": "The common quail is a species that:",
+    "options": {
+      "A": "Comes from Africa to breed in Europe",
+      "B": "Comes from the Middle East to breed in Europe",
+      "C": "Resident in the north of the country"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 216,
+    "question": "The common quail is a species that:",
+    "options": {
+      "A": "Can be found throughout the whole year in the north of the country",
+      "B": "Can be found throughout the whole year in the south of the country",
+      "C": "Can be found throughout the whole year in the south of the country and in the Azores"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 217,
+    "question": "The song of the common quail can be heard:",
+    "options": {
+      "A": "By day and at morning twilight",
+      "B": "By night and at evening twilight",
+      "C": "Both by day and by night"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 218,
+    "question": "The common quail is a species that prefers:",
+    "options": {
+      "A": "Cultivated fields, cereal fields, pastures and open spaces in woods",
+      "B": "Cultivated fields, cereal fields, pastures and waterlogged areas",
+      "C": "Cultivated fields, cereal fields, pastures and stony areas"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 219,
+    "question": "The common quail is a species that:",
+    "options": {
+      "A": "Nests in small-sized shrubs",
+      "B": "Nests on the ground",
+      "C": "Nests in medium-sized shrubs"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 220,
+    "question": "The nest of the common quail is formed of:",
+    "options": {
+      "A": "A slight depression lined with feathers of the common quail itself",
+      "B": "A slight depression lined with various debris",
+      "C": "A slight depression lined with plant material"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 221,
+    "question": "The common quail is a species that generally breeds:",
+    "options": {
+      "A": "From mid-May to June",
+      "B": "From mid-May to July",
+      "C": "From mid-April to June"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 222,
+    "question": "In the common quail, the incubation of the eggs is done:",
+    "options": {
+      "A": "Only by the male",
+      "B": "Only by the female",
+      "C": "By both sexes"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 223,
+    "question": "In the common quail, the incubation of the eggs lasts between:",
+    "options": {
+      "A": "12 to 16 days",
+      "B": "16 to 21 days",
+      "C": "18 to 21 days"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 224,
+    "question": "In the common quail, from what age can the chicks migrate together with the adults?",
+    "options": {
+      "A": "At 2 months",
+      "B": "At 3 months",
+      "C": "At 4 months"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 225,
+    "question": "It can be stated that the common quail is:",
+    "options": {
+      "A": "The smallest European animal",
+      "B": "The smallest European galliform",
+      "C": "The smallest European herbivore"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 226,
+    "question": "The common quail generally makes its nest:",
+    "options": {
+      "A": "In small-sized shrubs and trees",
+      "B": "In large-sized trees",
+      "C": "On the ground"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 227,
+    "question": "Which of the statements is correct:",
+    "options": {
+      "A": "The turtle dove begins the building of the nest in April",
+      "B": "The chicks of the common quail can migrate with the adults at two months of life",
+      "C": "The Iberian hare has only one litter a year"
+    },
+    "status": "checked",
+    "notes": ""
+  }
+]

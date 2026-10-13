@@ -19,6 +19,24 @@ import chunk15 from '../questions/15-arco-besta.json' with { type: 'json' };
 import chunk16 from '../questions/16-campos-treino.json' with { type: 'json' };
 import chunk17 from '../questions/17-caes.json' with { type: 'json' };
 import chunk18 from '../questions/18-cetraria.json' with { type: 'json' };
+import translation01 from '../translations/en/01-documentos.json' with { type: 'json' };
+import translation02 from '../translations/en/02-conceitos-basicos.json' with { type: 'json' };
+import translation03 from '../translations/en/03-biologia-coelho-lebre.json' with { type: 'json' };
+import translation04 from '../translations/en/04-biologia-raposa-javali.json' with { type: 'json' };
+import translation05 from '../translations/en/05-biologia-veado-corco.json' with { type: 'json' };
+import translation06 from '../translations/en/06-biologia-perdiz.json' with { type: 'json' };
+import translation07 from '../translations/en/07-biologia-pombos-codorniz.json' with { type: 'json' };
+import translation08 from '../translations/en/08-biologia-patos.json' with { type: 'json' };
+import translation09 from '../translations/en/09-biologia-pombos-galinhola-narcejas.json' with { type: 'json' };
+import translation10 from '../translations/en/10-biologia-tarambola-tordos.json' with { type: 'json' };
+import translation11 from '../translations/en/11-nao-cinegeticas.json' with { type: 'json' };
+import translation12 from '../translations/en/12-condicionamentos.json' with { type: 'json' };
+import translation13 from '../translations/en/13-terrenos.json' with { type: 'json' };
+import translation14 from '../translations/en/14-periodos-processos.json' with { type: 'json' };
+import translation15 from '../translations/en/15-arco-besta.json' with { type: 'json' };
+import translation16 from '../translations/en/16-campos-treino.json' with { type: 'json' };
+import translation17 from '../translations/en/17-caes.json' with { type: 'json' };
+import translation18 from '../translations/en/18-cetraria.json' with { type: 'json' };
 
 export type OptionKey = 'A' | 'B' | 'C';
 
@@ -132,16 +150,20 @@ export const sectionOf = (question: Question): Section | undefined => sectionByS
 export const topicOf = (question: Question): Topic | undefined => topicBySlug.get(question.topic);
 
 /**
- * PHASE 2 HOOK: translations/en/ and hints/en/ do not exist yet. When phase 2 lands the
- * files, import each one here (same names as the chunk files, one import line each, as
- * for chunks) and list them in these two arrays. import.meta.glob was not used
+ * One import per translations/en/ file, listed in chunk order like `chunks` (the loader test fails
+ * when a file on disk is not wired in); the JSON widens `status` to string, so the list is narrowed
+ * once, here. hints/en/ joins `hints` the same way in phase 3. import.meta.glob was not used
  * because tsc needs Vite client type shims for it, and the files are few and named.
  */
-const translationFiles: readonly (readonly Translation[])[] = [];
-const hintFiles: readonly (readonly Hint[])[] = [];
+const translations = [
+  translation01, translation02, translation03, translation04, translation05, translation06,
+  translation07, translation08, translation09, translation10, translation11, translation12,
+  translation13, translation14, translation15, translation16, translation17, translation18,
+].flat() as Translation[];
+const hints: readonly Hint[] = [];
 
-const translationById = new Map(translationFiles.flat().map((t) => [t.id, t]));
-const hintById = new Map(hintFiles.flat().map((h) => [h.id, h]));
+const translationById = new Map(translations.map((t) => [t.id, t]));
+const hintById = new Map(hints.map((h) => [h.id, h]));
 
 /** The English translation for an id, or undefined while no file holds it. */
 export const translationFor = (id: number): Translation | undefined => translationById.get(id);

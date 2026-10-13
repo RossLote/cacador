@@ -273,7 +273,8 @@ function checkHint(rel, e, pt) {
 /**
  * Rule 5: translations and hints mirror the question files, with the fields of DESIGN.md § 3.3.
  * Only files that exist are checked.
- * Returns the translations by id, each with the file it came from and its lowercased text, for rule 6.
+ * Returns the translations by id, each with the file it came from and its lowercased text with quotes
+ * straightened, for rule 6 and the counts.
  */
 function checkMirrors(dir, files) {
   const translations = new Map();
@@ -295,7 +296,7 @@ function checkMirrors(dir, files) {
         if (!STATUSES.includes(e.status)) failAt(rel, e.id, `status "${e.status}" is not one of ${STATUSES.join(', ')}`);
         if (kind === 'translations') {
           checkTranslation(rel, e, pt);
-          translations.set(e.id, { ...e, file: rel, text: textOf(e).toLowerCase() });
+          translations.set(e.id, { ...e, file: rel, text: straighten(textOf(e)).toLowerCase() });
         } else {
           checkHint(rel, e, pt);
         }
@@ -314,26 +315,52 @@ const escapeRegExp = (text) => text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 const straighten = (text) => text.replace(/\u2019/g, "'").replace(/[\u201c\u201d]/g, '"');
 
 /**
+ * Reads the glossary file `rel` when it exists: a list of objects whose fields have the types `spec`
+ * names, with `pt` unique as rule 6 matches it (ignoring case, curly quotes read as straight ones).
+ * Returns the list, or undefined when there is no such file.
+ */
+function readGlossary(dir, rel, label, spec) {
+  if (!existsSync(join(dir, rel))) return undefined;
+  const glossary = readJson(dir, rel);
+  if (!Array.isArray(glossary)) fail(rel, 'does not hold a list');
+  checkEntries(rel, label, glossary, 'pt', spec);
+  const first = new Map();
+  for (const entry of glossary) {
+    const key = straighten(entry.pt).toLowerCase();
+    if (first.has(key)) fail(rel, `${label} ${entry.pt} is listed twice (also as ${first.get(key)})`);
+    first.set(key, entry.pt);
+  }
+  return glossary;
+}
+
+/**
  * Rule 6 (DESIGN.md § 4): a glossary `pt` that occurs as a whole word in a question (a hyphen is part
  * of the word, curly quotes straightened) must have its `en` in every non-draft translation of it.
  */
-function checkGlossary(dir, files, translations) {
-  const rel = 'glossary/species.json';
-  if (!existsSync(join(dir, rel))) return;
-  const glossary = readJson(dir, rel);
-  if (!Array.isArray(glossary)) fail(rel, 'does not hold a list');
-  checkEntries(rel, 'species', glossary, 'pt', { pt: 'string', scientific: 'string', en: 'string', group: 'string' });
+function checkGlossary(files, translations, glossary) {
   const ptText = new Map([...files.values()].flat().map((q) => [q.id, straighten(textOf(q))]));
+  const ptLower = new Map([...ptText].map(([id, text]) => [id, text.toLowerCase()]));
   for (const entry of glossary) {
-    const word = new RegExp(`(?<![\\p{L}\\p{N}-])${escapeRegExp(straighten(entry.pt))}(?![\\p{L}\\p{N}-])`, 'iu');
-    const en = entry.en.toLowerCase();
+    const name = straighten(entry.pt);
+    const needle = name.toLowerCase();
+    const word = new RegExp(`(?<![\\p{L}\\p{N}-])${escapeRegExp(name)}(?![\\p{L}\\p{N}-])`, 'iu');
+    const en = straighten(entry.en).toLowerCase();
     for (const [id, translation] of translations) {
-      if (translation.status === 'draft' || !word.test(ptText.get(id))) continue;
+      // The substring test is a cheap filter; the word-boundary regex decides.
+      if (translation.status === 'draft' || !ptLower.get(id).includes(needle) || !word.test(ptText.get(id))) continue;
       if (!translation.text.includes(en)) {
         failAt(translation.file, id, `"${entry.pt}" must appear as "${entry.en}" (glossary/species.json)`);
       }
     }
   }
+}
+
+/** The translation counts `validate` reports: entries, files, and entries at each status. */
+function countTranslations(translations) {
+  const entries = [...translations.values()];
+  const counts = { entries: entries.length, files: new Set(entries.map((t) => t.file)).size };
+  for (const status of STATUSES) counts[status] = entries.filter((t) => t.status === status).length;
+  return counts;
 }
 
 /** Checks `dir` (default packages/data) against DESIGN.md § 4, in order, and returns the counts. */
@@ -346,7 +373,12 @@ export function validate(dir = dataDir) {
   checkSectionsAndTopics(manifest, files);
   checkText(manifest, files);
   checkImages(dir, manifest, files);
-  checkGlossary(dir, files, checkMirrors(dir, files));
+  const translations = checkMirrors(dir, files);
+  const species = readGlossary(dir, 'glossary/species.json', 'species', { pt: 'string', scientific: 'string', en: 'string', group: 'string' });
+  if (species) checkGlossary(files, translations, species);
+  // Rule 7 (DESIGN.md § 4): only the terms glossary's shape is checked; a term's use in translations
+  // is the meaning pass's job, not a rule's.
+  const terms = readGlossary(dir, 'glossary/terms.json', 'term', { pt: 'string', en: 'string', note: 'text' });
 
   const all = [...files.values()].flat();
   return {
@@ -356,5 +388,7 @@ export function validate(dir = dataDir) {
     topics: manifest.topics.length,
     images: manifest.images.length,
     imageQuestions: all.filter((q) => q.image !== undefined).length,
+    translations: countTranslations(translations),
+    glossaries: { species: species?.length ?? 0, terms: terms?.length ?? 0 },
   };
 }

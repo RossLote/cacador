@@ -131,8 +131,8 @@ packages/data/
   hints/en/                  same 18 file names, language notes and nudges
   images/                    q119.jpg … q320.jpg and sinal.jpg
   glossary/
-    species.json             pt name, scientific name, en name, group
-    terms.json               hunting and legal vocabulary, pt to en, with notes
+    species.json             { pt, scientific, en, group }, one entry per surface form (§ 3.3)
+    terms.json               { pt, en, note }, hunting and legal vocabulary (§ 3.3)
   scripts/
     extract.mjs              PDF to questions/ and images/, deterministic
     validate.mjs             the rules in § 4, run by pnpm lint
@@ -226,9 +226,38 @@ An English translation, one entry in a `translations/en/` file:
   "status": "draft", "notes": "" }
 ```
 
-`status` is `draft` (machine or first pass), `checked` (glossary and side-by-side
+`status` is `draft` (the translator's pass), `checked` (glossary and side-by-side
 meaning pass done) or `reviewed` (Ross read it). `notes` records anything a reviewer
-should know.
+should know: an ambiguity the meaning pass could not resolve, never a change it made.
+The rules for writing and checking an entry are in § 5 step 2.
+
+A species, one entry in `glossary/species.json` (an array):
+
+```json
+{ "pt": "arrabio", "scientific": "Anas acuta", "en": "Northern pintail", "group": "patos" }
+```
+
+`pt` is the name as the bank prints it, and a singular and a plural are separate
+entries. `en` follows § 5 step 2 rule 9. The glossary holds every species name the bank
+uses plus every species of Portaria 67/2024
+(diariodarepublica.pt/dr/detalhe/portaria/67-2024-853384722). `group` follows one rule
+(decision 2026-10-13): the manifest topic slug of the species' family when it has one
+(`coelho`, `perdiz`, `patos` for every duck, `tordos` for every thrush, `pombos-rolas`
+for pigeons and doves); `nao-cinegeticas` for a protected species; `outras-cinegeticas`
+for a game species with no topic (corvids, starling, geese).
+
+A term, one entry in `glossary/terms.json` (an array):
+
+```json
+{ "pt": "cetraria", "en": "falconry", "note": "" }
+```
+
+The terms glossary holds the hunting and legal vocabulary: the hunting methods, the
+kinds of hunting ground, the documents and the legal periods. `pt` is unique and in the
+bank's surface form; `en` is the one English every translation uses for it; `note` is a
+string, empty or saying when the term applies or how it differs from a near neighbour.
+Rule 7 in § 4 checks the shape only; whether a translation uses the term is the meaning
+pass's job, not a rule's.
 
 A hint, one entry in a `hints/en/` file:
 
@@ -293,12 +322,16 @@ the file and id. Rules:
 6. Once `glossary/species.json` exists: for every Portuguese species name in a
    question, the matching English name is present in its translation (case-insensitive).
    Skipped for entries with status `draft`. Every glossary entry has non-empty `pt`,
-   `scientific`, `en` and `group`, and `pt` is unique. The glossary `pt` must be the
+   `scientific`, `en` and `group`, and `pt` is unique, ignoring case and curly-versus-straight quotes. The glossary `pt` must be the
    surface form used in the bank: a whole-word, case-insensitive match in which a
    hyphen counts as part of the word (`Perdiz` does not match inside `perdiz-cinzenta`),
    curly apostrophes and quotes are read as straight ones, and a plural is its own
    entry. An entry that matches no question is allowed, because the glossary also
    holds species of Portaria 67/2024 that the bank never names.
+7. Once `glossary/terms.json` exists: every entry has non-empty `pt` and `en` and a
+   `note` that is a string (empty allowed), and `pt` is unique in the same sense as rule 6. Only the shape is
+   checked; a term inflects in running text, so its use in a translation is left to the
+   meaning pass (§ 5 step 2).
 
 The manifest itself is checked first: every entry has the fields of § 3.4 with their
 types and a unique slug or file name, section ranges tile 1 to 506, chunk ranges tile
@@ -309,14 +342,67 @@ names existing questions, each under one image only.
 
 Four phases, each its own epic, in order.
 
-1. **Extract** (this epic): workspace, manifest, extractor, images, validator, loader.
-2. **Translate**: species glossary first (Portuguese name, scientific name, English
-   name, from Portaria 67/2024's species list and the bank itself), then an English
-   draft per chunk with the glossary enforced, then a side-by-side meaning pass that
-   flags drift into `notes`, then review. The earlier translation in
-   `/Users/ross.lote/Projects/personal/cacador-quiz/src/data/questions/*.json` is a usable
-   draft for prose but wrong on species names (narceja-galega, arrabio,
-   pato-trombeteiro, piadeira, marreco), which is why the glossary pass is mandatory.
+1. **Extract** (done, cac-eo6): workspace, manifest, extractor, images, validator,
+   loader.
+2. **Translate** (phase 2, epic cac-qre): the species and terms glossaries first
+   (§ 3.3), then a translator's pass per chunk file, then a side-by-side meaning pass
+   per chunk file by a different agent; every entry ends at `checked`. A bead owns one
+   to four chunk files totalling 37 to 63 questions and works them one file at a time;
+   the meaning-pass beads mirror the translation beads' groups one to one. The English
+   in the earlier cacador-quiz project was found wrong and inconsistent on species and
+   terms (a 39-question sample on 2026-10-13: arrabio as teal, narceja-galega as great
+   snipe, de salto three different ways) and is not an input. A translator or
+   meaning-pass worker follows these rules:
+
+   1. Translate fresh from the Portuguese in `questions/`. No earlier English is
+      opened, the cacador-quiz files included.
+   2. Read `glossary/species.json` and `glossary/terms.json` before the first entry.
+      A species or term the bank uses is written as the glossary's `en`, the same in
+      every stem and option. A species or term a glossary lacks is not added inside
+      the bead: write the name the glossary would hold (rule 9 for a species) and list
+      it in the bead's close reason, for one "Glossary additions" bead at the end of
+      the phase. Where a terms note's combined form names a species, the species
+      glossary's `en` wins ("in the hunting of ducks", "Iberian hare coursing").
+   3. Register is literal-leaning: keep the Portuguese order and structure where
+      English allows, so the English maps onto the sentence the learner is reading.
+      British spelling (licence, metres, colour). Numbers, units and times as the
+      Portuguese has them; a bare number or a proper name is copied unchanged. A time
+      of day is written on the 24-hour clock ("depois das 16 horas" → "after 16:00");
+      a duration stays in hours. Where the Portuguese verb has no stated subject and
+      English needs one, write "the hunter" or "they", never "he".
+   4. A Portuguese term with no English equivalent (montaria, listado, farropo,
+      morouços, terçó) stays in Portuguese, followed in parentheses by the gloss the
+      terms glossary gives it.
+   5. Each entry has the § 3.3 shape, the ids and option keys of its Portuguese file.
+      Keep the keyed option right and the other two wrong in English as they are in
+      Portuguese.
+   6. The translator leaves every entry at `draft` with `notes` empty. Rule 6 skips
+      `draft`, so a half-finished file never fails lint.
+   7. The meaning pass is a second agent, never the translator of the same file. It
+      reads `pt` and `en` side by side, rewrites the English where it drifts from the
+      Portuguese, breaks a glossary, or would make the keyed option wrong, and sets
+      `status` to `checked`; from then rule 6 binds.
+   8. `notes` is written only by the meaning pass and only for an ambiguity it could
+      not resolve: a reading of the Portuguese it cannot settle, or a term with no
+      clean English. A fix it made goes in the bead's close reason with the ids it
+      changed, never in `notes`.
+   9. A species' `en` is the common name as British field guides print it, in its full
+      form where one exists (Northern pintail, Eurasian wigeon, Common snipe, Jack
+      snipe), capitalised as a name; rule 6 matches case-insensitively, so running text
+      may lowercase it. Its `scientific` is as Portaria 67/2024 prints it, else the
+      current IOC name.
+   10. No entry is set to `reviewed` in this phase; Ross flips it while studying, through
+       the app phase.
+   11. A Portuguese term whose English rendering or gloss would by itself pick the keyed
+       option stays in Portuguese, without a gloss, in the stem and the options; the rest
+       of the sentence is translated. This is the case in a question that asks for a
+       name or what a name means (what groups of boar are called, which teeth are called
+       navalhas, the name of a young boar under six months, what brama is). A gloss there
+       would give the answer away during a peek. It applies when the answer follows
+       from what the English word means (how a method works, what a name denotes), not
+       when the question asks a method's legal scope (which game, months or ground it is
+       allowed for), where the English name's associations are the field knowledge the
+       exam tests.
 3. **Hints**: one agent per chunk file writes `language`, `nudge` and `patterns` for
    each question by reading the sentence as a learner; a second pass checks the nudge
    agrees with the keyed answer and every `language.pt` occurs in the question.
@@ -407,3 +493,54 @@ precedent for every choice here, minus the server: this app has no backend.
 - **2026-10-13, Beads prefix `cac`, JSONL committed.** No Dolt remote;
   `export.auto` is on and the git hooks are installed so `.beads/issues.jsonl` travels
   with every commit.
+- **2026-10-13, Translations are written fresh.** One agent per group of chunk files,
+  both glossaries as READ FIRST; the earlier cacador-quiz English is never opened by a
+  worker (§ 5 step 2). Reason: a 39-question sample plus a tally of every species option
+  found it wrong and inconsistent on species (arrabio as teal, pato-trombeteiro as
+  wigeon and as goldeneye, narceja-galega as great snipe) and on terms (de salto as jump
+  method, jump hunting and walk-up); fixing it costs as much as redoing it and keeps its
+  anchoring. Record: brief cac-qgb, notes FOUND.
+- **2026-10-13, Species glossary scope and group.** `glossary/species.json` holds every
+  species name the bank uses, each surface form its own entry, plus every species of
+  Portaria 67/2024; `group` is the family's topic slug, else `nao-cinegeticas` or
+  `outras-cinegeticas` (§ 3.3). Reason: rule 6 already enforces the shape and allows
+  entries the bank never names.
+- **2026-10-13, Terms glossary, shape checked only.** `glossary/terms.json` is
+  `{ pt, en, note }`, `pt` unique and in the bank's surface form; rule 7 checks its
+  shape, and its use in translations is checked by the meaning pass. Reason: terms
+  inflect, so a rule matching them in translations would be loose or noisy.
+- **2026-10-13, Literal-leaning register.** Portuguese order and structure kept where
+  English allows, British spelling, numbers and units as printed; a term with no
+  English equivalent stays in Portuguese with the glossary's gloss in parentheses
+  (§ 5 step 2 rules 3 and 4). Reason: the peek unblocks a word in the sentence being
+  read; it is not a reading mode.
+- **2026-10-13, Meaning pass by a second agent.** Never the translator of the same file;
+  reads `pt` and `en` side by side, rewrites drift, glossary breaks and anything that
+  would make the keyed option wrong, flips `status` to `checked`, and writes `notes`
+  only for an ambiguity it could not resolve; its fixes go in the bead's close reason.
+  Reason: notes are what a reviewer should know, not a change log.
+- **2026-10-13, No hand review in phase 2.** Every entry ends at `checked`; `reviewed`
+  is flipped as Ross studies, through the app phase. Reason: `reviewed` means Ross read
+  the entry (§ 3.3), so only Ross's own study can set it (brief cac-qgb D6).
+- **2026-10-13, Species English names.** The common name as British field guides print
+  it, full form where one exists (Northern pintail, Eurasian wigeon, Common snipe, Jack
+  snipe), capitalised as a name; scientific name as Portaria 67/2024 prints it, else
+  the current IOC name. Precedent: the § 3.3 example. Rule 6 matches case-insensitively,
+  so running text may lowercase it.
+- **2026-10-13, Translators leave `draft`.** Only the meaning pass flips an entry to
+  `checked`, so rule 6 binds from the meaning pass on. Reason: rule 6 skips `draft`; a
+  translator's half-finished file must not fail lint.
+- **2026-10-13, Translation beads wire their own files and run in series.** Each
+  translation bead adds its files to the loader (`packages/data/src/index.ts`, the
+  phase 2 hook), so those beads run one after another; meaning-pass beads never touch
+  the loader and run in parallel. Reason: the loader test requires every file on disk to
+  be wired, and phase 1 chose static imports over `import.meta.glob`.
+- **2026-10-13, Bead size for translation.** A bead owns one to four chunk files
+  totalling 37 to 63 questions and works them one file at a time; the meaning-pass beads
+  mirror the same groups one to one. Reason: agents work one chunk file at a time
+  (§ 3.1, `CLAUDE.md`).
+- **2026-10-13, Names under test stay unglossed.** In a question that asks for a
+  Portuguese name, the names under test stay in Portuguese without a gloss (§ 5 step 2
+  rule 11), over the terms glossary's gloss. Reason: cac-qre.6 glossed listado and
+  farropo with their ages in the very question that asks which name fits which age, so
+  a peek gave the answer away.

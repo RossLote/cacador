@@ -1,0 +1,354 @@
+[
+  {
+    "id": 105,
+    "question": "The red fox is:",
+    "options": {
+      "A": "A solitary animal",
+      "B": "An animal that lives in large colonies",
+      "C": "An animal that lives in pairs"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 106,
+    "question": "The red fox is:",
+    "options": {
+      "A": "A medium-sized mammal",
+      "B": "A large-sized mammal",
+      "C": "A small-sized mammal"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 107,
+    "question": "The males of the red fox can, at times, be distinguished from the females by:",
+    "options": {
+      "A": "Having a less strong and more pointed head",
+      "B": "Having a stronger and less pointed head",
+      "C": "Having a stronger and more pointed head"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 108,
+    "question": "The coat of the red fox, during winter, is:",
+    "options": {
+      "A": "Less thick and denser than in summer",
+      "B": "Thicker and less dense than in summer",
+      "C": "Thicker and denser than in summer"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 109,
+    "question": "The heat of the red fox generally occurs in:",
+    "options": {
+      "A": "January",
+      "B": "February",
+      "C": "March"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 110,
+    "question": "The gestation period of the red fox has an approximate duration of:",
+    "options": {
+      "A": "40 to 50 days",
+      "B": "50 to 60 days",
+      "C": "60 to 70 days"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 111,
+    "question": "In the red fox, each litter has on average:",
+    "options": {
+      "A": "1 to 3 young",
+      "B": "2 to 5 young",
+      "C": "3 to 6 young"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 112,
+    "question": "Red foxes can be seen in a group:",
+    "options": {
+      "A": "Throughout the whole year",
+      "B": "During the winter period",
+      "C": "While the females are in heat"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 113,
+    "question": "The Egyptian mongoose is an animal:",
+    "options": {
+      "A": "That lives in places with sparse vegetation",
+      "B": "Solitary",
+      "C": "That can be seen both by day and by night"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 114,
+    "question": "The Egyptian mongoose has ears:",
+    "options": {
+      "A": "Large and rounded",
+      "B": "Very short and rounded",
+      "C": "Very short and pointed"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 115,
+    "question": "The Egyptian mongoose is:",
+    "options": {
+      "A": "A medium-sized carnivore",
+      "B": "A large-sized carnivore",
+      "C": "A small-sized carnivore"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 116,
+    "question": "The Egyptian mongoose is an animal:",
+    "options": {
+      "A": "Solitary",
+      "B": "Quite sociable",
+      "C": "Not very sociable"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 117,
+    "question": "The Egyptian mongoose is an animal that, during its hunting activities:",
+    "options": {
+      "A": "Moves in groups",
+      "B": "Moves in pairs",
+      "C": "Moves alone"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 118,
+    "question": "The Egyptian mongoose is an animal:",
+    "options": {
+      "A": "That inhabits places with sparse vegetation",
+      "B": "That inhabits damp and waterlogged places",
+      "C": "That inhabits places with dense vegetation"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 119,
+    "question": "The picture shows:",
+    "options": {
+      "A": "An Egyptian mongoose",
+      "B": "A European badger",
+      "C": "A ferret"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 120,
+    "question": "The Egyptian mongoose feeds mainly on:",
+    "options": {
+      "A": "Birds, mammals, reptiles and fruit",
+      "B": "Varied plant products",
+      "C": "Insects"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 121,
+    "question": "The Egyptian mongoose feeds fundamentally on:",
+    "options": {
+      "A": "Small birds and mammals, reptiles and fruit",
+      "B": "Varied plant products",
+      "C": "Shoots of trees and shrubs"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 122,
+    "question": "The Egyptian mongoose has a diet:",
+    "options": {
+      "A": "Not very varied, based exclusively on fish",
+      "B": "Not very varied, based exclusively on insects",
+      "C": "Very varied, in which small birds and mammals, invertebrates, reptiles and fruit are included"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 123,
+    "question": "From what age can the wild boar breed?",
+    "options": {
+      "A": "From 6 months",
+      "B": "From 8 months",
+      "C": "From 10 months"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 124,
+    "question": "What are the groups of wild boar called?",
+    "options": {
+      "A": "Varas or companhias",
+      "B": "Rebanhos or manadas",
+      "C": "Bandos or companhias"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 125,
+    "question": "Which is the big-game species with the widest representation in Portugal?",
+    "options": {
+      "A": "Red fox",
+      "B": "Red deer",
+      "C": "Wild boar"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 126,
+    "question": "In the wild boar, the name navalhas is given to the teeth:",
+    "options": {
+      "A": "Lower canines",
+      "B": "Upper canines",
+      "C": "Premolars"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 127,
+    "question": "In the wild boar, the name amoladeiras is given to the teeth:",
+    "options": {
+      "A": "Upper canines",
+      "B": "Premolars",
+      "C": "Lower canines"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 128,
+    "question": "In feeding habits, the wild boar is an animal:",
+    "options": {
+      "A": "Insectivorous",
+      "B": "Granivorous",
+      "C": "Omnivorous"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 129,
+    "question": "With age, adult male wild boar tend to:",
+    "options": {
+      "A": "Form pairs",
+      "B": "Form large groups of males only",
+      "C": "Isolate themselves progressively"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 130,
+    "question": "The gestation of the wild boar lasts on average:",
+    "options": {
+      "A": "100 days",
+      "B": "110 days",
+      "C": "120 days"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 131,
+    "question": "What name is given to the young of the wild boar under 6 months of age?",
+    "options": {
+      "A": "Listado",
+      "B": "Farropo",
+      "C": "Leitão"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 132,
+    "question": "Between 6 months and 1 year of age, the young of the wild boar has a name of its own. Which?",
+    "options": {
+      "A": "Bácoro",
+      "B": "Listado",
+      "C": "Farropo"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 133,
+    "question": "Indicate which of the following sentences is correct:",
+    "options": {
+      "A": "The wild boar is a sociable animal throughout its whole life",
+      "B": "The trophy of the wild boar is the head",
+      "C": "The rut of the wild boar does not always occur in a fixed season"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 134,
+    "question": "The wild boar shows different coats according to age. The coat known as “striped” is characteristic of animals with:",
+    "options": {
+      "A": "Less than 6 months of age",
+      "B": "2 years of age",
+      "C": "Adult age"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 135,
+    "question": "In the adult wild boar, one of the features that allow the male to be distinguished from the female is:",
+    "options": {
+      "A": "The lighter colour of the male",
+      "B": "The presence of larger tusks in the males",
+      "C": "The longer tail in the male"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 136,
+    "question": "In terms of habitat, the wild boar needs above all two elements. Indicate which:",
+    "options": {
+      "A": "Open areas with wide feeding grounds",
+      "B": "Extensive areas of shelter - made up essentially of dense scrub - and the presence of water",
+      "C": "Cereal-growing areas in very rugged terrain and the presence of water"
+    },
+    "status": "checked",
+    "notes": ""
+  }
+]

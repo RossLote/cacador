@@ -81,8 +81,14 @@ function expectFailure(change: (dir: string) => void, message: RegExp): void {
 }
 
 describe('validate on the real data', () => {
-  it('passes and returns the counts of DESIGN.md § 2 and § 3', () => {
-    expect(validate()).toEqual({ questions: 506, files: 18, sections: 11, topics: 29, images: 15, imageQuestions: 18 });
+  it('passes and returns the counts of DESIGN.md § 2 and § 3, the translations on disk and the glossary sizes', () => {
+    const { translations, glossaries, ...bank } = validate();
+    expect(bank).toEqual({ questions: 506, files: 18, sections: 11, topics: 29, images: 15, imageQuestions: 18 });
+    // Phase 2 leaves every entry translated and none draft; reviewed grows as Ross studies.
+    expect(translations).toMatchObject({ entries: 506, files: 18, draft: 0 });
+    expect(translations.checked + translations.reviewed).toBe(506);
+    expect(glossaries.species).toBeGreaterThan(0);
+    expect(glossaries.terms).toBeGreaterThan(0);
   });
 });
 
@@ -95,6 +101,29 @@ describe('validate on the tiny fixture', () => {
       topics: 3,
       images: 2,
       imageQuestions: 3,
+      translations: { entries: 4, files: 2, draft: 1, checked: 2, reviewed: 1 },
+      glossaries: { species: 2, terms: 2 },
+    });
+  });
+
+  it('counts no translations and empty glossaries when the files do not exist', () => {
+    const dir = copyBase();
+    remove(dir, 'translations');
+    remove(dir, 'glossary');
+    expect(validate(dir)).toMatchObject({
+      translations: { entries: 0, files: 0, draft: 0, checked: 0, reviewed: 0 },
+      glossaries: { species: 0, terms: 0 },
+    });
+  });
+
+  it('counts the translations of each file and each status, and the glossary entries', () => {
+    const dir = copyBase();
+    remove(dir, 'translations/en/02-beta.json');
+    editRows(dir, 'translations/en/01-alfa.json', (t) => (t[1].status = 'reviewed'));
+    addSpecies(dir, { pt: 'Abetarda', en: 'Great bustard' });
+    expect(validate(dir)).toMatchObject({
+      translations: { entries: 2, files: 1, draft: 0, checked: 1, reviewed: 1 },
+      glossaries: { species: 3, terms: 2 },
     });
   });
 });
@@ -476,6 +505,23 @@ describe('rule 6: species names', () => {
     expect(() => validate(dir)).toThrow(/id 3: ""frisada"" must appear as "Gadwall"/);
   });
 
+  it.each([
+    ["Mallard's duck", 'Mallard\u2019s duck'],
+    ['Mallard\u2019s duck', "Mallard's duck"],
+  ])('reads curly apostrophes as straight in the glossary English %s and the translation %s', (en, option) => {
+    const dir = copyBase();
+    editJson<GlossaryEntry[]>(dir, 'glossary/species.json', (g) => (g[0]!.en = en));
+    editRows(dir, 'translations/en/02-beta.json', (t) => (t[0].options.C = option));
+    expect(() => validate(dir)).not.toThrow();
+  });
+
+  it.each([
+    ['case', (g: GlossaryEntry[]) => g.push({ ...g[0]!, pt: 'pato-real' }), /species pato-real is listed twice \(also as Pato-real\)/],
+    ['quotes', (g: GlossaryEntry[]) => g.push({ ...g[0]!, pt: '\u201cPato-real\u201d' }, { ...g[0]!, pt: '"Pato-real"' }), /species "Pato-real" is listed twice \(also as \u201cPato-real\u201d\)/],
+  ])('rejects a glossary pt that repeats another but for %s', (_name, change, message) => {
+    expectFailure((dir) => editJson<GlossaryEntry[]>(dir, 'glossary/species.json', change), message);
+  });
+
   it('accepts a glossary entry that matches no question', () => {
     const dir = copyBase();
     addSpecies(dir, { pt: 'Abetarda', en: 'Great bustard' });
@@ -501,6 +547,55 @@ describe('rule 6: species names', () => {
     const dir = copyBase();
     remove(dir, 'glossary');
     expect(() => validate(dir)).not.toThrow();
+  });
+});
+
+interface TermEntry {
+  pt: string;
+  en?: string;
+  note?: string | number;
+}
+
+describe('rule 7: terms glossary shape', () => {
+  const editTerms = (dir: string, change: (t: TermEntry[]) => void) => editJson<TermEntry[]>(dir, 'glossary/terms.json', change);
+
+  it.each([
+    ['an empty en', (t: TermEntry[]) => (t[0]!.en = ''), /glossary\/terms\.json: term furão has no non-empty string "en"/],
+    ['no en', (t: TermEntry[]) => delete t[1]!.en, /glossary\/terms\.json: term de salto has no non-empty string "en"/],
+    ['an empty pt', (t: TermEntry[]) => (t[1]!.pt = ''), /glossary\/terms\.json: term #2 has no non-empty string "pt"/],
+    ['a duplicate pt', (t: TermEntry[]) => t.push({ ...t[0]! }), /glossary\/terms\.json: term furão is listed twice/],
+    ['no note', (t: TermEntry[]) => delete t[0]!.note, /glossary\/terms\.json: term furão has no string "note"/],
+    ['a note that is not a string', (t: TermEntry[]) => (t[1]!.note = 7), /glossary\/terms\.json: term de salto has no string "note"/],
+    ['an entry that is not an object', (t: TermEntry[]) => t.push('x' as unknown as TermEntry), /glossary\/terms\.json: term #3 is not an object/],
+  ])('rejects a term with %s', (_name, change, message) => {
+    expectFailure((dir) => editTerms(dir, change), message);
+  });
+
+  it('rejects a term that repeats another but for case', () => {
+    expectFailure((dir) => editTerms(dir, (t) => t.push({ pt: 'Furão', en: 'ferret', note: '' })), /glossary\/terms\.json: term Furão is listed twice \(also as furão\)/);
+  });
+
+  it('rejects a terms file that is not a list', () => {
+    expectFailure((dir) => writeText(dir, 'glossary/terms.json', '{}'), /glossary\/terms\.json: does not hold a list/);
+  });
+
+  it('accepts an empty note and a term that occurs in no question', () => {
+    const dir = copyBase();
+    editTerms(dir, (t) => t.push({ pt: 'montaria', en: 'montaria (driven big-game hunt with hounds)', note: '' }));
+    expect(() => validate(dir)).not.toThrow();
+  });
+
+  it('is skipped when there is no terms file, even with the species glossary present', () => {
+    const dir = copyBase();
+    remove(dir, 'glossary/terms.json');
+    expect(() => validate(dir)).not.toThrow();
+  });
+
+  it('runs after rule 6', () => {
+    expectFailure((dir) => {
+      editTerms(dir, (t) => (t[0]!.en = ''));
+      editRows(dir, 'translations/en/02-beta.json', (t) => (t[0].options.A = 'A duck'));
+    }, /translations\/en\/02-beta\.json: id 3: "Pato-real" must appear as "Mallard"/);
   });
 });
 

@@ -1,0 +1,90 @@
+[
+  {
+    "id": 499,
+    "question": "The merlin is a small falcon ideal for hunting:",
+    "options": {
+      "A": "Common quail",
+      "B": "rabbits",
+      "C": "Ducks"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 500,
+    "question": "Which of the following statements is correct?",
+    "options": {
+      "A": "The feeding of birds of prey may consist essentially of compound feed",
+      "B": "The feeding of birds of prey must be identical to what they would consume in the wild state",
+      "C": "The food given to birds of prey may not have feathers or fur"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 501,
+    "question": "The Eurasian goshawk is a “baixo-voo” (low flight, with short-winged hawks) bird of prey, used in the hunting of:",
+    "options": {
+      "A": "Furred game",
+      "B": "Feathered game",
+      "C": "Both feathered and furred game"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 502,
+    "question": "Indicate the correct sentence:",
+    "options": {
+      "A": "The Eurasian goshawk is the classic bird of hunting in alto-voo",
+      "B": "The Eurasian goshawk is the classic bird of hunting in baixo-voo",
+      "C": "The Eurasian sparrowhawk is the classic bird of hunting in alto-voo"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 503,
+    "question": "Birds of prey of the male sex are called “terçó” (tiercel, the male bird of prey) in falconry. The “terçó” is:",
+    "options": {
+      "A": "Bulkier than the female",
+      "B": "The same size as the female",
+      "C": "More agile than the female"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 504,
+    "question": "The physical condition of a bird of prey is assessed:",
+    "options": {
+      "A": "By the weight",
+      "B": "By the size",
+      "C": "By the feathers"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 505,
+    "question": "What is the cetraria method?",
+    "options": {
+      "A": "The one in which the hunter uses birds of prey to capture game species, only with the help of hunting dogs and with or without a stick",
+      "B": "The one in which the hunter uses a bow or crossbow to capture game species",
+      "C": "The one in which the hunter uses traps to capture game species"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 506,
+    "question": "In the initiation of birds of prey, manning should preferably be carried out:",
+    "options": {
+      "A": "By day",
+      "B": "By night",
+      "C": "Either by night or by day"
+    },
+    "status": "checked",
+    "notes": ""
+  }
+]

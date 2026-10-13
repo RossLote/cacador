@@ -1,0 +1,35 @@
+[
+  {
+    "id": 413,
+    "question": "How can a hunter gain access to a municipal hunting zone?",
+    "options": {
+      "A": "Only if they make a prior registration and are drawn in a public draw",
+      "B": "Only if they are a member of the municipal hunting zone",
+      "C": "Only if they are an owner of land included in the municipal hunting zone"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 414,
+    "question": "The following have access to the tourist hunting zones:",
+    "options": {
+      "A": "Only the owners of the land and their guests",
+      "B": "Only foreign hunters, the members and their guests",
+      "C": "All hunters who comply with the private operating rules of those zones"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 415,
+    "question": "The following have access to the association hunting zones:",
+    "options": {
+      "A": "Only the owners of the land",
+      "B": "Only foreign hunters",
+      "C": "Only the member hunters and the guests"
+    },
+    "status": "checked",
+    "notes": ""
+  }
+]

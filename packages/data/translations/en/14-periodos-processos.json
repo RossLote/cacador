@@ -1,0 +1,519 @@
+[
+  {
+    "id": 416,
+    "question": "The hunting of Iberian hare by the driven method may be permitted only:",
+    "options": {
+      "A": "In the months of October to January",
+      "B": "In the months of January and February",
+      "C": "In hunting zones"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 417,
+    "question": "Iberian hare coursing in the months of January and February:",
+    "options": {
+      "A": "Is prohibited",
+      "B": "Is permitted on the conditions set in a public notice of the ICNF",
+      "C": "Is permitted in hunting zones"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 418,
+    "question": "In managed hunting grounds, which hunting methods are authorised for the rabbit?",
+    "options": {
+      "A": "Walked-up, from a hide, driven, by coursing, falconry and with a ferret",
+      "B": "Walked-up, driven, stalking, falconry and with a ferret",
+      "C": "Walked-up, from a hide, driven, by coursing, stalking and with a ferret"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 419,
+    "question": "The hunting method “stalking” is permitted in the hunting:",
+    "options": {
+      "A": "Only of resident small-game species",
+      "B": "Only of aquatic small-game species",
+      "C": "Only of big-game species"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 420,
+    "question": "The hunting of snipe by falconry:",
+    "options": {
+      "A": "Is permitted in the months of October to February",
+      "B": "Is permitted in the months of January and February, but only in hunting zones",
+      "C": "Is prohibited"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 421,
+    "question": "Which of the hunting methods is prohibited in the hunting of small-game species?",
+    "options": {
+      "A": "Walked-up",
+      "B": "Stalking",
+      "C": "Driven"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 422,
+    "question": "Which of the following hunting methods is prohibited in the hunting of wild boar?",
+    "options": {
+      "A": "From a hide",
+      "B": "Stalking",
+      "C": "Coursing"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 423,
+    "question": "What is the maximum limit of the open season in which the hunting of Iberian hare may be authorised?",
+    "options": {
+      "A": "September to February",
+      "B": "September to December",
+      "C": "October to December"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 424,
+    "question": "In managed hunting grounds, in the month of August, the hunting of turtle dove may be authorised by which of the following methods?",
+    "options": {
+      "A": "Walked-up",
+      "B": "From a hide",
+      "C": "Falconry"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 425,
+    "question": "What is the maximum limit of the open season in which the hunting of common starling may be authorised?",
+    "options": {
+      "A": "From October to February",
+      "B": "From December to February",
+      "C": "From October to March"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 426,
+    "question": "In January and February the hunting of Iberian hare in hunting zones may be authorised by which of the following methods:",
+    "options": {
+      "A": "Driven",
+      "B": "Coursing",
+      "C": "From a hide"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 427,
+    "question": "Montarias (driven big-game hunts with hounds) for wild boar may be held:",
+    "options": {
+      "A": "Only in managed hunting grounds",
+      "B": "In unmanaged hunting grounds all year",
+      "C": "In unmanaged hunting grounds, from October to February in the places and on the conditions set in a public notice of the Instituto de Conservação da Natureza e das Florestas"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 428,
+    "question": "What is the maximum limit of the open season in which the hunting of stock dove may be authorised?",
+    "options": {
+      "A": "August to January",
+      "B": "September to February",
+      "C": "August to February"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 429,
+    "question": "In hunting zones driven hunting may be authorised:",
+    "options": {
+      "A": "For partridge",
+      "B": "For common quail",
+      "C": "For European golden plover"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 430,
+    "question": "What is the maximum limit of the open season in which the hunting of common quail may be authorised?",
+    "options": {
+      "A": "From August to October",
+      "B": "From August to December",
+      "C": "From September to December"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 431,
+    "question": "Of the methods indicated below, which cannot be used in the hunting of partridge?",
+    "options": {
+      "A": "Walked-up",
+      "B": "From a hide",
+      "C": "Falconry"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 432,
+    "question": "Which hunting methods are authorised in the hunting of snipe?",
+    "options": {
+      "A": "Walked-up and falconry",
+      "B": "Walked-up and from a hide",
+      "C": "Walked-up and driven"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 433,
+    "question": "The hunting of turtle doves may be carried out by the method:",
+    "options": {
+      "A": "Walked-up",
+      "B": "From a hide",
+      "C": "Falconry"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 434,
+    "question": "What is the maximum limit of the open season in which the hunting of rabbit may be authorised?",
+    "options": {
+      "A": "October to December",
+      "B": "September to December",
+      "C": "October to February"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 435,
+    "question": "In the months of January and February the hunting of Iberian hare may be carried out by coursing:",
+    "options": {
+      "A": "Only in hunting zones",
+      "B": "In the places indicated in a public notice of the Instituto de Conservação da Natureza e das Florestas",
+      "C": "In all places"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 436,
+    "question": "In unmanaged hunting grounds, which is the species that in January and February may be hunted on Saturdays by the driven method, provided it is in the places and on the conditions set in a public notice of the Instituto de Conservação da Natureza e das Florestas:",
+    "options": {
+      "A": "Iberian hare",
+      "B": "Rabbit",
+      "C": "Egyptian mongoose"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 437,
+    "question": "A group of hunters that, in December, hunts red fox in a driven hunt in unmanaged grounds:",
+    "options": {
+      "A": "Is acting correctly",
+      "B": "Is not acting correctly because one may only hunt red fox in a driven hunt, in unmanaged grounds, in the months of January and February",
+      "C": "Is not acting correctly because one may not hunt in a driven hunt in unmanaged grounds"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 438,
+    "question": "What is the maximum limit of the open season in which the hunting of thrushes may be authorised?",
+    "options": {
+      "A": "October to December",
+      "B": "September to December",
+      "C": "October to February"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 439,
+    "question": "In January, in unmanaged hunting grounds, may the walked-up hunting of snipe be authorised?",
+    "options": {
+      "A": "No, because in January one cannot hunt snipe",
+      "B": "No, because the walked-up method is prohibited",
+      "C": "Yes, in the places and on the conditions set by public notice of the Instituto de Conservação da Natureza e das Florestas"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 440,
+    "question": "What is the maximum limit of the open season in which the driven hunting of wild boar may be authorised?",
+    "options": {
+      "A": "October to December",
+      "B": "October to January",
+      "C": "October to February"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 441,
+    "question": "A hunter, in the month of August, killed 10 common quail by the walked-up method. What offence did they commit?",
+    "options": {
+      "A": "None",
+      "B": "They used a method that is not authorised",
+      "C": "They hunted outside the species' open season"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 442,
+    "question": "A hunter, in the month of August, in a hunting zone, killed 1 duck by the walked-up method. What offence did they commit?",
+    "options": {
+      "A": "None",
+      "B": "They used a method that is not authorised",
+      "C": "They hunted outside the species' open season"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 443,
+    "question": "In the month of August, in unmanaged grounds, may the hunting of ducks from a hide be authorised?",
+    "options": {
+      "A": "Yes, in the places and on the conditions set in a public notice of the Instituto de Conservação da Natureza e das Florestas",
+      "B": "No, because in August the hunting of ducks cannot be authorised",
+      "C": "No, because ducks cannot be hunted from a hide"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 444,
+    "question": "A hunter, in the month of June, in a hunting zone, hunted 1 wild boar by stalking. What offence did they commit?",
+    "options": {
+      "A": "They used a method that is not authorised",
+      "B": "They hunted outside the species' open season",
+      "C": "None"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 445,
+    "question": "May one hunt rabbits by the driven method?",
+    "options": {
+      "A": "Yes, but only on the conditions and in the places set by public notice of the Instituto de Conservação da Natureza e das Florestas",
+      "B": "Yes, but only in the months of August and November",
+      "C": "Yes, but only in hunting zones, as long as it is provided for in the game management and exploitation plan (POEC) or management plan (PG), duly approved"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 446,
+    "question": "Indicate for which of the species listed it is prohibited to hunt less than 100 metres from water points?",
+    "options": {
+      "A": "Turtle dove",
+      "B": "Snipe",
+      "C": "Common quail"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 447,
+    "question": "Is it permitted to hunt wild boar by stalking?",
+    "options": {
+      "A": "Yes, but only in managed hunting grounds",
+      "B": "Yes, but only in unmanaged hunting grounds",
+      "C": "No, because it is a method prohibited for wild boar"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 448,
+    "question": "The red fox may be hunted in a driven hunt in unmanaged hunting grounds. Indicate in which of the following periods the hunting method referred to may be authorised for this species:",
+    "options": {
+      "A": "October to February",
+      "B": "January and February, on the conditions and in the places set in a public notice of the Instituto de Conservação da Natureza e das Florestas",
+      "C": "All year"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 449,
+    "question": "What is the maximum limit of the open season in which the walked-up hunting of wild boar in managed grounds may be authorised:",
+    "options": {
+      "A": "October to December",
+      "B": "October to January",
+      "C": "October to February"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 450,
+    "question": "What is the maximum span of the open season for the rock dove?",
+    "options": {
+      "A": "October to December",
+      "B": "August to February",
+      "C": "August to December"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 451,
+    "question": "What is the maximum span of the open season for the mallard?",
+    "options": {
+      "A": "October to February",
+      "B": "September to February",
+      "C": "August to January"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 452,
+    "question": "The rock dove may be hunted:",
+    "options": {
+      "A": "Throughout the country",
+      "B": "Only in the municipalities set by ministerial order",
+      "C": "Only in hunting zones"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 453,
+    "question": "In the hunting of common quail the authorised hunting methods are:",
+    "options": {
+      "A": "Walked-up and falconry",
+      "B": "Walked-up and from a hide",
+      "C": "Walked-up and stalking"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 454,
+    "question": "In the months of January and February the hunting of Iberian hare may be carried out by coursing:",
+    "options": {
+      "A": "Only in hunting zones",
+      "B": "In the places indicated in a public notice of the Instituto de Conservação da Natureza e das Florestas",
+      "C": "In all places"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 455,
+    "question": "In unmanaged grounds, which hunting methods are authorised in the hunting of red-legged partridge?",
+    "options": {
+      "A": "Walked-up and driven",
+      "B": "Walked-up and falconry",
+      "C": "Walked-up and from a hide"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 456,
+    "question": "Which of the hunting methods for red-legged partridge is authorised only in managed grounds?",
+    "options": {
+      "A": "Falconry",
+      "B": "Driven",
+      "C": "From a hide"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 457,
+    "question": "Which statement is correct regarding the common quail:",
+    "options": {
+      "A": "The maximum limit of the open season is from August to November",
+      "B": "In managed grounds, in September, one may hunt only walked-up",
+      "C": "The maximum limit of the open season is from September to December"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 458,
+    "question": "In hunting zones, the hunting of Eurasian woodcock by the hide method:",
+    "options": {
+      "A": "Is permitted, provided that it appears in the game management and exploitation plan",
+      "B": "Is permitted only during the months of January and February",
+      "C": "Is not permitted"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 459,
+    "question": "In managed hunting grounds the hunting of big-game species is permitted:",
+    "options": {
+      "A": "Only from August to December",
+      "B": "Only from August to February",
+      "C": "All year"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 460,
+    "question": "In unmanaged hunting grounds, what is the maximum limit of the open season in which the hunting of red fox, by the walked-up method, may be authorised?",
+    "options": {
+      "A": "From August to October",
+      "B": "From October to December",
+      "C": "From October to January"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 461,
+    "question": "In managed hunting grounds the hunting of Eurasian woodcock may be permitted:",
+    "options": {
+      "A": "Walked-up, from October to February",
+      "B": "From a hide, from November to December",
+      "C": "Walked-up and from a hide, from October to February"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 462,
+    "question": "What is the maximum limit of the open season in which the hunting of red-legged partridge may be authorised?",
+    "options": {
+      "A": "From August to February",
+      "B": "From September to December",
+      "C": "From October to January"
+    },
+    "status": "checked",
+    "notes": ""
+  }
+]

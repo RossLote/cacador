@@ -5,6 +5,21 @@ export class ValidationError extends Error {
 /** A plain object: not null, not an array. */
 export function isObject(value: unknown): value is Record<string, unknown>;
 
+/** The translations/en/ files: how many entries, in how many files, and how many at each status. */
+export interface TranslationCounts {
+  entries: number;
+  files: number;
+  draft: number;
+  checked: number;
+  reviewed: number;
+}
+
+/** Entries in glossary/species.json and glossary/terms.json, 0 for a file that does not exist. */
+export interface GlossaryCounts {
+  species: number;
+  terms: number;
+}
+
 export interface ValidationCounts {
   questions: number;
   files: number;
@@ -12,6 +27,8 @@ export interface ValidationCounts {
   topics: number;
   images: number;
   imageQuestions: number;
+  translations: TranslationCounts;
+  glossaries: GlossaryCounts;
 }
 
 /** Reads and parses a JSON file under `dir`; throws a ValidationError naming the file when it cannot. */

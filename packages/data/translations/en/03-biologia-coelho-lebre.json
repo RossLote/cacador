@@ -1,0 +1,508 @@
+[
+  {
+    "id": 59,
+    "question": "In terms of diet, the rabbit is:",
+    "options": {
+      "A": "A small carnivore",
+      "B": "A small omnivore",
+      "C": "A small herbivore"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 60,
+    "question": "When fleeing, the run of the rabbit is characterised by being:",
+    "options": {
+      "A": "In a straight line",
+      "B": "In long zigzags",
+      "C": "In tight zigzags"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 61,
+    "question": "The rabbit lives preferably in:",
+    "options": {
+      "A": "Areas of abundant scrub",
+      "B": "Areas of very dense woodland",
+      "C": "Sandy and damp areas"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 62,
+    "question": "The diet of the rabbit is made up essentially of:",
+    "options": {
+      "A": "Roots, stems and small insects",
+      "B": "Herbaceous plants, roots, stems, grains and succulent bark",
+      "C": "Herbaceous plants, roots and small amphibians"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 63,
+    "question": "The rabbit is an animal whose habits are:",
+    "options": {
+      "A": "Nocturnal and crepuscular",
+      "B": "Essentially diurnal",
+      "C": "Essentially nocturnal"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 64,
+    "question": "Rabbits live, normally, in:",
+    "options": {
+      "A": "Colonies, with extensive and much-branched tunnels",
+      "B": "Colonies, with extensive unbranched tunnels",
+      "C": "Individual dwelling burrows"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 65,
+    "question": "Pregnant female rabbits have their litters:",
+    "options": {
+      "A": "In a deep branch of the dwelling burrow",
+      "B": "In a special burrow away from the colony",
+      "C": "In a shallow branch of the dwelling burrow"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 66,
+    "question": "The breeding burrows of rabbits are formed of:",
+    "options": {
+      "A": "A simple and deep tunnel",
+      "B": "A complex and deep tunnel",
+      "C": "A simple and shallow tunnel"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 67,
+    "question": "The breeding burrows of rabbits are built:",
+    "options": {
+      "A": "By the females",
+      "B": "By both sexes",
+      "C": "Only by the males"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 68,
+    "question": "The breeding burrows of rabbits are made up of:",
+    "options": {
+      "A": "A single opening, lined with grass and dry leaves",
+      "B": "A single opening, lined with the female's own fur",
+      "C": "A single opening, lined with grass, leaves and dry bark"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 69,
+    "question": "After how long do female rabbits move their young to the dwelling burrows?",
+    "options": {
+      "A": "1 Week",
+      "B": "2 Weeks",
+      "C": "3 Weeks"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 70,
+    "question": "The European rabbit is able to breed from the following age:",
+    "options": {
+      "A": "Four months",
+      "B": "Six months",
+      "C": "Twelve months"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 71,
+    "question": "In length, the ears of the rabbit are:",
+    "options": {
+      "A": "Longer than those of the Iberian hare",
+      "B": "Longer than the length of its head",
+      "C": "Shorter than the length of its head"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 72,
+    "question": "The most intense breeding season of the rabbit runs from:",
+    "options": {
+      "A": "March to May",
+      "B": "March to August",
+      "C": "Throughout the whole year"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 73,
+    "question": "In female rabbits, the gestation period is:",
+    "options": {
+      "A": "25 to 30 days",
+      "B": "27 to 30 days",
+      "C": "28 to 30 days"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 74,
+    "question": "Female rabbits have, on average, how many litters a year?",
+    "options": {
+      "A": "1 to 4",
+      "B": "3 to 5",
+      "C": "2 to 5"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 75,
+    "question": "Rabbit kits are born:",
+    "options": {
+      "A": "Blind, deaf and without fur",
+      "B": "With eyes open and with fur",
+      "C": "Blind, deaf and with fur"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 76,
+    "question": "With regard to the epidemic diseases of the rabbit, which of the sentences is correct?",
+    "options": {
+      "A": "In restocking, carry out their health control and vaccination",
+      "B": "The hunter may skin the hunted rabbits in the field",
+      "C": "If skinning the hunted rabbits, give the entrails to the dogs"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 77,
+    "question": "With regard to epidemic diseases, which of the following measures can contribute to the management of the European rabbit?",
+    "options": {
+      "A": "Burning the rabbits that are victims of diseases",
+      "B": "Not carrying out stubble burning",
+      "C": "Building burrows or “morouços” (artificial rabbit warrens)"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 78,
+    "question": "The rabbit can live up to:",
+    "options": {
+      "A": "5 years",
+      "B": "10 years",
+      "C": "15 years"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 79,
+    "question": "The rabbit is attacked by a serious contagious disease. Indicate which:",
+    "options": {
+      "A": "Coccidiosis",
+      "B": "Myxomatosis",
+      "C": "Brucellosis"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 80,
+    "question": "Rabbits open their eyes after:",
+    "options": {
+      "A": "5 days",
+      "B": "10 days",
+      "C": "15 days"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 81,
+    "question": "The hearing apparatus of the rabbit is completely developed at:",
+    "options": {
+      "A": "8 days",
+      "B": "10 days",
+      "C": "15 days"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 82,
+    "question": "Myxomatosis, a disease that attacks rabbits, is:",
+    "options": {
+      "A": "Transmissible to humans",
+      "B": "Not transmissible to humans",
+      "C": "Transmissible to other game species"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 83,
+    "question": "Newborn rabbits are commonly given the name of:",
+    "options": {
+      "A": "Láparos",
+      "B": "Lebrachos",
+      "C": "Listados"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 84,
+    "question": "Regarding the European rabbit, indicate the correct sentence:",
+    "options": {
+      "A": "It is a species of restricted distribution",
+      "B": "It is a species of little importance in the ecological balance of the Mediterranean habitat",
+      "C": "Myxomatosis is a disease that contributes to the decline of rabbit populations"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 85,
+    "question": "The European rabbit is a species that lives:",
+    "options": {
+      "A": "In areas where scrub is rare, preferring damp and clayey ground",
+      "B": "In open areas without scrub, preferring rugged and rocky ground",
+      "C": "In areas where scrub is abundant, preferring dry and sandy ground"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 86,
+    "question": "Where is there the greatest probability of finding the European rabbit?",
+    "options": {
+      "A": "On damp and muddy ground",
+      "B": "In areas where scrub is abundant",
+      "C": "In areas of fallow land and cultivated land"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 87,
+    "question": "Which of the measures can contribute positively to the management of the European rabbit:",
+    "options": {
+      "A": "Carrying out restocking regardless of the origin of the animals",
+      "B": "Building burrows or “morouços” (artificial rabbit warrens) on ground where it is difficult to dig",
+      "C": "Carrying out restocking with domestic rabbit females to increase the reproductive capacity"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 88,
+    "question": "In length, the ears of the Iberian hare are:",
+    "options": {
+      "A": "Shorter than those of the rabbit",
+      "B": "Longer than the length of its head",
+      "C": "Shorter than the length of its head"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 89,
+    "question": "One of the characteristics of the Iberian hare is:",
+    "options": {
+      "A": "Having small ears, white at the tip",
+      "B": "Having large ears, black at the tip",
+      "C": "Having large and rounded ears, shorter than the length of the head"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 90,
+    "question": "One of the characteristics of the Iberian hare is:",
+    "options": {
+      "A": "Having hind limbs larger than the forelimbs",
+      "B": "Having forelimbs larger than the hind limbs",
+      "C": "Having a size similar to that of the rabbit"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 91,
+    "question": "The larger size of the hind limbs of the Iberian hare allows it to:",
+    "options": {
+      "A": "Gain good grip",
+      "B": "Gain a good capacity for zigzag escape",
+      "C": "Gain great speed"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 92,
+    "question": "The Iberian hare is, generally, more abundant:",
+    "options": {
+      "A": "In Estremadura and south of the Tejo",
+      "B": "In Beira Interior and south of the Tejo",
+      "C": "In Beira Litoral and south of the Tejo"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 93,
+    "question": "The Iberian hare prefers:",
+    "options": {
+      "A": "Fallow land and cultivated land",
+      "B": "Rugged and stony ground",
+      "C": "Ground with dense cover"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 94,
+    "question": "The Iberian hare is a species that:",
+    "options": {
+      "A": "Lives in burrows with little-branched tunnels",
+      "B": "Prefers ground with dense cover.",
+      "C": "Prefers flat, damp ground with little cover."
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 95,
+    "question": "The Iberian hare is:",
+    "options": {
+      "A": "A herbivorous species",
+      "B": "A carnivorous species",
+      "C": "An omnivorous species"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 96,
+    "question": "The Iberian hare is:",
+    "options": {
+      "A": "A solitary animal",
+      "B": "An animal that lives in large colonies",
+      "C": "An animal that lives in pairs"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 97,
+    "question": "Newborn Iberian hares are commonly given the name of:",
+    "options": {
+      "A": "Láparos",
+      "B": "Lebrachos",
+      "C": "Listados"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 98,
+    "question": "The gestation period of the Iberian hare is:",
+    "options": {
+      "A": "40 to 44 days",
+      "B": "40 to 42 days",
+      "C": "42 to 44 days"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 99,
+    "question": "Leverets are born:",
+    "options": {
+      "A": "With eyes open and with fur",
+      "B": "Blind, deaf and with fur",
+      "C": "With eyes closed and with fur"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 100,
+    "question": "Leverets are suckled until:",
+    "options": {
+      "A": "2 weeks",
+      "B": "3 weeks",
+      "C": "4 weeks"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 101,
+    "question": "The Iberian hare has, normally, how many litters a year?",
+    "options": {
+      "A": "1 to 5",
+      "B": "2 to 4",
+      "C": "1 to 3"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 102,
+    "question": "In Iberian hares, each litter is, normally, made up of how many leverets?",
+    "options": {
+      "A": "1 or 2",
+      "B": "2 to 3",
+      "C": "2 to 4"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 103,
+    "question": "The Iberian hare is easily recognised by:",
+    "options": {
+      "A": "Having the front limbs much larger than the back ones",
+      "B": "Having large ears with a black tip",
+      "C": "Having small and pointed ears"
+    },
+    "status": "checked",
+    "notes": ""
+  },
+  {
+    "id": 104,
+    "question": "The Iberian hare is a species that prefers as habitat:",
+    "options": {
+      "A": "Dense and closed thickets",
+      "B": "Open plains, cultivated or fallow",
+      "C": "Rugged and stony areas"
+    },
+    "status": "checked",
+    "notes": ""
+  }
+]
