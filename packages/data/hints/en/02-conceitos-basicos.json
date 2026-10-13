@@ -1,338 +1,574 @@
 [
   {
     "id": 11,
-    "language": [],
-    "nudge": "",
-    "patterns": [],
+    "language": [
+      {
+        "pt": "Consideram-se",
+        "en": "are considered to be",
+        "note": "The se makes the verb passive, 'are considered (to be)', not 'consider themselves'; the subject, aqueles onde (those where), comes last, so read it as 'those where … are considered …'."
+      }
+    ],
+    "nudge": "The definition is legal, not biological: terrenos cinegéticos are those where 'é permitido o exercício da caça'. Where game roams, breeds or feeds decides nothing, and question 12 mirrors it: non-hunting ground is where hunting 'é proibido'.",
+    "patterns": ["name-question"],
     "status": "draft"
   },
   {
     "id": 12,
-    "language": [],
-    "nudge": "",
-    "patterns": [],
+    "language": [
+      {
+        "pt": "Consideram-se",
+        "en": "are considered to be",
+        "note": "The se makes the verb passive, 'are considered (to be)', not 'consider themselves'; the subject, aqueles onde (those where), comes last, so read it as 'those where … are considered …'."
+      },
+      {
+        "pt": "não se reproduzem nem se alimentam",
+        "en": "neither breed nor feed",
+        "note": "não … nem = neither … nor: both verbs are negated."
+      }
+    ],
+    "nudge": "Like question 11, the definition is legal: terrenos não cinegéticos are those where 'é proibido o exercício da caça'. Whether game is present, breeds or feeds there is not the test.",
+    "patterns": ["name-question"],
     "status": "draft"
   },
   {
     "id": 13,
-    "language": [],
-    "nudge": "",
-    "patterns": [],
+    "language": [
+      {
+        "pt": "Consideram-se",
+        "en": "are considered to be",
+        "note": "The se makes the verb passive, 'are considered (to be)', not 'consider themselves'; what is so considered comes in the options."
+      }
+    ],
+    "nudge": "Terrenos cinegéticos are where 'é permitido o exercício da caça', expressly including 'as áreas de jurisdição marítima e as águas interiores'. Training grounds and game refuges are not among them (questions 17 and 18), and where hunting is not permitted is the opposite category of question 12.",
+    "patterns": ["name-question"],
     "status": "draft"
   },
   {
     "id": 14,
-    "language": [],
-    "nudge": "",
-    "patterns": [],
+    "language": [
+      {
+        "pt": "Consideram-se",
+        "en": "are considered to be",
+        "note": "The se makes the verb passive, 'are considered (to be)', not 'consider themselves'; what is so considered comes in the options."
+      }
+    ],
+    "nudge": "Terrenos não cinegéticos are where 'é proibido o exercício da caça'. Tourist hunting zones are hunting zones, and areas under maritime jurisdiction count as hunting ground (question 13), so both sit on the other side.",
+    "patterns": ["name-question"],
     "status": "draft"
   },
   {
     "id": 15,
-    "language": [],
-    "nudge": "",
-    "patterns": [],
+    "language": [
+      {
+        "pt": "Consideram-se",
+        "en": "are considered to be",
+        "note": "The se makes the verb passive, 'are considered (to be)', not 'consider themselves'; what is so considered comes in the options."
+      }
+    ],
+    "nudge": "'As áreas de proteção' are ground where hunting is banned, one kind of terreno não cinegético. National hunting zones and areas under maritime jurisdiction are hunting grounds (questions 13 and 18).",
+    "patterns": ["name-question"],
     "status": "draft"
   },
   {
     "id": 16,
-    "language": [],
-    "nudge": "",
-    "patterns": [],
+    "language": [
+      {
+        "pt": "Consideram-se",
+        "en": "are considered to be",
+        "note": "The se makes the verb passive, 'are considered (to be)', not 'consider themselves'; what is so considered comes in the options."
+      },
+      {
+        "pt": "Apenas as áreas",
+        "en": "Only the",
+        "note": "apenas = only: it limits the category to the two kinds of area that follow and nothing else."
+      }
+    ],
+    "nudge": "The definition covers 'todos os terrenos onde é proibido o exercício da caça', whatever kind they are. The two 'apenas' options each cut it down to two named kinds of area, narrower than the definition.",
+    "patterns": ["name-question", "only", "always-never"],
     "status": "draft"
   },
   {
     "id": 17,
     "language": [],
-    "nudge": "",
+    "nudge": "A 'zona de caça municipal' is a hunting zone, and hunting zones are managed hunting grounds. Training grounds and game refuges are not hunting grounds: question 13 offers them together as the wrong answer.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 18,
     "language": [],
-    "nudge": "",
+    "nudge": "The definition of terrenos cinegéticos expressly includes 'as áreas de jurisdição marítima' (question 13). Protection areas are non-hunting ground (question 15), and training grounds are not hunting grounds (question 17).",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 19,
     "language": [],
-    "nudge": "",
-    "patterns": [],
+    "nudge": "Matilheiros work a pack of hounds, the matilha, so they flush game 'com a ajuda de cães', and that game is 'caça maior', as in a montaria. The distractors swap one half each: small game with dogs, or big game without them.",
+    "patterns": ["name-question"],
     "status": "draft"
   },
   {
     "id": 20,
-    "language": [],
-    "nudge": "",
-    "patterns": [],
+    "language": [
+      {
+        "pt": "Considera-se",
+        "en": "is considered to be",
+        "note": "The se makes the verb passive, 'is considered (to be)'; the subject named after it is what the options define."
+      }
+    ],
+    "nudge": "Época venatória is the hunting year, fixed by date: 'entre o dia 1 de junho de cada ano e o dia 31 de maio do ano seguinte'. The time when a species may be hunted is a different term, the período venatório of question 26.",
+    "patterns": ["name-question"],
     "status": "draft"
   },
   {
     "id": 21,
-    "language": [],
-    "nudge": "",
-    "patterns": [],
+    "language": [
+      {
+        "pt": "há um que não pode",
+        "en": "there is one who may not",
+        "note": "há um que = there is one that: the stem asks for the single exception, and não pode = may not."
+      }
+    ],
+    "nudge": "Negaceiros set and work the negaças, the decoys, and do not pursue game with dogs. Matilheiros pursue big game with a pack (question 19), and batedores may use dogs to drive the game in a batida.",
+    "patterns": ["negative-stem", "exception", "name-question"],
     "status": "draft"
   },
   {
     "id": 22,
     "language": [],
-    "nudge": "",
-    "patterns": [],
+    "nudge": "Época venatória is the hunting year, 'o período anual que decorre entre o dia 1 de junho de cada ano e o dia 31 de maio do ano seguinte'. The span in which each species may be hunted is a different term, the período venatório of questions 26 and 43.",
+    "patterns": ["name-question"],
     "status": "draft"
   },
   {
     "id": 23,
-    "language": [],
-    "nudge": "",
-    "patterns": [],
+    "language": [
+      {
+        "pt": "desde que o barco esteja em movimento",
+        "en": "provided that the boat is in motion",
+        "note": "desde que = provided that, with the present subjunctive esteja: a condition attached to the permission."
+      },
+      {
+        "pt": "só nas deslocações",
+        "en": "only when moving",
+        "note": "só = only: the permission is limited to moving between hide positions and to the hides themselves."
+      },
+      {
+        "pt": "se atire com o motor em movimento",
+        "en": "one shoots with the engine running",
+        "note": "se atire = one shoots: impersonal se, subjunctive after desde que; motor em movimento = engine running."
+      }
+    ],
+    "nudge": "The boat is allowed 'só nas deslocações entre locais de espera e nas esperas', moving between hide positions and in the hides themselves. The two 'desde que' options make a moving boat or a running engine the condition, which the keyed rule does not.",
+    "patterns": ["only", "provided-that"],
     "status": "draft"
   },
   {
     "id": 24,
-    "language": [],
-    "nudge": "",
-    "patterns": [],
+    "language": [
+      {
+        "pt": "se pode caçar de barco",
+        "en": "may be hunted from a boat",
+        "note": "se pode caçar = may be hunted, passive se; de barco = from a boat."
+      }
+    ],
+    "nudge": "Ducks, 'galinha-d’água e galeirão' are the birds that may be hunted from a boat. The lists differ in one bird: woodcock and snipe are not hunted from a boat, as question 50 confirms.",
+    "patterns": ["list-options"],
     "status": "draft"
   },
   {
     "id": 25,
-    "language": [],
-    "nudge": "",
-    "patterns": [],
+    "language": [
+      {
+        "pt": "superior ao permitido",
+        "en": "greater than that permitted",
+        "note": "superior a = above, greater than: a count over the limit, not 'better'."
+      }
+    ],
+    "nudge": "October is inside the partridge season (question 462) and walked-up is a partridge method (question 455), so neither the month nor the method is the offence. Ten dogs walked-up is the rabbit allowance (questions 29 and 30), and for partridge it is 'um número de cães superior ao permitido'.",
+    "patterns": ["case"],
     "status": "draft"
   },
   {
     "id": 26,
     "language": [],
-    "nudge": "",
-    "patterns": [],
+    "nudge": "The período venatório belongs to a species: 'o intervalo de tempo em que pode ser caçada'. 1 June to 31 May is the época venatória, the hunting year (question 20), and a licence's validity is a separate matter.",
+    "patterns": ["name-question"],
     "status": "draft"
   },
   {
     "id": 27,
-    "language": [],
-    "nudge": "",
-    "patterns": [],
+    "language": [
+      {
+        "pt": "não é proibida a caça",
+        "en": "is hunting not prohibited",
+        "note": "não é proibida = is not prohibited: the stem asks which species may still be hunted on snow."
+      }
+    ],
+    "nudge": "On snow-covered ground hunting is banned for rabbit and fox, but not for 'Javali', the wild boar. Question 385 agrees: hunting wild boar in snow is not a crime.",
+    "patterns": ["negative-stem"],
     "status": "draft"
   },
   {
     "id": 28,
     "language": [],
-    "nudge": "",
+    "nudge": "Chamarizes, lure calls, are allowed for 'Patos', and question 46 adds fox, red deer and roe deer. Thrushes and pigeons are not on that list; do not confuse chamarizes with negaças, the decoys used for pigeons (question 35).",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 29,
-    "language": [],
-    "nudge": "",
+    "language": [
+      {
+        "pt": "que espécies cinegéticas",
+        "en": "Which game species",
+        "note": "The question word comes last: que espécies? = which species?, the object of pode caçar."
+      }
+    ],
+    "nudge": "Ten dogs walked-up is the rabbit allowance: question 30 sets 'no máximo: 10 cães' for rabbit by any method other than batida. Hare and fox are not covered by it, and question 25 shows ten is over the limit for partridge too.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 30,
-    "language": [],
-    "nudge": "",
+    "language": [
+      {
+        "pt": "por processo diferente do de batida",
+        "en": "by a method other than the driven method",
+        "note": "diferente do de batida = other than that of batida: every rabbit method except the driven one."
+      }
+    ],
+    "nudge": "For rabbit by any method but batida, the cap is '10 cães' per hunter or group. Fifty is the figure for fox coursing (question 31).",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 31,
     "language": [],
-    "nudge": "",
+    "nudge": "Fox coursing allows up to '50' dogs. It is not unlimited: the no-limit rule belongs to montarias (question 50).",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 32,
-    "language": [],
-    "nudge": "",
-    "patterns": [],
+    "language": [
+      {
+        "pt": "de qualquer espécie, cinegética ou não",
+        "en": "of any species, game or not",
+        "note": "qualquer = any; cinegética ou não = game or not, so non-game species are included."
+      }
+    ],
+    "nudge": "Taking 'crias ou ovos de qualquer espécie, cinegética ou não' is banned. Sunrise to sunset is when hunting is normally allowed (question 33), and Thursday is a hunting day on unmanaged ground (question 57).",
+    "patterns": ["which-statement", "always-never"],
     "status": "draft"
   },
   {
     "id": 33,
-    "language": [],
-    "nudge": "",
-    "patterns": [],
+    "language": [
+      {
+        "pt": "só é permitido entre o nascer e o pôr-do-sol",
+        "en": "is only permitted between sunrise and sunset",
+        "note": "só = only: as a rule, hunting is limited to the daylight hours."
+      },
+      {
+        "pt": "exceto",
+        "en": "except",
+        "note": "exceto = except: the stem asks for the case the daylight rule leaves out."
+      }
+    ],
+    "nudge": "The exception is big game hunted 'pelo processo de espera', which may be authorised 'em período de lua cheia', after dark. A finish at 17 horas would still sit inside the daylight hours, so it is no exception.",
+    "patterns": ["exception"],
     "status": "draft"
   },
   {
     "id": 34,
     "language": [],
-    "nudge": "",
+    "nudge": "Aproximação, stalking, is a big-game method: the hunter moves in on 'determinado exemplar de caça maior' (question 39). Question 419 limits it 'Só às espécies de caça maior', and question 421 bans it for small game.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 35,
     "language": [],
-    "nudge": "",
+    "nudge": "Negaças, decoys, are allowed for 'pombos', 'patos', 'pega-rabuda' and 'gralha-preta'. Question 50 marks decoys for snipe and plovers as wrong, and coot and moorhen are not on the list.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 36,
-    "language": [],
-    "nudge": "",
+    "language": [
+      {
+        "pt": "Não podem",
+        "en": "May not",
+        "note": "não podem = may not: every option states a ban, so the question is which ban applies to assistants."
+      },
+      {
+        "pt": "acondicionadas em estojo ou bolsa",
+        "en": "packed in a case or bag",
+        "note": "acondicionadas = packed away: the guns are cased, not ready to use."
+      }
+    ],
+    "nudge": "Assistants help the hunter without hunting themselves, so they 'Não podem fazer parte da linha de caçadores'. The other two options ban carrying ammunition or cased guns, which the keyed rule does not.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 37,
-    "language": [],
-    "nudge": "",
+    "language": [
+      {
+        "pt": "por cada lebre",
+        "en": "for each Iberian hare",
+        "note": "por cada = for each: the count applies to each hare coursed."
+      }
+    ],
+    "nudge": "Hare coursing allows 'Dois cães de busca e dois cães galgos por cada lebre', two search dogs and two greyhounds. Question 38 repeats the same two-and-two limit; the distractors shift the split.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 38,
-    "language": [],
-    "nudge": "",
+    "language": [
+      {
+        "pt": "a cada lebre",
+        "en": "for each Iberian hare",
+        "note": "a cada lebre = for each hare, the same as por cada lebre in question 37."
+      }
+    ],
+    "nudge": "Hare coursing allows 'Dois cães galgos e dois cães de busca a cada lebre', as in question 37. Ten dogs for rabbit is the limit for methods other than batida (question 30), so 'pelo processo de batida' makes that option wrong.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 39,
-    "language": [],
-    "nudge": "",
-    "patterns": [],
+    "language": [
+      {
+        "pt": "se desloca",
+        "en": "moves",
+        "note": "deslocar-se = to move, go from place to place: the hunter goes to the game."
+      },
+      {
+        "pt": "designa-se",
+        "en": "is called",
+        "note": "designa-se = is called, passive se; the name comes in the options."
+      }
+    ],
+    "nudge": "Aproximação is stalking: the hunter 'se desloca' towards 'determinado exemplar de caça maior', one chosen animal. In salto the hunter walks up whatever the ground flushes, and in a batida the hunter waits while beaters drive the game (question 40).",
+    "patterns": ["name-question"],
     "status": "draft"
   },
   {
     "id": 40,
-    "language": [],
-    "nudge": "",
-    "patterns": [],
+    "language": [
+      {
+        "pt": "denomina-se",
+        "en": "is called",
+        "note": "denomina-se = is called, passive se; the name comes in the options."
+      }
+    ],
+    "nudge": "In a batida the hunter waits at a post for game 'levantadas por batedores', the beaters. In a montaria it is packs of hounds worked by matilheiros that drive the game, and à espera the hunter waits with no one driving it.",
+    "patterns": ["name-question"],
     "status": "draft"
   },
   {
     "id": 41,
     "language": [],
-    "nudge": "",
+    "nudge": "Battery-powered devices to attract game 'Não podem ser utilizados na caça', with no exception for ducks or for predator control. Lure calls worked by the hunter are a different thing and are allowed for ducks (question 28).",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 42,
     "language": [],
-    "nudge": "",
+    "nudge": "As in question 41, battery-powered devices 'Não podem ser utilizados na caça', ducks and thrushes included. Ducks may be hunted with lure calls the hunter works (question 28), not with battery devices.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 43,
-    "language": [],
-    "nudge": "",
-    "patterns": [],
+    "language": [
+      {
+        "pt": "Considera-se",
+        "en": "is considered to be",
+        "note": "The se makes the verb passive, 'is considered (to be)'; the subject named after it is what the options define."
+      },
+      {
+        "pt": "só se pode caçar",
+        "en": "one may only hunt",
+        "note": "só se pode caçar = one may only hunt: impersonal se, and só limits it to the species listed."
+      }
+    ],
+    "nudge": "The período venatório is 'o intervalo de tempo em que cada uma das espécies pode ser caçada': each species has its own. The 'só' options tie it to a fixed group of species, which the definition does not.",
+    "patterns": ["name-question", "only"],
     "status": "draft"
   },
   {
     "id": 44,
-    "language": [],
-    "nudge": "",
-    "patterns": [],
+    "language": [
+      {
+        "pt": "não é permitido utilizar",
+        "en": "it is not permitted to use",
+        "note": "não é permitido = is not permitted: the stem asks for the one thing excluded."
+      }
+    ],
+    "nudge": "Corricão is coursing: dogs run the game down, the hunter on foot or on 'cavalo', with or without a 'pau', and never with 'Armas de fogo'. Question 52 asks which method rules out the firearm and has the same answer.",
+    "patterns": ["negative-stem", "name-question"],
     "status": "draft"
   },
   {
     "id": 45,
     "language": [],
-    "nudge": "",
+    "nudge": "The daily bag is 'O definido no calendário venatório anual': the yearly hunting calendar sets bag limits. So there is a limit, and it is not a fixed 50 rabbits.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 46,
     "language": [],
-    "nudge": "",
-    "patterns": [],
+    "nudge": "Lure calls, chamarizes, are allowed 'na caça aos patos, à raposa, ao veado e ao corço'. Thrushes are the odd one out in the shorter list (question 28 leaves them out too), and the ban is not absolute.",
+    "patterns": ["list-options", "always-never"],
     "status": "draft"
   },
   {
     "id": 47,
-    "language": [],
-    "nudge": "",
-    "patterns": [],
+    "language": [
+      {
+        "pt": "Só na caça",
+        "en": "Only in",
+        "note": "só = only: it limits the horse to that one use and nothing else."
+      }
+    ],
+    "nudge": "The horse is allowed 'na caça às espécies de caça maior, à raposa e à lebre e na caça de cetraria'. The 'Só' options name one of those uses and wrongly shut out the rest.",
+    "patterns": ["only"],
     "status": "draft"
   },
   {
     "id": 48,
-    "language": [],
-    "nudge": "",
-    "patterns": [],
+    "language": [
+      {
+        "pt": "não é permitido utilizar",
+        "en": "it is not permitted to use",
+        "note": "não é permitido = is not permitted: the stem asks for the one thing excluded."
+      }
+    ],
+    "nudge": "As in question 44, corricão is coursing with dogs, the hunter on foot or on 'cavalo', and never with 'Armas de fogo'. Dogs and horse are its tools, so they cannot be what it forbids.",
+    "patterns": ["negative-stem", "name-question"],
     "status": "draft"
   },
   {
     "id": 49,
-    "language": [],
-    "nudge": "",
-    "patterns": [],
+    "language": [
+      {
+        "pt": "só é permitido em que processos de caça",
+        "en": "is only permitted in which hunting methods",
+        "note": "só limits the stick to the methods asked for; em que processos? = in which methods?, the question word comes late."
+      }
+    ],
+    "nudge": "The pau is carried in coursing and walked-up hunting, so 'Corricão e de salto' is the pair; question 505 adds falconry, 'com ou sem pau'. Every option has salto, and batida and montaria are the wrong partners.",
+    "patterns": ["list-options"],
     "status": "draft"
   },
   {
     "id": 50,
-    "language": [],
-    "nudge": "",
-    "patterns": [],
+    "language": [
+      {
+        "pt": "não há limite de número de cães",
+        "en": "there is no limit on the number of dogs",
+        "note": "não há = there is no: the number of dogs is left open."
+      }
+    ],
+    "nudge": "Montarias have no cap on dogs: 'não há limite de número de cães'. Boats are not for snipe or woodcock (question 24), and decoys are not for snipe or plovers (question 35).",
+    "patterns": ["which-statement"],
     "status": "draft"
   },
   {
     "id": 51,
-    "language": [],
-    "nudge": "",
-    "patterns": [],
+    "language": [
+      {
+        "pt": "denomina-se",
+        "en": "is called",
+        "note": "denomina-se = is called, passive se; the name comes in the options."
+      }
+    ],
+    "nudge": "Cetraria is falconry: game is taken by an 'ave de presa adestrada', a trained bird of prey. A batida drives game to hunters at posts, and corricão is coursing with dogs.",
+    "patterns": ["name-question"],
     "status": "draft"
   },
   {
     "id": 52,
-    "language": [],
-    "nudge": "",
-    "patterns": [],
+    "language": [
+      {
+        "pt": "não pode utilizar arma de fogo",
+        "en": "may not use a firearm",
+        "note": "não pode = may not: the stem asks which method rules the firearm out."
+      },
+      {
+        "pt": "quando pretende",
+        "en": "when they intend",
+        "note": "pretender = to intend, a false friend: not 'pretend'."
+      }
+    ],
+    "nudge": "Corricão is coursing with dogs, on foot or on horseback, and never with a firearm (questions 44 and 48). In salto the hunter shoots what the ground flushes, and a montaria drives big game to hunters at posts.",
+    "patterns": ["negative-stem", "name-question"],
     "status": "draft"
   },
   {
     "id": 53,
-    "language": [],
-    "nudge": "",
-    "patterns": [],
+    "language": [
+      {
+        "pt": "que constem do calendário venatório",
+        "en": "that appear in the hunting calendar",
+        "note": "constar de = to appear in, be listed in."
+      }
+    ],
+    "nudge": "Only species 'que constem do calendário venatório publicado anualmente' may be hunted. Being classed as game is not enough, and damage to farming does not by itself make a species huntable; question 387 is the same question.",
+    "patterns": ["which-statement", "always-never"],
     "status": "draft"
   },
   {
     "id": 54,
     "language": [],
-    "nudge": "",
+    "nudge": "On unmanaged ground each hunter may take 'Um auxiliar', one assistant. The number decides; three and five are distractors.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 55,
     "language": [],
-    "nudge": "",
-    "patterns": [],
+    "nudge": "As in question 19, matilheiros work a pack of hounds, so they flush game 'com a ajuda de cães', and that game is 'caça maior', as in a montaria. The distractors swap one half each: small game with dogs, or big game without them.",
+    "patterns": ["name-question"],
     "status": "draft"
   },
   {
     "id": 56,
     "language": [],
-    "nudge": "",
-    "patterns": [],
+    "nudge": "On unmanaged ground fox coursing 'pode ser exercida às quartas-feiras e sábados'. Stalking wild boar is allowed only on managed ground (question 447), and a fox batida there needs the January and February window set in an ICNF public notice (question 448).",
+    "patterns": ["which-statement"],
     "status": "draft"
   },
   {
     "id": 57,
     "language": [],
-    "nudge": "",
-    "patterns": [],
+    "nudge": "With a firearm on unmanaged ground the days are 'quintas-feiras, domingos e feriados nacionais obrigatórios'. Saturdays and municipal holidays are not among them; Saturday is a coursing day (question 56).",
+    "patterns": ["list-options"],
     "status": "draft"
   },
   {
     "id": 58,
-    "language": [],
-    "nudge": "",
-    "patterns": [],
+    "language": [
+      {
+        "pt": "Só é permitida em três dias",
+        "en": "Is only permitted on three days",
+        "note": "só = only: it limits big-game hunting to three days a week."
+      },
+      {
+        "pt": "apenas nas zonas de caça turísticas",
+        "en": "only in tourist hunting zones",
+        "note": "apenas = only: any day of the week, but only in that kind of zone."
+      }
+    ],
+    "nudge": "On managed ground big game is hunted 'nos dias previstos nos respetivos planos de ordenamento cinegético ou exploração', the days each zone's own plan sets. The 'Só' and 'apenas' options impose a fixed limit the keyed rule does not.",
+    "patterns": ["only"],
     "status": "draft"
   }
 ]
