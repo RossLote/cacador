@@ -30,8 +30,8 @@ export interface StorageBackend {
   listExams(): Promise<Exam[]>;
   /**
    * Sets one question's option on the stored exam, leaving its other answers as
-   * stored, while it is running at `at` (`isRunning`) and only for one of its
-   * questions; returns whether it did.
+   * stored, while it is running at `at` and only for one of its
+   * questions (`withExamAnswer`); returns whether it did.
    */
   setExamAnswer(id: string, questionId: number, option: OptionKey, at: number): Promise<boolean>;
   /**

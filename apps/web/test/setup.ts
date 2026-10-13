@@ -8,8 +8,8 @@ import { closeStorage } from '@/storage';
 
 /**
  * Every test starts on an empty device: the storage module's connection closed
- * over a fresh IndexedDB, empty Web Storage, the UI in English, and no stub or
- * spy left from the test before. A test that needs something else (no
+ * over a fresh IndexedDB, empty Web Storage, the UI in English, and no stub,
+ * spy or fake timer left from the test before. A test that needs something else (no
  * IndexedDB, a fresh device halfway through) sets it up itself. The
  * node-environment tests (a Vite build) have no DOM and nothing to reset.
  */
@@ -27,6 +27,7 @@ beforeEach(async () => {
 });
 
 afterEach(async () => {
+  vi.useRealTimers();
   cleanup();
   if (locale === undefined) return;
   act(() => locale.setLocale('en'));

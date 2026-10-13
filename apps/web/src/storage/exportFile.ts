@@ -4,9 +4,10 @@
  * the first record that is not well formed, so an import never half-applies.
  */
 import { questionById } from '@cacador/data';
+import { isOneOf } from '@/lib/isOneOf';
 import { EXAM_SIZE, examDeadline, isCorrectOption, localDateKey, MINUTE_MS, scoreExam } from '@/model';
 import { isWellFormedAnswer, withoutLogId } from './state';
-import { FLAG_KINDS, OPTION_KEYS, type Answer, type Exam, type ExportFile, type Flag, type FlagKind, type OptionKey } from './types';
+import { FLAG_KINDS, OPTION_KEYS, type Answer, type Exam, type ExportFile, type Flag, type OptionKey } from './types';
 
 /** The records an export holds: every store but questionState. */
 export interface ProgressRecords {
@@ -61,9 +62,9 @@ const isCount = (v: unknown): v is number => Number.isInteger(v) && (v as number
 const isBoolean = (v: unknown): v is boolean => typeof v === 'boolean';
 const isString = (v: unknown): v is string => typeof v === 'string';
 const isId = (v: unknown): v is string => typeof v === 'string' && v.length > 0;
-const isOption = (v: unknown): v is OptionKey => OPTION_KEYS.some((key) => key === v);
+const isOption = isOneOf(OPTION_KEYS);
 const isMode = (v: unknown): v is Answer['mode'] => v === 'practice' || v === 'exam';
-const isKind = (v: unknown): v is FlagKind => FLAG_KINDS.some((kind) => kind === v);
+const isKind = isOneOf(FLAG_KINDS);
 
 /** A time that has happened by `now`, give or take `CLOCK_SKEW_MS`: a later one would outrank every real record. */
 const timeBy =

@@ -24,7 +24,6 @@ vi.mock('@/storage', async (importOriginal) => {
 
 afterEach(() => {
   storageFaults.removeFlag = false;
-  vi.useRealTimers();
 });
 
 const T0 = Date.UTC(2026, 9, 13, 9, 0);

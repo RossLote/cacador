@@ -2,13 +2,14 @@ import { translationFor, type OptionKey } from '@cacador/data';
 import { act, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Link, MemoryRouter, Route, Routes, useLocation } from 'react-router';
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import type { Locale } from '@/i18n/locales';
 import { MESSAGES } from '@/i18n/messages';
 import { drawExam, examDeadline, scoreExam, seededRandom } from '@/model';
 import { closeStorage, createExam, finishExam, getExam, listAnswers, listExams, saveExamAnswer, type Exam } from '@/storage';
 import { ExamPage } from './ExamPage';
 import { question, wrongOf } from '../../test/fixtures';
+import { failStore } from '../../test/storage';
 
 const SECOND = 1000;
 const MINUTE = 60 * SECOND;
@@ -57,20 +58,6 @@ async function stored(): Promise<Exam> {
   if (!exam) throw new Error('no exam stored');
   return exam;
 }
-
-/** Makes the next `count` writes to the exams store throw, as a full or broken IndexedDB would; the other stores work. Restore it before calling it again. */
-function failExamWrites(count: number) {
-  const put = IDBObjectStore.prototype.put;
-  let left = count;
-  return vi.spyOn(IDBObjectStore.prototype, 'put').mockImplementation(function (this: IDBObjectStore, ...args) {
-    if (this.name === 'exams' && left-- > 0) throw new DOMException('full', 'QuotaExceededError');
-    return put.apply(this, args);
-  });
-}
-
-afterEach(() => {
-  vi.useRealTimers();
-});
 
 describe('the exam start screen', () => {
   it('shows the heading, the rules and Start when no exam is running', async () => {
@@ -230,7 +217,7 @@ describe('the running exam', () => {
     await user.click(optionFor('A'));
     await waitFor(async () => expect((await stored()).answers).toEqual({ [q.id]: 'A' }));
 
-    let failing = failExamWrites(1);
+    let failing = failStore('put', { store: 'exams', times: 1 });
     await user.click(optionFor('B'));
     // What is on screen is what Submit would score: the stored A, not the B that was not saved.
     expect(await screen.findByText(t.answerNotSaved)).toBeInTheDocument();
@@ -240,7 +227,7 @@ describe('the running exam', () => {
     failing.mockRestore();
 
     await user.click(marker(2));
-    failing = failExamWrites(1);
+    failing = failStore('put', { store: 'exams', times: 1 });
     await user.click(optionFor('C'));
     expect(await screen.findByText(t.answerNotSaved)).toBeInTheDocument();
     await waitFor(() => expect(optionFor('C')).toHaveAttribute('aria-pressed', 'false'));
@@ -394,7 +381,7 @@ describe('submitting', () => {
     await user.click(optionFor('A'));
     await waitFor(async () => expect(Object.keys((await stored()).answers)).toHaveLength(1));
 
-    failExamWrites(1);
+    failStore('put', { store: 'exams', times: 1 });
     await user.click(screen.getByRole('button', { name: t.submit }));
     await user.click(within(await screen.findByRole('alertdialog')).getByRole('button', { name: t.confirmSubmit }));
     expect(await screen.findByText(t.submitFailed)).toBeInTheDocument();

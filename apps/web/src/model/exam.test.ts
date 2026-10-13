@@ -12,9 +12,7 @@ import {
   scoreExam,
 } from './exam';
 import { seededRandom } from './random';
-import { correctOf } from '../../test/fixtures';
-
-const wrongOf = (answer: OptionKey): OptionKey => (answer === 'A' ? 'B' : 'A');
+import { correctOf, wrongOf } from '../../test/fixtures';
 
 /** An exam over the first 20 ids with `right` right, `unanswered` left blank and the rest wrong. */
 function exam(right: number, unanswered: number): Exam {
@@ -22,7 +20,7 @@ function exam(right: number, unanswered: number): Exam {
   const answers: Record<number, OptionKey> = {};
   questionIds.forEach((id, i) => {
     if (i < right) answers[id] = correctOf(id);
-    else if (i >= right + unanswered) answers[id] = wrongOf(correctOf(id));
+    else if (i >= right + unanswered) answers[id] = wrongOf(id);
   });
   return { id: 'e1', startedAt: 0, questionIds, answers };
 }
@@ -73,7 +71,7 @@ describe('exam score', () => {
 describe('isCorrectOption', () => {
   it('is right only for the bank answer, and no option chosen is wrong', () => {
     expect(isCorrectOption(4, correctOf(4))).toBe(true);
-    expect(isCorrectOption(4, wrongOf(correctOf(4)))).toBe(false);
+    expect(isCorrectOption(4, wrongOf(4))).toBe(false);
     expect(isCorrectOption(4, undefined)).toBe(false);
     expect(isCorrectOption(507, 'A')).toBe(false);
   });

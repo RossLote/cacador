@@ -11,6 +11,7 @@ import { createExam, finishExam, getExam, saveExamAnswer, type Exam } from '@/st
 import { DB_NAME, DB_VERSION } from '@/storage/idbBackend';
 import { ExamPage } from './ExamPage';
 import { question, wrongOf } from '../../test/fixtures';
+import { answerExam } from '../../test/storage';
 
 const t = MESSAGES.en.exam;
 const card = MESSAGES.en.practice.card;
@@ -28,7 +29,7 @@ async function finishedExam(right: number, unanswered = 0) {
     const q = question(id);
     answers[id] = index < right ? q.answer : wrongOf(q.id);
   });
-  for (const [id, option] of Object.entries(answers)) expect(await saveExamAnswer(exam.id, Number(id), option)).toBe(true);
+  await answerExam(exam.id, answers);
   expect(await finishExam(exam.id)).toBe(true);
   return { id: exam.id, answers };
 }

@@ -1,7 +1,8 @@
 import { questionById, type OptionKey } from '@cacador/data';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { useNavigate } from 'react-router';
+import { useCallback, useRef, useState } from 'react';
+import { Navigate } from 'react-router';
+import { FailureLine } from '@/components/FailureLine';
 import { QuestionCard } from '@/components/question/QuestionCard';
 import {
   AlertDialog,
@@ -60,7 +61,6 @@ type Failure = 'answer' | 'submit';
  */
 export function RunningExam({ exam }: { exam: Exam }) {
   const { t } = useI18n();
-  const navigate = useNavigate();
   /** The answers as last saved or read back: what Submit will score. */
   const [stored, setStored] = useState<Record<number, OptionKey>>(exam.answers);
   /** Options tapped whose save has not settled yet, by question; shown over the stored ones. */
@@ -69,18 +69,11 @@ export function RunningExam({ exam }: { exam: Exam }) {
   const [confirming, setConfirming] = useState(false);
   const [ending, setEnding] = useState(false);
   const [failure, setFailure] = useState<Failure>();
+  /** The exam is finished: the page opens its results. Set after the page has gone, it is dropped, so the learner stays where they went. */
+  const [done, setDone] = useState(false);
   /** The answer saves in order; the finish waits for the last. Never rejects. */
   const saving = useRef<Promise<unknown>>(Promise.resolve());
   const ended = useRef(false);
-  /** False once the page has gone, so a finish that settles later does not pull the learner back to the results. */
-  const mounted = useRef(true);
-
-  useEffect(() => {
-    mounted.current = true;
-    return () => {
-      mounted.current = false;
-    };
-  }, []);
 
   const end = useCallback(() => {
     if (ended.current) return;
@@ -91,9 +84,7 @@ export function RunningExam({ exam }: { exam: Exam }) {
     void saving.current
       .then(() => finishExam(exam.id))
       .then(
-        () => {
-          if (mounted.current) navigate(examResultsPath(exam.id), { replace: true });
-        },
+        () => setDone(true),
         () => {
           // Not submitted: the exam stays open here, and Submit may run again, the finish being once-only.
           ended.current = false;
@@ -101,7 +92,7 @@ export function RunningExam({ exam }: { exam: Exam }) {
           setFailure('submit');
         },
       );
-  }, [exam.id, navigate]);
+  }, [exam.id]);
 
   /** Takes the screen back to the exam as stored; one finished meanwhile, here or elsewhere, ends the page. */
   const reread = useCallback(async () => {
@@ -168,6 +159,7 @@ export function RunningExam({ exam }: { exam: Exam }) {
 
   return (
     <div className="flex flex-col gap-4">
+      {done && <Navigate to={examResultsPath(exam.id)} replace />}
       <div className="flex items-baseline justify-between gap-4">
         <h1 className="text-xl font-semibold tracking-tight">{t.exam.title}</h1>
         <p className="text-muted-foreground tabular-nums">{t.exam.position(current + 1, total)}</p>
@@ -192,11 +184,7 @@ export function RunningExam({ exam }: { exam: Exam }) {
         />
       )}
 
-      {failure && (
-        <p role="status" className="text-sm text-destructive">
-          {failure === 'answer' ? t.exam.answerNotSaved : t.exam.submitFailed}
-        </p>
-      )}
+      {failure && <FailureLine>{failure === 'answer' ? t.exam.answerNotSaved : t.exam.submitFailed}</FailureLine>}
 
       <div className="flex gap-2">
         <Button

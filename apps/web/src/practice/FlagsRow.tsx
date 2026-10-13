@@ -1,4 +1,5 @@
 import { useCallback, useId, useRef, useState } from 'react';
+import { FailureLine } from '@/components/FailureLine';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useI18n } from '@/i18n/useI18n';
@@ -56,13 +57,12 @@ export function FlagsRow({ questionId }: { questionId: number }) {
   const [saveFailed, setSaveFailed] = useState(false);
   /** The flags could not be read again after a failed write, so what is stored is unknown. */
   const [unknown, setUnknown] = useState(false);
-  const usable = loadedState !== undefined && !loadFailed && !unknown;
+  // A failed load leaves no state, so it is not usable either.
+  const usable = loadedState !== undefined && !unknown;
   const state = usable ? loadedState : {};
   const idPrefix = useId();
-  /** The row's writes, chained so they land in the order they were asked for. */
+  /** The row's writes, chained so they land in the order they were asked for; a write is the last one queued while it is still the tail. */
   const writes = useRef<Promise<void>>(Promise.resolve());
-  /** How many writes have been queued; a write knows it is the last one queued when this still equals its own count. */
-  const queued = useRef(0);
   /** A write failed, so the row is to be read again once the queue has drained. */
   const stale = useRef(false);
 
@@ -78,9 +78,8 @@ export function FlagsRow({ questionId }: { questionId: number }) {
    * landed; a read overtaken by a newer write is left for that write to redo.
    */
   const queue = (write: () => Promise<unknown>) => {
-    const count = ++queued.current;
-    const isLast = () => count === queued.current;
-    writes.current = writes.current
+    const isLast = () => writes.current === tail;
+    const tail: Promise<void> = writes.current
       .then(write)
       .catch(() => {
         stale.current = true;
@@ -97,6 +96,7 @@ export function FlagsRow({ questionId }: { questionId: number }) {
           setUnknown(true);
         }
       });
+    writes.current = tail;
   };
 
   const toggle = (kind: FlagKind) => {
@@ -176,9 +176,7 @@ export function FlagsRow({ questionId }: { questionId: number }) {
         );
       })}
       {(loadFailed || unknown || saveFailed) && (
-        <p role="status" className="text-sm text-destructive">
-          {loadFailed || unknown ? words.loadFailed : words.saveFailed}
-        </p>
+        <FailureLine>{loadFailed || unknown ? words.loadFailed : words.saveFailed}</FailureLine>
       )}
     </div>
   );

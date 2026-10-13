@@ -5,6 +5,7 @@ import { useLoaded } from '@/lib/useLoaded';
 import {
   accuracyByDay,
   accuracyWindowStart,
+  isFinished,
   READINESS_TARGET_PERCENT,
   readiness,
   type DayAccuracy,
@@ -14,7 +15,6 @@ import {
 } from '@/model';
 import { getStates, listAnswers, listExams, listFlags } from '@/storage';
 import { DayBars } from './DayBars';
-import { pastExams } from './exams';
 import { GroupTabs } from './GroupTabs';
 import { PastExams } from './PastExams';
 import { useDayRefresh } from './useDayRefresh';
@@ -44,7 +44,10 @@ async function loadProgress(): Promise<ProgressData> {
     readiness: readiness(states),
     days: accuracyByDay(answers, now),
     states,
-    exams: pastExams(exams),
+    // Past exams (DESIGN.md § 6.6): finished ones only, newest finished first, so the order follows the date each
+    // row shows. This is the one definition of the order; storage's listExams sorts by start, and the two differ
+    // when exams overlap (possible after an import merges two devices).
+    exams: exams.filter(isFinished).sort((a, b) => b.finishedAt - a.finishedAt),
     flagCount: flags.length,
   };
 }

@@ -1,10 +1,6 @@
 import { renderHook } from '@testing-library/react';
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { useDayRefresh } from './useDayRefresh';
-
-afterEach(() => {
-  vi.useRealTimers();
-});
 
 describe('useDayRefresh', () => {
   it('refreshes at each local midnight while mounted, and no more once unmounted', () => {

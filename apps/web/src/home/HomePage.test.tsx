@@ -2,14 +2,15 @@ import { act, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { IDBFactory } from 'fake-indexeddb';
 import { MemoryRouter, Route, Routes } from 'react-router';
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { setLocale } from '@/i18n/locale';
 import type { Locale } from '@/i18n/locales';
 import { MESSAGES } from '@/i18n/messages';
 import { drawExam, seededRandom } from '@/model';
-import { closeStorage, createExam, listAnswers, recordAnswer, saveExamAnswer } from '@/storage';
+import { closeStorage, createExam, listAnswers, recordAnswer } from '@/storage';
 import { HomePage } from './HomePage';
 import { correctOf } from '../../test/fixtures';
+import { answerExam } from '../../test/storage';
 
 const SECOND = 1000;
 const MINUTE = 60 * SECOND;
@@ -30,10 +31,6 @@ function renderHome() {
 
 /** The exam card, once Home has read storage. */
 const examCard = () => screen.findByRole('link', { name: new RegExp(en.home.examInProgress) });
-
-afterEach(() => {
-  vi.useRealTimers();
-});
 
 describe('Home', () => {
   for (const locale of ['en', 'pt'] satisfies Locale[]) {
@@ -119,7 +116,7 @@ describe('Home', () => {
     const startedAt = Date.now() - 31 * MINUTE;
     const exam = await createExam(examIds, startedAt);
     const answered = examIds.slice(0, 12);
-    for (const id of answered) expect(await saveExamAnswer(exam.id, id, correctOf(id), startedAt + MINUTE)).toBe(true);
+    await answerExam(exam.id, Object.fromEntries(answered.map((id) => [id, correctOf(id)])), startedAt + MINUTE);
     renderHome();
 
     // 12 right at 1, 8 unanswered at 0, 486 unseen at 1/3: 174 / 506 = 34.4 %.

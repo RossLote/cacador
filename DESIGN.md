@@ -1120,7 +1120,7 @@ before the first run and again after each Playwright bump. The `e2e` script stay
   `vite preview` answers any sub-route itself: `404.html` is a byte-for-byte copy of
   `index.html`, the service worker waits (nothing claims clients or skips waiting, and
   the app never asks it to), the precache holds every built file under `/cacador/`, and
-  every URL in `index.html` and the manifest starts with `/cacador/`.
+  every URL in `index.html` starts with `/cacador/`.
 
 Step 1 of the bar, a fresh clone through install, lint, test and `pnpm e2e`, is run by
 hand, and step 13 is Ross's, on the phone after the first push.

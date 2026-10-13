@@ -1,5 +1,5 @@
 import { examDeadline, examResults, scoreExam } from '@/model';
-import type { Answer, Exam } from './types';
+import type { Answer, Exam, OptionKey } from './types';
 
 /** An exam as submitted and the answers its submission logs. */
 interface ExamSubmission {
@@ -43,4 +43,14 @@ export const newestFirst = (a: Exam, b: Exam): number => b.startedAt - a.started
 /** The exam running at `now`, the most recently started should there be several; undefined when none is. */
 export function runningExam(exams: readonly Exam[], now: number): Exam | undefined {
   return exams.filter((exam) => isRunning(exam, now)).sort(newestFirst)[0];
+}
+
+/**
+ * `exam` with `option` set for `questionId`, its other answers as they are, or
+ * undefined when the answer is refused: no exam, the exam not running at `at`
+ * (`isRunning`), or a question not in the exam.
+ */
+export function withExamAnswer(exam: Exam | undefined, questionId: number, option: OptionKey, at: number): Exam | undefined {
+  if (exam === undefined || !isRunning(exam, at) || !exam.questionIds.includes(questionId)) return undefined;
+  return { ...exam, answers: { ...exam.answers, [questionId]: option } };
 }

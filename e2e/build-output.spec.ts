@@ -62,19 +62,10 @@ test('D12: the precache holds every built file, the manifest and index.html amon
   expect([...urls].sort()).toEqual(expected.sort());
 });
 
-test('D1: every URL in index.html and the manifest starts with /cacador/', () => {
+// The manifest's own URLs are checked where it is served (installable.spec.ts).
+test('D1: every URL in index.html starts with /cacador/', () => {
   const html = read('index.html');
   const htmlUrls = [...html.matchAll(/\s(?:href|src)="([^"]*)"/g)].map((match) => match[1]!);
   expect(htmlUrls.length).toBeGreaterThan(0);
   for (const url of htmlUrls) expect(url, 'index.html').toMatch(/^\/cacador\//);
-
-  const manifest = JSON.parse(read('manifest.webmanifest')) as {
-    id: string;
-    start_url: string;
-    scope: string;
-    icons: { src: string }[];
-  };
-  const manifestUrls = [manifest.id, manifest.start_url, manifest.scope, ...manifest.icons.map((icon) => icon.src)];
-  expect(manifest.icons.length).toBeGreaterThan(0);
-  for (const url of manifestUrls) expect(url, 'manifest.webmanifest').toMatch(/^\/cacador\//);
 });

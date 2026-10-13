@@ -1,6 +1,6 @@
 import type { OptionKey } from '@cacador/data';
-import { IDBFactory, IDBObjectStore } from 'fake-indexeddb';
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { IDBFactory } from 'fake-indexeddb';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { drawExam, EXAM_DURATION_MS, seededRandom } from '@/model';
 import { finishExamRecords } from './finish';
 import { withoutLogId } from './state';
@@ -20,7 +20,6 @@ import {
   LOCALE_KEY,
   recordAnswer,
   RECENT_KEY,
-  saveExamAnswer,
   setFlag,
   storageMode,
   type Answer,
@@ -28,17 +27,13 @@ import {
   type ExportFile,
 } from './index';
 import { correctOf, wrongOf } from '../../test/fixtures';
+import { answerExam, failStore } from '../../test/storage';
 
 const MINUTE = 60 * 1000;
 const T0 = Date.UTC(2026, 9, 13, 9, 0);
 
 const allOf = (ids: readonly number[], pick: (id: number) => OptionKey): Record<number, OptionKey> =>
   Object.fromEntries(ids.map((id) => [id, pick(id)]));
-
-/** Saves each of `answers` on the running exam, chosen at `at`. */
-async function saveAnswers(examId: string, answers: Record<number, OptionKey>, at: number): Promise<void> {
-  for (const [id, option] of Object.entries(answers)) expect(await saveExamAnswer(examId, Number(id), option, at)).toBe(true);
-}
 
 const questionIds = drawExam(seededRandom(7));
 const otherIds = drawExam(seededRandom(8));
@@ -58,10 +53,10 @@ async function makeProgress(): Promise<{ finished: Exam; running: Exam }> {
     await recordAnswer({ questionId: id, chosen: right ? correctOf(id) : wrongOf(id), correct: right, mode: 'practice', at: T0 + i * MINUTE });
   }
   const finished = await createExam(questionIds, T0 + 10 * MINUTE);
-  await saveAnswers(finished.id, allOf(questionIds.slice(0, 15), correctOf), T0 + 11 * MINUTE);
+  await answerExam(finished.id, allOf(questionIds.slice(0, 15), correctOf), T0 + 11 * MINUTE);
   await finishExam(finished.id, T0 + 20 * MINUTE);
   const running = await createExam(otherIds, T0 + 22 * MINUTE);
-  await saveAnswers(running.id, allOf(otherIds.slice(0, 2), wrongOf), T0 + 23 * MINUTE);
+  await answerExam(running.id, allOf(otherIds.slice(0, 2), wrongOf), T0 + 23 * MINUTE);
   await setFlag(3, 'translation', 'says deer', T0 + 5 * MINUTE);
   await setFlag(40, 'hint', '', T0 + 6 * MINUTE);
   return { finished, running: (await getExam(running.id)) as Exam };
@@ -80,9 +75,6 @@ describe.each([
     await closeStorage();
     vi.stubGlobal('indexedDB', available ? new IDBFactory() : undefined);
     expect(await storageMode()).toBe(mode);
-  });
-  afterEach(() => {
-    vi.useRealTimers();
   });
 
   it('exports the version 1 file: answers without log ids, exams and flags, never question state', async () => {
@@ -182,7 +174,7 @@ describe.each([
 
     it('submits the device own at the moment of the import when the file one started later', async () => {
       const own = await createExam(questionIds, T0);
-      await saveAnswers(own.id, allOf(questionIds.slice(0, 2), correctOf), T0 + MINUTE);
+      await answerExam(own.id, allOf(questionIds.slice(0, 2), correctOf), T0 + MINUTE);
       const other: Exam = { id: 'from-laptop', startedAt: T0 + 10 * MINUTE, questionIds: otherIds, answers: {} };
 
       expect(await importProgress(fileText({ exams: [other] }))).toEqual({ ok: true, added: { answers: 20, exams: 1, flags: 0 } });
@@ -197,7 +189,7 @@ describe.each([
     /** The device's exam finished at `finishAt` with every answer right, and the same exam as the file has it. */
     async function deviceExam(finishAt?: number): Promise<Exam> {
       const exam = await createExam(questionIds, T0);
-      await saveAnswers(exam.id, allOf(questionIds.slice(0, 3), correctOf), T0 + MINUTE);
+      await answerExam(exam.id, allOf(questionIds.slice(0, 3), correctOf), T0 + MINUTE);
       if (finishAt !== undefined) await finishExam(exam.id, finishAt);
       return (await getExam(exam.id)) as Exam;
     }
@@ -343,9 +335,6 @@ describe('import on IndexedDB', () => {
     vi.useFakeTimers({ toFake: ['Date'] });
     vi.setSystemTime(T0 + 25 * MINUTE);
   });
-  afterEach(() => {
-    vi.useRealTimers();
-  });
 
   it('is all or nothing: a write that fails leaves every store as it was', async () => {
     await makeProgress();
@@ -357,10 +346,8 @@ describe('import on IndexedDB', () => {
       flags: [{ questionId: 9, kind: 'hint', note: 'x', at: T0 }],
     });
 
-    vi.spyOn(IDBObjectStore.prototype, 'put').mockImplementation(() => {
-      throw new DOMException('refused', 'DataError');
-    });
-    await expect(importProgress(text)).rejects.toThrow('refused');
+    failStore('put');
+    await expect(importProgress(text)).rejects.toThrow('put refused');
     vi.restoreAllMocks();
 
     expect({ answers: await listAnswers(), exams: await listExams(), flags: await listFlags(), states: await getStates() }).toEqual(before);

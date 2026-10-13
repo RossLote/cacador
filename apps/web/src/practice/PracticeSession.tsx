@@ -1,6 +1,7 @@
 import { questionById, type OptionKey } from '@cacador/data';
 import { ArrowRight } from 'lucide-react';
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { FailureLine } from '@/components/FailureLine';
 import { QuestionCard } from '@/components/question/QuestionCard';
 import { Button } from '@/components/ui/button';
 import { useI18n } from '@/i18n/useI18n';
@@ -69,7 +70,6 @@ export function PracticeSession({ pool }: { pool: readonly number[] }) {
   }, []);
 
   useEffect(() => {
-    generation.current += 1;
     const isCurrent = staysCurrent(generation);
     void drawNext(isCurrent).then(
       (id) => {
@@ -157,11 +157,7 @@ export function PracticeSession({ pool }: { pool: readonly number[] }) {
           )
         }
       />
-      {answerNotSaved && (
-        <p role="status" className="text-sm text-destructive">
-          {t.practice.answerNotSaved}
-        </p>
-      )}
+      {answerNotSaved && <FailureLine>{t.practice.answerNotSaved}</FailureLine>}
       {answered && <FlagsRow key={question.id} questionId={question.id} />}
     </div>
   );

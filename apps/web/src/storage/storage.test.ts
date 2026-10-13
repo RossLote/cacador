@@ -1,6 +1,6 @@
 import { IDBFactory } from 'fake-indexeddb';
 import { openDB } from 'idb';
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { drawExam, EXAM_DURATION_MS, examDeadline, seededRandom } from '@/model';
 import { DB_NAME, DB_VERSION } from './idbBackend';
 import {
@@ -22,9 +22,9 @@ import {
   saveExamAnswer,
   setFlag,
   storageMode,
-  type OptionKey,
 } from './index';
 import { correctOf, wrongOf } from '../../test/fixtures';
+import { answerExam } from '../../test/storage';
 
 const MINUTE = 60 * 1000;
 const T0 = Date.UTC(2026, 9, 13, 9, 0);
@@ -33,11 +33,6 @@ const T0 = Date.UTC(2026, 9, 13, 9, 0);
 const stateOf = async (questionId: number) => (await getStates()).get(questionId);
 /** One question's answers in time order, as the app reads the log. */
 const answersFor = async (questionId: number) => (await listAnswers()).filter((a) => a.questionId === questionId);
-
-/** Saves each of `answers` on the running exam, chosen at `at`. */
-async function saveAnswers(examId: string, answers: Record<number, OptionKey>, at: number): Promise<void> {
-  for (const [id, option] of Object.entries(answers)) expect(await saveExamAnswer(examId, Number(id), option, at)).toBe(true);
-}
 
 /** IndexedDB on a fresh fake factory, or no IndexedDB at all. */
 function useIndexedDb(available: boolean): void {
@@ -115,9 +110,6 @@ describe.each([
       vi.useFakeTimers({ toFake: ['Date'] });
       vi.setSystemTime(T0);
     });
-    afterEach(() => {
-      vi.useRealTimers();
-    });
 
     it('creates an exam with no answers', async () => {
       const exam = await createExam(questionIds, T0);
@@ -128,7 +120,7 @@ describe.each([
     it('finishes an exam once: the second call does nothing and reports it', async () => {
       const exam = await createExam(questionIds, T0);
       const answers = Object.fromEntries(questionIds.slice(0, 16).map((id) => [id, correctOf(id)]));
-      await saveAnswers(exam.id, answers, T0 + MINUTE);
+      await answerExam(exam.id, answers, T0 + MINUTE);
 
       expect(await finishExam(exam.id, T0 + 10 * MINUTE)).toBe(true);
       expect(await finishExam(exam.id, T0 + 11 * MINUTE)).toBe(false);
@@ -147,7 +139,7 @@ describe.each([
     it('settles an exam past its deadline when the unfinished exam is asked for', async () => {
       const exam = await createExam(questionIds, T0);
       const answered = questionIds.slice(0, 12);
-      await saveAnswers(exam.id, Object.fromEntries(answered.map((id) => [id, correctOf(id)])), T0 + MINUTE);
+      await answerExam(exam.id, Object.fromEntries(answered.map((id) => [id, correctOf(id)])), T0 + MINUTE);
 
       expect(await getUnfinishedExam(T0 + 31 * MINUTE)).toBeUndefined();
 

@@ -2,7 +2,7 @@ import { questionsInTopic } from '@cacador/data';
 import { act, render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter, Route, Routes, useLocation, useNavigate } from 'react-router';
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { setLocale } from '@/i18n/locale';
 import type { Locale } from '@/i18n/locales';
 import { MESSAGES } from '@/i18n/messages';
@@ -15,11 +15,11 @@ import {
   finishExam,
   importProgress,
   recordAnswer,
-  saveExamAnswer,
   setFlag,
 } from '@/storage';
 import { ProgressPage } from './ProgressPage';
 import { correctOf, wrongOf } from '../../test/fixtures';
+import { answerExam } from '../../test/storage';
 
 const MINUTE = 60 * 1000;
 const DAY = 24 * 60 * MINUTE;
@@ -72,10 +72,6 @@ const dayBars = () => within(screen.getByRole('list', { name: en.progress.daysCh
 beforeEach(() => {
   vi.useFakeTimers({ toFake: ['Date'] });
   vi.setSystemTime(NOW);
-});
-
-afterEach(() => {
-  vi.useRealTimers();
 });
 
 describe('Progress on a fresh device', () => {
@@ -260,13 +256,13 @@ describe('Past exams', () => {
     // A failed exam on 10 Oct: 14 of 20.
     const failedIds = drawExam(seededRandom(1));
     const failed = await createExam(failedIds, NOW - 3 * DAY);
-    for (const id of failedIds.slice(0, 14)) await saveExamAnswer(failed.id, id, correctOf(id), NOW - 3 * DAY);
+    await answerExam(failed.id, Object.fromEntries(failedIds.slice(0, 14).map((id) => [id, correctOf(id)])), NOW - 3 * DAY);
     expect(await finishExam(failed.id, NOW - 3 * DAY + 10 * MINUTE)).toBe(true);
 
     // A passed exam this morning: 15 right, 5 wrong.
     const passedIds = drawExam(seededRandom(2));
     const passed = await createExam(passedIds, NOW - 2 * 60 * MINUTE);
-    for (const [i, id] of passedIds.entries()) await saveExamAnswer(passed.id, id, i < 15 ? correctOf(id) : wrongOf(id), NOW - 2 * 60 * MINUTE);
+    await answerExam(passed.id, Object.fromEntries(passedIds.map((id, i) => [id, i < 15 ? correctOf(id) : wrongOf(id)])), NOW - 2 * 60 * MINUTE);
     expect(await finishExam(passed.id, NOW - 2 * 60 * MINUTE + 20 * MINUTE)).toBe(true);
 
     // One still running: never a row.
@@ -300,7 +296,7 @@ describe('Past exams', () => {
   it('settles an exam past its deadline first and lists it', async () => {
     const ids = drawExam(seededRandom(4));
     const exam = await createExam(ids, NOW - 45 * MINUTE);
-    await saveExamAnswer(exam.id, ids[0] as number, correctOf(ids[0] as number), NOW - 44 * MINUTE);
+    await answerExam(exam.id, { [ids[0] as number]: correctOf(ids[0] as number) }, NOW - 44 * MINUTE);
     renderProgress();
 
     const section = await screen.findByRole('region', { name: en.progress.exams });
@@ -335,7 +331,7 @@ describe('Past exams order and score', () => {
   it('shows the score worked out from the answers, as the results page does, not a stored one that disagrees', async () => {
     const ids = drawExam(seededRandom(8));
     const exam = await createExam(ids, NOW - 60 * MINUTE);
-    for (const id of ids.slice(0, 3)) await saveExamAnswer(exam.id, id, correctOf(id), NOW - 59 * MINUTE);
+    await answerExam(exam.id, Object.fromEntries(ids.slice(0, 3).map((id) => [id, correctOf(id)])), NOW - 59 * MINUTE);
     expect(await finishExam(exam.id, NOW - 50 * MINUTE)).toBe(true);
     // A file whose stored score says 20 for the same answers.
     const file = await exportProgress();

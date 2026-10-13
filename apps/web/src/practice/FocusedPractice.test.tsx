@@ -1,7 +1,6 @@
 import { hintFor, type OptionKey } from '@cacador/data';
 import { fireEvent, render, renderHook, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { IDBObjectStore } from 'fake-indexeddb';
 import type { ReactNode } from 'react';
 import { MemoryRouter } from 'react-router';
 import { describe, expect, it, vi } from 'vitest';
@@ -12,6 +11,7 @@ import { getFlags, listAnswers, setFlag } from '@/storage';
 import { PracticePage } from './PracticePage';
 import { usePracticePool } from './usePracticePool';
 import { question, wrongOf } from '../../test/fixtures';
+import { failStore } from '../../test/storage';
 
 const t = MESSAGES.en.practice;
 const flagsT = t.flags;
@@ -38,25 +38,6 @@ const nextButton = () => screen.queryByRole('button', { name: t.next });
 const flagsRow = () => screen.queryByRole('group', { name: flagsT.group });
 const englishOff = () => screen.getByRole('button', { name: flagsT.englishOff });
 const hintOff = () => screen.getByRole('button', { name: flagsT.hintOff });
-
-/** Makes every read of the flags store throw, leaving the other stores alone. */
-function failFlagReads() {
-  const getAll = IDBObjectStore.prototype.getAll;
-  return vi.spyOn(IDBObjectStore.prototype, 'getAll').mockImplementation(function (this: IDBObjectStore, ...args) {
-    if (this.name === 'flags') throw new DOMException('broken', 'UnknownError');
-    return getAll.apply(this, args);
-  });
-}
-
-/** Makes the next `count` flag writes (put) throw. */
-function failWrites(count = Infinity) {
-  const put = IDBObjectStore.prototype.put;
-  let left = count;
-  return vi.spyOn(IDBObjectStore.prototype, 'put').mockImplementation(function (this: IDBObjectStore, ...args) {
-    if (left-- > 0) throw new DOMException('full', 'QuotaExceededError');
-    return put.apply(this, args);
-  });
-}
 
 /** Lets the row's writes and reads under way land. */
 const settle = () => new Promise((resolve) => setTimeout(resolve, 50));
@@ -299,9 +280,7 @@ describe('the flags row (D2)', () => {
     await answer(user);
     await vi.waitFor(() => expect(hintOff()).toBeEnabled());
     await vi.waitFor(async () => expect(await listAnswers()).toHaveLength(1));
-    const put = vi.spyOn(IDBObjectStore.prototype, 'put').mockImplementation(() => {
-      throw new DOMException('full', 'QuotaExceededError');
-    });
+    const put = failStore('put');
     // A synchronous tap, so the row is checked before the failed write can put it back.
     fireEvent.click(hintOff());
     expect(hintOff()).toHaveAttribute('aria-pressed', 'true');
@@ -320,7 +299,7 @@ describe('the flags row (D2)', () => {
     await vi.waitFor(() => expect(englishOff()).toBeEnabled());
     await user.click(englishOff());
     await vi.waitFor(async () => expect(await getFlags(1)).toEqual([expect.objectContaining({ kind: 'translation', note: '' })]));
-    const writes = failWrites();
+    const writes = failStore('put');
     await user.type(screen.getByRole('textbox', { name: flagsT.englishNote }), 'option B{Enter}');
     await vi.waitFor(() => expect(writes).toHaveBeenCalled());
     await settle();
@@ -338,8 +317,8 @@ describe('the flags row (D2)', () => {
     await answer(user);
     await vi.waitFor(() => expect(hintOff()).toBeEnabled());
     await vi.waitFor(async () => expect(await listAnswers()).toHaveLength(1));
-    const writes = failWrites();
-    failFlagReads();
+    const writes = failStore('put');
+    failStore('getAll', { store: 'flags' });
     fireEvent.click(hintOff());
     await vi.waitFor(() => expect(writes).toHaveBeenCalled());
     await settle();
@@ -357,7 +336,7 @@ describe('the flags row (D2)', () => {
     await answer(user);
     await vi.waitFor(() => expect(hintOff()).toBeEnabled());
     await vi.waitFor(async () => expect(await listAnswers()).toHaveLength(1));
-    failWrites(1);
+    failStore('put', { times: 1 });
     // Both taps in one tick: the hint write is queued behind the English one, which fails.
     fireEvent.click(englishOff());
     fireEvent.click(hintOff());
@@ -393,7 +372,7 @@ describe('the flags row (D2)', () => {
     const user = userEvent.setup();
     renderPractice();
     await shownId();
-    const reads = failFlagReads();
+    const reads = failStore('getAll', { store: 'flags' });
     await answer(user);
     await settle();
     expect(englishOff()).toBeDisabled();

@@ -1,6 +1,6 @@
 import { openDB, type DBSchema, type IDBPDatabase, type IDBPTransaction, type StoreNames } from 'idb';
 import type { StorageBackend } from './backend';
-import { finishExamRecords, isRunning, runningExam } from './finish';
+import { finishExamRecords, runningExam, withExamAnswer } from './finish';
 import { planImport } from './merge';
 import { compareAnswers, isInOrder, nextState, withoutLogId } from './state';
 import type { Answer, Exam, Flag, FlagKind, QuestionState } from './types';
@@ -106,9 +106,9 @@ function idbBackend(db: IDBPDatabase<CacadorDB>): StorageBackend {
     setExamAnswer: (id, questionId, option, at) =>
       write(db, ['exams'], async (tx) => {
         const exams = tx.objectStore('exams');
-        const exam = await exams.get(id);
-        if (exam === undefined || !isRunning(exam, at) || !exam.questionIds.includes(questionId)) return false;
-        await exams.put({ ...exam, answers: { ...exam.answers, [questionId]: option } });
+        const answered = withExamAnswer(await exams.get(id), questionId, option, at);
+        if (answered === undefined) return false;
+        await exams.put(answered);
         return true;
       }),
     finishExam: (id, at) =>

@@ -1,5 +1,5 @@
 import type { StorageBackend } from './backend';
-import { finishExamRecords, isRunning, runningExam } from './finish';
+import { finishExamRecords, runningExam, withExamAnswer } from './finish';
 import { flagKey, planImport } from './merge';
 import { compareAnswers, nextState } from './state';
 import type { Answer, Exam, Flag, QuestionState } from './types';
@@ -53,9 +53,9 @@ export function createMemoryBackend(): StorageBackend {
     },
     listExams: async () => [...exams.values()].map((e) => copy(e)),
     setExamAnswer: async (id, questionId, option, at) => {
-      const exam = exams.get(id);
-      if (exam === undefined || !isRunning(exam, at) || !exam.questionIds.includes(questionId)) return false;
-      exams.set(id, { ...exam, answers: { ...exam.answers, [questionId]: option } });
+      const answered = withExamAnswer(exams.get(id), questionId, option, at);
+      if (answered === undefined) return false;
+      exams.set(id, answered);
       return true;
     },
     finishExam: async (id, at) => {

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { FailureLine } from '@/components/FailureLine';
 import { Button } from '@/components/ui/button';
 import { useI18n } from '@/i18n/useI18n';
 import { useLoaded } from '@/lib/useLoaded';
@@ -53,11 +54,7 @@ export function ExamStart() {
           <Button type="button" size="lg" className="h-12 text-base sm:self-start sm:px-8" disabled={starting} onClick={start}>
             {t.exam.start}
           </Button>
-          {startFailed && (
-            <p role="status" className="text-sm text-destructive">
-              {t.exam.loadFailed}
-            </p>
-          )}
+          {startFailed && <FailureLine>{t.exam.loadFailed}</FailureLine>}
         </>
       )}
     </section>

@@ -1,7 +1,6 @@
 import { hintFor, sectionOf, topicOf, translationFor, type OptionKey } from '@cacador/data';
 import { act, fireEvent, render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { IDBObjectStore } from 'fake-indexeddb';
 import { MemoryRouter } from 'react-router';
 import { describe, expect, it, vi } from 'vitest';
 import { MESSAGES } from '@/i18n/messages';
@@ -10,6 +9,7 @@ import { closeStorage, getStates, listAnswers, RECENT_KEY } from '@/storage';
 import { PracticePage } from './PracticePage';
 import { PracticeSession } from './PracticeSession';
 import { question, wrongOf } from '../../test/fixtures';
+import { failStore } from '../../test/storage';
 
 const t = MESSAGES.en.practice;
 const card = t.card;
@@ -142,9 +142,7 @@ describe('PracticePage', () => {
     const user = userEvent.setup();
     renderPractice();
     const id = await shownId();
-    const add = vi.spyOn(IDBObjectStore.prototype, 'add').mockImplementation(() => {
-      throw new DOMException('full', 'QuotaExceededError');
-    });
+    const add = failStore('add');
     await user.click(optionFor(wrongOf(id)));
     expect(within(optionFor(wrongOf(id))).getByText(card.wrong)).toBeInTheDocument();
     expect(await screen.findByText(t.answerNotSaved)).toBeInTheDocument();

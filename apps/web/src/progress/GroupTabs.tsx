@@ -4,6 +4,7 @@ import { Link, useSearchParams } from 'react-router';
 import { Card } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useI18n } from '@/i18n/useI18n';
+import { isOneOf } from '@/lib/isOneOf';
 import { GROUP_KINDS, type GroupKind, type StateMap } from '@/model';
 import { groupRows, type GroupRow } from './groups';
 
@@ -45,7 +46,7 @@ function GroupList({ rows }: { rows: readonly GroupRow[] }) {
 const TAB_PARAM = 'tab';
 const DEFAULT_KIND: GroupKind = 'topic';
 
-const isGroupKind = (value: unknown): value is GroupKind => GROUP_KINDS.some((kind) => kind === value);
+const isGroupKind = isOneOf(GROUP_KINDS);
 
 /**
  * Topics, sections and patterns, one tab each, every row a link into focused
