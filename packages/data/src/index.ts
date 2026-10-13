@@ -19,6 +19,8 @@ import chunk15 from '../questions/15-arco-besta.json' with { type: 'json' };
 import chunk16 from '../questions/16-campos-treino.json' with { type: 'json' };
 import chunk17 from '../questions/17-caes.json' with { type: 'json' };
 import chunk18 from '../questions/18-cetraria.json' with { type: 'json' };
+import translation01 from '../translations/en/01-documentos.json' with { type: 'json' };
+import translation02 from '../translations/en/02-conceitos-basicos.json' with { type: 'json' };
 
 export type OptionKey = 'A' | 'B' | 'C';
 
@@ -132,12 +134,14 @@ export const sectionOf = (question: Question): Section | undefined => sectionByS
 export const topicOf = (question: Question): Topic | undefined => topicBySlug.get(question.topic);
 
 /**
- * PHASE 2 HOOK: translations/en/ and hints/en/ do not exist yet. When phase 2 lands the
- * files, import each one here (same names as the chunk files, one import line each, as
- * for chunks) and list them in these two arrays. import.meta.glob was not used
+ * PHASE 2 HOOK: every file in translations/en/ is imported by name at the top (same name as
+ * its chunk file, one import line each, as for chunks) and listed here in chunk order; a new
+ * translation file gets its import line and its place in this list. hints/en/ does not exist
+ * yet; its files go into hintFiles the same way when phase 3 lands them. The JSON widens
+ * `status` to string, so each list is narrowed once, here. import.meta.glob was not used
  * because tsc needs Vite client type shims for it, and the files are few and named.
  */
-const translationFiles: readonly (readonly Translation[])[] = [];
+const translationFiles = [translation01, translation02] as (readonly Translation[])[];
 const hintFiles: readonly (readonly Hint[])[] = [];
 
 const translationById = new Map(translationFiles.flat().map((t) => [t.id, t]));

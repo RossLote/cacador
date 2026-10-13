@@ -81,8 +81,17 @@ function expectFailure(change: (dir: string) => void, message: RegExp): void {
 }
 
 describe('validate on the real data', () => {
-  it('passes and returns the counts of DESIGN.md § 2 and § 3', () => {
-    expect(validate()).toEqual({ questions: 506, files: 18, sections: 11, topics: 29, images: 15, imageQuestions: 18 });
+  it('passes and returns the counts of DESIGN.md § 2 and § 3, the translations on disk and the glossary sizes', () => {
+    expect(validate()).toEqual({
+      questions: 506,
+      files: 18,
+      sections: 11,
+      topics: 29,
+      images: 15,
+      imageQuestions: 18,
+      translations: { entries: 58, files: 2, draft: 58, checked: 0, reviewed: 0 },
+      glossaries: { species: 99, terms: 166 },
+    });
   });
 });
 
@@ -95,6 +104,29 @@ describe('validate on the tiny fixture', () => {
       topics: 3,
       images: 2,
       imageQuestions: 3,
+      translations: { entries: 4, files: 2, draft: 1, checked: 2, reviewed: 1 },
+      glossaries: { species: 2, terms: 2 },
+    });
+  });
+
+  it('counts no translations and empty glossaries when the files do not exist', () => {
+    const dir = copyBase();
+    remove(dir, 'translations');
+    remove(dir, 'glossary');
+    expect(validate(dir)).toMatchObject({
+      translations: { entries: 0, files: 0, draft: 0, checked: 0, reviewed: 0 },
+      glossaries: { species: 0, terms: 0 },
+    });
+  });
+
+  it('counts the translations of each file and each status, and the glossary entries', () => {
+    const dir = copyBase();
+    remove(dir, 'translations/en/02-beta.json');
+    editRows(dir, 'translations/en/01-alfa.json', (t) => (t[1].status = 'reviewed'));
+    addSpecies(dir, { pt: 'Abetarda', en: 'Great bustard' });
+    expect(validate(dir)).toMatchObject({
+      translations: { entries: 2, files: 1, draft: 0, checked: 1, reviewed: 1 },
+      glossaries: { species: 3, terms: 2 },
     });
   });
 });

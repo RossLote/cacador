@@ -46,14 +46,23 @@ describe('loader', () => {
 
   // The loader lists translation and hint files by hand (src/index.ts). The validator makes every
   // file under translations/en and hints/en carry exactly its chunk's ids, so a chunk file that
-  // exists on disk must resolve for every id of the chunk, or it was never wired in.
+  // exists on disk must resolve every id of the chunk to the entry of that id, or it was never wired in.
   it.each([
     ['translations/en', translationFor],
     ['hints/en', hintFor],
   ] as const)('wires every file in %s into the loader', (dir, lookup) => {
     const onDisk = manifest.chunks.filter((c) => existsSync(new URL(`../${dir}/${c.file}`, import.meta.url)));
-    const missing = onDisk.flatMap((c) => Array.from({ length: c.to - c.from + 1 }, (_, i) => c.from + i)).filter((id) => lookup(id) === undefined);
+    const missing = onDisk.flatMap((c) => Array.from({ length: c.to - c.from + 1 }, (_, i) => c.from + i)).filter((id) => lookup(id)?.id !== id);
     expect(missing).toEqual([]);
     if (onDisk.length === 0) for (const id of [1, 229, 506]) expect(lookup(id)).toBeUndefined();
+  });
+
+  it('looks translations up by id', () => {
+    const t = translationFor(1);
+    expect(t?.id).toBe(1);
+    expect(Object.keys(t?.options ?? {})).toEqual(['A', 'B', 'C']);
+    expect(['draft', 'checked', 'reviewed']).toContain(t?.status);
+    expect(translationFor(0)).toBeUndefined();
+    expect(translationFor(507)).toBeUndefined();
   });
 });

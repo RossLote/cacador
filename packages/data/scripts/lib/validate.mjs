@@ -328,11 +328,12 @@ function readGlossary(dir, rel, label, spec) {
 /**
  * Rule 6 (DESIGN.md § 4): a glossary `pt` that occurs as a whole word in a question (a hyphen is part
  * of the word, curly quotes straightened) must have its `en` in every non-draft translation of it.
+ * Returns the number of glossary entries, 0 when there is no glossary.
  */
 function checkGlossary(dir, files, translations) {
   const rel = 'glossary/species.json';
   const glossary = readGlossary(dir, rel, 'species', { pt: 'string', scientific: 'string', en: 'string', group: 'string' });
-  if (!glossary) return;
+  if (!glossary) return 0;
   const ptText = new Map([...files.values()].flat().map((q) => [q.id, straighten(textOf(q))]));
   for (const entry of glossary) {
     const word = new RegExp(`(?<![\\p{L}\\p{N}-])${escapeRegExp(straighten(entry.pt))}(?![\\p{L}\\p{N}-])`, 'iu');
@@ -344,15 +345,25 @@ function checkGlossary(dir, files, translations) {
       }
     }
   }
+  return glossary.length;
 }
 
 /**
  * Rule 7 (DESIGN.md § 4): glossary/terms.json, when it exists, is a list of { pt, en, note } with
  * `pt` and `en` non-empty, `note` a string and `pt` unique. Only its shape is checked: the use of a
- * term in translations is the meaning pass's job, not a rule's.
+ * term in translations is the meaning pass's job, not a rule's. Returns the number of terms, 0 when
+ * there is no terms file.
  */
 function checkTerms(dir) {
-  readGlossary(dir, 'glossary/terms.json', 'term', { pt: 'string', en: 'string', note: 'text' });
+  return readGlossary(dir, 'glossary/terms.json', 'term', { pt: 'string', en: 'string', note: 'text' })?.length ?? 0;
+}
+
+/** The translation counts `validate` reports: entries, files, and entries at each status. */
+function countTranslations(translations) {
+  const entries = [...translations.values()];
+  const counts = { entries: entries.length, files: new Set(entries.map((t) => t.file)).size };
+  for (const status of STATUSES) counts[status] = entries.filter((t) => t.status === status).length;
+  return counts;
 }
 
 /** Checks `dir` (default packages/data) against DESIGN.md § 4, in order, and returns the counts. */
@@ -365,8 +376,9 @@ export function validate(dir = dataDir) {
   checkSectionsAndTopics(manifest, files);
   checkText(manifest, files);
   checkImages(dir, manifest, files);
-  checkGlossary(dir, files, checkMirrors(dir, files));
-  checkTerms(dir);
+  const translations = checkMirrors(dir, files);
+  const species = checkGlossary(dir, files, translations);
+  const terms = checkTerms(dir);
 
   const all = [...files.values()].flat();
   return {
@@ -376,5 +388,7 @@ export function validate(dir = dataDir) {
     topics: manifest.topics.length,
     images: manifest.images.length,
     imageQuestions: all.filter((q) => q.image !== undefined).length,
+    translations: countTranslations(translations),
+    glossaries: { species, terms },
   };
 }

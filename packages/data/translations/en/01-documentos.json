@@ -1,0 +1,112 @@
+[
+  {
+    "id": 1,
+    "question": "Who may be exempted from the hunter's certificate?",
+    "options": {
+      "A": "The officers of the authorities with competence in the enforcement of hunting",
+      "B": "The members of the Government, the Deputies to the Assembleia da República and the staff of the ICNF",
+      "C": "Foreigners not resident in Portuguese territory, provided they are qualified to hunt in the country of their nationality or residence"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 2,
+    "question": "To obtain the hunter's certificate, besides other requirements, it is also necessary:",
+    "options": {
+      "A": "To be a national citizen",
+      "B": "To be resident in national territory",
+      "C": "To be over 16 years of age"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 3,
+    "question": "The hunter's certificate may be renewed:",
+    "options": {
+      "A": "In the 12 months that precede the end of its validity",
+      "B": "In the 18 months that precede the end of its validity",
+      "C": "In the 24 months that precede the end of its expiry"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 4,
+    "question": "When its holder is convicted of a hunting crime, the hunter's certificate:",
+    "options": {
+      "A": "Must be corrected",
+      "B": "Lapses",
+      "C": "Must be exchanged"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 5,
+    "question": "Which of the sentences is correct?",
+    "options": {
+      "A": "The members of the diplomatic corps may be exempted from the hunting licence",
+      "B": "The regional hunting licence authorises the practice of hunting in the area of the hunting region to which it relates",
+      "C": "The regional hunting licence is only valid for some species"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 6,
+    "question": "The hunting dog licence is required for dogs:",
+    "options": {
+      "A": "Over 4 months of age",
+      "B": "Over 12 months of age",
+      "C": "Over 6 months of age"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 7,
+    "question": "A hunter who intends to hunt only snipe in a single hunting region must be the holder of:",
+    "options": {
+      "A": "Licence to hunt waterfowl",
+      "B": "Regional hunting licence or national hunting licence",
+      "C": "Regional hunting licence and waterfowl licence"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 8,
+    "question": "Can a hunter, to carry out the act of hunting, be exempted from the hunting licence?",
+    "options": {
+      "A": "No, he can never be exempted",
+      "B": "Yes, if he is a foreigner, not resident in national territory",
+      "C": "Yes, if he is a member of the diplomatic corps accredited in Portugal"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 9,
+    "question": "Indicate who is exempted from the hunting licence in order to hunt:",
+    "options": {
+      "A": "The members of the diplomatic and consular corps accredited in Portugal",
+      "B": "Foreigners not resident in Portuguese territory, provided that they are qualified to hunt in the country of their nationality or residence",
+      "C": "No one"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 10,
+    "question": "A hunter who intends to hunt only rabbits in a single hunting region must be the holder of:",
+    "options": {
+      "A": "Licence to hunt waterfowl",
+      "B": "Regional hunting licence or national hunting licence",
+      "C": "Regional hunting licence and waterfowl licence"
+    },
+    "status": "draft",
+    "notes": ""
+  }
+]

@@ -8,6 +8,11 @@ try {
     `validate: ${c.questions} questions, ${c.files} files, ${c.sections} sections, ${c.topics} topics, ` +
       `${c.images} images on ${c.imageQuestions} questions`,
   );
+  const t = c.translations;
+  console.log(
+    `validate: translations ${t.entries} entries in ${t.files} files, ${t.draft} draft, ${t.checked} checked, ${t.reviewed} reviewed; ` +
+      `glossaries ${c.glossaries.species} species, ${c.glossaries.terms} terms`,
+  );
 } catch (error) {
   if (!(error instanceof ValidationError)) throw error;
   console.error(`validate: ${error.message}`);
