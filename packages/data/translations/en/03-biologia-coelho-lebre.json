@@ -267,9 +267,9 @@
     "id": 83,
     "question": "Newborn rabbits are commonly given the name of:",
     "options": {
-      "A": "Rabbit kits",
-      "B": "Leverets",
-      "C": "Listados (striped boar piglets, under 6 months)"
+      "A": "Láparos",
+      "B": "Lebrachos",
+      "C": "Listados"
     },
     "status": "checked",
     "notes": ""
@@ -421,9 +421,9 @@
     "id": 97,
     "question": "Newborn Iberian hares are commonly given the name of:",
     "options": {
-      "A": "Rabbit kits",
-      "B": "Leverets",
-      "C": "Listados (striped boar piglets, under 6 months)"
+      "A": "Láparos",
+      "B": "Lebrachos",
+      "C": "Listados"
     },
     "status": "checked",
     "notes": ""

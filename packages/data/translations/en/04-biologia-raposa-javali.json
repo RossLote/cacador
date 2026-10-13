@@ -7,7 +7,7 @@
       "B": "An animal that lives in large colonies",
       "C": "An animal that lives in pairs"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -18,7 +18,7 @@
       "B": "A large-sized mammal",
       "C": "A small-sized mammal"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -29,7 +29,7 @@
       "B": "Having a stronger and less pointed head",
       "C": "Having a stronger and more pointed head"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -40,7 +40,7 @@
       "B": "Thicker and less dense than in summer",
       "C": "Thicker and denser than in summer"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -51,7 +51,7 @@
       "B": "February",
       "C": "March"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -62,7 +62,7 @@
       "B": "50 to 60 days",
       "C": "60 to 70 days"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -73,7 +73,7 @@
       "B": "2 to 5 young",
       "C": "3 to 6 young"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -84,7 +84,7 @@
       "B": "During the winter period",
       "C": "While the females are in heat"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -95,7 +95,7 @@
       "B": "Solitary",
       "C": "That can be seen both by day and by night"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -106,7 +106,7 @@
       "B": "Very short and rounded",
       "C": "Very short and pointed"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -117,7 +117,7 @@
       "B": "A large-sized carnivore",
       "C": "A small-sized carnivore"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -128,7 +128,7 @@
       "B": "Quite sociable",
       "C": "Not very sociable"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -139,7 +139,7 @@
       "B": "Moves in pairs",
       "C": "Moves alone"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -150,7 +150,7 @@
       "B": "That inhabits damp and waterlogged places",
       "C": "That inhabits places with dense vegetation"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -161,7 +161,7 @@
       "B": "A European badger",
       "C": "A ferret"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -172,7 +172,7 @@
       "B": "Varied plant products",
       "C": "Insects"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -183,7 +183,7 @@
       "B": "Varied plant products",
       "C": "Shoots of trees and shrubs"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -194,7 +194,7 @@
       "B": "Not very varied, based exclusively on insects",
       "C": "Very varied, in which small birds and mammals, invertebrates, reptiles and fruit are included"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -205,18 +205,18 @@
       "B": "From 8 months",
       "C": "From 10 months"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
     "id": 124,
     "question": "What are the groups of wild boar called?",
     "options": {
-      "A": "Sounders or companhias",
-      "B": "Flocks or herds",
-      "C": "Bands or companhias"
+      "A": "Varas ou companhias",
+      "B": "Rebanhos ou manadas",
+      "C": "Bandos ou companhias"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -227,29 +227,29 @@
       "B": "Red deer",
       "C": "Wild boar"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
     "id": 126,
-    "question": "In the wild boar, the name tusks is given to the teeth:",
+    "question": "In the wild boar, the name navalhas is given to the teeth:",
     "options": {
       "A": "Lower canines",
       "B": "Upper canines",
       "C": "Premolars"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
     "id": 127,
-    "question": "In the wild boar, the name whetters is given to the teeth:",
+    "question": "In the wild boar, the name amoladeiras is given to the teeth:",
     "options": {
       "A": "Upper canines",
       "B": "Premolars",
       "C": "Lower canines"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -260,7 +260,7 @@
       "B": "Granivorous",
       "C": "Omnivorous"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -271,7 +271,7 @@
       "B": "Form large groups of males only",
       "C": "Isolate themselves progressively"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -282,29 +282,29 @@
       "B": "110 days",
       "C": "120 days"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
     "id": 131,
     "question": "What name is given to the young of the wild boar under 6 months of age?",
     "options": {
-      "A": "Listado (striped boar piglet, under 6 months)",
-      "B": "Farropo (young boar, 6 to 12 months)",
-      "C": "Piglet"
+      "A": "Listado",
+      "B": "Farropo",
+      "C": "Leitão"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
     "id": 132,
     "question": "Between 6 months and 1 year of age, the young of the wild boar has a name of its own. Which?",
     "options": {
-      "A": "Bácoro (young pig)",
-      "B": "Listado (striped boar piglet, under 6 months)",
-      "C": "Farropo (young boar, 6 to 12 months)"
+      "A": "Bácoro",
+      "B": "Listado",
+      "C": "Farropo"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -315,7 +315,7 @@
       "B": "The trophy of the wild boar is the head",
       "C": "The rut of the wild boar does not always occur in a fixed season"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -326,7 +326,7 @@
       "B": "2 years of age",
       "C": "Adult age"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -337,7 +337,7 @@
       "B": "The presence of larger tusks in the males",
       "C": "The longer tail in the male"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -348,7 +348,7 @@
       "B": "Extensive areas of shelter - made up essentially of dense scrub - and the presence of water",
       "C": "Cereal-growing areas in very rugged terrain and the presence of water"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   }
 ]
