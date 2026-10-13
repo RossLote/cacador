@@ -84,14 +84,16 @@ the root `package.json`). Corepack is not used. The extraction scripts shell out
 ```bash
 source ~/.nvm/nvm.sh && nvm use
 pnpm install
-pnpm lint      # eslint + tsc --noEmit in every workspace + the data validator
-pnpm test      # vitest in every workspace
+pnpm lint      # eslint . --max-warnings 0, then tsc --noEmit in every workspace, then pnpm validate
+pnpm test      # vitest run in every workspace
 pnpm extract   # packages/data: rebuild the question files from the source PDF
-pnpm validate  # packages/data: check the question files (also part of lint)
+pnpm validate  # packages/data: check the manifest and the question files (also part of lint)
 ```
 
-Until the scaffold bead lands these scripts do not exist yet; the lines above are
-the target it lands.
+Each workspace package defines `typecheck` (`tsc -p tsconfig.json`, which never
+emits because `tsconfig.base.json` sets `noEmit`) and `test` (`vitest run`); the
+root scripts run them with `pnpm -r`. `packages/data` also defines `extract` and
+`validate`, which the root scripts call with `pnpm --filter @cacador/data`.
 
 ## Architecture Overview
 
@@ -100,9 +102,9 @@ pnpm workspace. Phase 1 holds one package; the web app arrives in a later phase.
 - `packages/data`: the question bank as data. `source/` holds the official PDF and a
   reference parse; `questions/` holds the Portuguese questions in 18 chunk files, one
   section or species group each, never more than 51 questions; `translations/en/` and
-  `hints/en/` mirror those file names; `images/` holds the 14 species photos;
-  `glossary/` holds species and term lists; `manifest.json` lists sections, topics and
-  chunks with their id ranges. `scripts/extract.mjs` and `scripts/validate.mjs` build
+  `hints/en/` mirror those file names; `images/` holds the 14 species photos and
+  `sinal.jpg`, the sign shared by four questions; `glossary/` holds species and term
+  lists; `manifest.json` lists sections, topics and chunks with their id ranges. `scripts/extract.mjs` and `scripts/validate.mjs` build
   and check it. `src/index.ts` is the typed loader the app will import. The layout and
   shapes are fixed in `DESIGN.md` § 3 and § 4.
 - `apps/web` (later): Vite + React 19 + TypeScript + Tailwind v4 + shadcn/ui on

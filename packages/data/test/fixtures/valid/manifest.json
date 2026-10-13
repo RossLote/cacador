@@ -1,0 +1,19 @@
+{
+  "sections": [
+    { "slug": "alfa", "heading": "ALFA", "pt": "Alfa", "en": "Alpha", "from": 1, "to": 2 },
+    { "slug": "beta", "heading": "BETA", "pt": "Beta", "en": "Beta", "from": 3, "to": 4 }
+  ],
+  "topics": [
+    { "slug": "alfa", "pt": "Alfa", "en": "Alpha", "section": "alfa", "ranges": [[1, 2]] },
+    { "slug": "patos", "pt": "Patos", "en": "Ducks", "section": "beta", "ranges": [[3, 3]] },
+    { "slug": "perdiz", "pt": "Perdiz", "en": "Partridge", "section": "beta", "ranges": [[4, 4]] }
+  ],
+  "chunks": [
+    { "file": "01-alfa.json", "section": "alfa", "from": 1, "to": 2 },
+    { "file": "02-beta.json", "section": "beta", "from": 3, "to": 4 }
+  ],
+  "images": [
+    { "file": "q2.jpg", "page": 1, "index": 1, "questions": [2] },
+    { "file": "shared.jpg", "page": 2, "index": 1, "questions": [3, 4] }
+  ]
+}

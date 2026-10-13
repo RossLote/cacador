@@ -1,0 +1,375 @@
+[
+  {
+    "id": 137,
+    "section": "biologia",
+    "topic": "gamo",
+    "question": "Em que época do ano os gamos perdem as armações?",
+    "options": {
+      "A": "Março a abril",
+      "B": "Fevereiro a março",
+      "C": "Janeiro a fevereiro"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 138,
+    "section": "biologia",
+    "topic": "gamo",
+    "question": "Quando se iniciam os nascimentos nas gamelas?",
+    "options": {
+      "A": "Abril",
+      "B": "Maio",
+      "C": "Junho"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 139,
+    "section": "biologia",
+    "topic": "gamo",
+    "question": "A armação do gamo é constituída por:",
+    "options": {
+      "A": "Duas hastes espalmadas, arredondadas na base",
+      "B": "Duas hastes arredondadas, espalmadas na base",
+      "C": "Duas hastes cilíndricas, mais ou menos ramificadas"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 140,
+    "section": "biologia",
+    "topic": "gamo",
+    "question": "A cabeça do gamo atinge a sua forma característica:",
+    "options": {
+      "A": "Aos 5 anos",
+      "B": "Aos 6 anos",
+      "C": "Aos 7 anos"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 141,
+    "section": "biologia",
+    "topic": "gamo",
+    "question": "O gamo prefere:",
+    "options": {
+      "A": "Zonas com abundante arvoredo e matagal, com áreas de pasto",
+      "B": "Zonas abertas, com áreas de pasto e sombras",
+      "C": "Zonas alagadiças e húmidas"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 142,
+    "section": "biologia",
+    "topic": "gamo",
+    "question": "O cio no gamo começa:",
+    "options": {
+      "A": "No princípio do verão",
+      "B": "No princípio do outono",
+      "C": "No princípio do inverno"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 143,
+    "section": "biologia",
+    "topic": "veado",
+    "image": "q143.jpg",
+    "question": "A seguinte figura representa um:",
+    "options": {
+      "A": "Veado",
+      "B": "Corço",
+      "C": "Gamo"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 144,
+    "section": "biologia",
+    "topic": "veado",
+    "question": "Qual o nome da fêmea do veado?",
+    "options": {
+      "A": "Corça",
+      "B": "Cerva",
+      "C": "Gama ou gamela"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 145,
+    "section": "biologia",
+    "topic": "veado",
+    "question": "Em que época do ano os veados perdem as armações?",
+    "options": {
+      "A": "Finais de fevereiro a março",
+      "B": "Finais de março a abril",
+      "C": "Finais de janeiro a fevereiro"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 146,
+    "section": "biologia",
+    "topic": "veado",
+    "question": "A armação do veado atinge a forma característica por volta dos:",
+    "options": {
+      "A": "7 a 8 anos de vida",
+      "B": "8 a 9 anos de vida",
+      "C": "6 a 7 anos de vida"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 147,
+    "section": "biologia",
+    "topic": "veado",
+    "question": "A armação do veado, além de constituir um troféu de caça, é ainda:",
+    "options": {
+      "A": "Indicadora da idade do macho",
+      "B": "Indicadora da idade da fêmea",
+      "C": "Indicadora da idade de ambos os sexos"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 148,
+    "section": "biologia",
+    "topic": "veado",
+    "question": "Os habitats preferidos do veado são:",
+    "options": {
+      "A": "Bosques de folha caduca e matagais, muito fechados",
+      "B": "Bosques de folha caduca, com zonas abertas, e matagais",
+      "C": "Bosques de coníferas, matagais e zonas húmidas"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 149,
+    "section": "biologia",
+    "topic": "veado",
+    "question": "As cervas podem criar pela primeira vez com a idade de:",
+    "options": {
+      "A": "1 ano",
+      "B": "2 anos",
+      "C": "3 anos"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 150,
+    "section": "biologia",
+    "topic": "veado",
+    "question": "Dá-se o nome de brama:",
+    "options": {
+      "A": "Ao grito de desafio que o veado macho lança aos seus rivais na época do cio",
+      "B": "Ao grito que as cervas utilizam para chamar as crias",
+      "C": "Ao grito que os veados machos utilizam para chamar as fêmeas"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 151,
+    "section": "biologia",
+    "topic": "veado",
+    "question": "Quando começam os nascimentos nas cervas?",
+    "options": {
+      "A": "Março",
+      "B": "Abril",
+      "C": "Maio"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 152,
+    "section": "biologia",
+    "topic": "veado",
+    "question": "A armação do veado é composta por:",
+    "options": {
+      "A": "Duas hastes espalmadas, arredondadas na base",
+      "B": "Duas hastes cilíndricas, mais ou menos ramificadas",
+      "C": "Duas hastes cilíndricas, espalmadas nas pontas"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 153,
+    "section": "biologia",
+    "topic": "veado",
+    "question": "O termo “veludo” significa:",
+    "options": {
+      "A": "A pelagem das crias de veado até ás duas primeiras semanas de vida",
+      "B": "A cobertura de pele cinzenta com pelos que protege as hastes de veado em formação",
+      "C": "O escudo anal do corço"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 154,
+    "section": "biologia",
+    "topic": "veado",
+    "question": "As armações do veado adulto:",
+    "options": {
+      "A": "Só caem até ao sexto ano de vida",
+      "B": "Caem todos os anos durante a época do cio",
+      "C": "Caem todos os anos depois da época do cio"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 155,
+    "section": "biologia",
+    "topic": "veado",
+    "question": "Qual dos cervídeos portugueses é mais corpulento?",
+    "options": {
+      "A": "Corço",
+      "B": "Gamo",
+      "C": "Veado"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 156,
+    "section": "biologia",
+    "topic": "veado",
+    "question": "O veado distingue-se do corço por:",
+    "options": {
+      "A": "Ser mais corpulento",
+      "B": "Ter hastes ramificadas",
+      "C": "Só os machos possuírem armação"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 157,
+    "section": "biologia",
+    "topic": "veado",
+    "question": "Em que época do ano os machos de veado perdem as armações?",
+    "options": {
+      "A": "Outubro a novembro",
+      "B": "Fins de fevereiro e março",
+      "C": "Nunca"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 158,
+    "section": "biologia",
+    "topic": "corco",
+    "question": "Em qual das espécies as parições são frequentemente de gémeos?",
+    "options": {
+      "A": "Gamo",
+      "B": "Muflão",
+      "C": "Corço"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 159,
+    "section": "biologia",
+    "topic": "corco",
+    "question": "O cio do corço ocorre entre:",
+    "options": {
+      "A": "Julho e agosto",
+      "B": "Agosto e setembro",
+      "C": "Setembro e outubro"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 160,
+    "section": "biologia",
+    "topic": "corco",
+    "question": "No corço, os partos ocorrem geralmente em:",
+    "options": {
+      "A": "Janeiro",
+      "B": "Maio",
+      "C": "Agosto"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 161,
+    "section": "biologia",
+    "topic": "corco",
+    "question": "O tempo de gestação da corça é de:",
+    "options": {
+      "A": "8 meses",
+      "B": "9 meses",
+      "C": "10 meses"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 162,
+    "section": "biologia",
+    "topic": "corco",
+    "question": "O corço é um animal:",
+    "options": {
+      "A": "Fundamentalmente solitário",
+      "B": "Que forma rebanhos durante o inverno",
+      "C": "Que forma rebanhos durante o verão"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 163,
+    "section": "biologia",
+    "topic": "corco",
+    "question": "O cio do corço ocorre",
+    "options": {
+      "A": "No outono",
+      "B": "No verão",
+      "C": "Na primavera"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 164,
+    "section": "biologia",
+    "topic": "corco",
+    "question": "Durante a época do ano em que o corço não tem armações, como se pode distinguir o macho da fêmea?",
+    "options": {
+      "A": "Pela cor da pele",
+      "B": "Pelo escudo anal",
+      "C": "Pelo tamanho das orelhas"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 165,
+    "section": "biologia",
+    "topic": "muflao",
+    "question": "Em que época ocorre o cio no muflão?",
+    "options": {
+      "A": "No mês de novembro",
+      "B": "No mês de dezembro",
+      "C": "No mês de outubro"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 166,
+    "section": "biologia",
+    "topic": "muflao",
+    "question": "As parições no muflão verificam-se normalmente em:",
+    "options": {
+      "A": "Março",
+      "B": "Abril",
+      "C": "Maio"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 167,
+    "section": "biologia",
+    "topic": "muflao",
+    "question": "Os muflões machos adultos reúnem-se em grupos independentes:",
+    "options": {
+      "A": "No inverno",
+      "B": "Na primavera",
+      "C": "No verão"
+    },
+    "answer": "C"
+  }
+]

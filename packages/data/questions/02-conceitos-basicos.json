@@ -1,0 +1,578 @@
+[
+  {
+    "id": 11,
+    "section": "conceitos-basicos",
+    "topic": "conceitos-basicos",
+    "question": "Consideram-se terrenos cinegéticos aqueles onde:",
+    "options": {
+      "A": "É permitido o exercício da caça",
+      "B": "As espécies cinegéticas vagueiam livremente",
+      "C": "As espécies cinegéticas se reproduzem e alimentam"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 12,
+    "section": "conceitos-basicos",
+    "topic": "conceitos-basicos",
+    "question": "Consideram-se terrenos não cinegéticos aqueles onde:",
+    "options": {
+      "A": "Não existem espécies cinegéticas",
+      "B": "As espécies cinegéticas não se reproduzem nem se alimentam",
+      "C": "É proibido o exercício da caça"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 13,
+    "section": "conceitos-basicos",
+    "topic": "conceitos-basicos",
+    "question": "Consideram-se terrenos cinegéticos:",
+    "options": {
+      "A": "Aqueles onde é permitido o exercício da caça, incluindo as áreas de jurisdição marítima e as águas interiores",
+      "B": "Aqueles onde não é permitido o exercício da caça",
+      "C": "Os campos de treino de caça e as áreas de refúgio de caça"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 14,
+    "section": "conceitos-basicos",
+    "topic": "conceitos-basicos",
+    "question": "Consideram-se terrenos não cinegéticos:",
+    "options": {
+      "A": "Aqueles onde é proibido o exercício da caça",
+      "B": "As zonas de caça turísticas",
+      "C": "As áreas de jurisdição marítima"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 15,
+    "section": "conceitos-basicos",
+    "topic": "conceitos-basicos",
+    "question": "Consideram-se terrenos não cinegéticos:",
+    "options": {
+      "A": "As áreas de proteção",
+      "B": "As zonas de caça nacionais",
+      "C": "As áreas de jurisdição marítima"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 16,
+    "section": "conceitos-basicos",
+    "topic": "conceitos-basicos",
+    "question": "Consideram-se terrenos não cinegéticos:",
+    "options": {
+      "A": "Apenas as áreas de refúgio de caça e os aparcamentos de gado",
+      "B": "Apenas as áreas de não caça e os campos de treino de caça",
+      "C": "Todos os terrenos onde é proibido o exercício da caça"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 17,
+    "section": "conceitos-basicos",
+    "topic": "conceitos-basicos",
+    "question": "Qual das seguintes áreas é considerada como terreno cinegético?",
+    "options": {
+      "A": "Campo de treino de caça",
+      "B": "Área de refúgio de caça",
+      "C": "Zona de caça municipal"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 18,
+    "section": "conceitos-basicos",
+    "topic": "conceitos-basicos",
+    "question": "Quais das seguintes áreas podem ser consideradas terrenos cinegéticos?",
+    "options": {
+      "A": "Campos de treino de caça",
+      "B": "Áreas de jurisdição marítima",
+      "C": "Áreas de proteção"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 19,
+    "section": "conceitos-basicos",
+    "topic": "conceitos-basicos",
+    "question": "Os matilheiros são auxiliares do caçador que têm como função:",
+    "options": {
+      "A": "Procurar, perseguir e levantar espécies de caça menor com a ajuda de cães",
+      "B": "Procurar, perseguir e levantar espécies de caça maior com a ajuda de cães",
+      "C": "Procurar, perseguir e levantar espécies de caça maior sem a ajuda de cães"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 20,
+    "section": "conceitos-basicos",
+    "topic": "conceitos-basicos",
+    "question": "Considera-se época venatória o período anual:",
+    "options": {
+      "A": "Que decorre entre o dia 1 de junho de cada ano e o dia 31 de maio do ano seguinte",
+      "B": "Em que se pode praticar o exercício venatório",
+      "C": "Que decorre entre o dia 15 de agosto e o último domingo do mês de fevereiro do ano seguinte"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 21,
+    "section": "conceitos-basicos",
+    "topic": "conceitos-basicos",
+    "question": "Dos auxiliares de caça indicados há um que não pode perseguir a caça com auxílio de cães:",
+    "options": {
+      "A": "Batedores",
+      "B": "Negaceiros",
+      "C": "Matilheiros"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 22,
+    "section": "conceitos-basicos",
+    "topic": "conceitos-basicos",
+    "question": "Época venatória é:",
+    "options": {
+      "A": "O período anual que decorre entre o dia 1 de junho de cada ano e o dia 31 de maio do ano seguinte",
+      "B": "O intervalo de tempo em que cada uma das espécies pode ser caçada",
+      "C": "O período estipulado no calendário venatório para o exercício da caça a espécies de caça menor"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 23,
+    "section": "conceitos-basicos",
+    "topic": "conceitos-basicos",
+    "question": "A utilização do barco na caça aos patos:",
+    "options": {
+      "A": "É permitida desde que o barco esteja em movimento",
+      "B": "É permitida só nas deslocações entre locais de espera e nas esperas",
+      "C": "É permitida desde que se atire com o motor em movimento"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 24,
+    "section": "conceitos-basicos",
+    "topic": "conceitos-basicos",
+    "question": "Qual dos seguintes grupos de espécies se pode caçar de barco?",
+    "options": {
+      "A": "Patos, galinha-d’água e galeirão",
+      "B": "Patos, galinhola e galeirão",
+      "C": "Patos, narcejas e galeirão"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 25,
+    "section": "conceitos-basicos",
+    "topic": "conceitos-basicos",
+    "question": "Que infração comete um caçador que no mês de outubro, numa zona de caça utiliza dez cães na caça à perdiz pelo processo de salto?",
+    "options": {
+      "A": "Utiliza um número de cães superior ao permitido",
+      "B": "Caça num mês em que não pode ser autorizada a caça a esta espécie",
+      "C": "Utiliza um processo de caça proibido para a espécie no mês de outubro"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 26,
+    "section": "conceitos-basicos",
+    "topic": "conceitos-basicos",
+    "question": "O período venatório de uma espécie cinegética é:",
+    "options": {
+      "A": "O intervalo de tempo em que pode ser caçada",
+      "B": "O intervalo de tempo em que é válida uma licença de caça",
+      "C": "O período que decorre entre 1 de junho e 31 de maio do ano seguinte"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 27,
+    "section": "conceitos-basicos",
+    "topic": "conceitos-basicos",
+    "question": "Em terrenos cobertos de neve, a qual das seguintes espécies não é proibida a caça?",
+    "options": {
+      "A": "Coelho",
+      "B": "Raposa",
+      "C": "Javali"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 28,
+    "section": "conceitos-basicos",
+    "topic": "conceitos-basicos",
+    "question": "A qual das seguintes espécies é permitido o uso de chamarizes na caça?",
+    "options": {
+      "A": "Tordos",
+      "B": "Pombos",
+      "C": "Patos"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 29,
+    "section": "conceitos-basicos",
+    "topic": "conceitos-basicos",
+    "question": "Um caçador, pode caçar pelo processo de salto com o auxilio de 10 cães que espécies cinegéticas?",
+    "options": {
+      "A": "Raposa",
+      "B": "Lebre",
+      "C": "Coelho"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 30,
+    "section": "conceitos-basicos",
+    "topic": "conceitos-basicos",
+    "question": "No continente, na caça ao coelho-bravo por processo diferente do de batida, cada caçador ou grupo de caçadores pode utilizar no máximo:",
+    "options": {
+      "A": "10 cães",
+      "B": "15 cães e 2 cachorros",
+      "C": "50 cães"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 31,
+    "section": "conceitos-basicos",
+    "topic": "conceitos-basicos",
+    "question": "Qual o número máximo de cães que pode ser utilizado na caça à raposa a corricão?",
+    "options": {
+      "A": "50",
+      "B": "100",
+      "C": "Ilimitado"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 32,
+    "section": "conceitos-basicos",
+    "topic": "conceitos-basicos",
+    "question": "Assinale a afirmação correta:",
+    "options": {
+      "A": "É proibido capturar crias ou ovos de qualquer espécie, cinegética ou não",
+      "B": "É proibido caçar patos entre o nascer e o pôr-do-sol",
+      "C": "É proibido caçar em terrenos cinegéticos não ordenados às quintas-feiras"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 33,
+    "section": "conceitos-basicos",
+    "topic": "conceitos-basicos",
+    "question": "Como regra, o exercício da caça só é permitido entre o nascer e o pôr-do-sol, exceto:",
+    "options": {
+      "A": "Na caça aos patos, pelo processo de espera, quando exercida até 200 m dos planos de água",
+      "B": "Na caça às espécies de caça maior, pelo processo de espera, que é autorizada em período de lua cheia",
+      "C": "Na caça aos pombos, tordos e estorninho-malhado, que só é permitida até às 17 horas"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 34,
+    "section": "conceitos-basicos",
+    "topic": "conceitos-basicos",
+    "question": "A caça de aproximação é um processo de caça autorizado para:",
+    "options": {
+      "A": "Espécies de caça maior",
+      "B": "Espécies de caça menor",
+      "C": "Aves aquáticas"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 35,
+    "section": "conceitos-basicos",
+    "topic": "conceitos-basicos",
+    "question": "O uso de negaças é permitido na caça:",
+    "options": {
+      "A": "Aos pombos, aos patos, à pega-rabuda e à gralha-preta",
+      "B": "Às narcejas e tarambola-dourada",
+      "C": "Ao galeirão e galinha-d’água"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 36,
+    "section": "conceitos-basicos",
+    "topic": "conceitos-basicos",
+    "question": "Durante o exercício da caça, o caçador pode ser ajudado por auxiliares que:",
+    "options": {
+      "A": "Não podem fazer parte da linha de caçadores",
+      "B": "Não podem transportar munições",
+      "C": "Não podem transportar armas de fogo, arco ou besta acondicionadas em estojo ou bolsa"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 37,
+    "section": "conceitos-basicos",
+    "topic": "conceitos-basicos",
+    "question": "Na caça à lebre a corricão podem ser utilizados no máximo:",
+    "options": {
+      "A": "Dois cães de busca e dois cães galgos por cada lebre",
+      "B": "Um cão de busca e três cães galgos por cada lebre",
+      "C": "Três cães de busca e um cão galgo por cada lebre"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 38,
+    "section": "conceitos-basicos",
+    "topic": "conceitos-basicos",
+    "question": "No exercício da caça, cada caçador pode utilizar, no máximo:",
+    "options": {
+      "A": "Três cães na caça à perdiz-vermelha",
+      "B": "Dez cães na caça ao coelho-bravo, pelo processo de batida",
+      "C": "Dois cães galgos e dois cães de busca a cada lebre, na caça à lebre a corricão"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 39,
+    "section": "conceitos-basicos",
+    "topic": "conceitos-basicos",
+    "question": "O processo de caça em que o caçador se desloca para capturar determinado exemplar de caça maior, designa-se:",
+    "options": {
+      "A": "De salto",
+      "B": "De batida",
+      "C": "De aproximação"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 40,
+    "section": "conceitos-basicos",
+    "topic": "conceitos-basicos",
+    "question": "O processo de caça em que o caçador aguarda as espécies levantadas por batedores, denomina-se:",
+    "options": {
+      "A": "De montaria",
+      "B": "De batida",
+      "C": "À espera"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 41,
+    "section": "conceitos-basicos",
+    "topic": "conceitos-basicos",
+    "question": "Aparelhos que funcionem a pilhas para atrair as espécies cinegéticas:",
+    "options": {
+      "A": "Podem ser utilizados na caça aos patos",
+      "B": "Podem ser utilizados no controle de predadores",
+      "C": "Não podem ser utilizados na caça"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 42,
+    "section": "conceitos-basicos",
+    "topic": "conceitos-basicos",
+    "question": "Aparelhos que funcionem a pilhas para atrair as espécies cinegéticas:",
+    "options": {
+      "A": "Podem ser utilizados na caça aos patos",
+      "B": "Podem ser utilizados na caça aos tordos",
+      "C": "Não podem ser utilizados na caça"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 43,
+    "section": "conceitos-basicos",
+    "topic": "conceitos-basicos",
+    "question": "Considera-se período venatório, o intervalo de tempo:",
+    "options": {
+      "A": "Em que só se pode caçar aos coelhos, lebres e perdizes",
+      "B": "Em que cada uma das espécies pode ser caçada",
+      "C": "Em que só se pode caçar às espécies migradoras"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 44,
+    "section": "conceitos-basicos",
+    "topic": "conceitos-basicos",
+    "question": "No processo de caça a corricão não é permitido utilizar:",
+    "options": {
+      "A": "Pau e cavalo",
+      "B": "Cães de caça e cavalo",
+      "C": "Armas de fogo"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 45,
+    "section": "conceitos-basicos",
+    "topic": "conceitos-basicos",
+    "question": "Cada caçador pode abater por dia de caça:",
+    "options": {
+      "A": "50 coelhos.",
+      "B": "Não tem limite.",
+      "C": "O definido no calendário venatório anual."
+    },
+    "answer": "C"
+  },
+  {
+    "id": 46,
+    "section": "conceitos-basicos",
+    "topic": "conceitos-basicos",
+    "question": "A utilização de chamarizes na caça:",
+    "options": {
+      "A": "É sempre proibida",
+      "B": "É permitida na caça aos patos e tordos",
+      "C": "É permitida na caça aos patos, à raposa, ao veado e ao corço"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 47,
+    "section": "conceitos-basicos",
+    "topic": "conceitos-basicos",
+    "question": "A utilização do cavalo como meio de caça é permitida:",
+    "options": {
+      "A": "Só na caça à raposa a corricão",
+      "B": "Na caça às espécies de caça maior, à raposa e à lebre e na caça de cetraria",
+      "C": "Só na caça à lebre de cetraria"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 48,
+    "section": "conceitos-basicos",
+    "topic": "conceitos-basicos",
+    "question": "No processo de caça a corricão não é permitido utilizar:",
+    "options": {
+      "A": "Pau e cavalo",
+      "B": "Cães e cavalo",
+      "C": "Armas de fogo"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 49,
+    "section": "conceitos-basicos",
+    "topic": "conceitos-basicos",
+    "question": "Como meio de caça, o uso do pau só é permitido em que processos de caça?",
+    "options": {
+      "A": "Corricão e de salto",
+      "B": "Batida e de salto",
+      "C": "Montaria e de salto"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 50,
+    "section": "conceitos-basicos",
+    "topic": "conceitos-basicos",
+    "question": "Qual das seguintes frases está correta:",
+    "options": {
+      "A": "A utilização de barco é permitida na caça às narcejas e galinholas",
+      "B": "É permitido o uso de negaças às narcejas e tarambolas",
+      "C": "Nas montarias não há limite de número de cães a utilizar"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 51,
+    "section": "conceitos-basicos",
+    "topic": "conceitos-basicos",
+    "question": "O processo de caça em que as espécies cinegéticas são capturadas por ave de presa adestrada para esse fim, denomina-se:",
+    "options": {
+      "A": "Batida",
+      "B": "Corricão",
+      "C": "Cetraria"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 52,
+    "section": "conceitos-basicos",
+    "topic": "conceitos-basicos",
+    "question": "Um caçador não pode utilizar arma de fogo quando pretende caçar pelo processo de:",
+    "options": {
+      "A": "Corricão",
+      "B": "Montaria",
+      "C": "Salto"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 53,
+    "section": "conceitos-basicos",
+    "topic": "conceitos-basicos",
+    "question": "Indique qual das frases está correta:",
+    "options": {
+      "A": "É permitido caçar as espécies que constem do calendário venatório publicado anualmente",
+      "B": "É permitido caçar todas as espécies classificadas como cinegéticas",
+      "C": "É permitido caçar qualquer espécie que cause prejuízos na agricultura"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 54,
+    "section": "conceitos-basicos",
+    "topic": "conceitos-basicos",
+    "question": "Em terrenos cinegéticos não ordenados, cada caçador pode ser acompanhado por:",
+    "options": {
+      "A": "Cinco auxiliares",
+      "B": "Três auxiliares",
+      "C": "Um auxiliar"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 55,
+    "section": "conceitos-basicos",
+    "topic": "conceitos-basicos",
+    "question": "Os matilheiros são auxiliares do caçador que têm como função:",
+    "options": {
+      "A": "Procurar, perseguir e levantar espécies de caça menor com a ajuda de cães",
+      "B": "Procurar, perseguir e levantar espécies de caça maior com a ajuda de cães",
+      "C": "Procurar, perseguir e levantar espécies de caça maior sem a ajuda de cães"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 56,
+    "section": "conceitos-basicos",
+    "topic": "conceitos-basicos",
+    "question": "Para terrenos cinegéticos não ordenados, qual das afirmações está correta?",
+    "options": {
+      "A": "É permitido caçar ao javali pelo processo de aproximação",
+      "B": "Podem realizar-se batidas às raposas às quartas-feiras",
+      "C": "A caça à raposa a corricão pode ser exercida às quartas-feiras e sábados"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 57,
+    "section": "conceitos-basicos",
+    "topic": "conceitos-basicos",
+    "question": "Em terrenos cinegéticos não ordenados, os dias de caça permitidos para caçar com arma de fogo, são:",
+    "options": {
+      "A": "As quintas-feiras, sábados e domingos",
+      "B": "As quintas-feiras, domingos e feriados nacionais obrigatórios",
+      "C": "As quintas-feiras, domingos, feriados nacionais obrigatórios e feriados municipais"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 58,
+    "section": "conceitos-basicos",
+    "topic": "conceitos-basicos",
+    "question": "Em terrenos cinegéticos ordenados, a caça a espécies de caça maior:",
+    "options": {
+      "A": "É permitida nos dias previstos nos respetivos planos de ordenamento cinegético ou exploração",
+      "B": "Só é permitida em três dias da semana à escolha do concessionário",
+      "C": "É permitida em qualquer dia da semana apenas nas zonas de caça turísticas"
+    },
+    "answer": "A"
+  }
+]

@@ -1,0 +1,38 @@
+[
+  {
+    "id": 413,
+    "section": "terrenos",
+    "topic": "terrenos",
+    "question": "Como é que um caçador pode ter acesso a uma zona de caça municipal?",
+    "options": {
+      "A": "Só se fizer a inscrição prévia e for contemplado em sorteio público",
+      "B": "Só se for associado da zona de caça municipal",
+      "C": "Só se for proprietário de terrenos integrados na zona de caça municipal"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 414,
+    "section": "terrenos",
+    "topic": "terrenos",
+    "question": "Têm acesso às zonas de caça turísticas:",
+    "options": {
+      "A": "Só os proprietários dos terrenos e seus convidados",
+      "B": "Só os caçadores estrangeiros, os sócios e seus convidados",
+      "C": "Todos os caçadores que cumpram as normas privativas de funcionamento das mesmas"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 415,
+    "section": "terrenos",
+    "topic": "terrenos",
+    "question": "Têm acesso às zonas de caça associativas:",
+    "options": {
+      "A": "Só os proprietários dos terrenos",
+      "B": "Só os caçadores estrangeiros",
+      "C": "Só os caçadores associados e os convidados"
+    },
+    "answer": "C"
+  }
+]

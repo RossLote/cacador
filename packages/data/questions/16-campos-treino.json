@@ -1,0 +1,62 @@
+[
+  {
+    "id": 475,
+    "section": "campos-treino",
+    "topic": "campos-treino",
+    "question": "Nos campos de treino de caça é permitido:",
+    "options": {
+      "A": "Treinar aves de presa",
+      "B": "Realizar batidas ao javali",
+      "C": "Treinar cães de caça utilizando espécies não cinegéticas"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 476,
+    "section": "campos-treino",
+    "topic": "campos-treino",
+    "question": "Nos campos de treino de caça qual das seguintes atividades pode ser praticada?",
+    "options": {
+      "A": "Exercício de tiro com arma de fogo em perdizes criadas em cativeiro",
+      "B": "Montarias aos javalis",
+      "C": "Caçar espécies cinegéticas da fauna selvagem para treinar aves de presa"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 477,
+    "section": "campos-treino",
+    "topic": "campos-treino",
+    "question": "Diga qual das afirmações está correta?",
+    "options": {
+      "A": "Nos campos de treino os utilizadores devem assegurar a recolha de cartuchos vazios resultantes do exercício do tiro",
+      "B": "Nos campos de treino os utilizadores não podem utilizar armas de caça",
+      "C": "Nos campos de treino os utilizadores devem possuir licença de caça"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 478,
+    "section": "campos-treino",
+    "topic": "campos-treino",
+    "question": "Nos campos de treino de caça pode ser autorizada a prática de uma das seguintes atividades:",
+    "options": {
+      "A": "Treino de furões com coelhos mansos",
+      "B": "Exercício de tiro com besta",
+      "C": "Treinar cães de caça utilizando espécies cinegéticas silvestres"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 479,
+    "section": "campos-treino",
+    "topic": "campos-treino",
+    "question": "Nos campos de treino de caça, entre outras atividades de carácter venatório, pode ser autorizado:",
+    "options": {
+      "A": "O treino de aves de presa",
+      "B": "A realização de montarias",
+      "C": "A realização de batidas às raposas"
+    },
+    "answer": "A"
+  }
+]

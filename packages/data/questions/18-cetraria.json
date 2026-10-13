@@ -1,0 +1,98 @@
+[
+  {
+    "id": 499,
+    "section": "cetraria",
+    "topic": "cetraria",
+    "question": "O esmerilhão é um pequeno falcão ideal para caçar:",
+    "options": {
+      "A": "Codornizes",
+      "B": "coelhos",
+      "C": "Patos"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 500,
+    "section": "cetraria",
+    "topic": "cetraria",
+    "question": "Qual das seguintes afirmações está correta?",
+    "options": {
+      "A": "A alimentação das aves de presa pode ser constituída essencialmente por rações",
+      "B": "A alimentação das aves de presa deve ser idêntica à que consumiriam no estado selvagem",
+      "C": "Os alimentos dados às aves de presa não podem ter penas ou pêlos"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 501,
+    "section": "cetraria",
+    "topic": "cetraria",
+    "question": "O Açor é uma ave de presa de “baixo-voo”, utilizadas na caça :",
+    "options": {
+      "A": "De pêlo",
+      "B": "De pena",
+      "C": "Tanto de pena como de pelo"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 502,
+    "section": "cetraria",
+    "topic": "cetraria",
+    "question": "Indique a frase correta:",
+    "options": {
+      "A": "O Açor é a ave clássica da caça em alto-voo",
+      "B": "O Açor é a ave clássica da caça em baixo-voo",
+      "C": "O Gavião é a ave clássica da caça em alto-voo"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 503,
+    "section": "cetraria",
+    "topic": "cetraria",
+    "question": "As aves de presa de sexo masculino são designadas em cetraria por “terçó”. O “terçó” é:",
+    "options": {
+      "A": "Mais corpulento do que a fêmea",
+      "B": "Do mesmo tamanho que a fêmea",
+      "C": "Mais ágil do que a fêmea"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 504,
+    "section": "cetraria",
+    "topic": "cetraria",
+    "question": "A condição física de uma ave de presa é avaliada:",
+    "options": {
+      "A": "Pelo peso",
+      "B": "Pelo tamanho",
+      "C": "Pelas penas"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 505,
+    "section": "cetraria",
+    "topic": "cetraria",
+    "question": "O que é o processo de cetraria?",
+    "options": {
+      "A": "Aquele em que o caçador, utiliza aves de presa para capturar espécies cinegéticas, apenas com o auxílio de cães de caça e com ou sem pau",
+      "B": "Aquele em que o caçador, utiliza arco ou besta para capturar espécies cinegéticas",
+      "C": "Aquele em que o caçador, utiliza armadilhas para capturar espécies cinegéticas"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 506,
+    "section": "cetraria",
+    "topic": "cetraria",
+    "question": "Na iniciação das aves de presa, o amansamento deve preferencialmente ser realizado:",
+    "options": {
+      "A": "De dia",
+      "B": "De noite",
+      "C": "Indiferentemente de noite ou de dia"
+    },
+    "answer": "B"
+  }
+]

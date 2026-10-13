@@ -1,0 +1,19 @@
+[
+  {
+    "id": 1,
+    "section": "alfa",
+    "topic": "alfa",
+    "question": "Qual é a idade mínima?",
+    "options": { "A": "Dezasseis anos", "B": "Dezoito anos", "C": "Vinte anos" },
+    "answer": "B"
+  },
+  {
+    "id": 2,
+    "section": "alfa",
+    "topic": "alfa",
+    "image": "q2.jpg",
+    "question": "A seguinte figura representa:",
+    "options": { "A": "Um cão", "B": "Um furão", "C": "Um gato" },
+    "answer": "A"
+  }
+]

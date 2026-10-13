@@ -1,0 +1,230 @@
+[
+  {
+    "id": 480,
+    "section": "caes",
+    "topic": "caes",
+    "question": "Qual é o cão de caça vulgarmente designado como coelheiro?",
+    "options": {
+      "A": "O podengo pequeno",
+      "B": "O podengo médio",
+      "C": "O podengo grande"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 481,
+    "section": "caes",
+    "topic": "caes",
+    "question": "Qual das seguintes raças de cães é indicada para a caça ao javali?",
+    "options": {
+      "A": "O podengo médio",
+      "B": "O podengo grande",
+      "C": "O Fox-hound"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 482,
+    "section": "caes",
+    "topic": "caes",
+    "question": "O podengo pequeno e o podengo médio são cães especialmente adaptados à caça de:",
+    "options": {
+      "A": "Perdiz e codorniz",
+      "B": "Coelho-bravo",
+      "C": "Patos e galeirão"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 483,
+    "section": "caes",
+    "topic": "caes",
+    "question": "Indique qual das afirmações está correta:",
+    "options": {
+      "A": "O perdigueiro português é a única raça de cães adaptada à caça à perdiz",
+      "B": "O podengo pequeno é vulgarmente designado por cão coelheiro",
+      "C": "O beagle é utilizado na caça ao coelho"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 484,
+    "section": "caes",
+    "topic": "caes",
+    "question": "Os baixotes são considerados:",
+    "options": {
+      "A": "Cães de equipagem",
+      "B": "Cães de pista de sangue de caça maior",
+      "C": "Cães de parar"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 485,
+    "section": "caes",
+    "topic": "caes",
+    "question": "Os podengos são cães de raça portuguesa adaptados à caça de espécies cinegéticas:",
+    "options": {
+      "A": "De pelo",
+      "B": "De pena",
+      "C": "De pelo e de pena"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 486,
+    "section": "caes",
+    "topic": "caes",
+    "question": "Qual das afirmações é correta?",
+    "options": {
+      "A": "O pointer é um cão de porte médio e de pelo liso cor de fogo",
+      "B": "O coelheiro é um cão de pequeno porte, de pelo liso ou cerdoso",
+      "C": "O braco alemão é um cão de boa corpulência, de pelo liso ou cerdoso"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 487,
+    "section": "caes",
+    "topic": "caes",
+    "question": "O fox-terrier é especialmente indicado para caçar?",
+    "options": {
+      "A": "Perdiz",
+      "B": "Raposa",
+      "C": "Javali"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 488,
+    "section": "caes",
+    "topic": "caes",
+    "question": "Qual das seguintes frases está correta?",
+    "options": {
+      "A": "O pointer está bem adaptado a caçar em terrenos muito dobrados",
+      "B": "O setter irlandês cobra bem na água e em terra",
+      "C": "O podengo é um cão adaptado à caça de pena"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 489,
+    "section": "caes",
+    "topic": "caes",
+    "question": "Os Fox-hound são considerados:",
+    "options": {
+      "A": "Cães de equipagem",
+      "B": "Cães de parar",
+      "C": "Cães que cobram bem"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 490,
+    "section": "caes",
+    "topic": "caes",
+    "question": "Qual das afirmações é correta?",
+    "options": {
+      "A": "O perdigueiro português, além de “parar”, também cobra bem",
+      "B": "Os galgos não são considerados cães de caça em Portugal",
+      "C": "O pointer é um cão de tamanho médio e com pelo comprido"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 491,
+    "section": "caes",
+    "topic": "caes",
+    "question": "O perdigueiro é um cão de raça portuguesa adaptado à caça de espécies cinegéticas de:",
+    "options": {
+      "A": "Pelo",
+      "B": "Pena",
+      "C": "Pelo e pena"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 492,
+    "section": "caes",
+    "topic": "caes",
+    "question": "Os baixotes são cães principalmente adequados para:",
+    "options": {
+      "A": "Seguir pistas de sangue de caça maior",
+      "B": "Perseguir lebres",
+      "C": "Perseguir perdizes"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 493,
+    "section": "caes",
+    "topic": "caes",
+    "question": "Qual destas raças de cães é a mais indicada para a caça de pena?",
+    "options": {
+      "A": "Podengo médio",
+      "B": "Podengo pequeno",
+      "C": "Perdigueiro português"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 494,
+    "section": "caes",
+    "topic": "caes",
+    "question": "Qual das seguintes raças de cães é indicada para a caça ao javali?",
+    "options": {
+      "A": "Podengo grande",
+      "B": "Fox-houd",
+      "C": "Beagle"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 495,
+    "section": "caes",
+    "topic": "caes",
+    "question": "Qual das seguintes raças de cães é a mais indicada para a caça de pelo?",
+    "options": {
+      "A": "Braco alemão",
+      "B": "Podengo médio",
+      "C": "Pointer"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 496,
+    "section": "caes",
+    "topic": "caes",
+    "question": "Qual das afirmações está correta:",
+    "options": {
+      "A": "O perdigueiro português é a única raça adaptada para a caça à perdiz",
+      "B": "O epagneul breton cobra bem em terra e na água",
+      "C": "O terrier destina-se a seguir pistas de sangue de caça maior"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 497,
+    "section": "caes",
+    "topic": "caes",
+    "question": "O podengo médio é um cão mais adaptado para caçar:",
+    "options": {
+      "A": "Ao coelho",
+      "B": "Ao javali",
+      "C": "À perdiz-vermelha"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 498,
+    "section": "caes",
+    "topic": "caes",
+    "question": "Indique qual destas raças de cães é a mais indicada para a caça de pena:",
+    "options": {
+      "A": "Beagle",
+      "B": "Setter inglês",
+      "C": "Fox-terrier"
+    },
+    "answer": "B"
+  }
+]

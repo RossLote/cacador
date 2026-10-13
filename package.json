@@ -1,0 +1,22 @@
+{
+  "name": "cacador",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@11.6.0",
+  "engines": {
+    "node": ">=26"
+  },
+  "scripts": {
+    "lint": "eslint . --max-warnings 0 && pnpm -r typecheck && pnpm validate",
+    "test": "pnpm -r test",
+    "extract": "pnpm --filter @cacador/data extract",
+    "validate": "pnpm --filter @cacador/data validate"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.11.0",
+    "globals": "^17.12.0",
+    "typescript": "~6.0.3",
+    "typescript-eslint": "^8.71.0"
+  }
+}

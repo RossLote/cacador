@@ -71,6 +71,12 @@ validator (§ 4) catches a regression.
    feed between pages and no running headers or page numbers.
 7. Curly quotes (“espelho alar”) and the apostrophe in galinha-d’água are kept as they
    are in the PDF.
+8. The `pdftotext` mode matters. The default mode drops the hyphen at a wrapped line end
+   (`pôr-do-` / `sol` comes out `pôr-dosol` in 411 and `perdiz-` / `vermelha` comes out
+   `perdizvermelha` in 455) and `-raw` drops spaces on some justified lines (412 options B
+   and C, 443, 455 and 461, for example `Desaltoedecetraria`). The extractor uses
+   `-layout`, which keeps both, and rejoins a line ending in `-` to the next without a
+   space.
 
 ### 2.3 Images
 
@@ -130,8 +136,14 @@ packages/data/
   scripts/
     extract.mjs              PDF to questions/ and images/, deterministic
     validate.mjs             the rules in § 4, run by pnpm lint
+    lib/
+      manifest.mjs           dataDir and the range and image lookups both scripts share
+      parse.mjs              the PDF text parser, pure, unit-tested on the § 2.2 hazards
+      validate.mjs           the rule checks as functions, imported by extract.mjs and the tests
   src/
-    index.ts                 typed loader for the app and the scripts
+    index.ts                 typed loader for the app and the tests
+  test/
+    fixtures/valid/          a 4-question data directory the validator tests copy and break
 ```
 
 ### 3.1 Chunks
@@ -178,12 +190,12 @@ assigned by id range (decision 2026-10-13):
 | veado | 143–157 | Red deer |
 | corco | 158–164 | Roe deer |
 | muflao | 165–167 | Mouflon |
-| perdiz | 168–197, 267 | Red-legged partridge |
-| pombos-rolas | 198–212, 268–279 | Pigeons and doves |
+| perdiz | 168–197 | Red-legged partridge |
+| pombos-rolas | 198–212, 267–279 | Pigeons and doves |
 | codorniz | 213–227 | Common quail |
 | patos | 228–255 | Ducks |
-| galinha-d-agua | 256–260 | Moorhen |
-| galeirao | 261–266 | Coot |
+| galinha-d-agua | 256–261 | Moorhen |
+| galeirao | 262–266 | Coot |
 | galinhola | 280–292 | Woodcock |
 | narcejas | 293–303 | Snipe |
 | tarambola | 304–308 | Golden plover |
@@ -244,7 +256,8 @@ which constructions trip the learner.
 `manifest.json` is hand-maintained and drives both the extractor and the validator:
 
 ```json
-{ "sections": [ { "slug": "biologia", "pt": "Biologia", "en": "Biology", "from": 59, "to": 320 } ],
+{ "sections": [ { "slug": "biologia", "heading": "BIOLOGIA", "pt": "Biologia", "en": "Biology",
+                  "from": 59, "to": 320 } ],
   "topics":   [ { "slug": "patos", "pt": "Patos", "en": "Ducks", "section": "biologia",
                   "ranges": [[228, 255]] } ],
   "chunks":   [ { "file": "08-biologia-patos.json", "section": "biologia", "from": 228, "to": 266 } ],
@@ -252,7 +265,9 @@ which constructions trip the learner.
                 { "file": "sinal.jpg", "page": 38, "index": 1, "questions": [373, 375, 394, 397] } ] }
 ```
 
-The tables in § 2.1, § 2.3, § 3.1 and § 3.2 are its contents.
+The tables in § 2.1, § 2.3, § 3.1 and § 3.2 are its contents. `heading` is the all-caps
+section heading exactly as the PDF prints it; the extractor uses it to split sections
+and the validator to reject heading text, so neither script hard-codes a heading.
 
 ## 4. Validation rules
 
@@ -265,20 +280,30 @@ the file and id. Rules:
    manifest and one of that topic's ranges contains the id.
 3. `options` has exactly the keys A, B, C, each a non-empty single-line string;
    `answer` is one of them; no field contains `*`, a section heading, two consecutive
-   spaces, or leading or trailing whitespace.
+   spaces, whitespace other than a plain space (a tab, a no-break space, U+2028), or
+   leading or trailing whitespace.
 4. The questions the manifest lists under `images` carry that `image`, no other
    question has one, every listed file exists in `images/`, and every file in `images/`
    is listed.
 5. When `translations/en/` or `hints/en/` has a file, it has the same name as a
    `questions/` file, the same ids once each, the same option keys, and a `status` from
-   the three allowed values. A `language` entry's `pt` text occurs in the question or
-   its options.
+   the three allowed values; each entry carries the other fields of § 3.3 with their
+   types (strings non-empty except `notes`, `note` and `nudge`). A `language` entry's
+   `pt` text occurs in the question or its options.
 6. Once `glossary/species.json` exists: for every Portuguese species name in a
    question, the matching English name is present in its translation (case-insensitive).
-   Skipped for entries with status `draft`.
+   Skipped for entries with status `draft`. Every glossary entry has non-empty `pt`,
+   `scientific`, `en` and `group`, and `pt` is unique. The glossary `pt` must be the
+   surface form used in the bank: a whole-word, case-insensitive match in which a
+   hyphen counts as part of the word (`Perdiz` does not match inside `perdiz-cinzenta`),
+   curly apostrophes and quotes are read as straight ones, and a plural is its own
+   entry. An entry that matches no question is allowed, because the glossary also
+   holds species of Portaria 67/2024 that the bank never names.
 
-The manifest itself is checked first: section ranges tile 1 to 506, chunk ranges tile
-1 to 506 without crossing a section, topic ranges tile every section.
+The manifest itself is checked first: every entry has the fields of § 3.4 with their
+types and a unique slug or file name, section ranges tile 1 to 506, chunk ranges tile
+1 to 506 without crossing a section, topic ranges tile every section, and every image
+names existing questions, each under one image only.
 
 ## 5. Pipeline
 

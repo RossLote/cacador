@@ -1,0 +1,566 @@
+[
+  {
+    "id": 416,
+    "section": "periodos-processos",
+    "topic": "periodos-processos",
+    "question": "A caça à lebre pelo processo de batida pode ser permitida apenas:",
+    "options": {
+      "A": "Nos meses de outubro a janeiro",
+      "B": "Nos meses de janeiro e fevereiro",
+      "C": "Em zonas de caça"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 417,
+    "section": "periodos-processos",
+    "topic": "periodos-processos",
+    "question": "A caça à lebre a corricão nos meses de janeiro e fevereiro:",
+    "options": {
+      "A": "É proibida",
+      "B": "É permitida nas condições definidas em edital do ICNF",
+      "C": "É permitida nas zonas de caça"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 418,
+    "section": "periodos-processos",
+    "topic": "periodos-processos",
+    "question": "Em terrenos cinegéticos ordenados quais os processos de caça autorizados para o coelho?",
+    "options": {
+      "A": "De salto, à espera, de batida, a corricão, de cetraria e com furão",
+      "B": "De salto, de batida, de aproximação, de cetraria e com furão",
+      "C": "De salto, à espera, de batida, a corricão, de aproximação e com furão"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 419,
+    "section": "periodos-processos",
+    "topic": "periodos-processos",
+    "question": "O processo de caça “de aproximação” é permitido na caça:",
+    "options": {
+      "A": "Só às espécies de caça menor sedentárias",
+      "B": "Só às espécies de caça menor aquáticas",
+      "C": "Só às espécies de caça maior"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 420,
+    "section": "periodos-processos",
+    "topic": "periodos-processos",
+    "question": "A caça às narcejas pelo processo de cetraria:",
+    "options": {
+      "A": "É permitida nos meses de outubro a fevereiro",
+      "B": "É permitida nos meses de janeiro e fevereiro, mas só nas zonas de caça",
+      "C": "É proibida"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 421,
+    "section": "periodos-processos",
+    "topic": "periodos-processos",
+    "question": "Qual dos processos de caça é proibido na caça às espécies de caça menor?",
+    "options": {
+      "A": "De salto",
+      "B": "De aproximação",
+      "C": "De batida"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 422,
+    "section": "periodos-processos",
+    "topic": "periodos-processos",
+    "question": "Qual dos seguintes processos de caça é proibido na caça ao javali?",
+    "options": {
+      "A": "À espera",
+      "B": "De aproximação",
+      "C": "A corricão"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 423,
+    "section": "periodos-processos",
+    "topic": "periodos-processos",
+    "question": "Qual o limite o máximo do período venatório em que pode ser autorizada a caça à lebre?",
+    "options": {
+      "A": "Setembro a fevereiro",
+      "B": "Setembro a dezembro",
+      "C": "Outubro a dezembro"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 424,
+    "section": "periodos-processos",
+    "topic": "periodos-processos",
+    "question": "Em terrenos cinegéticos ordenados, no mês de agosto, pode ser autorizada a caça à rola por qual dos seguintes processos?",
+    "options": {
+      "A": "De salto",
+      "B": "À espera",
+      "C": "Cetraria"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 425,
+    "section": "periodos-processos",
+    "topic": "periodos-processos",
+    "question": "Qual o limite máximo do período venatório em que pode ser autorizada a caça ao estorninho-malhado?",
+    "options": {
+      "A": "De outubro a fevereiro",
+      "B": "De dezembro a fevereiro",
+      "C": "De outubro a março"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 426,
+    "section": "periodos-processos",
+    "topic": "periodos-processos",
+    "question": "Em janeiro e fevereiro pode ser autorizada a caça à lebre em zonas de caça por qual dos seguintes processos:",
+    "options": {
+      "A": "De batida",
+      "B": "A corricão",
+      "C": "À espera"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 427,
+    "section": "periodos-processos",
+    "topic": "periodos-processos",
+    "question": "As montarias aos javalis podem ser realizadas:",
+    "options": {
+      "A": "Só em terrenos cinegéticos ordenados",
+      "B": "Em terrenos cinegéticos não ordenados todo o ano",
+      "C": "Em terrenos cinegéticos não ordenados, de outubro a fevereiro nos locais e condições definidos em edital do Instituto de Conservação da Natureza e das Florestas"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 428,
+    "section": "periodos-processos",
+    "topic": "periodos-processos",
+    "question": "Qual o limite máximo do período venatório em que pode ser autorizada a caça ao pombo-bravo?",
+    "options": {
+      "A": "Agosto a janeiro",
+      "B": "Setembro a fevereiro",
+      "C": "Agosto a fevereiro"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 429,
+    "section": "periodos-processos",
+    "topic": "periodos-processos",
+    "question": "Em zonas de caça pode ser autorizada a caça de batida:",
+    "options": {
+      "A": "À perdiz",
+      "B": "À codorniz",
+      "C": "À tarambola-dourada"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 430,
+    "section": "periodos-processos",
+    "topic": "periodos-processos",
+    "question": "Qual o limite máximo do período venatório em que pode ser autorizada a caça à codorniz?",
+    "options": {
+      "A": "De agosto a outubro",
+      "B": "De agosto a dezembro",
+      "C": "De setembro a dezembro"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 431,
+    "section": "periodos-processos",
+    "topic": "periodos-processos",
+    "question": "Dos processos abaixo indicados qual não pode ser usado na caça à perdiz?",
+    "options": {
+      "A": "De salto",
+      "B": "À espera",
+      "C": "Cetraria"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 432,
+    "section": "periodos-processos",
+    "topic": "periodos-processos",
+    "question": "Quais os processos de caça autorizados na caça às narcejas?",
+    "options": {
+      "A": "De salto e de cetraria",
+      "B": "De salto e à espera",
+      "C": "De salto e de batida"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 433,
+    "section": "periodos-processos",
+    "topic": "periodos-processos",
+    "question": "A caça às rolas pode ser exercida pelo processo:",
+    "options": {
+      "A": "De salto",
+      "B": "De espera",
+      "C": "De cetraria"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 434,
+    "section": "periodos-processos",
+    "topic": "periodos-processos",
+    "question": "Qual o limite máximo do período venatório em que pode ser autorizada a caça ao coelho?",
+    "options": {
+      "A": "Outubro a dezembro",
+      "B": "Setembro a dezembro",
+      "C": "Outubro a fevereiro"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 435,
+    "section": "periodos-processos",
+    "topic": "periodos-processos",
+    "question": "Nos meses de janeiro e fevereiro a caça à lebre pode ser exercida a corricão:",
+    "options": {
+      "A": "Só em zonas de caça",
+      "B": "Nos locais indicados em edital do Instituto de Conservação da Natureza e das Florestas",
+      "C": "Em todos os locais"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 436,
+    "section": "periodos-processos",
+    "topic": "periodos-processos",
+    "question": "Nos terrenos cinegéticos não ordenados, qual é a espécie que em janeiro e fevereiro se pode caçar aos sábados pelo processo de batida, desde que nos locais e condições definidas em edital do Instituto de Conservação da Natureza e das Florestas:",
+    "options": {
+      "A": "Lebre",
+      "B": "Coelho",
+      "C": "Saca-rabos"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 437,
+    "section": "periodos-processos",
+    "topic": "periodos-processos",
+    "question": "Um grupo de caçadores que, em dezembro, caça à raposa de batida em terrenos não ordenados:",
+    "options": {
+      "A": "Está a proceder corretamente",
+      "B": "Não está a proceder corretamente porque só se pode caçar de batida à raposa, em terrenos não ordenados, nos meses de janeiro e fevereiro",
+      "C": "Não está a proceder corretamente porque não se pode caçar de batida em terrenos não ordenados"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 438,
+    "section": "periodos-processos",
+    "topic": "periodos-processos",
+    "question": "Qual o limite máximo do período venatório em que pode ser autorizada a caça aos tordos?",
+    "options": {
+      "A": "Outubro a dezembro",
+      "B": "Setembro a dezembro",
+      "C": "Outubro a fevereiro"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 439,
+    "section": "periodos-processos",
+    "topic": "periodos-processos",
+    "question": "Em janeiro, em terrenos cinegéticos não ordenados, pode ser autorizada a caça às narcejas de salto?",
+    "options": {
+      "A": "Não, porque em janeiro não se pode caçar narcejas",
+      "B": "Não, porque o processo de salto é proibido",
+      "C": "Sim, nos locais e condições definidas por edital do Instituto de Conservação da Natureza e das Florestas"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 440,
+    "section": "periodos-processos",
+    "topic": "periodos-processos",
+    "question": "Qual o limite máximo do período venatório em que pode ser autorizada a caça de batida ao javali?",
+    "options": {
+      "A": "Outubro a dezembro",
+      "B": "Outubro a janeiro",
+      "C": "Outubro a fevereiro"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 441,
+    "section": "periodos-processos",
+    "topic": "periodos-processos",
+    "question": "Um caçador, no mês de agosto, abateu 10 codornizes pelo processo de salto. Que infração cometeu?",
+    "options": {
+      "A": "Nenhuma",
+      "B": "Utilizou um processo não autorizado",
+      "C": "Caçou fora do período venatório da espécie"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 442,
+    "section": "periodos-processos",
+    "topic": "periodos-processos",
+    "question": "Um caçador, no mês de agosto, numa zona de caça, abateu 1 pato pelo processo de salto. Que infração cometeu?",
+    "options": {
+      "A": "Nenhuma",
+      "B": "Utilizou um processo não autorizado",
+      "C": "Caçou fora do período venatório da espécie"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 443,
+    "section": "periodos-processos",
+    "topic": "periodos-processos",
+    "question": "No mês de agosto, em terrenos não ordenados, pode ser autorizada a caça à espera aos patos?",
+    "options": {
+      "A": "Sim, nos locais e condições definidos em edital do Instituto de Conservação da Natureza e das Florestas",
+      "B": "Não, porque em Agosto não pode ser autorizada a caça aos patos",
+      "C": "Não, porque não se podem caçar patos de espera"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 444,
+    "section": "periodos-processos",
+    "topic": "periodos-processos",
+    "question": "Um caçador, no mês de junho, numa zona de caça, caçou 1 javali pelo processo de aproximação. Que infração cometeu?",
+    "options": {
+      "A": "Utilizou um processo não autorizado",
+      "B": "Caçou fora do período venatório da espécie",
+      "C": "Nenhuma"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 445,
+    "section": "periodos-processos",
+    "topic": "periodos-processos",
+    "question": "Pode-se caçar aos coelhos pelo processo de batida?",
+    "options": {
+      "A": "Sim, mas só nas condições e nos locais definidos por edital do Instituto de Conservação da Natureza e das Florestas",
+      "B": "Sim, mas só nos meses de agosto e novembro",
+      "C": "Sim, mas só em zonas de caça, desde que previsto no Plano de Ordenamento e Exploração Cinegética (POEC) ou Plano de Gestão (PG) devidamente aprovado"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 446,
+    "section": "periodos-processos",
+    "topic": "periodos-processos",
+    "question": "Indique qual das espécies referidas é proibido caçar a menos de 100 metros de pontos de água?",
+    "options": {
+      "A": "Rola",
+      "B": "Narcejas",
+      "C": "Codorniz"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 447,
+    "section": "periodos-processos",
+    "topic": "periodos-processos",
+    "question": "É permitido caçar javalis pelo processo de aproximação?",
+    "options": {
+      "A": "Sim, mas só em terrenos cinegéticos ordenados",
+      "B": "Sim, mas só em terrenos cinegéticos não ordenados",
+      "C": "Não, porque é um processo proibido para o javali"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 448,
+    "section": "periodos-processos",
+    "topic": "periodos-processos",
+    "question": "A raposa pode ser caçada de batida em terrenos cinegéticos não ordenados. Indique em qual dos seguintes períodos o processo de caça referido pode ser autorizado para esta espécie:",
+    "options": {
+      "A": "Outubro a fevereiro",
+      "B": "Janeiro e fevereiro, nas condições e nos locais definidos em edital do Instituto de Conservação da Natureza e das Florestas",
+      "C": "Todo o ano"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 449,
+    "section": "periodos-processos",
+    "topic": "periodos-processos",
+    "question": "Qual o limite máximo do período venatório em que pode ser autorizada a caça de salto ao javali em terrenos ordenados:",
+    "options": {
+      "A": "Outubro a dezembro",
+      "B": "Outubro a janeiro",
+      "C": "Outubro a fevereiro"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 450,
+    "section": "periodos-processos",
+    "topic": "periodos-processos",
+    "question": "Qual o intervalo máximo do período venatório ao pombo-da-rocha?",
+    "options": {
+      "A": "Outubro a dezembro",
+      "B": "Agosto a fevereiro",
+      "C": "Agosto a dezembro"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 451,
+    "section": "periodos-processos",
+    "topic": "periodos-processos",
+    "question": "Qual o intervalo máximo do período venatório ao pato-real?",
+    "options": {
+      "A": "Outubro a fevereiro",
+      "B": "Setembro a fevereiro",
+      "C": "Agosto a janeiro"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 452,
+    "section": "periodos-processos",
+    "topic": "periodos-processos",
+    "question": "O pombo-da-rocha pode ser caçado:",
+    "options": {
+      "A": "Em todo o País",
+      "B": "Só nos municípios definidos em portaria",
+      "C": "Só em zonas de caça"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 453,
+    "section": "periodos-processos",
+    "topic": "periodos-processos",
+    "question": "Na caça à codorniz os processos de caça autorizados são:",
+    "options": {
+      "A": "De salto e de cetraria",
+      "B": "De salto e à espera",
+      "C": "De salto e de aproximação"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 454,
+    "section": "periodos-processos",
+    "topic": "periodos-processos",
+    "question": "Nos meses de janeiro e fevereiro a caça à lebre pode ser exercida a corricão:",
+    "options": {
+      "A": "Só em zonas de caça",
+      "B": "Nos locais indicados em edital do Instituto de Conservação da Natureza e das Florestas",
+      "C": "Em todos os locais"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 455,
+    "section": "periodos-processos",
+    "topic": "periodos-processos",
+    "question": "Em terrenos não ordenados, quais os processos de caça autorizados na caça à perdiz-vermelha?",
+    "options": {
+      "A": "De salto e de batida",
+      "B": "De salto e de cetraria",
+      "C": "De salto e à espera"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 456,
+    "section": "periodos-processos",
+    "topic": "periodos-processos",
+    "question": "Qual dos processos de caça à perdiz-vermelha é autorizado só em terrenos ordenados?",
+    "options": {
+      "A": "De cetraria",
+      "B": "De batida",
+      "C": "À espera"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 457,
+    "section": "periodos-processos",
+    "topic": "periodos-processos",
+    "question": "Qual a afirmação correta relativamente à codorniz:",
+    "options": {
+      "A": "O limite máximo do período venatório é de agosto a novembro",
+      "B": "Em terrenos ordenados, em setembro, pode caçar-se apenas de salto",
+      "C": "O limite máximo do período venatório é de setembro a dezembro"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 458,
+    "section": "periodos-processos",
+    "topic": "periodos-processos",
+    "question": "Em zonas de caça, a caça à galinhola pelo processo de espera:",
+    "options": {
+      "A": "É permitida, desde que conste do plano de ordenamento e exploração cinegética",
+      "B": "É permitida só durante os meses de janeiro e fevereiro",
+      "C": "Não é permitida"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 459,
+    "section": "periodos-processos",
+    "topic": "periodos-processos",
+    "question": "Em terrenos cinegéticos ordenados a caça a espécies de caça maior é permitida:",
+    "options": {
+      "A": "Só de agosto a dezembro",
+      "B": "Só de agosto a fevereiro",
+      "C": "Todo o ano"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 460,
+    "section": "periodos-processos",
+    "topic": "periodos-processos",
+    "question": "Em terrenos cinegéticos não ordenados, qual o limite máximo do período venatório em que pode ser autorizada a caça à raposa, pelo processo de salto?",
+    "options": {
+      "A": "De agosto a outubro",
+      "B": "De outubro a dezembro",
+      "C": "De outubro a janeiro"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 461,
+    "section": "periodos-processos",
+    "topic": "periodos-processos",
+    "question": "Em terrenos cinegéticos ordenados a caça à galinhola pode ser permitida:",
+    "options": {
+      "A": "De salto, de outubro a fevereiro",
+      "B": "À espera, de novembro a dezembro",
+      "C": "De salto e à espera, de outubro a fevereiro"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 462,
+    "section": "periodos-processos",
+    "topic": "periodos-processos",
+    "question": "Qual o limite máximo do período venatório em que pode ser autorizada a caça à perdiz-vermelha?",
+    "options": {
+      "A": "De agosto a fevereiro",
+      "B": "De setembro a dezembro",
+      "C": "De outubro a janeiro"
+    },
+    "answer": "C"
+  }
+]

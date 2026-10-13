@@ -1,0 +1,364 @@
+[
+  {
+    "id": 168,
+    "section": "biologia",
+    "topic": "perdiz",
+    "image": "q168.jpg",
+    "question": "A seguinte figura representa:",
+    "options": {
+      "A": "Perdiz-vermelha",
+      "B": "Faisão",
+      "C": "Rola-comum"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 169,
+    "section": "biologia",
+    "topic": "perdiz",
+    "image": "q169.jpg",
+    "question": "A seguinte figura representa:",
+    "options": {
+      "A": "Uma codorniz",
+      "B": "Uma perdiz-vermelha",
+      "C": "Um faisão"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 170,
+    "section": "biologia",
+    "topic": "perdiz",
+    "question": "A perdiz-vermelha possui:",
+    "options": {
+      "A": "Bico e patas vermelhas",
+      "B": "Bico amarelo e patas vermelhas",
+      "C": "Bico vermelho e patas amarelas"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 171,
+    "section": "biologia",
+    "topic": "perdiz",
+    "question": "Na perdiz-vermelha, uma das formas de distinguir os machos das fêmeas é:",
+    "options": {
+      "A": "Os machos serem menores e menos pesados que as fêmeas",
+      "B": "Os machos serem maiores e mais pesados que as fêmeas",
+      "C": "Os machos serem do mesmo tamanho que as fêmeas"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 172,
+    "section": "biologia",
+    "topic": "perdiz",
+    "question": "Na perdiz-vermelha, uma das formas de distinguir os machos das fêmeas é:",
+    "options": {
+      "A": "A cabeça dos machos ser mais volumosa que a das fêmeas",
+      "B": "A cabeça dos machos ser menos volumosa que a das fêmeas",
+      "C": "A cabeça das fêmeas ser mais volumosa que a dos machos"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 173,
+    "section": "biologia",
+    "topic": "perdiz",
+    "question": "Na perdiz-vermelha, uma das formas de distinguir os machos das fêmeas é:",
+    "options": {
+      "A": "As fêmeas terem tarsos mais curtos e delgados",
+      "B": "As fêmeas terem os tarsos mais compridos e grossos",
+      "C": "As fêmeas terem os tarsos mais curtos e grossos"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 174,
+    "section": "biologia",
+    "topic": "perdiz",
+    "question": "Na perdiz-vermelha, uma das formas de distinguir os machos das fêmeas é:",
+    "options": {
+      "A": "Os machos terem tarsos mais curtos e grossos",
+      "B": "Os machos terem tarsos mais compridos e grossos",
+      "C": "Os machos terem tarsos mais curtos e delgados"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 175,
+    "section": "biologia",
+    "topic": "perdiz",
+    "question": "Na perdiz-vermelha, uma das formas de distinguir os machos das fêmeas é:",
+    "options": {
+      "A": "Os machos terem esporões com base larga e extremidade arredondada",
+      "B": "Os machos terem esporões com base estreita e extremidade bicuda",
+      "C": "Os machos terem esporões com base larga e extremidade bicuda"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 176,
+    "section": "biologia",
+    "topic": "perdiz",
+    "question": "Na perdiz-vermelha, uma das formas de distinguir os machos das fêmeas é:",
+    "options": {
+      "A": "As fêmeas, quando apresentam esporões, estes têm a base estreita e são bicudos",
+      "B": "As fêmeas, quando apresentam esporões, estes têm a base estreita e são redondos",
+      "C": "As fêmeas, quando apresentam esporões, estes têm a base larga e são bicudos"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 177,
+    "section": "biologia",
+    "topic": "perdiz",
+    "question": "Na perdiz-vermelha, enquanto juvenil, a muda das penas tem início:",
+    "options": {
+      "A": "Ao primeiro mês de vida",
+      "B": "Ao segundo mês de vida",
+      "C": "Ao terceiro mês de vida"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 178,
+    "section": "biologia",
+    "topic": "perdiz",
+    "question": "Na perdiz-vermelha, enquanto juvenil, as duas últimas rémiges são:",
+    "options": {
+      "A": "Pontiagudas e podem apresentar uma pequena pinta branca na extremidade",
+      "B": "Arredondadas e podem apresentar uma pequena pinta branca na extremidade",
+      "C": "Pontiagudas e sem apresentar uma pequena pinta branca na extremidade"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 179,
+    "section": "biologia",
+    "topic": "perdiz",
+    "question": "Na perdiz-vermelha, o adulto inicia a muda de todas as rémiges primárias:",
+    "options": {
+      "A": "Ao mesmo tempo que o juvenil",
+      "B": "Duas ou três semanas antes do juvenil",
+      "C": "Duas ou três semanas depois do juvenil"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 180,
+    "section": "biologia",
+    "topic": "perdiz",
+    "question": "Na perdiz-vermelha adulta, as duas últimas penas:",
+    "options": {
+      "A": "Podem apresentar uma pequena pinta branca na extremidade",
+      "B": "Têm a extremidade arredondada",
+      "C": "Têm a extremidade pontiaguda"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 181,
+    "section": "biologia",
+    "topic": "perdiz",
+    "question": "A perdiz-vermelha, é uma ave que prefere especialmente:",
+    "options": {
+      "A": "Zonas alagadiças e incultas",
+      "B": "Zonas florestadas e com matos",
+      "C": "Zonas de culturas cerealíferas"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 182,
+    "section": "biologia",
+    "topic": "perdiz",
+    "question": "Qual destas atuações contribui para a boa gestão de uma população de perdizes?",
+    "options": {
+      "A": "A utilização de pesticidas nas culturas",
+      "B": "O abate de mais de 60% dos efetivos",
+      "C": "O abate de menos de 50% dos efetivos"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 183,
+    "section": "biologia",
+    "topic": "perdiz",
+    "question": "Na perdiz-vermelha, a alimentação durante o primeiro mês de vida é:",
+    "options": {
+      "A": "Essencialmente insectívora",
+      "B": "Essencialmente granívora",
+      "C": "Essencialmente vegetal"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 184,
+    "section": "biologia",
+    "topic": "perdiz",
+    "question": "Na perdiz-vermelha adulta, a alimentação é constituída por:",
+    "options": {
+      "A": "Insetos, bagas, flores e grãos",
+      "B": "Grãos, bolotas, folhas, raízes e insetos",
+      "C": "Grãos, bolotas, folhas, rebentos, bagas, flores e raízes"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 185,
+    "section": "biologia",
+    "topic": "perdiz",
+    "question": "A perdiz-vermelha, faz o ninho, geralmente:",
+    "options": {
+      "A": "No chão, com o fundo simplesmente coberto de plantas secas",
+      "B": "No chão, com o fundo simplesmente coberto de penas suas",
+      "C": "No chão, com o fundo coberto de plantas secas e penas suas"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 186,
+    "section": "biologia",
+    "topic": "perdiz",
+    "question": "Na perdiz-vermelha, a postura de ovos, no sul do País faz-se durante os meses de:",
+    "options": {
+      "A": "Março a abril",
+      "B": "Abril a maio",
+      "C": "Abril a junho"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 187,
+    "section": "biologia",
+    "topic": "perdiz",
+    "question": "Os perdigotos logo que nascem:",
+    "options": {
+      "A": "Permanecem no ninho durante duas semanas",
+      "B": "Permanecem no ninho pelo menos uma semana",
+      "C": "Abandonam o ninho"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 188,
+    "section": "biologia",
+    "topic": "perdiz",
+    "question": "Na perdiz-vermelha, a incubação dos ovos, dura cerca de:",
+    "options": {
+      "A": "21 dias",
+      "B": "23 dias",
+      "C": "25 dias"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 189,
+    "section": "biologia",
+    "topic": "perdiz",
+    "question": "Em média, o ninho de perdiz-vermelha contém:",
+    "options": {
+      "A": "10 ovos",
+      "B": "12 ovos",
+      "C": "14 ovos"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 190,
+    "section": "biologia",
+    "topic": "perdiz",
+    "question": "A perdiz-vermelha, durante o verão e até nova época de acasalamento, desloca-se:",
+    "options": {
+      "A": "Aos casais",
+      "B": "Isoladamente",
+      "C": "Em bandos"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 191,
+    "section": "biologia",
+    "topic": "perdiz",
+    "question": "Para bem gerir uma população de perdizes há que seguir certas regras. Qual está certa?",
+    "options": {
+      "A": "Colocar à sua disposição alimento, água e abrigo",
+      "B": "Abater, anualmente, 60% dos efetivos",
+      "C": "Eliminar todos os predadores"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 192,
+    "section": "biologia",
+    "topic": "perdiz",
+    "question": "Para manter o nível da população de perdizes há que seguir certas regras. Qual está errada?",
+    "options": {
+      "A": "Evitar o abuso de pesticidas",
+      "B": "Cuidar da maneira como são feitas as ceifas",
+      "C": "Abater, anualmente, 60% dos efetivos"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 193,
+    "section": "biologia",
+    "topic": "perdiz",
+    "question": "Para bem gerir uma população de perdizes há que seguir certas regras. Qual está certa?",
+    "options": {
+      "A": "Eliminar todos os predadores",
+      "B": "Abater, anualmente, todos os predadores",
+      "C": "Evitar a deambulação de cães e gatos vadios"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 194,
+    "section": "biologia",
+    "topic": "perdiz",
+    "question": "Numa população bem gerida, por cada ninho de perdiz, chegam em média à idade adulta:",
+    "options": {
+      "A": "3 perdigotos",
+      "B": "5 perdigotos",
+      "C": "7 perdigotos"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 195,
+    "section": "biologia",
+    "topic": "perdiz",
+    "question": "A perdiz-vermelha faz geralmente o ninho:",
+    "options": {
+      "A": "Em arbustos de pequeno porte",
+      "B": "No chão",
+      "C": "Em buracos de muros e paredes"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 196,
+    "section": "biologia",
+    "topic": "perdiz",
+    "question": "A perdiz-vermelha adulta distingue-se da juvenil:",
+    "options": {
+      "A": "Pela cor e tamanho",
+      "B": "Pela observação das rémiges primárias (as dez penas da extremidade da asa)",
+      "C": "Pelos tarsos e esporões"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 197,
+    "section": "biologia",
+    "topic": "perdiz",
+    "question": "A perdiz-vermelha é uma espécie que prefere:",
+    "options": {
+      "A": "Zonas de culturas cerealíferas",
+      "B": "Zonas com solos leves e húmidos",
+      "C": "Zonas rochosas incluindo a orla marítima"
+    },
+    "answer": "A"
+  }
+]

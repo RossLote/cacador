@@ -1,0 +1,208 @@
+[
+  {
+    "id": 304,
+    "section": "biologia",
+    "topic": "tarambola",
+    "question": "Qual destas afirmações é correta?",
+    "options": {
+      "A": "A lebre tem orelhas e tamanho diferente do coelho, mas uma coloração igual",
+      "B": "O pombo-torcaz distingue-se do pombo-bravo por ser mais pequeno",
+      "C": "A narceja-comum distingue-se da narceja-galega por ser maior e ter o bico mais comprido"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 305,
+    "section": "biologia",
+    "topic": "tarambola",
+    "question": "A alimentação da tarambola-dourada baseia-se sobretudo em:",
+    "options": {
+      "A": "Vermes, caracóis e grãos",
+      "B": "insetos e larvas",
+      "C": "Moluscos, crustáceos e vermes"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 306,
+    "section": "biologia",
+    "topic": "tarambola",
+    "question": "Quantas espécies de tarambolas se podem encontrar em Portugal?",
+    "options": {
+      "A": "3",
+      "B": "2",
+      "C": "1"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 307,
+    "section": "biologia",
+    "topic": "tarambola",
+    "question": "As tarambolas visitam Portugal:",
+    "options": {
+      "A": "Durante o inverno e primavera",
+      "B": "Durante o outono e inverno",
+      "C": "Apenas durante o inverno"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 308,
+    "section": "biologia",
+    "topic": "tarambola",
+    "question": "A tarambola-dourada encontra-se:",
+    "options": {
+      "A": "Em zonas florestais",
+      "B": "Especialmente em zonas interiores",
+      "C": "Exclusivamente em áreas costeiras"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 309,
+    "section": "biologia",
+    "topic": "tordos",
+    "question": "Os tordos são:",
+    "options": {
+      "A": "Pássaros de tamanho pequeno",
+      "B": "Pássaros de tamanho grande",
+      "C": "Pássaros de tamanho médio"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 310,
+    "section": "biologia",
+    "topic": "tordos",
+    "question": "Quantas espécies de tordos se podem encontrar em Portugal?",
+    "options": {
+      "A": "5",
+      "B": "4",
+      "C": "3"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 311,
+    "section": "biologia",
+    "topic": "tordos",
+    "question": "A alimentação dos tordos baseia-se em:",
+    "options": {
+      "A": "Invertebrados e frutos",
+      "B": "Insetos, moluscos e caracóis",
+      "C": "Insetos e larvas"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 312,
+    "section": "biologia",
+    "topic": "tordos",
+    "question": "Qual das espécies de tordos é a maior?",
+    "options": {
+      "A": "Tordeia",
+      "B": "Tordo-zornal",
+      "C": "Tordo-comum"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 313,
+    "section": "biologia",
+    "topic": "tordos",
+    "question": "Qual das espécies de tordos é sedentária?",
+    "options": {
+      "A": "Tordo-comum",
+      "B": "Tordo-ruivo",
+      "C": "Tordeia"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 314,
+    "section": "biologia",
+    "topic": "tordos",
+    "question": "Qual das seguintes espécies de tordos se pode identificar, em voo, por apresentar a parte inferior das asas de cor branca?",
+    "options": {
+      "A": "Tordo-ruivo",
+      "B": "Tordeia",
+      "C": "Tordo-comum"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 315,
+    "section": "biologia",
+    "topic": "tordos",
+    "question": "O habitat dos tordos, está geralmente ligado a:",
+    "options": {
+      "A": "Zonas arborizadas ou às suas orlas",
+      "B": "Zonas húmidas ou às suas orlas",
+      "C": "Zonas cerealíferas ou às suas orlas"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 316,
+    "section": "biologia",
+    "topic": "tordos",
+    "question": "O tordo-zornal e o tordo-ruivo são aves invernantes em Portugal que nidificam:",
+    "options": {
+      "A": "Em países do Sul da Europa",
+      "B": "Em países do Norte da Europa",
+      "C": "Em países do Norte de África"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 317,
+    "section": "biologia",
+    "topic": "tordos",
+    "question": "Indique qual a frase correta:",
+    "options": {
+      "A": "Os saca-rabos têm uma alimentação essencialmente à base de coelho-bravo",
+      "B": "Os perdigotos têm uma alimentação semelhante à da perdiz adulta",
+      "C": "Os tordos têm uma alimentação baseada em invertebrados e frutos"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 318,
+    "section": "biologia",
+    "topic": "tordos",
+    "question": "Os tordos encontram-se com frequência em:",
+    "options": {
+      "A": "Terrenos alagadiços",
+      "B": "Grandes planícies cultivadas",
+      "C": "Zonas arborizadas ou nas suas orlas"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 319,
+    "section": "biologia",
+    "topic": "tordos",
+    "image": "q319.jpg",
+    "question": "A seguinte figura representa:",
+    "options": {
+      "A": "Gralha-preta",
+      "B": "Melro",
+      "C": "Estorninho-malhado"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 320,
+    "section": "biologia",
+    "topic": "tordos",
+    "image": "q320.jpg",
+    "question": "A seguinte figura representa:",
+    "options": {
+      "A": "Pega-rabuda",
+      "B": "Gaio",
+      "C": "Melro"
+    },
+    "answer": "B"
+  }
+]
