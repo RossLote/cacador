@@ -1,6 +1,6 @@
 import { openDB, type DBSchema, type IDBPDatabase, type IDBPTransaction, type StoreNames } from 'idb';
 import type { StorageBackend } from './backend';
-import { finishExamRecords, isRunning } from './finish';
+import { finishExamRecords, isRunning, runningExam } from './finish';
 import { planImport } from './merge';
 import { compareAnswers, isInOrder, nextState, withoutLogId } from './state';
 import type { Answer, Exam, Flag, FlagKind, QuestionState } from './types';
@@ -93,9 +93,14 @@ function idbBackend(db: IDBPDatabase<CacadorDB>): StorageBackend {
     listAnswers: (since) => db.getAllFromIndex('answers', 'at', since === undefined ? undefined : IDBKeyRange.lowerBound(since)),
     listStates: () => db.getAll('questionState'),
 
-    addExam: async (exam) => {
-      await db.add('exams', exam);
-    },
+    startExam: (exam) =>
+      write(db, ['exams'], async (tx) => {
+        const exams = tx.objectStore('exams');
+        const running = runningExam(await exams.getAll(), exam.startedAt);
+        if (running !== undefined) return running;
+        await exams.add(exam);
+        return exam;
+      }),
     getExam: (id) => db.get('exams', id),
     listExams: () => db.getAll('exams'),
     setExamAnswers: (id, answers, now) =>
@@ -104,6 +109,14 @@ function idbBackend(db: IDBPDatabase<CacadorDB>): StorageBackend {
         const exam = await exams.get(id);
         if (exam === undefined || !isRunning(exam, now)) return false;
         await exams.put({ ...exam, answers: { ...answers } });
+        return true;
+      }),
+    setExamAnswer: (id, questionId, option, at) =>
+      write(db, ['exams'], async (tx) => {
+        const exams = tx.objectStore('exams');
+        const exam = await exams.get(id);
+        if (exam === undefined || !isRunning(exam, at) || !exam.questionIds.includes(questionId)) return false;
+        await exams.put({ ...exam, answers: { ...exam.answers, [questionId]: option } });
         return true;
       }),
     finishExam: (id, at) =>
@@ -135,14 +148,14 @@ function idbBackend(db: IDBPDatabase<CacadorDB>): StorageBackend {
       ]);
       return { answers: answers.sort(compareAnswers), exams, flags };
     },
-    importFile: (file) =>
+    importFile: (file, now) =>
       write(db, [...STORES], async (tx) => {
         const answers = tx.objectStore('answers');
         const exams = tx.objectStore('exams');
         const flags = tx.objectStore('flags');
         const states = tx.objectStore('questionState');
         const [deviceAnswers, deviceExams, deviceFlags] = await Promise.all([answers.getAll(), exams.getAll(), flags.getAll()]);
-        const plan = planImport({ answers: deviceAnswers, exams: deviceExams, flags: deviceFlags }, file);
+        const plan = planImport({ answers: deviceAnswers, exams: deviceExams, flags: deviceFlags }, file, now);
         await sendAll([
           ...plan.removeAnswerIds.map((id) => () => answers.delete(id)),
           ...plan.addAnswers.map((answer) => () => answers.add(withoutLogId(answer))),

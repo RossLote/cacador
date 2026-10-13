@@ -1,5 +1,5 @@
 import type { StorageBackend } from './backend';
-import { finishExamRecords, isRunning } from './finish';
+import { finishExamRecords, isRunning, runningExam } from './finish';
 import { flagKey, planImport } from './merge';
 import { compareAnswers, nextState } from './state';
 import type { Answer, Exam, Flag, QuestionState } from './types';
@@ -40,9 +40,12 @@ export function createMemoryBackend(): StorageBackend {
         .map((a) => copy(a)),
     listStates: async () => [...states.values()].map((s) => copy(s)),
 
-    addExam: async (exam) => {
+    startExam: async (exam) => {
+      const running = runningExam([...exams.values()], exam.startedAt);
+      if (running !== undefined) return copy(running);
       if (exams.has(exam.id)) throw new Error(`Exam ${exam.id} already exists`);
       exams.set(exam.id, copy(exam));
+      return copy(exam);
     },
     getExam: async (id) => {
       const exam = exams.get(id);
@@ -53,6 +56,12 @@ export function createMemoryBackend(): StorageBackend {
       const exam = exams.get(id);
       if (exam === undefined || !isRunning(exam, now)) return false;
       exams.set(id, { ...exam, answers: copy(examAnswers) });
+      return true;
+    },
+    setExamAnswer: async (id, questionId, option, at) => {
+      const exam = exams.get(id);
+      if (exam === undefined || !isRunning(exam, at) || !exam.questionIds.includes(questionId)) return false;
+      exams.set(id, { ...exam, answers: { ...exam.answers, [questionId]: option } });
       return true;
     },
     finishExam: async (id, at) => {
@@ -78,8 +87,8 @@ export function createMemoryBackend(): StorageBackend {
       exams: [...exams.values()].map((e) => copy(e)),
       flags: [...flags.values()].map((f) => copy(f)),
     }),
-    importFile: async (file) => {
-      const plan = planImport({ answers, exams: [...exams.values()], flags: [...flags.values()] }, copy(file));
+    importFile: async (file, now) => {
+      const plan = planImport({ answers, exams: [...exams.values()], flags: [...flags.values()] }, copy(file), now);
       const removed = new Set(plan.removeAnswerIds);
       answers = answers.filter((a) => a.id === undefined || !removed.has(a.id));
       for (const answer of plan.addAnswers) answers.push({ ...answer, id: nextId++ });

@@ -33,6 +33,18 @@ export function withoutLogId(answer: Answer): Answer {
   return copy;
 }
 
+/**
+ * Whether an answer has the shape the log allows (D15, DESIGN.md § 7): a
+ * practice answer always has its chosen option and names no exam; an exam
+ * answer names its exam, and lacks a chosen option only for a question left
+ * unanswered, which is wrong. Recording an answer and reading an import both
+ * hold to it.
+ */
+export function isWellFormedAnswer(answer: Pick<Answer, 'mode' | 'chosen' | 'correct' | 'examId'>): boolean {
+  if (answer.mode === 'practice') return answer.chosen !== undefined && answer.examId === undefined;
+  return answer.examId !== undefined && (answer.chosen !== undefined || !answer.correct);
+}
+
 /** One question's state rebuilt from its answers in any order, or undefined when it has none. */
 export function deriveState(answers: readonly Answer[]): QuestionState | undefined {
   return [...answers].sort(compareAnswers).reduce<QuestionState | undefined>(applyAnswer, undefined);

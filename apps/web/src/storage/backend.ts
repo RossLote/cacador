@@ -20,12 +20,22 @@ export interface StorageBackend {
   listAnswers(since?: number): Promise<Answer[]>;
   listStates(): Promise<QuestionState[]>;
 
-  /** Saves a new exam; fails when the id is taken. */
-  addExam(exam: Exam): Promise<void>;
+  /**
+   * Saves `exam` as the new unfinished exam unless one is already running at
+   * its `startedAt` (`runningExam`), in which case nothing is written and that
+   * one is returned; otherwise returns `exam`. Fails when the id is taken.
+   */
+  startExam(exam: Exam): Promise<Exam>;
   getExam(id: string): Promise<Exam | undefined>;
   listExams(): Promise<Exam[]>;
   /** Replaces the exam's answers while it is running at `now` (`isRunning`); returns whether it did. */
   setExamAnswers(id: string, answers: Record<number, OptionKey>, now: number): Promise<boolean>;
+  /**
+   * Sets one question's option on the stored exam, leaving its other answers as
+   * stored, while it is running at `at` (`isRunning`) and only for one of its
+   * questions; returns whether it did.
+   */
+  setExamAnswer(id: string, questionId: number, option: OptionKey, at: number): Promise<boolean>;
   /**
    * Submits the exam at `at` (`finishExamRecords`): the finished record, its
    * answers logged and their questions' states updated, only while it is
@@ -42,11 +52,11 @@ export interface StorageBackend {
   /** Every answer (in log order), exam and flag, read together, for the export (D8). */
   readAll(): Promise<ProgressRecords>;
   /**
-   * Merges a validated export into the stores (`planImport`) and rebuilds
-   * every question state from the merged log, all or nothing; returns what it
-   * added (D8).
+   * Merges a validated export into the stores (`planImport`, at `now`) and
+   * rebuilds every question state from the merged log, all or nothing; returns
+   * what it added (D8).
    */
-  importFile(file: ExportFile): Promise<ImportCounts>;
+  importFile(file: ExportFile, now: number): Promise<ImportCounts>;
   /** Empties every store (D8: Clear progress). */
   clear(): Promise<void>;
 
