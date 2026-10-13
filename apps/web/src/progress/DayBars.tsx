@@ -2,6 +2,7 @@ import { useI18n } from '@/i18n/useI18n';
 import { LOCALE_TAGS } from '@/i18n/locales';
 import { cn } from '@/lib/utils';
 import type { DayAccuracy } from '@/model';
+import { ACCURACY_DAYS } from '@/model/progress';
 
 /**
  * Accuracy by day (DESIGN.md § 6.6): one plain block per calendar day, oldest
@@ -19,7 +20,7 @@ export function DayBars({ days }: { days: readonly DayAccuracy[] }) {
   return (
     <section aria-labelledby="progress-days" className="flex flex-col gap-3">
       <h2 id="progress-days" className="text-sm font-medium text-muted-foreground">
-        {t.progress.days}
+        {t.progress.days(ACCURACY_DAYS)}
       </h2>
       <div className="flex flex-col gap-1.5">
         <ol aria-label={t.progress.daysChart} className="flex h-28 items-end gap-0.5 sm:gap-1">

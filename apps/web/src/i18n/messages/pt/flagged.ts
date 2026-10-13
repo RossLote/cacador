@@ -2,10 +2,10 @@ import type { Messages } from '../en';
 
 export const flagged: Messages['flagged'] = {
   title: 'Assinaladas',
-  empty: 'Nenhuma pergunta assinalada. Assinale uma depois de responder em Praticar.',
-  loading: 'A carregar as assinaladas',
-  loadFailed: 'Não foi possível ler nem alterar as assinaladas neste dispositivo. Recarregue a página para tentar de novo.',
-  list: 'Assinaladas, as mais recentes primeiro',
+  empty: 'Nenhuma assinalação. Assinale uma pergunta depois de responder em Praticar.',
+  loading: 'A carregar as assinalações',
+  loadFailed: 'Não foi possível ler nem alterar as assinalações neste dispositivo. Recarregue a página para tentar de novo.',
+  list: 'Assinalações, as mais recentes primeiro',
   questionNumber: (id) => `Pergunta ${id}`,
   kindEnglish: 'Inglês',
   kindHint: 'Dica',

@@ -11,4 +11,8 @@ export const common: Messages['common'] = {
     settings: 'Definições',
     flagged: 'Assinaladas',
   },
+  notFound: {
+    title: 'Página não encontrada',
+    body: 'Não há nenhum ecrã neste endereço.',
+  },
 };

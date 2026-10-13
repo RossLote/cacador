@@ -5,6 +5,7 @@ import { ExamPage } from '@/exam/ExamPage';
 import { FlaggedPage } from '@/flagged/FlaggedPage';
 import { HomePage } from '@/home/HomePage';
 import { useI18n } from '@/i18n/useI18n';
+import { NotFoundPage } from '@/notfound/NotFoundPage';
 import { PracticePage } from '@/practice/PracticePage';
 import { ProgressPage } from '@/progress/ProgressPage';
 import { SettingsPage } from '@/settings/SettingsPage';
@@ -37,7 +38,7 @@ function Layout() {
   );
 }
 
-/** The routes under the /cacador/ basename (D19). Each screen's page lives in its own folder. */
+/** The routes under the /cacador/ basename (D19). Each screen's page lives in its own folder; any other address gets the not-found page, inside the layout so it keeps the back control. */
 export default function App() {
   return (
     <Routes>
@@ -48,6 +49,7 @@ export default function App() {
         <Route path="progress" element={<ProgressPage />} />
         <Route path="settings" element={<SettingsPage />} />
         <Route path="flagged" element={<FlaggedPage />} />
+        <Route path="*" element={<NotFoundPage />} />
       </Route>
     </Routes>
   );

@@ -51,6 +51,26 @@ describe('routes', () => {
     }
   }
 
+  for (const locale of ['en', 'pt'] satisfies Locale[]) {
+    it(`says an unknown address names no screen, with the back control to Home (${locale})`, async () => {
+      const t = MESSAGES[locale];
+      act(() => setLocale(locale));
+      renderAt('/flags');
+      expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(t.common.notFound.title);
+      expect(screen.getByText(t.common.notFound.body)).toBeInTheDocument();
+      await userEvent.click(screen.getByRole('link', { name: t.common.backToHome }));
+      expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(t.home.title);
+    });
+  }
+
+  it('has every English common key in Portuguese', () => {
+    const keys = (value: object, prefix = ''): string[] =>
+      Object.entries(value).flatMap(([key, inner]) =>
+        typeof inner === 'object' && inner !== null ? keys(inner, `${prefix}${key}.`) : [`${prefix}${key}`],
+      );
+    expect(keys(MESSAGES.pt.common).sort()).toEqual(keys(MESSAGES.en.common).sort());
+  });
+
   it('sends every exam sub-route to the exam folder', () => {
     renderAt('/exam/results/1');
     expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(MESSAGES.en.exam.title);

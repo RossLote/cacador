@@ -4,9 +4,14 @@ import { Card } from '@/components/ui/card';
 import { LOCALE_TAGS } from '@/i18n/locales';
 import { useI18n } from '@/i18n/useI18n';
 import { cn } from '@/lib/utils';
-import { EXAM_SIZE, examPassed, examResultsPath, type FinishedExam } from '@/model';
+import { EXAM_SIZE, examPassed, examResultsPath, scoreExam, type FinishedExam } from '@/model';
 
-/** Finished exams, newest first, each with its date, score out of 20 and outcome, linking to its results (D11, D19). */
+/**
+ * Finished exams, newest finished first, each with its date, score out of 20
+ * and outcome, linking to its results (D11, D19). The score is worked out from
+ * the exam's answers, as the results page does, not the one stored at Submit,
+ * which an answer-key correction or an import can leave behind.
+ */
 export function PastExams({ exams }: { exams: readonly FinishedExam[] }) {
   const { t, locale } = useI18n();
   return (
@@ -20,7 +25,7 @@ export function PastExams({ exams }: { exams: readonly FinishedExam[] }) {
         <Card className="gap-0 py-0">
           <ul className="divide-y divide-border">
             {exams.map((exam) => {
-              const { score } = exam;
+              const score = scoreExam(exam);
               const passed = examPassed(score);
               const outcome = passed ? t.progress.passed : t.progress.notPassed;
               const date = new Date(exam.finishedAt).toLocaleDateString(LOCALE_TAGS[locale], {

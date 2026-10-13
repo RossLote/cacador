@@ -5,7 +5,6 @@ import { useLoaded } from '@/lib/useLoaded';
 import {
   accuracyByDay,
   accuracyWindowStart,
-  isFinished,
   READINESS_TARGET_PERCENT,
   readiness,
   type DayAccuracy,
@@ -15,14 +14,16 @@ import {
 } from '@/model';
 import { getStates, listAnswers, listExams, listFlags } from '@/storage';
 import { DayBars } from './DayBars';
+import { pastExams } from './exams';
 import { GroupTabs } from './GroupTabs';
 import { PastExams } from './PastExams';
+import { useDayRefresh } from './useDayRefresh';
 
 interface ProgressData {
   readiness: Readiness;
   days: DayAccuracy[];
   states: StateMap;
-  /** Finished exams only, newest first. */
+  /** Finished exams only, newest finished first. */
   exams: FinishedExam[];
   flagCount: number;
 }
@@ -43,7 +44,7 @@ async function loadProgress(): Promise<ProgressData> {
     readiness: readiness(states),
     days: accuracyByDay(answers, now),
     states,
-    exams: exams.filter(isFinished).sort((a, b) => b.finishedAt - a.finishedAt),
+    exams: pastExams(exams),
     flagCount: flags.length,
   };
 }
@@ -68,7 +69,9 @@ function ReadinessSummary({ value }: { value: Readiness }) {
 /** Progress (DESIGN.md § 6.6, D11): readiness, 30 days of answers, the group lists, past exams and the Flagged link. */
 export function ProgressPage() {
   const { t } = useI18n();
-  const { data, failed } = useLoaded(loadProgress);
+  const { data, failed, reload } = useLoaded(loadProgress);
+  // Reads again with a new "now" at midnight and on return to the page, so today stays today.
+  useDayRefresh(reload);
 
   return (
     <section className="flex flex-col gap-8">

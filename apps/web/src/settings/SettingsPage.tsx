@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useId, useRef, useState, type ChangeEvent } from 'react';
+import { useId, useRef, useState, type ChangeEvent } from 'react';
 import { LinkButton } from '@/components/LinkButton';
 import {
   AlertDialog,
@@ -28,12 +28,6 @@ type Outcome =
   /** Storage could not be read or written. */
   | { kind: 'failed' };
 
-/** The progress file for Share, being made or made. */
-interface ShareFile {
-  promise: Promise<File>;
-  file?: File;
-}
-
 /** The file's text, or undefined when it cannot be read. */
 async function readText(file: File): Promise<string | undefined> {
   try {
@@ -60,26 +54,25 @@ export function SettingsPage() {
   const progressId = useId();
 
   /**
-   * The file Share hands over, made ahead of the tap (and again after an
-   * import or a clear), so navigator.share runs inside the tap's user
-   * activation rather than after a read of the whole log, which a browser
-   * may let expire.
+   * The file Share hands over, made fresh for each tap but started on the
+   * press (pointerdown), so the read of the whole log runs while the finger is
+   * down and navigator.share still falls inside the tap's user activation,
+   * which a browser may let expire. A keyboard press has no pointerdown and
+   * makes it on the click. Like Export's, it holds what the device holds and
+   * today's date at the moment of the tap.
    */
-  const shareFile = useRef<ShareFile>(undefined);
-  const prepareShare = useCallback(() => {
-    if (!canShare) return;
-    const entry: ShareFile = { promise: makeProgressFile() };
-    entry.promise.then(
-      (file) => {
-        entry.file = file;
-      },
-      () => undefined,
-    );
-    shareFile.current = entry;
-  }, [canShare]);
-  useEffect(prepareShare, [prepareShare]);
+  const shareFile = useRef<Promise<File>>(undefined);
+  const prepareShare = () => {
+    shareFile.current = makeProgressFile();
+    // Its failure is reported by the click that uses it.
+    shareFile.current.catch(() => undefined);
+  };
+
+  /** A new Export or Share starts with no line from the last action (an import still running keeps its own). */
+  const startAction = () => setOutcome((current) => (current?.kind === 'importing' ? current : undefined));
 
   async function exportFile() {
+    startAction();
     try {
       downloadFile(await makeProgressFile());
     } catch {
@@ -88,14 +81,14 @@ export function SettingsPage() {
   }
 
   async function share() {
+    startAction();
+    const pending = shareFile.current ?? makeProgressFile();
+    shareFile.current = undefined;
     let file: File;
     try {
-      const entry = shareFile.current;
-      // Already made: shared with no await before it, inside the tap.
-      file = entry?.file ?? (await (entry?.promise ?? makeProgressFile()));
+      file = await pending;
     } catch {
       setOutcome({ kind: 'failed' });
-      prepareShare();
       return;
     }
     try {
@@ -115,7 +108,6 @@ export function SettingsPage() {
       // An unreadable file is refused like any other that is not an export.
       const result = text === undefined ? undefined : await importProgress(text);
       setOutcome(result?.ok ? { kind: 'imported', added: result.added } : { kind: 'refused' });
-      if (result?.ok) prepareShare();
     } catch {
       setOutcome({ kind: 'failed' });
     }
@@ -127,7 +119,6 @@ export function SettingsPage() {
     try {
       await clearProgress();
       setOutcome({ kind: 'cleared' });
-      prepareShare();
     } catch {
       setOutcome({ kind: 'failed' });
     }
@@ -193,7 +184,7 @@ export function SettingsPage() {
             {t.settings.export}
           </Button>
           {canShare && (
-            <Button variant="outline" size="lg" className="flex-1" onClick={() => void share()}>
+            <Button variant="outline" size="lg" className="flex-1" onPointerDown={prepareShare} onClick={() => void share()}>
               {t.settings.share}
             </Button>
           )}
