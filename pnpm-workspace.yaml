@@ -1,7 +1,13 @@
 packages:
   - packages/*
+  - apps/*
+  - e2e
 
 # Supply-chain guard: never resolve a package version younger than three days.
 # Strict mode is implied by setting minimumReleaseAge. Never add exclusions;
 # a blocked version means use the previous one (see CLAUDE.md, Conventions).
 minimumReleaseAge: 4320
+
+# Dependencies allowed to run install scripts (pnpm 11 blocks all others). The
+# stack needs none today: Vite 8 bundles with Rolldown and no esbuild is installed.
+allowBuilds: {}

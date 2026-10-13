@@ -7,14 +7,19 @@
     "node": ">=26"
   },
   "scripts": {
-    "lint": "eslint . --max-warnings 0 && pnpm -r typecheck && pnpm validate",
+    "dev": "pnpm --filter @cacador/web dev",
+    "build": "pnpm --filter @cacador/web build",
+    "lint": "eslint . --max-warnings 0 && pnpm -r typecheck && pnpm validate && node scripts/check-no-radix.mjs",
     "test": "pnpm -r test",
+    "e2e": "pnpm --filter @cacador/e2e e2e",
     "extract": "pnpm --filter @cacador/data extract",
     "validate": "pnpm --filter @cacador/data validate"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "eslint": "^10.11.0",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "eslint-plugin-react-refresh": "^0.5.7",
     "globals": "^17.12.0",
     "typescript": "~6.0.3",
     "typescript-eslint": "^8.71.0"
