@@ -2,57 +2,103 @@
   {
     "id": 499,
     "language": [],
-    "nudge": "",
+    "nudge": "The merlin, 'esmerilhão', is 'um pequeno falcão', and the bank keys it for small quarry, 'codornizes', quail. Rabbits, furred game, and ducks are the distractors.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 500,
-    "language": [],
-    "nudge": "",
-    "patterns": [],
+    "language": [
+      {
+        "pt": "rações",
+        "en": "compound feed",
+        "note": "rações = prepared animal feed; not 'rations' of food."
+      },
+      {
+        "pt": "consumiriam",
+        "en": "would consume",
+        "note": "consumiriam = would consume, the conditional: what the bird would eat if it were wild."
+      }
+    ],
+    "nudge": "A bird of prey is fed food 'idêntica à que consumiriam no estado selvagem', what it would eat in the wild. Prepared feed, 'rações', is not that diet, and wild prey comes with its 'penas ou pêlos', so a ban on them goes against the keyed rule.",
+    "patterns": ["which-statement"],
     "status": "draft"
   },
   {
     "id": 501,
-    "language": [],
-    "nudge": "",
-    "patterns": [],
+    "language": [
+      {
+        "pt": "Tanto de pena como de pelo",
+        "en": "Both feathered and furred game",
+        "note": "tanto … como = both … and; not 'as much as'."
+      }
+    ],
+    "nudge": "The goshawk, flown 'em baixo-voo', takes 'tanto de pena como de pelo', both birds and furred game. Each other option keeps only one half.",
+    "patterns": ["both"],
     "status": "draft"
   },
   {
     "id": 502,
     "language": [],
-    "nudge": "",
-    "patterns": [],
+    "nudge": "The goshawk is 'a ave clássica da caça em baixo-voo', low flight with short-winged hawks flown straight from the fist, as question 501 also says. Alto-voo, high flight, belongs to the long-winged falcons, so neither the goshawk nor the sparrowhawk is its classic bird.",
+    "patterns": ["which-statement"],
     "status": "draft"
   },
   {
     "id": 503,
-    "language": [],
-    "nudge": "",
-    "patterns": [],
+    "language": [
+      {
+        "pt": "do que a fêmea",
+        "en": "than the female",
+        "note": "mais … do que = more … than: each option sets the terçó against the female, and the comparison runs from the male's side."
+      }
+    ],
+    "nudge": "The terçó is the male bird of prey, smaller than the female, so neither 'mais corpulento' nor 'do mesmo tamanho' fits. The bank keys it 'mais ágil do que a fêmea', more agile.",
+    "patterns": ["comparative"],
     "status": "draft"
   },
   {
     "id": 504,
-    "language": [],
-    "nudge": "",
+    "language": [
+      {
+        "pt": "Pelo tamanho",
+        "en": "By the size",
+        "note": "pelo here = by the (por + o), not pelo 'fur'; each option names what the condition is judged by."
+      }
+    ],
+    "nudge": "A bird of prey's physical condition is read 'pelo peso', by its weight. Size and plumage are the distractors.",
     "patterns": [],
     "status": "draft"
   },
   {
     "id": 505,
-    "language": [],
-    "nudge": "",
-    "patterns": [],
+    "language": [
+      {
+        "pt": "processo",
+        "en": "method",
+        "note": "processo = method, a legal way of hunting; not 'process' or a lawsuit."
+      },
+      {
+        "pt": "apenas com o auxílio de cães de caça",
+        "en": "only with the help of hunting dogs",
+        "note": "apenas = only: hunting dogs are the only helpers, with a stick or without."
+      }
+    ],
+    "nudge": "Cetraria is falconry: game taken by 'aves de presa', with only hunting dogs and a stick, 'com ou sem pau', to help (question 51 names it the same way). Bows and crossbows and traps are other means, not this method.",
+    "patterns": ["name-question"],
     "status": "draft"
   },
   {
     "id": 506,
-    "language": [],
-    "nudge": "",
-    "patterns": [],
+    "language": [
+      {
+        "pt": "Indiferentemente de noite ou de dia",
+        "en": "Either by night or by day",
+        "note": "indiferentemente = either one, without preference; not 'indifferently' in the sense of carelessly."
+      }
+    ],
+    "nudge": "Manning, 'amansamento', taming a new bird to people, is done 'de noite', by night. 'Indiferentemente' would make day just as good, and the stem's 'preferencialmente' says one time is preferred.",
+    "patterns": ["both"],
     "status": "draft"
   }
 ]
