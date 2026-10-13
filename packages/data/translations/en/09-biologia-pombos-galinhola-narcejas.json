@@ -7,7 +7,7 @@
       "B": "A European turtle dove",
       "C": "A common wood pigeon"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -18,7 +18,7 @@
       "B": "A rock dove",
       "C": "A common wood pigeon"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -27,9 +27,9 @@
     "options": {
       "A": "Robust appearance, pointed wings, small head, long tail and fast flight",
       "B": "Robust appearance, rounded wings, large head, long tail and fast flight",
-      "C": "Robust appearance, pointed wings, medium head, short tail and very fast flight"
+      "C": "Robust appearance, pointed wings, medium-sized head, short tail and very fast flight"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -40,7 +40,7 @@
       "B": "Live alone",
       "C": "Live in flocks"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -51,7 +51,7 @@
       "B": "Two white patches on the sides of the neck and of the wings",
       "C": "Black wing tips and white rump"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -62,7 +62,7 @@
       "B": "Rock dove",
       "C": "Common wood pigeon"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -73,7 +73,7 @@
       "B": "The largest of the three pigeons",
       "C": "Completely dark"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -84,7 +84,7 @@
       "B": "From southern Europe",
       "C": "From the Middle East"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -95,7 +95,7 @@
       "B": "Holes in trees and in buildings",
       "C": "Low trees and cliffs"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -106,7 +106,7 @@
       "B": "Common wood pigeon",
       "C": "Stock dove"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -117,7 +117,7 @@
       "B": "Rock dove",
       "C": "Stock dove"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -128,7 +128,7 @@
       "B": "Rock dove",
       "C": "Stock dove"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -139,7 +139,7 @@
       "B": "Grains and seeds",
       "C": "Grains, berries, seeds and acorns"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -150,7 +150,7 @@
       "B": "A Eurasian woodcock",
       "C": "A European golden plover"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -161,7 +161,7 @@
       "B": "The Eurasian woodcock is a resident bird in the Azores",
       "C": "The Eurasian woodcock is a migratory bird in mainland Portugal"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -172,7 +172,7 @@
       "B": "Crepuscular and diurnal",
       "C": "Crepuscular and nocturnal"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -183,7 +183,7 @@
       "B": "That is found in pairs",
       "C": "That lives in flocks"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -194,7 +194,7 @@
       "B": "Broad and rounded wings, short and straight bill",
       "C": "Broad and rounded wings, long and straight bill"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -205,7 +205,7 @@
       "B": "Fast and straight",
       "C": "Slow and silent with the bill pointed towards the ground"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -216,7 +216,7 @@
       "B": "Stocky, with round wings and bill pointed towards the ground",
       "C": "Stocky, with narrow wings and bill pointed towards the ground"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -227,7 +227,7 @@
       "B": "Countries of North Africa",
       "C": "Countries of central and northern Europe"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -238,7 +238,7 @@
       "B": "Wintering",
       "C": "Spring"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -249,7 +249,7 @@
       "B": "In woods associated with areas of cultivation",
       "C": "In woods with shrub vegetation"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -260,7 +260,7 @@
       "B": "Stony and damp ground",
       "C": "Clayey and dry ground"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -271,7 +271,7 @@
       "B": "Is normally found in flocks of small size",
       "C": "Is a solitary bird"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -282,7 +282,7 @@
       "B": "Holm-oak wood pasture",
       "C": "Woods with shrub vegetation and cool and damp ground"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -293,7 +293,7 @@
       "B": "Common snipe",
       "C": "Eurasian woodcock"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -304,7 +304,7 @@
       "B": "Areas with light and damp soils",
       "C": "Large cultivated plains in inland areas"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -315,7 +315,7 @@
       "B": "Use the bill to extract from the earth the invertebrates they feed on",
       "C": "Chase the invertebrates they feed on"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -326,7 +326,7 @@
       "B": "Relatively short bill, legs and neck",
       "C": "Relatively long bill, legs and neck"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -337,7 +337,7 @@
       "B": "Not very sociable",
       "C": "Summer visitors"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -348,7 +348,7 @@
       "B": "Countries of North Africa",
       "C": "Countries of central and northern Europe"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -359,7 +359,7 @@
       "B": "Winter visitor",
       "C": "Partially migratory"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -370,7 +370,7 @@
       "B": "2",
       "C": "3"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -381,7 +381,7 @@
       "B": "Jack snipe",
       "C": "Great snipe"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -392,7 +392,7 @@
       "B": "Common snipe",
       "C": "Jack snipe"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -403,7 +403,7 @@
       "B": "Insects, seeds and aquatic plants",
       "C": "Rice, maize, snails and small frogs"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   }
 ]
