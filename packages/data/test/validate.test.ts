@@ -505,6 +505,23 @@ describe('rule 6: species names', () => {
     expect(() => validate(dir)).toThrow(/id 3: ""frisada"" must appear as "Gadwall"/);
   });
 
+  it.each([
+    ["Mallard's duck", 'Mallard\u2019s duck'],
+    ['Mallard\u2019s duck', "Mallard's duck"],
+  ])('reads curly apostrophes as straight in the glossary English %s and the translation %s', (en, option) => {
+    const dir = copyBase();
+    editJson<GlossaryEntry[]>(dir, 'glossary/species.json', (g) => (g[0]!.en = en));
+    editRows(dir, 'translations/en/02-beta.json', (t) => (t[0].options.C = option));
+    expect(() => validate(dir)).not.toThrow();
+  });
+
+  it.each([
+    ['case', (g: GlossaryEntry[]) => g.push({ ...g[0]!, pt: 'pato-real' }), /species pato-real is listed twice \(also as Pato-real\)/],
+    ['quotes', (g: GlossaryEntry[]) => g.push({ ...g[0]!, pt: '\u201cPato-real\u201d' }, { ...g[0]!, pt: '"Pato-real"' }), /species "Pato-real" is listed twice \(also as \u201cPato-real\u201d\)/],
+  ])('rejects a glossary pt that repeats another but for %s', (_name, change, message) => {
+    expectFailure((dir) => editJson<GlossaryEntry[]>(dir, 'glossary/species.json', change), message);
+  });
+
   it('accepts a glossary entry that matches no question', () => {
     const dir = copyBase();
     addSpecies(dir, { pt: 'Abetarda', en: 'Great bustard' });
@@ -552,6 +569,10 @@ describe('rule 7: terms glossary shape', () => {
     ['an entry that is not an object', (t: TermEntry[]) => t.push('x' as unknown as TermEntry), /glossary\/terms\.json: term #3 is not an object/],
   ])('rejects a term with %s', (_name, change, message) => {
     expectFailure((dir) => editTerms(dir, change), message);
+  });
+
+  it('rejects a term that repeats another but for case', () => {
+    expectFailure((dir) => editTerms(dir, (t) => t.push({ pt: 'Furão', en: 'ferret', note: '' })), /glossary\/terms\.json: term Furão is listed twice \(also as furão\)/);
   });
 
   it('rejects a terms file that is not a list', () => {

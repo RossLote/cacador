@@ -152,7 +152,7 @@ export const topicOf = (question: Question): Topic | undefined => topicBySlug.ge
 /**
  * One import per translations/en/ file, listed in chunk order like `chunks` (the loader test fails
  * when a file on disk is not wired in); the JSON widens `status` to string, so the list is narrowed
- * once, here. hints/en/ joins hintFiles the same way in phase 3. import.meta.glob was not used
+ * once, here. hints/en/ joins `hints` the same way in phase 3. import.meta.glob was not used
  * because tsc needs Vite client type shims for it, and the files are few and named.
  */
 const translations = [
@@ -160,10 +160,10 @@ const translations = [
   translation07, translation08, translation09, translation10, translation11, translation12,
   translation13, translation14, translation15, translation16, translation17, translation18,
 ].flat() as Translation[];
-const hintFiles: readonly (readonly Hint[])[] = [];
+const hints: readonly Hint[] = [];
 
 const translationById = new Map(translations.map((t) => [t.id, t]));
-const hintById = new Map(hintFiles.flat().map((h) => [h.id, h]));
+const hintById = new Map(hints.map((h) => [h.id, h]));
 
 /** The English translation for an id, or undefined while no file holds it. */
 export const translationFor = (id: number): Translation | undefined => translationById.get(id);

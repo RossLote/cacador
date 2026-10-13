@@ -322,14 +322,14 @@ the file and id. Rules:
 6. Once `glossary/species.json` exists: for every Portuguese species name in a
    question, the matching English name is present in its translation (case-insensitive).
    Skipped for entries with status `draft`. Every glossary entry has non-empty `pt`,
-   `scientific`, `en` and `group`, and `pt` is unique. The glossary `pt` must be the
+   `scientific`, `en` and `group`, and `pt` is unique, ignoring case and curly-versus-straight quotes. The glossary `pt` must be the
    surface form used in the bank: a whole-word, case-insensitive match in which a
    hyphen counts as part of the word (`Perdiz` does not match inside `perdiz-cinzenta`),
    curly apostrophes and quotes are read as straight ones, and a plural is its own
    entry. An entry that matches no question is allowed, because the glossary also
    holds species of Portaria 67/2024 that the bank never names.
 7. Once `glossary/terms.json` exists: every entry has non-empty `pt` and `en` and a
-   `note` that is a string (empty allowed), and `pt` is unique. Only the shape is
+   `note` that is a string (empty allowed), and `pt` is unique in the same sense as rule 6. Only the shape is
    checked; a term inflects in running text, so its use in a translation is left to the
    meaning pass (§ 5 step 2).
 

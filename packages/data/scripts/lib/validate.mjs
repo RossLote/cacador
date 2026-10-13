@@ -273,7 +273,8 @@ function checkHint(rel, e, pt) {
 /**
  * Rule 5: translations and hints mirror the question files, with the fields of DESIGN.md § 3.3.
  * Only files that exist are checked.
- * Returns the translations by id, each with the file it came from and its lowercased text, for rule 6.
+ * Returns the translations by id, each with the file it came from and its lowercased text with quotes
+ * straightened, for rule 6 and the counts.
  */
 function checkMirrors(dir, files) {
   const translations = new Map();
@@ -295,7 +296,7 @@ function checkMirrors(dir, files) {
         if (!STATUSES.includes(e.status)) failAt(rel, e.id, `status "${e.status}" is not one of ${STATUSES.join(', ')}`);
         if (kind === 'translations') {
           checkTranslation(rel, e, pt);
-          translations.set(e.id, { ...e, file: rel, text: textOf(e).toLowerCase() });
+          translations.set(e.id, { ...e, file: rel, text: straighten(textOf(e)).toLowerCase() });
         } else {
           checkHint(rel, e, pt);
         }
@@ -315,13 +316,20 @@ const straighten = (text) => text.replace(/\u2019/g, "'").replace(/[\u201c\u201d
 
 /**
  * Reads the glossary file `rel` when it exists: a list of objects whose fields have the types `spec`
- * names, with `pt` unique. Returns the list, or undefined when there is no such file.
+ * names, with `pt` unique as rule 6 matches it (ignoring case, curly quotes read as straight ones).
+ * Returns the list, or undefined when there is no such file.
  */
 function readGlossary(dir, rel, label, spec) {
   if (!existsSync(join(dir, rel))) return undefined;
   const glossary = readJson(dir, rel);
   if (!Array.isArray(glossary)) fail(rel, 'does not hold a list');
   checkEntries(rel, label, glossary, 'pt', spec);
+  const first = new Map();
+  for (const entry of glossary) {
+    const key = straighten(entry.pt).toLowerCase();
+    if (first.has(key)) fail(rel, `${label} ${entry.pt} is listed twice (also as ${first.get(key)})`);
+    first.set(key, entry.pt);
+  }
   return glossary;
 }
 
@@ -336,7 +344,7 @@ function checkGlossary(files, translations, glossary) {
     const name = straighten(entry.pt);
     const needle = name.toLowerCase();
     const word = new RegExp(`(?<![\\p{L}\\p{N}-])${escapeRegExp(name)}(?![\\p{L}\\p{N}-])`, 'iu');
-    const en = entry.en.toLowerCase();
+    const en = straighten(entry.en).toLowerCase();
     for (const [id, translation] of translations) {
       // The substring test is a cheap filter; the word-boundary regex decides.
       if (translation.status === 'draft' || !ptLower.get(id).includes(needle) || !word.test(ptText.get(id))) continue;
