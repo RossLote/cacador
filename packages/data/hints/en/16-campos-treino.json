@@ -2,36 +2,36 @@
   {
     "id": 475,
     "language": [],
-    "nudge": "Training grounds are for training dogs and birds of prey and for shooting practice on farmed game, so 'treinar aves de presa' is allowed (question 479 keys it too). A driven boar hunt is a hunt, not training, and dogs are not trained there on 'espécies não cinegéticas'.",
+    "nudge": "Birds of prey can be trained there, 'treinar aves de presa', as question 479 also keys, and question 476 adds shooting practice on partridges bred in captivity. A driven boar hunt, 'batidas ao javali', is not among them, nor is training dogs on 'espécies não cinegéticas'.",
     "patterns": [],
-    "status": "draft"
+    "status": "checked"
   },
   {
     "id": 476,
     "language": [],
-    "nudge": "Shooting practice is allowed on farmed game: 'exercício de tiro … em perdizes criadas em cativeiro', partridges bred in captivity. Montarias are hunts, and the near miss takes 'espécies cinegéticas da fauna selvagem', wild game, even if only to train hawks.",
+    "nudge": "Shooting practice with a firearm is allowed on 'perdizes criadas em cativeiro', partridges bred in captivity. The near miss hunts 'espécies cinegéticas da fauna selvagem', wild game, even if only to train birds of prey, and montarias for wild boar are hunts, not practice.",
     "patterns": [],
-    "status": "draft"
+    "status": "checked"
   },
   {
     "id": 477,
     "language": [],
     "nudge": "Users must 'assegurar a recolha de cartuchos vazios', pick up their spent cartridges. Shooting with a firearm is one of the ground's activities (question 476), so a ban on hunting guns is wrong, and the hunting-licence statement is the other distractor.",
     "patterns": ["which-statement"],
-    "status": "draft"
+    "status": "checked"
   },
   {
     "id": 478,
     "language": [],
-    "nudge": "Shooting practice can be authorised, here 'exercício de tiro com besta', as with a firearm in question 476. Training dogs on 'espécies cinegéticas silvestres' fails for the same reason wild game fails in question 476, and ferrets with domestic rabbits is the other distractor.",
+    "nudge": "Shooting practice can be authorised, here 'exercício de tiro com besta', as with a firearm in question 476. Training dogs on 'espécies cinegéticas silvestres', wild game, is the near miss, like the wild game of question 476, and training ferrets with domestic rabbits is the other distractor.",
     "patterns": [],
-    "status": "draft"
+    "status": "checked"
   },
   {
     "id": 479,
     "language": [],
     "nudge": "'O treino de aves de presa', training birds of prey, can be authorised, as question 475 also keys. Montarias and 'batidas às raposas' are hunts, and questions 475 and 476 reject a driven boar hunt and montarias the same way.",
     "patterns": [],
-    "status": "draft"
+    "status": "checked"
   }
 ]

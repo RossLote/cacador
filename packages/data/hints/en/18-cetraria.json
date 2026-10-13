@@ -2,9 +2,9 @@
   {
     "id": 499,
     "language": [],
-    "nudge": "The merlin, 'esmerilhão', is 'um pequeno falcão', and the bank keys it for small quarry, 'codornizes', quail. Rabbits, furred game, and ducks are the distractors.",
+    "nudge": "The merlin, 'esmerilhão', is 'um pequeno falcão', and the bank keys it for 'codornizes', quail. Rabbits and ducks are the distractors.",
     "patterns": [],
-    "status": "draft"
+    "status": "checked"
   },
   {
     "id": 500,
@@ -20,29 +20,23 @@
         "note": "consumiriam = would consume, the conditional: what the bird would eat if it were wild."
       }
     ],
-    "nudge": "A bird of prey is fed food 'idêntica à que consumiriam no estado selvagem', what it would eat in the wild. Prepared feed, 'rações', is not that diet, and wild prey comes with its 'penas ou pêlos', so a ban on them goes against the keyed rule.",
+    "nudge": "A bird of prey is fed food 'idêntica à que consumiriam no estado selvagem', what it would eat in the wild. Feed made essentially of 'rações' is not that diet, and a ban on 'penas ou pêlos' is the other distractor.",
     "patterns": ["which-statement"],
-    "status": "draft"
+    "status": "checked"
   },
   {
     "id": 501,
-    "language": [
-      {
-        "pt": "Tanto de pena como de pelo",
-        "en": "Both feathered and furred game",
-        "note": "tanto … como = both … and; not 'as much as'."
-      }
-    ],
-    "nudge": "The goshawk, flown 'em baixo-voo', takes 'tanto de pena como de pelo', both birds and furred game. Each other option keeps only one half.",
+    "language": [],
+    "nudge": "The goshawk, a bird of prey 'de baixo-voo', is used for 'tanto de pena como de pelo', both feathered and furred game. Each other option keeps only one half.",
     "patterns": ["both"],
-    "status": "draft"
+    "status": "checked"
   },
   {
     "id": 502,
     "language": [],
     "nudge": "The goshawk is 'a ave clássica da caça em baixo-voo', low flight with short-winged hawks flown straight from the fist, as question 501 also says. Alto-voo, high flight, belongs to the long-winged falcons, so neither the goshawk nor the sparrowhawk is its classic bird.",
     "patterns": ["which-statement"],
-    "status": "draft"
+    "status": "checked"
   },
   {
     "id": 503,
@@ -55,7 +49,7 @@
     ],
     "nudge": "The terçó is the male bird of prey, smaller than the female, so neither 'mais corpulento' nor 'do mesmo tamanho' fits. The bank keys it 'mais ágil do que a fêmea', more agile.",
     "patterns": ["comparative"],
-    "status": "draft"
+    "status": "checked"
   },
   {
     "id": 504,
@@ -66,9 +60,9 @@
         "note": "pelo here = by the (por + o), not pelo 'fur'; each option names what the condition is judged by."
       }
     ],
-    "nudge": "A bird of prey's physical condition is read 'pelo peso', by its weight. Size and plumage are the distractors.",
+    "nudge": "A bird of prey's physical condition is read 'pelo peso', by its weight. Size and feathers are the distractors.",
     "patterns": [],
-    "status": "draft"
+    "status": "checked"
   },
   {
     "id": 505,
@@ -77,16 +71,11 @@
         "pt": "processo",
         "en": "method",
         "note": "processo = method, a legal way of hunting; not 'process' or a lawsuit."
-      },
-      {
-        "pt": "apenas com o auxílio de cães de caça",
-        "en": "only with the help of hunting dogs",
-        "note": "apenas = only: hunting dogs are the only helpers, with a stick or without."
       }
     ],
     "nudge": "Cetraria is falconry: game taken by 'aves de presa', with only hunting dogs and a stick, 'com ou sem pau', to help (question 51 names it the same way). Bows and crossbows and traps are other means, not this method.",
     "patterns": ["name-question"],
-    "status": "draft"
+    "status": "checked"
   },
   {
     "id": 506,
@@ -99,6 +88,6 @@
     ],
     "nudge": "Manning, 'amansamento', taming a new bird to people, is done 'de noite', by night. 'Indiferentemente' would make day just as good, and the stem's 'preferencialmente' says one time is preferred.",
     "patterns": ["both"],
-    "status": "draft"
+    "status": "checked"
   }
 ]
