@@ -257,19 +257,21 @@ function checkTranslation(rel, e, pt) {
  */
 function checkHint(rel, e, pt) {
   expectType(rel, e.id, 'language', e.language, 'list');
-  const text = textOf(pt).toLowerCase();
+  // Each field on its own, so a phrase cannot match across the join of the stem and an option.
+  const fields = [pt.question, ...Object.values(pt.options)].map((field) => field.toLowerCase());
   e.language.forEach((item, i) => {
     const field = `language entry ${i + 1}`;
     if (!isObject(item)) failAt(rel, e.id, `${field} is not an object`);
     expectType(rel, e.id, `${field} pt`, item.pt, 'string');
     expectType(rel, e.id, `${field} en`, item.en, 'string');
     expectType(rel, e.id, `${field} note`, item.note, 'text');
-    if (!text.includes(item.pt.toLowerCase())) {
+    const phrase = item.pt.toLowerCase();
+    if (!fields.some((field) => field.includes(phrase))) {
       failAt(rel, e.id, `language text "${item.pt}" does not occur in the question or its options`);
     }
   });
   expectType(rel, e.id, 'nudge', e.nudge, 'text');
-  if (e.status !== 'draft' && e.nudge === '') failAt(rel, e.id, `nudge is empty, a ${e.status} entry needs a nudge`);
+  if (e.status !== 'draft' && e.nudge.trim() === '') failAt(rel, e.id, `nudge is empty, a ${e.status} entry needs a nudge`);
   expectType(rel, e.id, 'patterns', e.patterns, 'list');
   for (const pattern of e.patterns) expectType(rel, e.id, 'patterns entry', pattern, 'string');
 }
@@ -280,9 +282,9 @@ function checkHint(rel, e, pt) {
  * Returns the translations and the hints by id, each with the file it came from, for rules 6 and 8 and the counts.
  */
 function checkMirrors(dir, files) {
-  const check = { translations: checkTranslation, hints: checkHint };
+  const checks = { translations: checkTranslation, hints: checkHint };
   const byKind = { translations: new Map(), hints: new Map() };
-  for (const kind of ['translations', 'hints']) {
+  for (const [kind, check] of Object.entries(checks)) {
     const sub = join(kind, 'en');
     for (const name of visibleFiles(join(dir, sub))) {
       const rel = `${sub}/${name}`;
@@ -298,7 +300,7 @@ function checkMirrors(dir, files) {
         const pt = inFile.get(e.id);
         if (!pt) failAt(rel, e.id, `is not an id of questions/${name}`);
         if (!STATUSES.includes(e.status)) failAt(rel, e.id, `status "${e.status}" is not one of ${STATUSES.join(', ')}`);
-        check[kind](rel, e, pt);
+        check(rel, e, pt);
         byKind[kind].set(e.id, { ...e, file: rel });
       }
       for (const id of inFile.keys()) {

@@ -417,6 +417,13 @@ describe('rule 5: translations and hints', () => {
     );
   });
 
+  it('fails on language text that only occurs across the join of the stem and an option', () => {
+    expectFailure(
+      (dir) => editRows(dir, 'hints/en/02-beta.json', (h) => ((h[1].language as [{ pt: string }, { pt: string }])[0].pt = 'quintas-feiras?\nSim')),
+      /hints\/en\/02-beta\.json: id 4: language text "quintas-feiras\?\nSim" does not occur/,
+    );
+  });
+
   it('fails on empty language text', () => {
     expectFailure(
       (dir) => editRows(dir, 'hints/en/02-beta.json', (h) => ((h[1].language as [{ pt: string }, { pt: string }])[0].pt = '')),
@@ -441,7 +448,7 @@ describe('rule 5: translations and hints', () => {
     expectFailure((dir) => editRows(dir, 'hints/en/02-beta.json', (h) => (h[1].patterns = [''])), /hints\/en\/02-beta\.json: id 4: patterns entry is not a non-empty string/);
   });
 
-  it('fails on a checked or reviewed hint with an empty nudge, and allows it on a draft', () => {
+  it('fails on a checked or reviewed hint with an empty or blank nudge, and allows it on a draft', () => {
     expectFailure(
       (dir) => editRows(dir, 'hints/en/02-beta.json', (h) => (h[0].status = 'checked')),
       /hints\/en\/02-beta\.json: id 3: nudge is empty, a checked entry needs a nudge/,
@@ -452,6 +459,13 @@ describe('rule 5: translations and hints', () => {
         h[1].status = 'reviewed';
       }),
       /hints\/en\/02-beta\.json: id 4: nudge is empty, a reviewed entry needs a nudge/,
+    );
+    expectFailure(
+      (dir) => editRows(dir, 'hints/en/02-beta.json', (h) => {
+        h[1].nudge = '  ';
+        h[1].status = 'checked';
+      }),
+      /hints\/en\/02-beta\.json: id 4: nudge is empty, a checked entry needs a nudge/,
     );
     const dir = copyBase();
     editRows(dir, 'hints/en/02-beta.json', (h) => (h[1].nudge = ''));
