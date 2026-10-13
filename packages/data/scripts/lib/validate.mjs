@@ -314,15 +314,25 @@ const escapeRegExp = (text) => text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 const straighten = (text) => text.replace(/\u2019/g, "'").replace(/[\u201c\u201d]/g, '"');
 
 /**
+ * Reads the glossary file `rel` when it exists: a list of objects whose fields have the types `spec`
+ * names, with `pt` unique. Returns the list, or undefined when there is no such file.
+ */
+function readGlossary(dir, rel, label, spec) {
+  if (!existsSync(join(dir, rel))) return undefined;
+  const glossary = readJson(dir, rel);
+  if (!Array.isArray(glossary)) fail(rel, 'does not hold a list');
+  checkEntries(rel, label, glossary, 'pt', spec);
+  return glossary;
+}
+
+/**
  * Rule 6 (DESIGN.md § 4): a glossary `pt` that occurs as a whole word in a question (a hyphen is part
  * of the word, curly quotes straightened) must have its `en` in every non-draft translation of it.
  */
 function checkGlossary(dir, files, translations) {
   const rel = 'glossary/species.json';
-  if (!existsSync(join(dir, rel))) return;
-  const glossary = readJson(dir, rel);
-  if (!Array.isArray(glossary)) fail(rel, 'does not hold a list');
-  checkEntries(rel, 'species', glossary, 'pt', { pt: 'string', scientific: 'string', en: 'string', group: 'string' });
+  const glossary = readGlossary(dir, rel, 'species', { pt: 'string', scientific: 'string', en: 'string', group: 'string' });
+  if (!glossary) return;
   const ptText = new Map([...files.values()].flat().map((q) => [q.id, straighten(textOf(q))]));
   for (const entry of glossary) {
     const word = new RegExp(`(?<![\\p{L}\\p{N}-])${escapeRegExp(straighten(entry.pt))}(?![\\p{L}\\p{N}-])`, 'iu');
@@ -336,6 +346,15 @@ function checkGlossary(dir, files, translations) {
   }
 }
 
+/**
+ * Rule 7 (DESIGN.md § 4): glossary/terms.json, when it exists, is a list of { pt, en, note } with
+ * `pt` and `en` non-empty, `note` a string and `pt` unique. Only its shape is checked: the use of a
+ * term in translations is the meaning pass's job, not a rule's.
+ */
+function checkTerms(dir) {
+  readGlossary(dir, 'glossary/terms.json', 'term', { pt: 'string', en: 'string', note: 'text' });
+}
+
 /** Checks `dir` (default packages/data) against DESIGN.md § 4, in order, and returns the counts. */
 export function validate(dir = dataDir) {
   const manifest = readJson(dir, 'manifest.json');
@@ -347,6 +366,7 @@ export function validate(dir = dataDir) {
   checkText(manifest, files);
   checkImages(dir, manifest, files);
   checkGlossary(dir, files, checkMirrors(dir, files));
+  checkTerms(dir);
 
   const all = [...files.values()].flat();
   return {

@@ -504,6 +504,51 @@ describe('rule 6: species names', () => {
   });
 });
 
+interface TermEntry {
+  pt: string;
+  en?: string;
+  note?: string | number;
+}
+
+describe('rule 7: terms glossary shape', () => {
+  const editTerms = (dir: string, change: (t: TermEntry[]) => void) => editJson<TermEntry[]>(dir, 'glossary/terms.json', change);
+
+  it.each([
+    ['an empty en', (t: TermEntry[]) => (t[0]!.en = ''), /glossary\/terms\.json: term furão has no non-empty string "en"/],
+    ['no en', (t: TermEntry[]) => delete t[1]!.en, /glossary\/terms\.json: term de salto has no non-empty string "en"/],
+    ['an empty pt', (t: TermEntry[]) => (t[1]!.pt = ''), /glossary\/terms\.json: term #2 has no non-empty string "pt"/],
+    ['a duplicate pt', (t: TermEntry[]) => t.push({ ...t[0]! }), /glossary\/terms\.json: term furão is listed twice/],
+    ['no note', (t: TermEntry[]) => delete t[0]!.note, /glossary\/terms\.json: term furão has no string "note"/],
+    ['a note that is not a string', (t: TermEntry[]) => (t[1]!.note = 7), /glossary\/terms\.json: term de salto has no string "note"/],
+    ['an entry that is not an object', (t: TermEntry[]) => t.push('x' as unknown as TermEntry), /glossary\/terms\.json: term #3 is not an object/],
+  ])('rejects a term with %s', (_name, change, message) => {
+    expectFailure((dir) => editTerms(dir, change), message);
+  });
+
+  it('rejects a terms file that is not a list', () => {
+    expectFailure((dir) => writeText(dir, 'glossary/terms.json', '{}'), /glossary\/terms\.json: does not hold a list/);
+  });
+
+  it('accepts an empty note and a term that occurs in no question', () => {
+    const dir = copyBase();
+    editTerms(dir, (t) => t.push({ pt: 'montaria', en: 'montaria (driven big-game hunt with hounds)', note: '' }));
+    expect(() => validate(dir)).not.toThrow();
+  });
+
+  it('is skipped when there is no terms file, even with the species glossary present', () => {
+    const dir = copyBase();
+    remove(dir, 'glossary/terms.json');
+    expect(() => validate(dir)).not.toThrow();
+  });
+
+  it('runs after rule 6', () => {
+    expectFailure((dir) => {
+      editTerms(dir, (t) => (t[0]!.en = ''));
+      editRows(dir, 'translations/en/02-beta.json', (t) => (t[0].options.A = 'A duck'));
+    }, /translations\/en\/02-beta\.json: id 3: "Pato-real" must appear as "Mallard"/);
+  });
+});
+
 describe('rule order', () => {
   it('reports the first broken rule when several are broken', () => {
     expectFailure((dir) => {
