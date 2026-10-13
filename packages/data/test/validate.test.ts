@@ -7,7 +7,6 @@ import { ValidationError, validate } from '../scripts/lib/validate.mjs';
 
 /** The tiny valid data directory (4 questions, 2 files) the tests copy and break. */
 const base = fileURLToPath(new URL('./fixtures/valid', import.meta.url));
-const OPTIONS = { questionCount: 4 };
 const temps: string[] = [];
 
 afterEach(() => {
@@ -21,8 +20,6 @@ function copyBase(): string {
   return dir;
 }
 
-const readJson = (dir: string, rel: string): unknown => JSON.parse(readFileSync(join(dir, rel), 'utf8'));
-const writeJson = (dir: string, rel: string, data: unknown) => writeFileSync(join(dir, rel), JSON.stringify(data, null, 2));
 const writeText = (dir: string, rel: string, text: string) => writeFileSync(join(dir, rel), text);
 const remove = (dir: string, rel: string) => rmSync(join(dir, rel), { recursive: true, force: true });
 
@@ -46,9 +43,9 @@ interface ManifestJson {
 }
 
 function editJson<T>(dir: string, rel: string, change: (data: T) => void): void {
-  const data = readJson(dir, rel) as T;
+  const data = JSON.parse(readFileSync(join(dir, rel), 'utf8')) as T;
   change(data);
-  writeJson(dir, rel, data);
+  writeFileSync(join(dir, rel), JSON.stringify(data, null, 2));
 }
 
 const editRows = (dir: string, rel: string, change: (rows: Rows) => void) => editJson<Rows>(dir, rel, change);
@@ -58,8 +55,14 @@ const editManifest = (dir: string, change: (m: ManifestJson) => void) => editJso
 function expectFailure(change: (dir: string) => void, message: RegExp): void {
   const dir = copyBase();
   change(dir);
-  expect(() => validate(dir, OPTIONS)).toThrow(ValidationError);
-  expect(() => validate(dir, OPTIONS)).toThrow(message);
+  let error: unknown;
+  try {
+    validate(dir);
+  } catch (e) {
+    error = e;
+  }
+  expect(error).toBeInstanceOf(ValidationError);
+  expect((error as Error).message).toMatch(message);
 }
 
 describe('validate on the real data', () => {
@@ -70,7 +73,7 @@ describe('validate on the real data', () => {
 
 describe('validate on the tiny fixture', () => {
   it('passes the valid base', () => {
-    expect(validate(base, OPTIONS)).toEqual({
+    expect(validate(base)).toEqual({
       questions: 4,
       files: 2,
       sections: 2,
@@ -78,10 +81,6 @@ describe('validate on the tiny fixture', () => {
       images: 2,
       imageQuestions: 3,
     });
-  });
-
-  it('is the 506-question bank by default', () => {
-    expect(() => validate(base)).toThrow(/manifest\.json: section ranges end at 4, expected 506/);
   });
 });
 
@@ -116,14 +115,14 @@ describe('manifest tiling', () => {
         m.topics[2].ranges = [[4, 4]];
         m.topics[1].ranges = [];
       }),
-      /manifest\.json: topic ranges of section beta start at 4, expected 3/,
+      /manifest\.json: topic perdiz in section beta range 4-4 starts at 4, expected 3 \(gap or overlap\)/,
     );
   });
 
   it('fails on overlapping topics', () => {
     expectFailure(
       (dir) => editManifest(dir, (m) => (m.topics[2].ranges = [[3, 4]])),
-      /manifest\.json: topic perdiz range 3-4 in section beta starts at 3, expected 4 \(gap or overlap\)/,
+      /manifest\.json: topic perdiz in section beta range 3-4 starts at 3, expected 4 \(gap or overlap\)/,
     );
   });
 
@@ -178,7 +177,7 @@ describe('rule 1: ids and files', () => {
     }));
     remove(dir, 'questions/02-beta.json');
     writeText(dir, 'questions/01-alfa.json', JSON.stringify(entries));
-    expect(() => validate(dir, { questionCount: 52 })).toThrow(/questions\/01-alfa\.json: holds 52 questions, at most 51/);
+    expect(() => validate(dir)).toThrow(/questions\/01-alfa\.json: holds 52 questions, at most 51/);
   });
 });
 
@@ -225,7 +224,7 @@ describe('rule 3: options and text', () => {
     expectFailure((dir) => editRows(dir, 'questions/02-beta.json', (q) => (q[1].question = 'Pergunta BETA?')), /id 4: question contains the section heading "BETA"/);
     const dir = copyBase();
     editRows(dir, 'questions/02-beta.json', (q) => (q[0].question = 'Pergunta beta?'));
-    expect(() => validate(dir, OPTIONS)).not.toThrow();
+    expect(() => validate(dir)).not.toThrow();
   });
 
   it('fails on two consecutive spaces', () => {
@@ -321,18 +320,18 @@ describe('rule 6: species names', () => {
       t[0].options.A = 'A duck';
       t[0].status = 'draft';
     });
-    expect(() => validate(dir, OPTIONS)).not.toThrow();
+    expect(() => validate(dir)).not.toThrow();
   });
 
   it('matches whole words only', () => {
     const dir = copyBase();
     editJson<{ pt: string; scientific?: string; en?: string; group?: string }[]>(dir, 'glossary/species.json', (g) => g.push({ pt: 'pato', scientific: 'x', en: 'Duck', group: 'patos' }));
     // "Um pato-real": "pato" is followed by a hyphen, so it counts as a word and "Duck" is required.
-    expect(() => validate(dir, OPTIONS)).toThrow(/id 3: "pato" must appear as "Duck"/);
+    expect(() => validate(dir)).toThrow(/id 3: "pato" must appear as "Duck"/);
     editJson<{ pt: string; scientific?: string; en?: string; group?: string }[]>(dir, 'glossary/species.json', (g) => {
       g[2]!.pt = 'pat';
     });
-    expect(() => validate(dir, OPTIONS)).not.toThrow();
+    expect(() => validate(dir)).not.toThrow();
   });
 
   it('rejects a glossary that is not a list', () => {
@@ -342,7 +341,7 @@ describe('rule 6: species names', () => {
   it('is skipped when there is no glossary', () => {
     const dir = copyBase();
     remove(dir, 'glossary');
-    expect(() => validate(dir, OPTIONS)).not.toThrow();
+    expect(() => validate(dir)).not.toThrow();
   });
 });
 

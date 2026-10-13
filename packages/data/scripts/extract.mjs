@@ -4,10 +4,11 @@ import { execFileSync } from 'node:child_process';
 import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { dataDir, readManifest } from './lib/manifest.mjs';
+import { dataDir, imageByQuestion, readManifest, topicOfId } from './lib/manifest.mjs';
+import { checkManifest, ValidationError } from './lib/validate.mjs';
 
-const EXPECTED_QUESTIONS = 506;
 const LETTERS = ['A', 'B', 'C'];
+const OPTION_LINE = /^([ABC])\) ?(.*)$/;
 
 // Hand fixes live here so a rerun reproduces them: { [id]: { question?, options?: { A?, B?, C? } } }.
 // The PDF wins; add an entry only when its text is wrong and say why. Empty: no fix is needed.
@@ -42,11 +43,11 @@ function joinPieces(pieces) {
   return pieces.reduce((acc, piece) => (acc === '' ? piece : acc.endsWith('-') ? acc + piece : `${acc} ${piece}`), '');
 }
 
-function parseQuestions(lines, manifest) {
-  const headings = new Map(manifest.sections.map((s) => [s.heading, s]));
-  const sectionOrder = manifest.sections.map((s) => s.heading);
-  const seenHeadings = [];
+/** Parses the text into `total` questions with contiguous ids from 1, each under its section. */
+function parseQuestions(lines, manifest, total) {
+  const headings = new Set(manifest.sections.map((s) => s.heading));
   const questions = [];
+  let seen = 0;
   let section = null;
   let q = null;
   let nextId = 1;
@@ -57,11 +58,12 @@ function parseQuestions(lines, manifest) {
     if (q.options.length !== LETTERS.length) fail(`${where}: expected 3 options, found ${q.options.length}`);
     const marked = q.options.filter((o) => o.marked);
     if (marked.length !== 1) fail(`${where}: expected exactly one option marked *, found ${marked.length}`);
-    const entry = { stem: joinPieces(q.stem), options: q.options.map((o) => joinPieces(o.pieces)) };
-    for (const text of [entry.stem, ...entry.options]) {
+    const stem = joinPieces(q.stem);
+    const options = q.options.map((o) => joinPieces(o.pieces));
+    for (const text of [stem, ...options]) {
       if (text === '' || text.includes('*')) fail(`${where}: empty text or stray "*" in "${text}"`);
     }
-    questions.push({ id: q.id, page: q.page, section: q.section, stem: entry.stem, options: entry.options, answer: marked[0].letter });
+    questions.push({ id: q.id, page: q.page, section: q.section, stem, options, answer: marked[0].letter });
     q = null;
   };
 
@@ -70,10 +72,10 @@ function parseQuestions(lines, manifest) {
     if (line === '') continue;
     if (headings.has(line)) {
       finish();
-      const expected = sectionOrder[seenHeadings.length];
-      if (line !== expected) fail(`page ${page}: heading "${line}" found, expected "${expected}"`);
-      seenHeadings.push(line);
-      section = headings.get(line);
+      const expected = manifest.sections[seen];
+      if (line !== expected?.heading) fail(`page ${page}: heading "${line}" found, expected "${expected?.heading}"`);
+      section = expected;
+      seen += 1;
       continue;
     }
     if (!section) continue; // the intro before the first heading
@@ -94,9 +96,9 @@ function parseQuestions(lines, manifest) {
     // A trailing "*" marks the correct option; it may follow a space or be glued to the word.
     const marked = line.endsWith('*');
     const body = marked ? line.slice(0, -1).trimEnd() : line;
-    const option = new RegExp(`^${LETTERS[q.options.length] ?? '-'}\\) ?(.*)$`).exec(body);
-    if (option) {
-      q.options.push({ letter: LETTERS[q.options.length], pieces: option[1] === '' ? [] : [option[1]], marked });
+    const option = OPTION_LINE.exec(body);
+    if (option && option[1] === LETTERS[q.options.length]) {
+      q.options.push({ letter: option[1], pieces: option[2] === '' ? [] : [option[2]], marked });
     } else if (q.options.length === 0) {
       if (marked) fail(`question ${q.id} (page ${page}): "*" in the stem`);
       q.stem.push(body);
@@ -108,28 +110,21 @@ function parseQuestions(lines, manifest) {
   }
   finish();
 
-  if (questions.length !== EXPECTED_QUESTIONS) {
+  if (questions.length !== total) {
     const last = questions.at(-1);
-    fail(`parsed ${questions.length} questions, expected ${EXPECTED_QUESTIONS} (last parsed: question ${last?.id} on page ${last?.page}, next expected id ${nextId})`);
+    fail(`parsed ${questions.length} questions, expected ${total} (last parsed: question ${last?.id} on page ${last?.page}, next expected id ${nextId})`);
   }
-  if (seenHeadings.length !== sectionOrder.length) {
-    fail(`found ${seenHeadings.length} of ${sectionOrder.length} section headings`);
-  }
+  if (seen !== manifest.sections.length) fail(`found ${seen} of ${manifest.sections.length} section headings`);
   return questions;
 }
 
 function toEntries(questions, manifest) {
-  const images = new Map(manifest.images.flatMap((image) => image.questions.map((id) => [id, image.file])));
+  const images = imageByQuestion(manifest);
   for (const id of images.keys()) {
-    if (id < 1 || id > EXPECTED_QUESTIONS) fail(`manifest image names question ${id}, which does not exist`);
+    if (id < 1 || id > questions.length) fail(`manifest image names question ${id}, which does not exist`);
   }
-  const topicOf = (id) => {
-    const topic = manifest.topics.find((t) => t.ranges.some(([from, to]) => id >= from && id <= to));
-    if (!topic) fail(`question ${id}: no topic covers it in the manifest`);
-    return topic.slug;
-  };
   for (const id of Object.keys(CORRECTIONS)) {
-    if (!questions.some((q) => q.id === Number(id))) fail(`correction table names question ${id}, which does not exist`);
+    if (id < 1 || id > questions.length) fail(`correction table names question ${id}, which does not exist`);
   }
   return questions.map((q) => {
     const fix = CORRECTIONS[q.id] ?? {};
@@ -139,7 +134,7 @@ function toEntries(questions, manifest) {
     return {
       id: q.id,
       section: q.section.slug,
-      topic: topicOf(q.id),
+      topic: topicOfId(manifest, q.id).slug,
       ...(image ? { image } : {}),
       question: fix.question ?? q.stem,
       options,
@@ -152,39 +147,40 @@ function toEntries(questions, manifest) {
 
 /** Dump every JPEG placement and map (page, 1-based index on the page) to the manifest's file names. */
 function extractImages(pdf, manifest, questions, tmp) {
-  const listing = run('pdfimages', ['-list', pdf]).split('\n').slice(2).filter((l) => l.trim() !== '');
-  const byPage = new Map();
-  for (const row of listing) {
-    const col = row.trim().split(/\s+/);
-    const [page, num, type, , , , , , enc] = col;
-    if (type !== 'image' || enc !== 'jpeg') fail(`page ${page}: image placement ${num} is ${type}/${enc}, expected a jpeg image`);
-    byPage.set(Number(page), [...(byPage.get(Number(page)) ?? []), Number(num)]);
+  const rows = run('pdfimages', ['-list', pdf])
+    .split('\n')
+    .slice(2)
+    .filter((l) => l.trim() !== '')
+    .map((l) => l.trim().split(/\s+/))
+    .map((col) => ({ page: Number(col[0]), num: Number(col[1]), type: col[2], enc: col[8] }));
+  for (const r of rows) {
+    if (r.type !== 'image' || r.enc !== 'jpeg') fail(`page ${r.page}: image placement ${r.num} is ${r.type}/${r.enc}, expected a jpeg image`);
   }
+  const byPage = Map.groupBy(rows, (r) => r.page);
   const dump = join(tmp, 'img');
   mkdirSync(dump);
   run('pdfimages', ['-j', '-p', pdf, join(dump, 'p')]);
-  const path = (page, num) => join(dump, `p-${String(page).padStart(3, '0')}-${String(num).padStart(3, '0')}.jpg`);
+  const bytesOf = (r) => readFileSync(join(dump, `p-${String(r.page).padStart(3, '0')}-${String(r.num).padStart(3, '0')}.jpg`));
 
   const wanted = new Map(); // file -> bytes
   const used = new Set();
   for (const image of manifest.images) {
-    const num = byPage.get(image.page)?.[image.index - 1];
-    if (num === undefined) fail(`manifest image ${image.file}: page ${image.page} has no placement number ${image.index}`);
+    const row = byPage.get(image.page)?.[image.index - 1];
+    if (!row) fail(`manifest image ${image.file}: page ${image.page} has no placement number ${image.index}`);
     // A picture sits next to its question; a shared one is also named by questions that refer back to it.
-    const pages = image.questions.map((id) => questions.find((x) => x.id === id).page);
+    const pages = image.questions.map((id) => questions[id - 1].page);
     if (!pages.some((p) => Math.abs(p - image.page) <= 1)) {
       fail(`manifest image ${image.file}: image on page ${image.page}, but questions ${image.questions.join(', ')} are on pages ${pages.join(', ')}`);
     }
-    wanted.set(image.file, readFileSync(path(image.page, num)));
-    used.add(`${image.page}/${num}`);
+    wanted.set(image.file, bytesOf(row));
+    used.add(row);
   }
   // An unlisted placement is a repeat of a listed picture (page 38's second sign, page 40); anything else is new.
-  for (const [page, nums] of byPage) {
-    for (const num of nums.filter((n) => !used.has(`${page}/${n}`))) {
-      const bytes = readFileSync(path(page, num));
-      if (![...wanted.values()].some((known) => known.equals(bytes))) {
-        fail(`page ${page}: image placement ${num} is not in the manifest and repeats no listed picture`);
-      }
+  const known = [...wanted.values()];
+  for (const row of rows.filter((r) => !used.has(r))) {
+    const bytes = bytesOf(row);
+    if (!known.some((k) => k.equals(bytes))) {
+      fail(`page ${row.page}: image placement ${row.num} is not in the manifest and repeats no listed picture`);
     }
   }
   return wanted;
@@ -194,19 +190,15 @@ function extractImages(pdf, manifest, questions, tmp) {
 
 function main() {
   const manifest = readManifest();
+  const total = checkManifest(manifest);
   const pdf = join(dataDir, 'source', 'questionario-2016.pdf');
   const tmp = mkdtempSync(join(tmpdir(), 'cacador-extract-'));
   try {
-    const parsed = parseQuestions(pdfLines(pdf), manifest);
+    const parsed = parseQuestions(pdfLines(pdf), manifest, total);
     const entries = toEntries(parsed, manifest);
     const images = extractImages(pdf, manifest, parsed, tmp);
-
-    const files = manifest.chunks.map((chunk) => {
-      const inChunk = entries.filter((e) => e.id >= chunk.from && e.id <= chunk.to);
-      if (inChunk.length !== chunk.to - chunk.from + 1) fail(`${chunk.file}: found ${inChunk.length} questions, expected ${chunk.to - chunk.from + 1}`);
-      if (inChunk.some((e) => e.section !== chunk.section)) fail(`${chunk.file}: spans a section other than ${chunk.section}`);
-      return [chunk.file, `${JSON.stringify(inChunk, null, 2)}\n`];
-    });
+    // Ids are contiguous from 1 and the chunks tile them, so a chunk is a slice.
+    const files = manifest.chunks.map((chunk) => [chunk.file, `${JSON.stringify(entries.slice(chunk.from - 1, chunk.to), null, 2)}\n`]);
 
     const questionsDir = join(dataDir, 'questions');
     const imagesDir = join(dataDir, 'images');
@@ -225,7 +217,7 @@ function main() {
 try {
   main();
 } catch (error) {
-  if (!(error instanceof ExtractError)) throw error;
+  if (!(error instanceof ExtractError || error instanceof ValidationError)) throw error;
   console.error(`extract: ${error.message}`);
   process.exit(1);
 }

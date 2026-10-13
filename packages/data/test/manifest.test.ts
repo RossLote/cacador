@@ -1,36 +1,15 @@
 import { describe, expect, it } from 'vitest';
 import { manifest } from '../src/index';
 
-type Range = [number, number];
-
-/** Expands inclusive ranges to a sorted id list, keeping duplicates so overlaps show. */
-function idsOf(ranges: Range[]): number[] {
-  const ids: number[] = [];
-  for (const [from, to] of ranges) {
-    for (let id = from; id <= to; id++) ids.push(id);
-  }
-  return ids.sort((a, b) => a - b);
-}
-
-function span(from: number, to: number): number[] {
-  return idsOf([[from, to]]);
-}
-
-const sectionBySlug = new Map(manifest.sections.map((s) => [s.slug, s]));
+// Tiling (sections, chunks and topics cover 1 to 506 without gaps or crossings) is the
+// validator's job; validate.test.ts runs it on the real data. These tests pin the content.
 
 describe('manifest sections', () => {
   it('has 11 sections with unique slugs', () => {
     expect(manifest.sections).toHaveLength(11);
-    expect(sectionBySlug.size).toBe(11);
+    expect(new Set(manifest.sections.map((s) => s.slug)).size).toBe(11);
   });
 
-  it('tiles 1 to 506 in order', () => {
-    expect(idsOf(manifest.sections.map((s) => [s.from, s.to]))).toEqual(span(1, 506));
-    manifest.sections.forEach((s, i) => {
-      const prev = manifest.sections[i - 1];
-      expect(s.from).toBe(prev ? prev.to + 1 : 1);
-    });
-  });
 
   it('records each PDF heading in capitals', () => {
     for (const s of manifest.sections) {
@@ -69,16 +48,6 @@ describe('manifest chunks', () => {
     expect(manifest.chunks.map((c) => [c.file, c.section, c.from, c.to])).toEqual(expected);
   });
 
-  it('tiles 1 to 506 without crossing a section or exceeding 51 questions', () => {
-    expect(idsOf(manifest.chunks.map((c) => [c.from, c.to]))).toEqual(span(1, 506));
-    for (const c of manifest.chunks) {
-      const section = sectionBySlug.get(c.section);
-      expect(section, c.file).toBeDefined();
-      expect(c.from).toBeGreaterThanOrEqual(section!.from);
-      expect(c.to).toBeLessThanOrEqual(section!.to);
-      expect(c.to - c.from + 1).toBeLessThanOrEqual(51);
-    }
-  });
 });
 
 describe('manifest topics', () => {
@@ -88,13 +57,6 @@ describe('manifest topics', () => {
     expect(manifest.topics.filter((t) => t.section === 'biologia')).toHaveLength(19);
   });
 
-  it('tiles every section exactly once', () => {
-    for (const s of manifest.sections) {
-      const ranges = manifest.topics.filter((t) => t.section === s.slug).flatMap((t) => t.ranges);
-      expect(idsOf(ranges), s.slug).toEqual(span(s.from, s.to));
-    }
-    for (const t of manifest.topics) expect(sectionBySlug.has(t.section), t.slug).toBe(true);
-  });
 
   it('uses the section slug as the topic outside Biology', () => {
     for (const s of manifest.sections.filter((x) => x.slug !== 'biologia')) {
