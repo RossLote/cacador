@@ -75,4 +75,8 @@ describe('loader', () => {
   it('resolves translations that have passed the meaning pass', () => {
     for (const id of [1, 229, 506]) expect(['checked', 'reviewed']).toContain(translationFor(id)?.status);
   });
+
+  it('resolves hints that have passed the check', () => {
+    for (const id of [1, 229, 506]) expect(['checked', 'reviewed']).toContain(hintFor(id)?.status);
+  });
 });

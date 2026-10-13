@@ -90,7 +90,7 @@
       }
     ],
     "nudge": "The turtle dove likes matas densas alternando com searas e pastos: thick woodland broken by cereal fields and pasture, as question 212 also keys. The distractors bring in zonas alagadiças, waterlogged ground, and one thins the woods to pouco densas.",
-    "patterns": ["list-options"],
+    "patterns": ["list-options", "not-very"],
     "status": "checked"
   },
   {

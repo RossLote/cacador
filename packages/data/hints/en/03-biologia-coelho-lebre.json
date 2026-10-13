@@ -237,7 +237,7 @@
       }
     ],
     "nudge": "The true statement is that a mixomatose contribui para a diminuição das populações de coelho, cutting rabbit numbers. The rabbit is not of distribuição restrita, and it is not pouco importante either: the Iberian lynx's diet is based on coelhos-bravos (question 326).",
-    "patterns": ["which-statement"],
+    "patterns": ["which-statement", "not-very"],
     "status": "checked"
   },
   {
@@ -319,7 +319,7 @@
       }
     ],
     "nudge": "The hare prefers terrenos planos, húmidos e pouco cobertos: flat, damp, open ground, where the rabbit wants dry sand and scrub (question 85). Burrows with tunnels are the rabbit's (question 64), and grande densidade de coberto is not what the hare prefers (question 93).",
-    "patterns": [],
+    "patterns": ["not-very"],
     "status": "checked"
   },
   {

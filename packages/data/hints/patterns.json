@@ -42,6 +42,12 @@
     "note": "mais X que and menos X que compare two things, often two at once (cabeça mais forte e menos afilada; mais pesado e menos vivo), and each distractor flips one direction. Tag when the answer turns on the direction of a comparison, or of a superlative in the stem (distribuição menos alargada); not when the options differ in a noun or a number."
   },
   {
+    "slug": "not-very",
+    "pt": "pouco + adjetivo",
+    "en": "Not very (pouco)",
+    "note": "pouco before an adjective turns it down to 'not very', nearly its opposite (pouco sociável, vegetação pouco densa, pouco variada), never 'a little'; set beside bastante, muito or the bare adjective (densa), it flips what the option says. Tag when the answer turns on pouco: the keyed option against muito or bastante, or a distractor false only because of pouco (pouco importante, pouco densa); not when another fact in the option decides (uma zona pouca protegida)."
+  },
+  {
     "slug": "above-below",
     "pt": "superior a, inferior a",
     "en": "Above or below a limit (superior a, inferior a)",

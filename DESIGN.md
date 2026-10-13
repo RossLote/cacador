@@ -280,8 +280,8 @@ precedent of § 5 step 3):
     }
   ],
   "nudge": "One region, so a licença regional is enough, and the nacional covers it too. Snipe need no waterfowl licence: question 10 asks the same with rabbits and has the same answer.",
-  "patterns": ["only"],
-  "status": "draft"
+  "patterns": ["only", "case"],
+  "status": "checked"
 }
 ```
 
