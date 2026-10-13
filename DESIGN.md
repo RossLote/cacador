@@ -128,7 +128,9 @@ packages/data/
     …                        18 files, table below
     18-cetraria.json
   translations/en/           same 18 file names, English
-  hints/en/                  same 18 file names, language notes and nudges
+  hints/
+    patterns.json            { slug, pt, en, note }, the closed list of pattern tags hints use (§ 3.3)
+    en/                      same 18 file names, language notes and nudges
   images/                    q119.jpg … q320.jpg and sinal.jpg
   glossary/
     species.json             { pt, scientific, en, group }, one entry per surface form (§ 3.3)
@@ -259,26 +261,54 @@ string, empty or saying when the term applies or how it differs from a near neig
 Rule 7 in § 4 checks the shape only; whether a translation uses the term is the meaning
 pass's job, not a rule's.
 
-A hint, one entry in a `hints/en/` file:
+A hint, one entry in a `hints/en/` file (entry 7 of `hints/en/01-documentos.json`, the
+precedent of § 5 step 3):
 
 ```json
-{ "id": 7,
+{
+  "id": 7,
   "language": [
-    { "pt": "caçar só às narcejas", "en": "hunt snipe only",
-      "note": "à/aos after caçar marks the target species; só limits it to that species" },
-    { "pt": "numa única região cinegética", "en": "in a single hunting region", "note": "" }
+    {
+      "pt": "só às narcejas",
+      "en": "only snipe",
+      "note": "só = only, limiting the species; à/às after caçar marks what is hunted (caçar à perdiz, caçar aos coelhos)."
+    },
+    {
+      "pt": "numa única região cinegética",
+      "en": "in a single hunting region",
+      "note": "única = one only, not 'unique'."
+    }
   ],
-  "nudge": "One region, so a regional licence is enough. The waterfowl licence is a separate extra.",
-  "patterns": ["species-preposition", "so-only"],
-  "status": "draft" }
+  "nudge": "One region, so a licença regional is enough, and the nacional covers it too. Snipe need no waterfowl licence: question 10 asks the same with rabbits and has the same answer.",
+  "patterns": ["so-only", "species-preposition"],
+  "status": "draft"
+}
 ```
 
-`language` lists the words in this sentence that change its meaning for an English
-reader, and is safe to show before answering. `nudge` points at the fact behind the
-answer and is shown only after answering. `patterns` tags the recurring constructions
-(desde que, apenas, só … se, bem como, à exceção de, nos … que antecedem, the species
-preposition, caduca, aos casais, em bandos, negative stems) so the app can report
-which constructions trip the learner.
+`language` lists, at most four to a question, the words or constructions in the stem
+or an option that change the reading of the sentence for an English reader (só, desde
+que, não, a partir de, bem como, a false friend like única or processo), and is safe
+to show before answering. It never glosses vocabulary the peek already gives, and an
+empty list is right on a plain stem. In each entry `pt` is the phrase verbatim from the
+question or an option, `en` is the wording the translation uses for that phrase, and
+`note` gives its meaning. `nudge` is shown only after answering: at most two sentences
+that state the fact behind the keyed answer and what separates a near-miss distractor,
+quoting the Portuguese words that carry the fact and never naming the letter; on an
+image question it gives the species' distinguishing field marks. It is never empty; § 4
+rule 5 enforces that from `checked` on. `patterns` tags the constructions the answer turns on, each a
+`slug` of `hints/patterns.json`, so the app can report which constructions trip the
+learner. `status` is `draft` (the writer's pass), `checked` (the checker's side-by-side
+pass done) or `reviewed` (Ross read it). The shape has no `notes` field. The rules for
+writing and checking an entry are in § 5 step 3.
+
+A pattern, one entry in `hints/patterns.json` (an array): `{ slug, pt, en, note }`.
+
+`slug` is the kebab-case tag a hint's `patterns` uses, unique in the list. `pt` is the
+construction as the bank prints it, or a short Portuguese label when it has no single
+form. `en` is the English name the app's report shows. `note` says what the
+construction does to the reading and when to tag it. The list is closed: it is built
+from a sweep of the bank, holds about 20 entries and never more than 25, and rule 8 in
+§ 4 rejects a tag that is not one of its slugs.
 
 ### 3.4 Manifest
 
@@ -318,7 +348,8 @@ the file and id. Rules:
    `questions/` file, the same ids once each, the same option keys, and a `status` from
    the three allowed values; each entry carries the other fields of § 3.3 with their
    types (strings non-empty except `notes`, `note` and `nudge`). A `language` entry's
-   `pt` text occurs in the question or its options.
+   `pt` text occurs in the question or its options. A hint entry at `checked` or
+   `reviewed` has a non-empty `nudge`.
 6. Once `glossary/species.json` exists: for every Portuguese species name in a
    question, the matching English name is present in its translation (case-insensitive).
    Skipped for entries with status `draft`. Every glossary entry has non-empty `pt`,
@@ -332,6 +363,11 @@ the file and id. Rules:
    `note` that is a string (empty allowed), and `pt` is unique in the same sense as rule 6. Only the shape is
    checked; a term inflects in running text, so its use in a translation is left to the
    meaning pass (§ 5 step 2).
+8. Once `hints/patterns.json` exists: every entry has non-empty `slug`, `pt`, `en` and
+   `note`, and `slug` is unique and kebab-case (lowercase letters and digits in words
+   joined by single hyphens). Every tag in the `patterns` of every entry in every
+   `hints/en/` file is the `slug` of an entry; a tag that is not fails naming the file,
+   the id and the slug.
 
 The manifest itself is checked first: every entry has the fields of § 3.4 with their
 types and a unique slug or file name, section ranges tile 1 to 506, chunk ranges tile
@@ -403,9 +439,76 @@ Four phases, each its own epic, in order.
        when the question asks a method's legal scope (which game, months or ground it is
        allowed for), where the English name's associations are the field knowledge the
        exam tests.
-3. **Hints**: one agent per chunk file writes `language`, `nudge` and `patterns` for
-   each question by reading the sentence as a learner; a second pass checks the nudge
-   agrees with the keyed answer and every `language.pt` occurs in the question.
+3. **Hints** (phase 3, epic cac-eyh): the pattern list `hints/patterns.json` first
+   (§ 3.3), then a writer's pass per chunk file, then a checker's pass per chunk file by
+   a different agent; every entry ends at `checked`. One scaffolding bead first creates
+   every missing `hints/en/` file as empty `draft` entries (rule 5 allows empty
+   `language`, `nudge` and `patterns`) and wires all 18 files into the loader, so writer
+   and checker beads own only their hint files and run in parallel. A bead owns the
+   chunk files of one phase 2 translation group (37 to 63 questions) and works them one
+   file at a time; the checker beads mirror the writer groups one to one. Writer and
+   checker beads run on Opus. A writer or checker follows these rules:
+
+   1. Read `hints/en/01-documentos.json` first: it is the precedent, hand-written and
+      read by Ross, and every rule below is shown in it. Then read
+      `hints/patterns.json` and both glossaries. For each question read the Portuguese
+      in `questions/`, the English in `translations/en/` and the keyed answer side by
+      side. The precedent itself goes through the checker's pass like any other file.
+   2. A language note is written only for a word or construction that changes the
+      reading of the sentence: só, desde que, não, a partir de, bem como, a false
+      friend like única or processo. It can sit in the stem or in an option. It is
+      never a vocabulary gloss the peek already gives, such as a species or a term the
+      translation names. An empty `language` list is right on a plain stem. At most
+      four entries per question.
+   3. A language note's `pt` is verbatim from the question or the option (§ 4 rule 5
+      checks it), its `en` is the wording the translation uses for that phrase, and its
+      `note` gives the meaning. The note names the grammar briefly only when the form
+      recurs across the bank (the future subjunctive after se, the present subjunctive
+      after desde que); elsewhere it gives the meaning only.
+   4. A name under test is never glossed in a language note (§ 5 step 2 rule 11
+      carries over). In a question that asks for a Portuguese name or what a name
+      means, no `language` entry's `pt` is a name under test and no note says what one
+      means; the nudge, shown after answering, may.
+   5. The nudge is never empty (§ 4 rule 5 enforces it from `checked` on) and is at
+      most two sentences. It states the fact behind the keyed answer and what separates a
+      near-miss distractor, and quotes the Portuguese words that carry the fact. It
+      never names the letter: the app already marks the correct option. An image
+      question's nudge gives the species' distinguishing field marks.
+   6. A nudge asserts only what the bank itself and the two glossaries establish: no
+      law citations, no article numbers, no recollection of the law beyond the keyed
+      option. The checker narrows a nudge it cannot confirm to what the keyed option
+      asserts. The one exception is an image question's field marks (rule 5): where a
+      species photo is the question, the nudge names the visible features a field
+      guide gives for the keyed species (plumage, colouring, bill, shape, coat) and
+      uses the bank's own Biology questions about that species where they describe it,
+      while every legal claim and every non-visual biological claim stays within the
+      bank and the glossaries; the four `sinal.jpg` questions are not species photos,
+      and their nudges state what the sign means only as their keyed answers establish
+      it.
+   7. A nudge may cross-reference another question by number ("question 10 asks the
+      same with rabbits"), with the fact always stated in words too.
+   8. A `patterns` tag is a `slug` of `hints/patterns.json` (§ 4 rule 8) and is applied
+      only where the construction is part of what the answer turns on, not on every
+      occurrence. In the precedent 4 of 10 entries carry a tag; entry 3 carries none
+      because the number decides. A writer who needs a tag the list lacks leaves the
+      question untagged and names the construction and the ids in the bead's close
+      reason, for the tail bead (cac-eyh.24) that adds the pattern and tags them.
+   9. The writer leaves every entry at `draft`. The checker is a different agent, never
+      the writer of the same file: it reads the Portuguese, the English, the keyed
+      answer and the hint side by side, fixes the hint in place, and sets `status` to
+      `checked`; from then § 4 rule 5 requires a non-empty `nudge`. Its fixes go in the
+      bead's close reason with the ids; the hint shape has no `notes` field. No entry
+      is set to `reviewed` in this phase; Ross flips it while studying, through the app
+      phase.
+   10. A writer or checker edits only its own `hints/en/` files: never `src/index.ts`,
+       the scripts, the tests, `hints/patterns.json`, `translations/` or `questions/`.
+       A translation error it finds goes in the bead's close reason with the id and the
+       error, for the tail bead (cac-eyh.24) that applies it with `status` left at
+       `checked`. A Portuguese error in `questions/` goes into the extractor's
+       correction table through a bead of its own (§ 9). A writer's close reason gives
+       its count of entries with an empty `language` list, the constructions it left
+       untagged for want of a pattern (or none) and the translation errors it found (or
+       none); a checker's close reason lists the ids it changed.
 4. **App**: § 6 to § 8.
 
 ## 6. App behaviour
@@ -544,3 +647,86 @@ precedent for every choice here, minus the server: this app has no backend.
   rule 11), over the terms glossary's gloss. Reason: cac-qre.6 glossed listado and
   farropo with their ages in the very question that asks which name fits which age, so
   a peek gave the answer away.
+- **2026-10-13, Language notes only where the reading changes.** A language note is
+  written only for a word or construction that changes the reading of the sentence (só,
+  desde que, não, a partir de, bem como, a false friend like única or processo), in the
+  stem or in an option; never a vocabulary gloss the peek already gives; an empty list
+  is right on a plain stem; at most four entries per question. Its `pt` is verbatim from
+  the question or option (§ 4 rule 5), its `en` is the wording the translation uses for
+  that phrase, its `note` gives the meaning. § 5 step 2 rule 11 carries over: a name
+  under test is never glossed in a language note (§ 5 step 3 rules 2 to 4). Reason: 345
+  of 506 stems carry no construction and the peek covers vocabulary (brief cac-bc2
+  FOUND). Precedent: `hints/en/01-documentos.json`.
+- **2026-10-13, A closed pattern list.** Pattern tags come from a closed list,
+  `packages/data/hints/patterns.json`, an array of `{ slug, pt, en, note }`: `slug` the
+  kebab-case tag hints use, unique; `pt` the construction as the bank prints it or a
+  short Portuguese label when it has no single form; `en` the English name the app's
+  report shows; `note` what the construction does to the reading and when to tag it
+  (§ 3.3). Built from a sweep of the bank, about 20 entries and never more than 25; the
+  validator (§ 4 rule 8) rejects a tag that is not a slug in it. A writer who needs a
+  tag the list lacks leaves the question untagged and reports it in the close reason
+  for the tail bead cac-eyh.24. Reason: the app reports accuracy per pattern, which
+  needs a fixed vocabulary with enough questions each; the list § 3.3 used to give does
+  not match the bank (brief cac-bc2 D2).
+- **2026-10-13, The nudge is the fact and the contrast.** The nudge is never empty, at
+  most two sentences, states the fact behind the keyed answer and what separates a
+  near-miss distractor, quotes the Portuguese words that carry the fact, and never
+  names the letter; an image question's nudge gives the species' distinguishing field
+  marks (§ 5 step 3 rule 5). Reason: the app already marks the correct option; the
+  nudge's job is the fact and the contrast (brief cac-bc2 D3).
+- **2026-10-13, Nudges grounded in the bank.** A nudge asserts only what the bank itself
+  and the two glossaries establish: no law citations, no article numbers, no
+  recollection of the law beyond the keyed option. The checker narrows a nudge it
+  cannot confirm to what the keyed option asserts (§ 5 step 3 rule 6). The one
+  exception is an image question's field marks: where a species photo is the question,
+  the nudge names the visible features a field guide gives for the keyed species
+  (plumage, colouring, bill, shape, coat) and uses the bank's own Biology questions
+  about that species where they describe it; the limit to the bank and the glossaries
+  still binds every legal claim and every non-visual biological claim, and the four
+  `sinal.jpg` questions, which are not species photos, state what the sign means only
+  as their keyed answers establish it. Reason: no official manual exists and nothing in
+  the repo verifies a recollection (brief cac-bc2 D4). Reason for the exception: the
+  nudge decision asks for field marks and neither the bank's text nor the glossaries
+  describe plumage, so a strict limit would empty every photo nudge; a visible feature
+  is checkable against the photo itself, which a recollection of the law is not
+  (orchestrator ruling, cac-eyh.1).
+- **2026-10-13, Hint precedent.** `hints/en/01-documentos.json`, hand-written in the
+  brief and read by Ross, is the precedent every writer and checker reads first; it
+  goes through the checker's pass like any other file (§ 5 step 3 rule 1). Reason:
+  brief cac-bc2 D5.
+- **2026-10-13, Tag what the answer turns on.** A tag is applied only where the
+  construction is part of what the answer turns on, not on every occurrence; in the
+  precedent, 4 of 10 entries carry a tag, and entry 3 carries none because the number
+  decides (§ 5 step 3 rule 8). Reason: a low score on a pattern should mean that
+  construction cost answers (brief cac-bc2 D6).
+- **2026-10-13, Nudges may cite question numbers.** A nudge may cross-reference another
+  question by number ("question 10 asks the same with rabbits"), with the fact always
+  stated in words too (§ 5 step 3 rule 7). Reason: ids are stable and the app can link
+  them later (brief cac-bc2 D7).
+- **2026-10-13, Grammar named only when it recurs.** A language note names the grammar
+  briefly only when the form recurs across the bank (the future subjunctive after se,
+  the present subjunctive after desde que); elsewhere it gives the meaning only (§ 5
+  step 3 rule 3). Reason: brief cac-bc2 D8.
+- **2026-10-13, Hint checker by a second agent.** The writer leaves every entry at
+  `draft`. The checker is a different agent, never the writer of the same file: it
+  reads the Portuguese, the English, the keyed answer and the hint side by side, fixes
+  in place, and sets `status` to `checked`; from then § 4 rule 5 requires a non-empty
+  `nudge`. Its fixes go in the bead's close reason with the ids; the hint shape has no
+  `notes` field. No entry is set to `reviewed` in this phase, as in phase 2 (§ 5 step 3
+  rule 9). Reason: the phase 2 meaning pass and close-reason record (cac-qre D5 and D8)
+  worked.
+- **2026-10-13, Hint files scaffolded and wired once.** One bead scaffolds the 17
+  missing hint files as empty `draft` entries (§ 4 rule 5 allows empty `language`,
+  `nudge` and `patterns`) and wires all 18 into the loader once, so writer and checker
+  beads own only their hint files and run in parallel; none of them edits
+  `src/index.ts`, the scripts, the tests, `hints/patterns.json`, `translations/` or
+  `questions/` (§ 5 step 3 rule 10). Reason: phase 2's loader hot file made its
+  translation beads serial (cac-qre D9).
+- **2026-10-13, Bead size for hints.** A bead owns the chunk files of one phase 2
+  translation group (37 to 63 questions) and works them one file at a time; checker
+  beads mirror the writer groups one to one; group 1's writer owns
+  `02-conceitos-basicos.json` only, since `01-documentos.json` exists, and its checker
+  owns both. Reason: agents work one chunk file at a time (`CLAUDE.md`, cac-qre D10).
+- **2026-10-13, Hint beads run on Opus.** Writer and checker beads run on Opus: content
+  judgement is not extraction work. The scaffolding bead, which copies the phase 2
+  wiring and counts, runs on Sonnet.
