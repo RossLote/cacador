@@ -1,0 +1,596 @@
+[
+  {
+    "pt": "coelho",
+    "scientific": "Oryctolagus cuniculus",
+    "en": "Rabbit",
+    "group": "coelho"
+  },
+  {
+    "pt": "coelhos",
+    "scientific": "Oryctolagus cuniculus",
+    "en": "Rabbits",
+    "group": "coelho"
+  },
+  {
+    "pt": "coelho-bravo",
+    "scientific": "Oryctolagus cuniculus",
+    "en": "European rabbit",
+    "group": "coelho"
+  },
+  {
+    "pt": "coelhos-bravos",
+    "scientific": "Oryctolagus cuniculus",
+    "en": "European rabbits",
+    "group": "coelho"
+  },
+  {
+    "pt": "coelho-manso",
+    "scientific": "Oryctolagus cuniculus domesticus",
+    "en": "Domestic rabbit",
+    "group": "coelho"
+  },
+  {
+    "pt": "coelhos mansos",
+    "scientific": "Oryctolagus cuniculus domesticus",
+    "en": "Domestic rabbits",
+    "group": "coelho"
+  },
+  {
+    "pt": "lebre",
+    "scientific": "Lepus granatensis",
+    "en": "Iberian hare",
+    "group": "lebre"
+  },
+  {
+    "pt": "lebres",
+    "scientific": "Lepus granatensis",
+    "en": "Iberian hares",
+    "group": "lebre"
+  },
+  {
+    "pt": "raposa",
+    "scientific": "Vulpes vulpes",
+    "en": "Red fox",
+    "group": "raposa"
+  },
+  {
+    "pt": "raposas",
+    "scientific": "Vulpes vulpes",
+    "en": "Red foxes",
+    "group": "raposa"
+  },
+  {
+    "pt": "saca-rabos",
+    "scientific": "Herpestes ichneumon",
+    "en": "Egyptian mongoose",
+    "group": "saca-rabos"
+  },
+  {
+    "pt": "javali",
+    "scientific": "Sus scrofa",
+    "en": "Wild boar",
+    "group": "javali"
+  },
+  {
+    "pt": "javalis",
+    "scientific": "Sus scrofa",
+    "en": "Wild boar",
+    "group": "javali"
+  },
+  {
+    "pt": "gamo",
+    "scientific": "Dama dama",
+    "en": "Fallow deer",
+    "group": "gamo"
+  },
+  {
+    "pt": "gamos",
+    "scientific": "Dama dama",
+    "en": "Fallow deer",
+    "group": "gamo"
+  },
+  {
+    "pt": "veado",
+    "scientific": "Cervus elaphus",
+    "en": "Red deer",
+    "group": "veado"
+  },
+  {
+    "pt": "veados",
+    "scientific": "Cervus elaphus",
+    "en": "Red deer",
+    "group": "veado"
+  },
+  {
+    "pt": "corço",
+    "scientific": "Capreolus capreolus",
+    "en": "Roe deer",
+    "group": "corco"
+  },
+  {
+    "pt": "muflão",
+    "scientific": "Ovis ammon",
+    "en": "Mouflon",
+    "group": "muflao"
+  },
+  {
+    "pt": "muflões",
+    "scientific": "Ovis ammon",
+    "en": "Mouflon",
+    "group": "muflao"
+  },
+  {
+    "pt": "perdiz",
+    "scientific": "Alectoris rufa",
+    "en": "Partridge",
+    "group": "perdiz"
+  },
+  {
+    "pt": "perdizes",
+    "scientific": "Alectoris rufa",
+    "en": "Partridges",
+    "group": "perdiz"
+  },
+  {
+    "pt": "perdiz-vermelha",
+    "scientific": "Alectoris rufa",
+    "en": "Red-legged partridge",
+    "group": "perdiz"
+  },
+  {
+    "pt": "pombos",
+    "scientific": "Columba",
+    "en": "Pigeons",
+    "group": "pombos-rolas"
+  },
+  {
+    "pt": "pombo-da-rocha",
+    "scientific": "Columba livia",
+    "en": "Rock dove",
+    "group": "pombos-rolas"
+  },
+  {
+    "pt": "pombo-bravo",
+    "scientific": "Columba oenas",
+    "en": "Stock dove",
+    "group": "pombos-rolas"
+  },
+  {
+    "pt": "seixa",
+    "scientific": "Columba oenas",
+    "en": "Stock dove",
+    "group": "pombos-rolas"
+  },
+  {
+    "pt": "pombo-torcaz",
+    "scientific": "Columba palumbus",
+    "en": "Common wood pigeon",
+    "group": "pombos-rolas"
+  },
+  {
+    "pt": "rola",
+    "scientific": "Streptopelia turtur",
+    "en": "Turtle dove",
+    "group": "pombos-rolas"
+  },
+  {
+    "pt": "rolas",
+    "scientific": "Streptopelia turtur",
+    "en": "Turtle doves",
+    "group": "pombos-rolas"
+  },
+  {
+    "pt": "rola-comum",
+    "scientific": "Streptopelia turtur",
+    "en": "European turtle dove",
+    "group": "pombos-rolas"
+  },
+  {
+    "pt": "codorniz",
+    "scientific": "Coturnix coturnix",
+    "en": "Common quail",
+    "group": "codorniz"
+  },
+  {
+    "pt": "codornizes",
+    "scientific": "Coturnix coturnix",
+    "en": "Common quail",
+    "group": "codorniz"
+  },
+  {
+    "pt": "pato",
+    "scientific": "Anatidae",
+    "en": "Duck",
+    "group": "patos"
+  },
+  {
+    "pt": "patos",
+    "scientific": "Anatidae",
+    "en": "Ducks",
+    "group": "patos"
+  },
+  {
+    "pt": "pato-real",
+    "scientific": "Anas platyrhynchos",
+    "en": "Mallard",
+    "group": "patos"
+  },
+  {
+    "pt": "frisada",
+    "scientific": "Anas strepera",
+    "en": "Gadwall",
+    "group": "patos"
+  },
+  {
+    "pt": "marrequinha",
+    "scientific": "Anas crecca",
+    "en": "Eurasian teal",
+    "group": "patos"
+  },
+  {
+    "pt": "marreco",
+    "scientific": "Spatula querquedula",
+    "en": "Garganey",
+    "group": "patos"
+  },
+  {
+    "pt": "pato-trombeteiro",
+    "scientific": "Anas clypeata",
+    "en": "Northern shoveler",
+    "group": "patos"
+  },
+  {
+    "pt": "arrabio",
+    "scientific": "Anas acuta",
+    "en": "Northern pintail",
+    "group": "patos"
+  },
+  {
+    "pt": "piadeira",
+    "scientific": "Anas penelope",
+    "en": "Eurasian wigeon",
+    "group": "patos"
+  },
+  {
+    "pt": "zarro-comum",
+    "scientific": "Aythya ferina",
+    "en": "Common pochard",
+    "group": "patos"
+  },
+  {
+    "pt": "zarro-negrinha",
+    "scientific": "Aythya fuligula",
+    "en": "Tufted duck",
+    "group": "patos"
+  },
+  {
+    "pt": "negrinha",
+    "scientific": "Aythya fuligula",
+    "en": "Tufted duck",
+    "group": "patos"
+  },
+  {
+    "pt": "pato branco",
+    "scientific": "Tadorna tadorna",
+    "en": "Common shelduck",
+    "group": "patos"
+  },
+  {
+    "pt": "galinha-d’água",
+    "scientific": "Gallinula chloropus",
+    "en": "Common moorhen",
+    "group": "galinha-d-agua"
+  },
+  {
+    "pt": "galeirão",
+    "scientific": "Fulica atra",
+    "en": "Eurasian coot",
+    "group": "galeirao"
+  },
+  {
+    "pt": "galeirões",
+    "scientific": "Fulica atra",
+    "en": "Eurasian coots",
+    "group": "galeirao"
+  },
+  {
+    "pt": "galinhola",
+    "scientific": "Scolopax rusticola",
+    "en": "Eurasian woodcock",
+    "group": "galinhola"
+  },
+  {
+    "pt": "galinholas",
+    "scientific": "Scolopax rusticola",
+    "en": "Eurasian woodcock",
+    "group": "galinhola"
+  },
+  {
+    "pt": "narceja",
+    "scientific": "Gallinago, Lymnocryptes",
+    "en": "Snipe",
+    "group": "narcejas"
+  },
+  {
+    "pt": "narcejas",
+    "scientific": "Gallinago, Lymnocryptes",
+    "en": "Snipe",
+    "group": "narcejas"
+  },
+  {
+    "pt": "narceja-comum",
+    "scientific": "Gallinago gallinago",
+    "en": "Common snipe",
+    "group": "narcejas"
+  },
+  {
+    "pt": "narceja-galega",
+    "scientific": "Lymnocryptes minimus",
+    "en": "Jack snipe",
+    "group": "narcejas"
+  },
+  {
+    "pt": "narceja-grande",
+    "scientific": "Gallinago media",
+    "en": "Great snipe",
+    "group": "narcejas"
+  },
+  {
+    "pt": "tarambola-dourada",
+    "scientific": "Pluvialis apricaria",
+    "en": "European golden plover",
+    "group": "tarambola"
+  },
+  {
+    "pt": "tarambolas",
+    "scientific": "Pluvialis",
+    "en": "Plovers",
+    "group": "tarambola"
+  },
+  {
+    "pt": "tarambola-prateada",
+    "scientific": "Pluvialis squatarola",
+    "en": "Grey plover",
+    "group": "nao-cinegeticas"
+  },
+  {
+    "pt": "tordos",
+    "scientific": "Turdus",
+    "en": "Thrushes",
+    "group": "tordos"
+  },
+  {
+    "pt": "tordo-zornal",
+    "scientific": "Turdus pilaris",
+    "en": "Fieldfare",
+    "group": "tordos"
+  },
+  {
+    "pt": "tordo-comum",
+    "scientific": "Turdus philomelos",
+    "en": "Song thrush",
+    "group": "tordos"
+  },
+  {
+    "pt": "tordo-ruivo",
+    "scientific": "Turdus iliacus",
+    "en": "Redwing",
+    "group": "tordos"
+  },
+  {
+    "pt": "tordeia",
+    "scientific": "Turdus viscivorus",
+    "en": "Mistle thrush",
+    "group": "tordos"
+  },
+  {
+    "pt": "melro",
+    "scientific": "Turdus merula",
+    "en": "Common blackbird",
+    "group": "tordos"
+  },
+  {
+    "pt": "faisão",
+    "scientific": "Phasianus colchicus",
+    "en": "Common pheasant",
+    "group": "outras-cinegeticas"
+  },
+  {
+    "pt": "estorninho-malhado",
+    "scientific": "Sturnus vulgaris",
+    "en": "Common starling",
+    "group": "outras-cinegeticas"
+  },
+  {
+    "pt": "pega",
+    "scientific": "Pica pica",
+    "en": "Magpie",
+    "group": "outras-cinegeticas"
+  },
+  {
+    "pt": "pega-rabuda",
+    "scientific": "Pica pica",
+    "en": "Eurasian magpie",
+    "group": "outras-cinegeticas"
+  },
+  {
+    "pt": "gralha-preta",
+    "scientific": "Corvus corone",
+    "en": "Carrion crow",
+    "group": "outras-cinegeticas"
+  },
+  {
+    "pt": "gaio",
+    "scientific": "Garrulus glandarius",
+    "en": "Eurasian jay",
+    "group": "outras-cinegeticas"
+  },
+  {
+    "pt": "perdiz-cinzenta",
+    "scientific": "Perdix perdix",
+    "en": "Grey partridge",
+    "group": "nao-cinegeticas"
+  },
+  {
+    "pt": "charrela",
+    "scientific": "Perdix perdix",
+    "en": "Grey partridge",
+    "group": "nao-cinegeticas"
+  },
+  {
+    "pt": "abibe",
+    "scientific": "Vanellus vanellus",
+    "en": "Northern lapwing",
+    "group": "nao-cinegeticas"
+  },
+  {
+    "pt": "abetarda",
+    "scientific": "Otis tarda",
+    "en": "Great bustard",
+    "group": "nao-cinegeticas"
+  },
+  {
+    "pt": "abetardas",
+    "scientific": "Otis tarda",
+    "en": "Great bustards",
+    "group": "nao-cinegeticas"
+  },
+  {
+    "pt": "lince",
+    "scientific": "Lynx pardinus",
+    "en": "Lynx",
+    "group": "nao-cinegeticas"
+  },
+  {
+    "pt": "lince-ibérico",
+    "scientific": "Lynx pardinus",
+    "en": "Iberian lynx",
+    "group": "nao-cinegeticas"
+  },
+  {
+    "pt": "lobo",
+    "scientific": "Canis lupus",
+    "en": "Grey wolf",
+    "group": "nao-cinegeticas"
+  },
+  {
+    "pt": "texugo",
+    "scientific": "Meles meles",
+    "en": "European badger",
+    "group": "nao-cinegeticas"
+  },
+  {
+    "pt": "furão",
+    "scientific": "Mustela furo",
+    "en": "Ferret",
+    "group": "nao-cinegeticas"
+  },
+  {
+    "pt": "furões",
+    "scientific": "Mustela furo",
+    "en": "Ferrets",
+    "group": "nao-cinegeticas"
+  },
+  {
+    "pt": "açor",
+    "scientific": "Astur gentilis",
+    "en": "Eurasian goshawk",
+    "group": "nao-cinegeticas"
+  },
+  {
+    "pt": "gavião",
+    "scientific": "Accipiter nisus",
+    "en": "Eurasian sparrowhawk",
+    "group": "nao-cinegeticas"
+  },
+  {
+    "pt": "esmerilhão",
+    "scientific": "Falco columbarius",
+    "en": "Merlin",
+    "group": "nao-cinegeticas"
+  },
+  {
+    "pt": "grifo",
+    "scientific": "Gyps fulvus",
+    "en": "Griffon vulture",
+    "group": "nao-cinegeticas"
+  },
+  {
+    "pt": "águia-imperial",
+    "scientific": "Aquila adalberti",
+    "en": "Spanish imperial eagle",
+    "group": "nao-cinegeticas"
+  },
+  {
+    "pt": "águia-pesqueira",
+    "scientific": "Pandion haliaetus",
+    "en": "Western osprey",
+    "group": "nao-cinegeticas"
+  },
+  {
+    "pt": "coruja-do-mato",
+    "scientific": "Strix aluco",
+    "en": "Tawny owl",
+    "group": "nao-cinegeticas"
+  },
+  {
+    "pt": "milhafre",
+    "scientific": "Milvus",
+    "en": "Kite",
+    "group": "nao-cinegeticas"
+  },
+  {
+    "pt": "milhafres",
+    "scientific": "Milvus",
+    "en": "Kites",
+    "group": "nao-cinegeticas"
+  },
+  {
+    "pt": "falcão",
+    "scientific": "Falco",
+    "en": "Falcon",
+    "group": "nao-cinegeticas"
+  },
+  {
+    "pt": "falcões",
+    "scientific": "Falco",
+    "en": "Falcons",
+    "group": "nao-cinegeticas"
+  },
+  {
+    "pt": "peneireiros",
+    "scientific": "Falco tinnunculus, Falco naumanni",
+    "en": "Kestrels",
+    "group": "nao-cinegeticas"
+  },
+  {
+    "pt": "águias",
+    "scientific": "Accipitridae",
+    "en": "Eagles",
+    "group": "nao-cinegeticas"
+  },
+  {
+    "pt": "abutres",
+    "scientific": "Accipitridae",
+    "en": "Vultures",
+    "group": "nao-cinegeticas"
+  },
+  {
+    "pt": "bufos",
+    "scientific": "Bubo bubo",
+    "en": "Eagle-owls",
+    "group": "nao-cinegeticas"
+  },
+  {
+    "pt": "mochos",
+    "scientific": "Strigidae",
+    "en": "Owls",
+    "group": "nao-cinegeticas"
+  },
+  {
+    "pt": "corujas",
+    "scientific": "Strigiformes",
+    "en": "Owls",
+    "group": "nao-cinegeticas"
+  }
+]
