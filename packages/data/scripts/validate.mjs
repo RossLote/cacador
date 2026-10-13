@@ -2,17 +2,21 @@
 import { dataDir } from './lib/manifest.mjs';
 import { ValidationError, validate } from './lib/validate.mjs';
 
+/** A translations or hints count as validate prints it. */
+const entryLine = (label, n) =>
+  `${label} ${n.entries} entries in ${n.files} files, ${n.draft} draft, ${n.checked} checked, ${n.reviewed} reviewed`;
+
 try {
   const c = validate(dataDir);
   console.log(
     `validate: ${c.questions} questions, ${c.files} files, ${c.sections} sections, ${c.topics} topics, ` +
       `${c.images} images on ${c.imageQuestions} questions`,
   );
-  const t = c.translations;
   console.log(
-    `validate: translations ${t.entries} entries in ${t.files} files, ${t.draft} draft, ${t.checked} checked, ${t.reviewed} reviewed; ` +
+    `validate: ${entryLine('translations', c.translations)}; ` +
       `glossaries ${c.glossaries.species} species, ${c.glossaries.terms} terms`,
   );
+  console.log(`validate: ${entryLine('hints', c.hints)}; patterns ${c.patterns}`);
 } catch (error) {
   if (!(error instanceof ValidationError)) throw error;
   console.error(`validate: ${error.message}`);

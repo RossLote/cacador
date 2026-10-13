@@ -1,0 +1,338 @@
+[
+  {
+    "id": 198,
+    "language": [],
+    "nudge": "The European turtle dove is mais pequena e de silhueta mais esbelta than the pigeons (question 199), with a black-and-white striped neck patch and orange-brown, black-centred wing feathers. The common wood pigeon shows white patches on the neck and wings (question 271), and the stock dove is plain grey with neither mark.",
+    "patterns": [],
+    "status": "checked"
+  },
+  {
+    "id": 199,
+    "language": [
+      {
+        "pt": "distingue-se dos pombos",
+        "en": "is distinguished from pigeons",
+        "note": "distinguir-se de = to be told apart from; dos = de + os, 'from the', not 'of the'. The mais and menos in the options measure the dove against the pigeons, though no que follows."
+      }
+    ],
+    "nudge": "The turtle dove is mais pequena e de silhueta mais esbelta: smaller and slimmer than the pigeons. Menos esbelta and mais atarracada say the same wrong thing, a stockier bird.",
+    "patterns": ["comparative"],
+    "status": "checked"
+  },
+  {
+    "id": 200,
+    "language": [
+      {
+        "pt": "distingue-se dos pombos",
+        "en": "is distinguished from pigeons",
+        "note": "distinguir-se de = to be told apart from; dos = de + os, 'from the', not 'of the'. The mais and menos in the options measure the dove against the pigeons, though no que follows."
+      },
+      {
+        "pt": "menos irregular",
+        "en": "less irregular",
+        "note": "menos turns the adjective down rather than negating it: less irregular, that is steadier."
+      }
+    ],
+    "nudge": "In flight the turtle dove's batimento de asas is mais irregular than a pigeon's. Menos irregular is the flipped near miss, and mais lento compares speed, which is not the mark.",
+    "patterns": ["comparative"],
+    "status": "checked"
+  },
+  {
+    "id": 201,
+    "language": [
+      {
+        "pt": "distingue-se dos pombos",
+        "en": "is distinguished from pigeons",
+        "note": "distinguir-se de = to be told apart from; dos = de + os, 'from the', not 'of the'."
+      },
+      {
+        "pt": "notar-se",
+        "en": "being noticeable",
+        "note": "notar-se = to be noticed, to show: the infinitive with se, the tail showing in flight."
+      }
+    ],
+    "nudge": "In flight the turtle dove shows a cauda negra com barra terminal branca: a black tail with a white band at its tip. Each distractor gets one colour wrong, a dark band or a white tail; question 211 asks the same.",
+    "patterns": [],
+    "status": "checked"
+  },
+  {
+    "id": 202,
+    "language": [],
+    "nudge": "The turtle dove inverna no continente africano and nidifica na Europa: it winters in Africa and nests in Europe. 'No continente europeu e nidifica em África' swaps the two continents, and the continente americano plays no part.",
+    "patterns": [],
+    "status": "checked"
+  },
+  {
+    "id": 203,
+    "language": [
+      {
+        "pt": "a partir do mês de",
+        "en": "from the month of",
+        "note": "a partir de = from … on: the month the arrivals start, not the only month."
+      }
+    ],
+    "nudge": "Turtle doves start entering Europe a partir de abril, from April on. Março is too early, and maio is the month the first nests follow (question 208), not the month arrivals begin.",
+    "patterns": [],
+    "status": "checked"
+  },
+  {
+    "id": 204,
+    "language": [
+      {
+        "pt": "alternando com",
+        "en": "alternating with",
+        "note": "alternando com = alternating with: a patchwork of the two kinds of ground, not one or the other."
+      },
+      {
+        "pt": "Matas pouco densas",
+        "en": "Not very dense woodland",
+        "note": "pouco before an adjective turns it down: not very, nearly its opposite."
+      }
+    ],
+    "nudge": "The turtle dove likes matas densas alternando com searas e pastos: thick woodland broken by cereal fields and pasture, as question 212 also keys. The distractors bring in zonas alagadiças, waterlogged ground, and one thins the woods to pouco densas.",
+    "patterns": ["list-options", "not-very"],
+    "status": "checked"
+  },
+  {
+    "id": 205,
+    "language": [],
+    "nudge": "In terms of diet the turtle dove is uma ave granívora, a seed-eater. Insects are only a small part of what it eats, embora em pequena percentagem (question 206), too little to make it insectívora.",
+    "patterns": [],
+    "status": "checked"
+  },
+  {
+    "id": 206,
+    "language": [
+      {
+        "pt": "embora em pequena percentagem",
+        "en": "although in a small percentage",
+        "note": "embora = although: the clause limits the insects to a small share of the diet."
+      }
+    ],
+    "nudge": "The turtle dove eats sementes, cereais and a small share of insects. Each distractor swaps in rebentos novos, young shoots, for one of the two plant foods.",
+    "patterns": ["list-options"],
+    "status": "checked"
+  },
+  {
+    "id": 207,
+    "language": [],
+    "nudge": "The turtle dove is seen aos pares ou em grupos muito pequenos: in pairs or in very small groups. All three options share the pairs, so the other item decides: not grandes grupos, and not isoladas, alone.",
+    "patterns": [],
+    "status": "checked"
+  },
+  {
+    "id": 208,
+    "language": [],
+    "nudge": "The first turtle dove nests are made in maio, after the birds arrive from abril (question 203). Question 227 marks nest-building in abril as wrong.",
+    "patterns": [],
+    "status": "checked"
+  },
+  {
+    "id": 209,
+    "language": [
+      {
+        "pt": "raramente um",
+        "en": "rarely one",
+        "note": "raramente = rarely: the first number is the usual clutch, the second the rare exception."
+      }
+    ],
+    "nudge": "The turtle dove lays dois ovos, raramente um: two eggs, occasionally only one. Three or four eggs are the distractors; the partridge, by contrast, averages 12 (question 189).",
+    "patterns": [],
+    "status": "checked"
+  },
+  {
+    "id": 210,
+    "language": [
+      {
+        "pt": "É feita só pelas fêmeas",
+        "en": "Is done only by the females",
+        "note": "só = only: the work of one sex alone."
+      },
+      {
+        "pt": "É feita por ambos os sexos",
+        "en": "Is done by both sexes",
+        "note": "ambos = both: males and females together."
+      }
+    ],
+    "nudge": "Turtle dove eggs are incubated por ambos os sexos, by male and female alike. Each distractor gives the work to one sex só; in the quail it is the female alone (question 222).",
+    "patterns": ["only", "both"],
+    "status": "checked"
+  },
+  {
+    "id": 211,
+    "language": [
+      {
+        "pt": "distingue-se dos pombos",
+        "en": "is distinguished from pigeons",
+        "note": "distinguir-se de = to be told apart from; dos = de + os, 'from the', not 'of the'."
+      },
+      {
+        "pt": "por se notar",
+        "en": "by there being noticeable",
+        "note": "por + infinitive gives the means: the dove is told apart by what shows in flight; se notar = to be noticed."
+      }
+    ],
+    "nudge": "In flight the turtle dove shows a cauda negra com barra terminal branca: a black tail with a white band at its tip, as question 201 keys. Each distractor gets one colour wrong, a dark band or a white tail.",
+    "patterns": [],
+    "status": "checked"
+  },
+  {
+    "id": 212,
+    "language": [],
+    "nudge": "The turtle dove's habitat is matas densas alternando com campos abertos: thick woods in a patchwork with open fields, as question 204 puts it with searas e pastos. Plain forest lacks the open ground, and wetlands are not its habitat.",
+    "patterns": [],
+    "status": "checked"
+  },
+  {
+    "id": 213,
+    "language": [],
+    "nudge": "The quail is a migradora estival em todo o País, a summer visitor throughout the country that comes from Africa to breed (question 215). Both distractors make it invernante, a winter visitor.",
+    "patterns": [],
+    "status": "checked"
+  },
+  {
+    "id": 214,
+    "language": [
+      {
+        "pt": "O mais pequeno",
+        "en": "The smallest",
+        "note": "With the article, o mais pequeno is a superlative, 'the smallest'; European Portuguese says mais pequeno where English has 'smaller'."
+      }
+    ],
+    "nudge": "The quail is o mais pequeno galináceo europeu: the smallest European galliform, the order of fowl, partridges and quail. Animal and herbívoro are the wrong groups: the superlative holds among the galliforms only.",
+    "patterns": [],
+    "status": "checked"
+  },
+  {
+    "id": 215,
+    "language": [
+      {
+        "pt": "para criar na Europa",
+        "en": "to breed in Europe",
+        "note": "criar here = to breed, to raise young; not 'to create'."
+      }
+    ],
+    "nudge": "The quail vem de África para criar na Europa: it comes from Africa to breed, a summer visitor (question 213). The Middle East is the wrong origin, and sedentária no norte is wrong too: question 216 has it year-round only no sul do País e nos Açores.",
+    "patterns": [],
+    "status": "checked"
+  },
+  {
+    "id": 216,
+    "language": [],
+    "nudge": "All year round the quail can be found no sul do País e nos Açores. The near miss stops at the south and leaves out the Azores, and the north is not one of its year-round places.",
+    "patterns": ["list-options"],
+    "status": "checked"
+  },
+  {
+    "id": 217,
+    "language": [],
+    "nudge": "The quail's call can be heard quer de dia quer de noite, both by day and by night (quer … quer = both … and, not 'wants'). Each distractor confines it to one half of the day plus a twilight.",
+    "patterns": ["both"],
+    "status": "checked"
+  },
+  {
+    "id": 218,
+    "language": [],
+    "nudge": "The quail prefers campos cultivados, searas, pastos e espaços abertos em bosques: farmland, cereal fields, pasture and open spaces in woods. All three options share the first three items; zonas alagadiças and zonas pedregosas are what make the distractors wrong.",
+    "patterns": ["list-options"],
+    "status": "checked"
+  },
+  {
+    "id": 219,
+    "language": [],
+    "nudge": "The quail nidifica no solo, nests on the ground (question 226), as the partridge does (question 195). Shrubs, small or medium, are the distractors.",
+    "patterns": [],
+    "status": "checked"
+  },
+  {
+    "id": 220,
+    "language": [],
+    "nudge": "The quail's nest is uma ligeira depressão forrada com material vegetal: a shallow scrape lined with plant matter, as the partridge lines its nest with dry plants (question 185). Its own feathers and assorted detritos are the distractors.",
+    "patterns": [],
+    "status": "checked"
+  },
+  {
+    "id": 221,
+    "language": [
+      {
+        "pt": "cria geralmente",
+        "en": "generally breeds",
+        "note": "criar here = to breed, to raise young; not 'to create'."
+      }
+    ],
+    "nudge": "The quail breeds de meados de maio a junho, from mid-May to June. The near misses run the end on to julho or start a month early, in meados de abril.",
+    "patterns": [],
+    "status": "checked"
+  },
+  {
+    "id": 222,
+    "language": [
+      {
+        "pt": "Só pela fêmea",
+        "en": "Only by the female",
+        "note": "só = only: the work of one sex alone."
+      },
+      {
+        "pt": "Por ambos os sexos",
+        "en": "By both sexes",
+        "note": "ambos = both: males and females together."
+      }
+    ],
+    "nudge": "In the quail the eggs are incubated só pela fêmea, by the female alone. In the turtle dove ambos os sexos share it (question 210), which is the near miss here.",
+    "patterns": ["only", "both"],
+    "status": "checked"
+  },
+  {
+    "id": 223,
+    "language": [],
+    "nudge": "Quail incubation lasts 16 a 21 dias, a little shorter than the partridge's 23 (question 188). 18 a 21 shares the top of the range and 12 a 16 the bottom; the numbers alone decide.",
+    "patterns": [],
+    "status": "checked"
+  },
+  {
+    "id": 224,
+    "language": [
+      {
+        "pt": "a partir de que idade",
+        "en": "from what age",
+        "note": "a partir de = from … on: the earliest age, and every age after it."
+      }
+    ],
+    "nudge": "Quail chicks can migrate with the adults com 2 meses, from two months old; question 227 states it as dois meses de vida. 3 and 4 months are the distractors.",
+    "patterns": [],
+    "status": "checked"
+  },
+  {
+    "id": 225,
+    "language": [
+      {
+        "pt": "O mais pequeno",
+        "en": "The smallest",
+        "note": "With the article, o mais pequeno is a superlative, 'the smallest'; European Portuguese says mais pequeno where English has 'smaller'."
+      }
+    ],
+    "nudge": "The quail is o mais pequeno galináceo europeu, the smallest European galliform, as question 214 keys. Animal and herbívoro are the wrong groups: the superlative holds among the galliforms only.",
+    "patterns": [],
+    "status": "checked"
+  },
+  {
+    "id": 226,
+    "language": [],
+    "nudge": "The quail nests no solo, on the ground, as question 219 also keys. Trees, small or large, are the distractors.",
+    "patterns": [],
+    "status": "checked"
+  },
+  {
+    "id": 227,
+    "language": [
+      {
+        "pt": "apenas uma ninhada por ano",
+        "en": "only one litter a year",
+        "note": "apenas = only: one litter a year and no more."
+      }
+    ],
+    "nudge": "True: quail chicks podem migrar com os adultos com dois meses de vida, as question 224 keys. Turtle dove nests start in maio, not abril (question 208), and the hare has 1 a 3 litters a year (question 101), not apenas uma.",
+    "patterns": ["which-statement", "only"],
+    "status": "checked"
+  }
+]

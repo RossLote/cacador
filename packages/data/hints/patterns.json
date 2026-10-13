@@ -1,0 +1,104 @@
+[
+  {
+    "slug": "negative-stem",
+    "pt": "não, na pergunta",
+    "en": "Negative question (não)",
+    "note": "The stem asks for the one option that is not, cannot or does not (não é cinegética, não pode utilizar, não constitui crime), or for the wrong statement (incorreta, errada); read past the não and the two true options look right. Tag when não negates the stem's verb or the stem asks for the wrong one; not for a não inside a term that only names the ground (terrenos não ordenados, terrenos não cinegéticos), which the peek translates."
+  },
+  {
+    "slug": "only",
+    "pt": "só, apenas",
+    "en": "Only (só, apenas)",
+    "note": "só and apenas, like unicamente, exclusivamente, simplesmente and a única, limit what follows to that and nothing else (só às narcejas, apenas é válida para algumas espécies). Tag when the answer turns on the limit: an option with it set against a wider one (só em zonas de caça against em todos os locais; exclusivamente carnívora against omnívora), or a stem that asks for the one case or group it limits (só é eficaz … em que situação; composto só por rapinas diurnas); not when every option carries the same limit, which then decides nothing."
+  },
+  {
+    "slug": "provided-that",
+    "pt": "desde que",
+    "en": "Provided that (desde que)",
+    "note": "desde que attaches a condition, with the verb in the present subjunctive (desde que estejam, desde que tenha): the rule holds only when the condition is met. Tag when the answer turns on whether that condition makes the option true, typically a 'permitida, desde que …' or 'Sim, desde que …' option set against a flat ban; not when a number or a name decides and the condition is incidental."
+  },
+  {
+    "slug": "as-well-as",
+    "pt": "bem como",
+    "en": "As well as (bem como)",
+    "note": "bem como adds a second item to the same rule, so 'proibido caçar nos povoados, bem como numa faixa de proteção' bans the strip too; it is never a contrast or 'well, as'. Tag when the answer turns on what the bem como clause extends the rule to (which places carry the strip, whether the strip is covered); not when the strip's width is the whole question."
+  },
+  {
+    "slug": "always-never",
+    "pt": "sempre, nunca, todos, nenhum",
+    "en": "Always, never, all, none",
+    "note": "An absolute (é sempre proibido, nunca, ninguém, em nenhuma situação, em todos os locais, qualquer espécie) claims a rule holds without exception, against options that make it conditional or partial. Tag when the answer turns on whether the absolute holds: the absolute is keyed (no one is exempt) or it is the distractor beside a conditional keyed option (só quando sinalizados)."
+  },
+  {
+    "slug": "both",
+    "pt": "ambos, tanto … como, quer … quer",
+    "en": "Both (ambos, tanto … como)",
+    "note": "tanto X como Y and quer X quer Y mean 'both X and Y' (quer here is not 'wants'), and ambos os sexos is 'both sexes'. Tag when the options set one against both (the female alone, the male alone, both sexes; by day, by night, either) and the answer turns on which."
+  },
+  {
+    "slug": "comparative",
+    "pt": "mais … que, menos … que",
+    "en": "Comparisons (mais, menos … que)",
+    "note": "mais X que and menos X que compare two things, often two at once (cabeça mais forte e menos afilada; mais pesado e menos vivo), and each distractor flips one direction; a superlative stem asks which ranks first (o maior dos três, maior envergadura, distribuição menos alargada, onde há maior probabilidade, a época de reprodução mais intensa). Tag when the answer turns on the direction of a comparison in the options or on a superlative ranking stem, whatever the options are; not for a maior parte (most of), not for mais de or menos de before a number (above-below), and not when a comparison is incidental and a noun or a number decides."
+  },
+  {
+    "slug": "not-very",
+    "pt": "pouco + adjetivo",
+    "en": "Not very (pouco)",
+    "note": "pouco before an adjective turns it down to 'not very', nearly its opposite (pouco sociável, vegetação pouco densa, pouco variada), never 'a little'; set beside bastante, muito or the bare adjective (densa), it flips what the option says. Tag when the answer turns on pouco: the keyed option against muito or bastante, or a distractor false only because of pouco (pouco importante, pouco densa); not when another fact in the option decides (uma zona pouca protegida)."
+  },
+  {
+    "slug": "above-below",
+    "pt": "superior a, inferior a",
+    "en": "Above or below a limit (superior a, inferior a)",
+    "note": "superior a and inferior a mean above and below a figure, never better or worse; a mais de and a menos de 100 metros mean beyond and within 100 metres. Tag when the answer turns on which side of the limit applies (a blood alcohol rate inferior a 1,2 g/l is no crime); not when the options differ only in the number."
+  },
+  {
+    "slug": "before-after",
+    "pt": "antes de, durante, depois de",
+    "en": "Before, during, after",
+    "note": "The options place the same event before, during or after another (caem durante a época do cio, depois da época do cio; só enquanto dura o incêndio, e durante os 30 dias seguintes). Tag when the answer turns on that time relation; not when the options differ only in a date, a month or a number."
+  },
+  {
+    "slug": "without-consent",
+    "pt": "sem consentimento de quem de direito",
+    "en": "Without consent (sem consentimento)",
+    "note": "'Proibido caçar sem consentimento de quem de direito' bans hunting only without the consent of the person entitled, so with that consent it is allowed. Tag when the answer turns on consent: a ban that consent lifts set against a flat ban (nunca pode caçar, sempre proibido) or against someone else's permission (the junta de freguesia)."
+  },
+  {
+    "slug": "exception",
+    "pt": "exceto, há um que",
+    "en": "The exception (exceto, há um que)",
+    "note": "The stem states a rule and asks for the one case it leaves out (exceto; há um que não pode; há um deles que carece). Tag when the answer is that exception; a stem that asks it with não also takes negative-stem."
+  },
+  {
+    "slug": "name-question",
+    "pt": "dá-se o nome de, designa-se",
+    "en": "What it is called (dá-se o nome de, designa-se)",
+    "note": "The stem asks for a Portuguese name or for what a name denotes; dá-se o nome de X a Y reads 'Y is called X', so check which side the stem gives (dá-se o nome de navalhas aos dentes asks which teeth). Tag every stem that asks for a name or for what a name or term denotes, definition stems included (Consideram-se terrenos não cinegéticos, Época venatória é, O que é o processo de cetraria?), and stems that test what a term kept in Portuguese under § 5 step 2 rule 11 allows (No processo de caça a corricão não é permitido utilizar); the name under test is never glossed in a language note."
+  },
+  {
+    "slug": "which-statement",
+    "pt": "Qual das frases está correta?",
+    "en": "Which statement is correct",
+    "note": "The options are three whole statements, often about different facts, and the stem gives no context, so each must be read and judged on its own. Tag every question whose stem asks which statement (frase, afirmação, regra) is correct or wrong; the wrong-one form takes negative-stem too."
+  },
+  {
+    "slug": "yes-no-because",
+    "pt": "Sim, … / Não, porque …",
+    "en": "Yes or no, with a reason",
+    "note": "The options answer yes or no and add a reason or a condition (Não, porque …; Sim, mas só …; Sim, desde que …), and at least two share the same yes or no. Tag when the answer turns on the reason or the condition rather than on the yes or no alone."
+  },
+  {
+    "slug": "case",
+    "pt": "Um caçador que …",
+    "en": "A case to judge",
+    "note": "The stem names a hunter (um caçador, um grupo de caçadores), sets out the situation (month, ground, method, quarry, number of dogs) and asks whether it is lawful, which licence it needs or which infraction it commits; several details are given and only one or two decide. Tag when the answer turns on spotting which detail of the case matters; not a stem that gives the same details without naming a hunter (Em janeiro, em terrenos cinegéticos não ordenados, pode ser autorizada a caça às narcejas de salto?), nor one that names a hunter only to ask how to handle a single moment (o caçador ao preparar o disparo com arco ou besta)."
+  },
+  {
+    "slug": "list-options",
+    "pt": "opções em lista",
+    "en": "Lists in the options",
+    "note": "Each option lists like items (species, places, days, methods, foods), and a list is right only if every item in it is; a distractor is wrong by one item it adds, drops or swaps against the keyed list (Patos, galinha-d’água e galeirão against Patos, galinhola e galeirão). Tag when the answer turns on that one item; not when an option bundles attributes of one thing and a distractor flips one (Cegos, surdos e sem pelo against Cegos, surdos e com pelo), nor when each distractor carries two or more wrong items (Às narcejas e tarambola-dourada)."
+  }
+]

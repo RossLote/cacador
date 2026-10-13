@@ -3,6 +3,7 @@ import { describe, expect, it } from 'vitest';
 import {
   hintFor,
   manifest,
+  patterns,
   questionById,
   questions,
   questionsInSection,
@@ -57,7 +58,18 @@ describe('loader', () => {
     if (onDisk.length === 0) for (const id of [1, 229, 506]) expect(lookup(id)).toBeUndefined();
   });
 
-  it('resolves translations that have passed the meaning pass', () => {
-    for (const id of [1, 229, 506]) expect(['checked', 'reviewed']).toContain(translationFor(id)?.status);
+  it('exports a pattern for every tag a loaded hint carries', () => {
+    const slugs = new Set(patterns.map((p) => p.slug));
+    expect(slugs.size).toBe(patterns.length);
+    const unknown = questions.flatMap((q) => hintFor(q.id)?.patterns ?? []).filter((tag) => !slugs.has(tag));
+    expect(unknown).toEqual([]);
+    expect(slugs.size).toBeGreaterThan(0);
+  });
+
+  it.each([
+    ['translations', translationFor],
+    ['hints', hintFor],
+  ] as const)('resolves %s that have passed the meaning pass or the check', (_, lookup) => {
+    for (const id of [1, 229, 506]) expect(['checked', 'reviewed']).toContain(lookup(id)?.status);
   });
 });

@@ -1,0 +1,208 @@
+[
+  {
+    "id": 480,
+    "language": [
+      {
+        "pt": "vulgarmente designado como",
+        "en": "commonly called",
+        "note": "vulgarmente = commonly, popularly; nothing vulgar about it."
+      }
+    ],
+    "nudge": "Coelheiro, the rabbit dog, is the popular name of the 'podengo médio', the medium podengo. The small podengo is the near miss: question 483 offers it as the coelheiro and keys that statement wrong.",
+    "patterns": ["name-question"],
+    "status": "checked"
+  },
+  {
+    "id": 481,
+    "language": [],
+    "nudge": "For wild boar the bank keys the 'podengo grande', the large podengo, here and in question 494. The medium podengo is the rabbit dog (question 497), and the foxhound is the distractor in question 494 too.",
+    "patterns": [],
+    "status": "checked"
+  },
+  {
+    "id": 482,
+    "language": [],
+    "nudge": "The small and medium podengos are rabbit dogs, 'coelho-bravo', as question 497 keys for the medium one, and podengos hunt furred game, 'de pelo' (question 485). Partridge and quail, and ducks and coot, are feathered game, which question 488 rules out for the podengo.",
+    "patterns": [],
+    "status": "checked"
+  },
+  {
+    "id": 483,
+    "language": [
+      {
+        "pt": "é a única raça de cães",
+        "en": "is the only breed of dogs",
+        "note": "a única = the only one, not 'unique': the statement shuts out every other breed."
+      },
+      {
+        "pt": "vulgarmente designado por",
+        "en": "commonly called",
+        "note": "vulgarmente = commonly, popularly; nothing vulgar about it."
+      }
+    ],
+    "nudge": "The beagle 'é utilizado na caça ao coelho', a rabbit dog. 'A única raça' fails because other breeds are suited to feathered game too, the English setter among them (question 498), and the coelheiro is the medium podengo, not the small one (question 480).",
+    "patterns": ["which-statement", "only"],
+    "status": "checked"
+  },
+  {
+    "id": 484,
+    "language": [],
+    "nudge": "Baixotes, short-legged scent hounds, are 'cães de pista de sangue de caça maior': they follow the blood trail of wounded big game (question 492). Pack hounds are the foxhounds of question 489, and pointing dogs the pointers.",
+    "patterns": ["name-question"],
+    "status": "checked"
+  },
+  {
+    "id": 485,
+    "language": [
+      {
+        "pt": "De pelo e de pena",
+        "en": "Furred and feathered",
+        "note": "pelo here is fur (not the contraction pelo, 'by the') and pena is feather (not 'pity'): game de pelo is mammals, de pena birds, and the e joins both."
+      }
+    ],
+    "nudge": "The podengos hunt furred game, 'de pelo': rabbit for the small and medium (question 482), boar for the large (question 481). 'De pelo e de pena' adds birds, and question 488 keys the podengo as a dog for feathered game wrong.",
+    "patterns": ["both"],
+    "status": "checked"
+  },
+  {
+    "id": 486,
+    "language": [],
+    "nudge": "The German pointer is 'de boa corpulência, de pelo liso ou cerdoso', a big dog with a smooth or wiry coat. The coelheiro is the medium podengo (question 480), so 'de pequeno porte' does not fit it.",
+    "patterns": ["which-statement"],
+    "status": "checked"
+  },
+  {
+    "id": 487,
+    "language": [],
+    "nudge": "The fox terrier is the fox dog, 'raposa', as its name says. Partridge is game for the Portuguese pointer (questions 491 and 493), and boar for the large podengo (question 481).",
+    "patterns": [],
+    "status": "checked"
+  },
+  {
+    "id": 488,
+    "language": [
+      {
+        "pt": "terrenos muito dobrados",
+        "en": "very hilly ground",
+        "note": "dobrados = folded, so hilly, broken ground; not 'doubled'."
+      },
+      {
+        "pt": "cobra bem",
+        "en": "retrieves well",
+        "note": "cobra, from cobrar = brings back shot game; not the snake."
+      }
+    ],
+    "nudge": "The Irish setter 'cobra bem na água e em terra', retrieving in water and on land, as question 496 says of the Brittany. The podengo hunts furred game, not 'de pena' (question 485), and the pointer on 'terrenos muito dobrados' is the other false statement.",
+    "patterns": ["which-statement"],
+    "status": "checked"
+  },
+  {
+    "id": 489,
+    "language": [
+      {
+        "pt": "Cães que cobram bem",
+        "en": "Dogs that retrieve well",
+        "note": "cobram, from cobrar = bring back shot game; not the snake."
+      }
+    ],
+    "nudge": "Foxhounds hunt as a pack: 'cães de equipagem', pack hounds. 'Parar', pointing, and 'cobra bem', retrieving, are what the bank says of the Portuguese pointer and the Irish setter (questions 490 and 488).",
+    "patterns": [],
+    "status": "checked"
+  },
+  {
+    "id": 490,
+    "language": [
+      {
+        "pt": "além de “parar”, também",
+        "en": "as well as “pointing”, also",
+        "note": "além de … também = as well as … also: the dog does both, one on top of the other."
+      },
+      {
+        "pt": "cobra bem",
+        "en": "retrieves well",
+        "note": "cobra, from cobrar = brings back shot game; not the snake."
+      },
+      {
+        "pt": "com pelo comprido",
+        "en": "with a long coat",
+        "note": "pelo here is the dog's coat, not the contraction pelo, 'by the': com pelo comprido = with a long coat."
+      }
+    ],
+    "nudge": "The Portuguese pointer does both: 'além de “parar”, também cobra bem', it points and retrieves. Greyhounds are hunting dogs in Portugal, used in hare coursing (questions 37 and 38), and the long-coated pointer is the other false statement.",
+    "patterns": ["which-statement"],
+    "status": "checked"
+  },
+  {
+    "id": 491,
+    "language": [
+      {
+        "pt": "Pelo e pena",
+        "en": "Furred and feathered",
+        "note": "pelo here is fur (not the contraction pelo, 'by the') and pena is feather (not 'pity'): game de pelo is mammals, de pena birds, and the e joins both."
+      }
+    ],
+    "nudge": "The perdigueiro, the Portuguese pointer, is a bird dog: 'de pena', feathered game, as question 493 also keys. 'Pelo e pena' adds the furred game that belongs to the podengos (question 485).",
+    "patterns": ["both"],
+    "status": "checked"
+  },
+  {
+    "id": 492,
+    "language": [],
+    "nudge": "Baixotes follow 'pistas de sangue de caça maior', the blood trail of wounded big game, as question 484 also keys. Hares are run by greyhounds in coursing (question 37), and partridges are the pointers' game.",
+    "patterns": ["name-question"],
+    "status": "checked"
+  },
+  {
+    "id": 493,
+    "language": [],
+    "nudge": "For feathered game, 'caça de pena', the Portuguese pointer is the breed (question 491). Both podengos hunt furred game (question 485).",
+    "patterns": [],
+    "status": "checked"
+  },
+  {
+    "id": 494,
+    "language": [],
+    "nudge": "Wild boar is the large podengo's quarry, 'podengo grande', as in question 481. The beagle is a rabbit dog (question 483), and the foxhound is the distractor in question 481 too.",
+    "patterns": [],
+    "status": "checked"
+  },
+  {
+    "id": 495,
+    "language": [],
+    "nudge": "For furred game, 'caça de pelo', the medium podengo is the breed: podengos hunt 'de pelo' (question 485), and question 497 keys the medium podengo for the rabbit, 'ao coelho'. The German pointer and the Pointer are the distractors.",
+    "patterns": [],
+    "status": "checked"
+  },
+  {
+    "id": 496,
+    "language": [
+      {
+        "pt": "é a única raça",
+        "en": "is the only breed",
+        "note": "a única = the only one, not 'unique': the statement shuts out every other breed."
+      },
+      {
+        "pt": "cobra bem",
+        "en": "retrieves well",
+        "note": "cobra, from cobrar = brings back shot game; not the snake."
+      }
+    ],
+    "nudge": "The Brittany 'cobra bem em terra e na água', as question 488 says of the Irish setter. 'A única raça' for partridge fails as in question 483, and following blood trails is the baixotes' job, not the terrier's (question 492).",
+    "patterns": ["which-statement", "only"],
+    "status": "checked"
+  },
+  {
+    "id": 497,
+    "language": [],
+    "nudge": "The medium podengo is the coelheiro, the rabbit dog: 'ao coelho' (question 480). Boar is the large podengo's (question 481), and the red-legged partridge is feathered game, the Portuguese pointer's (question 491).",
+    "patterns": [],
+    "status": "checked"
+  },
+  {
+    "id": 498,
+    "language": [],
+    "nudge": "For feathered game the English setter, 'setter inglês', is the breed among these. The beagle is a rabbit dog (question 483) and the fox terrier a fox dog (question 487).",
+    "patterns": [],
+    "status": "checked"
+  }
+]

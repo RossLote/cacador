@@ -1,0 +1,127 @@
+[
+  {
+    "id": 304,
+    "language": [
+      {
+        "pt": "distingue-se do pombo-bravo por ser mais pequeno",
+        "en": "is distinguished from the stock dove by being smaller",
+        "note": "distinguir-se de X por ser … = to be told from X by being …: the first bird named is the one said to be mais pequeno, smaller, than the second."
+      }
+    ],
+    "nudge": "The true statement is that the narceja-comum is maior, with o bico mais comprido, than the narceja-galega; question 302 also gives it the larger wingspan. The pombo-torcaz is not mais pequeno but o maior dos três pombos (question 273), so that statement runs the wrong way.",
+    "patterns": ["which-statement", "comparative"],
+    "status": "checked"
+  },
+  {
+    "id": 305,
+    "language": [],
+    "nudge": "The golden plover feeds sobretudo on insetos e larvas, insects and their larvae. Neither distractor has insects at all: one is worms, snails and grain, the other molluscs, crustaceans and worms.",
+    "patterns": [],
+    "status": "checked"
+  },
+  {
+    "id": 306,
+    "language": [],
+    "nudge": "Two: the tarambola-dourada, a game species, and the tarambola-prateada, which cannot be hunted (question 342). Three and one are the distractors.",
+    "patterns": [],
+    "status": "checked"
+  },
+  {
+    "id": 307,
+    "language": [],
+    "nudge": "Tarambolas visit Portugal apenas durante o inverno, in winter only. Each distractor adds a second season, the spring or the autumn.",
+    "patterns": ["only"],
+    "status": "checked"
+  },
+  {
+    "id": 308,
+    "language": [],
+    "nudge": "The golden plover is found especialmente em zonas interiores, inland above all. Exclusivamente em áreas costeiras, only on the coast, gets the place wrong, and wooded ground is the thrushes' habitat (question 315), not the plover's.",
+    "patterns": ["only"],
+    "status": "checked"
+  },
+  {
+    "id": 309,
+    "language": [],
+    "nudge": "Thrushes are pássaros de tamanho médio, medium-sized birds, neither small nor large. The largest of them is the tordeia (question 312).",
+    "patterns": [],
+    "status": "checked"
+  },
+  {
+    "id": 310,
+    "language": [],
+    "nudge": "Four: the tordo-comum, the tordo-ruivo, the tordo-zornal and the tordeia, the species questions 312 to 316 ask about. The melro, the blackbird, is left out of the count.",
+    "patterns": [],
+    "status": "checked"
+  },
+  {
+    "id": 311,
+    "language": [],
+    "nudge": "Thrushes eat invertebrados e frutos, invertebrates and fruit, as question 317 also keys. Insetos e larvas is the golden plover's diet (question 305), and neither distractor has any fruit.",
+    "patterns": [],
+    "status": "checked"
+  },
+  {
+    "id": 312,
+    "language": [],
+    "nudge": "The tordeia, the mistle thrush, is 'a maior', the largest of the four thrushes counted in question 310. The tordo-zornal, the fieldfare, and the tordo-comum, the song thrush, are both smaller.",
+    "patterns": ["comparative"],
+    "status": "checked"
+  },
+  {
+    "id": 313,
+    "language": [],
+    "nudge": "The resident thrush, sedentária, is the tordeia, the mistle thrush. The tordo-ruivo only winters here and nests in northern Europe (question 316).",
+    "patterns": [],
+    "status": "checked"
+  },
+  {
+    "id": 314,
+    "language": [],
+    "nudge": "The tordeia, the mistle thrush, shows a parte inferior das asas de cor branca, white underwings, in flight. It is also the largest thrush (question 312) and the resident one (question 313).",
+    "patterns": [],
+    "status": "checked"
+  },
+  {
+    "id": 315,
+    "language": [],
+    "nudge": "Thrushes keep to zonas arborizadas ou às suas orlas, woodland and its edges, as question 318 also keys. Each distractor keeps the edges but changes the ground, to wetland or to cereal fields.",
+    "patterns": [],
+    "status": "checked"
+  },
+  {
+    "id": 316,
+    "language": [],
+    "nudge": "The fieldfare and the redwing only winter here, invernantes, and nidificam em países do Norte da Europa, nest in northern Europe. The ducks of question 246 follow the same pattern, wintering here and breeding in northern and central Europe.",
+    "patterns": [],
+    "status": "checked"
+  },
+  {
+    "id": 317,
+    "language": [],
+    "nudge": "The true statement is the thrushes' diet, invertebrados e frutos (question 311). The saca-rabos eats a muito variada diet, not mostly rabbit (question 122), and the perdigotos start on an essencialmente insectívora diet (question 183), unlike the adult partridge's grain and plant food (question 184).",
+    "patterns": ["which-statement"],
+    "status": "checked"
+  },
+  {
+    "id": 318,
+    "language": [],
+    "nudge": "Thrushes are found in zonas arborizadas ou nas suas orlas, woodland and its edges (question 315). Waterlogged ground is the moorhen's kind of place (question 258), and large cultivated plains are more the hare's (question 104).",
+    "patterns": [],
+    "status": "checked"
+  },
+  {
+    "id": 319,
+    "language": [],
+    "nudge": "A Carrion crow: a large bird, black all over, with a heavy, slightly arched black bill. The Common blackbird is far smaller, the male with an orange-yellow bill, and the Common starling is short-tailed with glossy, pale-spotted plumage.",
+    "patterns": [],
+    "status": "checked"
+  },
+  {
+    "id": 320,
+    "language": [],
+    "nudge": "A Eurasian jay: pinkish-brown body, a black moustache stripe and a bright blue wing patch barred with black, above a black tail. The Eurasian magpie is black and white with a long tail, and the Common blackbird is plain black or brown.",
+    "patterns": [],
+    "status": "checked"
+  }
+]

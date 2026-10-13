@@ -1,0 +1,4 @@
+[
+  { "slug": "so-only", "pt": "só, apenas", "en": "Only (só, apenas)", "note": "Limits what follows; tag when the limit decides." },
+  { "slug": "negative-stem", "pt": "não, na pergunta", "en": "Negative question (não)", "note": "The stem asks for the one that is not." }
+]

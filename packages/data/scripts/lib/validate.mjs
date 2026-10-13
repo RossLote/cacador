@@ -251,21 +251,27 @@ function checkTranslation(rel, e, pt) {
   expectType(rel, e.id, 'notes', e.notes, 'text');
 }
 
-/** A hint entry (DESIGN.md § 3.3): language entries whose pt occurs in the question, a nudge, pattern tags. */
+/**
+ * A hint entry (DESIGN.md § 3.3): language entries whose pt occurs in the question, a nudge (non-empty
+ * from checked on), pattern tags.
+ */
 function checkHint(rel, e, pt) {
   expectType(rel, e.id, 'language', e.language, 'list');
-  const text = textOf(pt).toLowerCase();
+  // Each field on its own, so a phrase cannot match across the join of the stem and an option.
+  const fields = [pt.question, ...Object.values(pt.options)].map((field) => field.toLowerCase());
   e.language.forEach((item, i) => {
     const field = `language entry ${i + 1}`;
     if (!isObject(item)) failAt(rel, e.id, `${field} is not an object`);
     expectType(rel, e.id, `${field} pt`, item.pt, 'string');
     expectType(rel, e.id, `${field} en`, item.en, 'string');
     expectType(rel, e.id, `${field} note`, item.note, 'text');
-    if (!text.includes(item.pt.toLowerCase())) {
+    const phrase = item.pt.toLowerCase();
+    if (!fields.some((field) => field.includes(phrase))) {
       failAt(rel, e.id, `language text "${item.pt}" does not occur in the question or its options`);
     }
   });
   expectType(rel, e.id, 'nudge', e.nudge, 'text');
+  if (e.status !== 'draft' && e.nudge.trim() === '') failAt(rel, e.id, `nudge is empty, a ${e.status} entry needs a nudge`);
   expectType(rel, e.id, 'patterns', e.patterns, 'list');
   for (const pattern of e.patterns) expectType(rel, e.id, 'patterns entry', pattern, 'string');
 }
@@ -273,12 +279,12 @@ function checkHint(rel, e, pt) {
 /**
  * Rule 5: translations and hints mirror the question files, with the fields of DESIGN.md § 3.3.
  * Only files that exist are checked.
- * Returns the translations by id, each with the file it came from and its lowercased text with quotes
- * straightened, for rule 6 and the counts.
+ * Returns the translations and the hints by id, each with the file it came from, for rules 6 and 8 and the counts.
  */
 function checkMirrors(dir, files) {
-  const translations = new Map();
-  for (const kind of ['translations', 'hints']) {
+  const checks = { translations: checkTranslation, hints: checkHint };
+  const byKind = { translations: new Map(), hints: new Map() };
+  for (const [kind, check] of Object.entries(checks)) {
     const sub = join(kind, 'en');
     for (const name of visibleFiles(join(dir, sub))) {
       const rel = `${sub}/${name}`;
@@ -294,19 +300,15 @@ function checkMirrors(dir, files) {
         const pt = inFile.get(e.id);
         if (!pt) failAt(rel, e.id, `is not an id of questions/${name}`);
         if (!STATUSES.includes(e.status)) failAt(rel, e.id, `status "${e.status}" is not one of ${STATUSES.join(', ')}`);
-        if (kind === 'translations') {
-          checkTranslation(rel, e, pt);
-          translations.set(e.id, { ...e, file: rel, text: straighten(textOf(e)).toLowerCase() });
-        } else {
-          checkHint(rel, e, pt);
-        }
+        check(rel, e, pt);
+        byKind[kind].set(e.id, { ...e, file: rel });
       }
       for (const id of inFile.keys()) {
         if (!ids.has(id)) failAt(rel, id, 'is missing, the file must carry the same ids as the question file');
       }
     }
   }
-  return translations;
+  return byKind;
 }
 
 const escapeRegExp = (text) => text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -315,15 +317,24 @@ const escapeRegExp = (text) => text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 const straighten = (text) => text.replace(/\u2019/g, "'").replace(/[\u201c\u201d]/g, '"');
 
 /**
- * Reads the glossary file `rel` when it exists: a list of objects whose fields have the types `spec`
- * names, with `pt` unique as rule 6 matches it (ignoring case, curly quotes read as straight ones).
- * Returns the list, or undefined when there is no such file.
+ * Reads the list file `rel` when it exists: a list of objects whose fields have the types `spec` names,
+ * with `key` unique. Returns the list, or undefined when there is no such file.
+ */
+function readList(dir, rel, label, key, spec) {
+  if (!existsSync(join(dir, rel))) return undefined;
+  const list = readJson(dir, rel);
+  if (!Array.isArray(list)) fail(rel, 'does not hold a list');
+  checkEntries(rel, label, list, key, spec);
+  return list;
+}
+
+/**
+ * Reads the glossary file `rel` when it exists (readList), with `pt` also unique as rule 6 matches it
+ * (ignoring case, curly quotes read as straight ones). Returns the list, or undefined when there is no such file.
  */
 function readGlossary(dir, rel, label, spec) {
-  if (!existsSync(join(dir, rel))) return undefined;
-  const glossary = readJson(dir, rel);
-  if (!Array.isArray(glossary)) fail(rel, 'does not hold a list');
-  checkEntries(rel, label, glossary, 'pt', spec);
+  const glossary = readList(dir, rel, label, 'pt', spec);
+  if (!glossary) return undefined;
   const first = new Map();
   for (const entry of glossary) {
     const key = straighten(entry.pt).toLowerCase();
@@ -340,6 +351,7 @@ function readGlossary(dir, rel, label, spec) {
 function checkGlossary(files, translations, glossary) {
   const ptText = new Map([...files.values()].flat().map((q) => [q.id, straighten(textOf(q))]));
   const ptLower = new Map([...ptText].map(([id, text]) => [id, text.toLowerCase()]));
+  const enLower = new Map([...translations].map(([id, t]) => [id, straighten(textOf(t)).toLowerCase()]));
   for (const entry of glossary) {
     const name = straighten(entry.pt);
     const needle = name.toLowerCase();
@@ -348,18 +360,41 @@ function checkGlossary(files, translations, glossary) {
     for (const [id, translation] of translations) {
       // The substring test is a cheap filter; the word-boundary regex decides.
       if (translation.status === 'draft' || !ptLower.get(id).includes(needle) || !word.test(ptText.get(id))) continue;
-      if (!translation.text.includes(en)) {
+      if (!enLower.get(id).includes(en)) {
         failAt(translation.file, id, `"${entry.pt}" must appear as "${entry.en}" (glossary/species.json)`);
       }
     }
   }
 }
 
-/** The translation counts `validate` reports: entries, files, and entries at each status. */
-function countTranslations(translations) {
-  const entries = [...translations.values()];
-  const counts = { entries: entries.length, files: new Set(entries.map((t) => t.file)).size };
-  for (const status of STATUSES) counts[status] = entries.filter((t) => t.status === status).length;
+const KEBAB = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+
+/**
+ * Rule 8 (DESIGN.md § 4), once hints/patterns.json exists: every entry has non-empty slug, pt, en and
+ * note, the slug unique and kebab-case, and every tag of every hint is one of the slugs.
+ * Returns the list, or undefined when there is no such file.
+ */
+function checkPatterns(dir, hints) {
+  const rel = 'hints/patterns.json';
+  const patterns = readList(dir, rel, 'pattern', 'slug', { slug: 'string', pt: 'string', en: 'string', note: 'string' });
+  if (!patterns) return undefined;
+  for (const { slug } of patterns) {
+    if (!KEBAB.test(slug)) fail(rel, `pattern ${slug} is not a kebab-case slug (lowercase letters and digits joined by single hyphens)`);
+  }
+  const slugs = new Set(patterns.map((p) => p.slug));
+  for (const [id, hint] of hints) {
+    for (const tag of hint.patterns) {
+      if (!slugs.has(tag)) failAt(hint.file, id, `pattern "${tag}" is not a slug of ${rel}`);
+    }
+  }
+  return patterns;
+}
+
+/** The counts `validate` reports for translations or hints: entries, files, and entries at each status. */
+function countEntries(byId) {
+  const entries = [...byId.values()];
+  const counts = { entries: entries.length, files: new Set(entries.map((e) => e.file)).size };
+  for (const status of STATUSES) counts[status] = entries.filter((e) => e.status === status).length;
   return counts;
 }
 
@@ -373,12 +408,13 @@ export function validate(dir = dataDir) {
   checkSectionsAndTopics(manifest, files);
   checkText(manifest, files);
   checkImages(dir, manifest, files);
-  const translations = checkMirrors(dir, files);
+  const { translations, hints } = checkMirrors(dir, files);
   const species = readGlossary(dir, 'glossary/species.json', 'species', { pt: 'string', scientific: 'string', en: 'string', group: 'string' });
   if (species) checkGlossary(files, translations, species);
   // Rule 7 (DESIGN.md § 4): only the terms glossary's shape is checked; a term's use in translations
   // is the meaning pass's job, not a rule's.
   const terms = readGlossary(dir, 'glossary/terms.json', 'term', { pt: 'string', en: 'string', note: 'text' });
+  const patterns = checkPatterns(dir, hints);
 
   const all = [...files.values()].flat();
   return {
@@ -388,7 +424,9 @@ export function validate(dir = dataDir) {
     topics: manifest.topics.length,
     images: manifest.images.length,
     imageQuestions: all.filter((q) => q.image !== undefined).length,
-    translations: countTranslations(translations),
+    translations: countEntries(translations),
+    hints: countEntries(hints),
     glossaries: { species: species?.length ?? 0, terms: terms?.length ?? 0 },
+    patterns: patterns?.length ?? 0,
   };
 }

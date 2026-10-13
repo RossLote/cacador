@@ -1,0 +1,395 @@
+[
+  {
+    "id": 59,
+    "language": [],
+    "nudge": "The rabbit eats plants only: um pequeno herbívoro, and question 62 lists its food as plantas herbáceas, raízes, caules, grãos e cascas. Question 95 asks the same of the hare, also herbívora.",
+    "patterns": [],
+    "status": "checked"
+  },
+  {
+    "id": 60,
+    "language": [],
+    "nudge": "A fleeing rabbit runs em apertados ziguezagues, in tight zigzags; alongados, long zigzags, is the near-miss. Retilínea, a straight line, is wrong too, and question 91 gives the hare's larger hind legs grande velocidade, not a zigzag.",
+    "patterns": [],
+    "status": "checked"
+  },
+  {
+    "id": 61,
+    "language": [],
+    "nudge": "The rabbit lives in zonas de mato abundante, scrub, as questions 85 and 86 also say; very dense woodland, arvoredo muito denso, is not its ground. Sandy is right but damp is not: question 85 has it prefer terrenos secos e arenosos.",
+    "patterns": [],
+    "status": "checked"
+  },
+  {
+    "id": 62,
+    "language": [],
+    "nudge": "Only plant matter: plantas herbáceas, raízes, caules, grãos e cascas suculentas. Each distractor slips in an animal food, pequenos insetos or pequenos batráquios, which a herbivore (question 59) does not eat.",
+    "patterns": ["list-options"],
+    "status": "checked"
+  },
+  {
+    "id": 63,
+    "language": [],
+    "nudge": "The rabbit is active at night and at dusk and dawn: noturnos e crepusculares. Essencialmente noturnos drops the twilight half, and essencialmente diurnos is wrong outright.",
+    "patterns": [],
+    "status": "checked"
+  },
+  {
+    "id": 64,
+    "language": [],
+    "nudge": "Rabbits live together in colónias whose galerias are extensas e muito ramificadas, long and much-branched. The near-miss keeps the colonies but makes the tunnels não ramificadas, unbranched; living alone is the hare's way (question 96), not the rabbit's.",
+    "patterns": [],
+    "status": "checked"
+  },
+  {
+    "id": 65,
+    "language": [],
+    "nudge": "The doe gives birth away from the warren, numa toca especial afastada da colónia: the toca de reprodução of questions 66 to 68. Both distractors keep the litter in a ramificação, a branch, of the toca de habitação.",
+    "patterns": [],
+    "status": "checked"
+  },
+  {
+    "id": 66,
+    "language": [],
+    "nudge": "The breeding burrow is one galeria simples e profunda: a simple tunnel, and a deep one. Each distractor flips one of the two words, to complexa or to superficial.",
+    "patterns": [],
+    "status": "checked"
+  },
+  {
+    "id": 67,
+    "language": [
+      {
+        "pt": "Por ambos os sexos",
+        "en": "By both sexes",
+        "note": "ambos = both: males and females together."
+      }
+    ],
+    "nudge": "The doe digs the breeding burrow herself: pelas fêmeas, the toca especial afastada da colónia of question 65. Neither só pelos machos nor ambos os sexos is right.",
+    "patterns": ["both"],
+    "status": "checked"
+  },
+  {
+    "id": 68,
+    "language": [
+      {
+        "pt": "Uma única abertura",
+        "en": "A single opening",
+        "note": "única = one only, not 'unique': a single entrance."
+      }
+    ],
+    "nudge": "The breeding burrow is lined with the doe's own fur, pelos da própria fêmea. All three options share the single opening; the distractors line it with plant matter, ervas, folhas and cascas, instead.",
+    "patterns": [],
+    "status": "checked"
+  },
+  {
+    "id": 69,
+    "language": [],
+    "nudge": "The doe moves her young to the toca de habitação after 3 semanas, three weeks; 1 and 2 weeks are the distractors. The same three weeks is how long leverets are suckled (question 100).",
+    "patterns": [],
+    "status": "checked"
+  },
+  {
+    "id": 70,
+    "language": [
+      {
+        "pt": "a partir da idade seguinte",
+        "en": "from the following age",
+        "note": "a partir de = from … on: the age at which breeding starts, not an upper limit."
+      }
+    ],
+    "nudge": "The coelho-bravo can breed from seis meses, six months old. Four and twelve months are the distractors; the number is the whole question.",
+    "patterns": [],
+    "status": "checked"
+  },
+  {
+    "id": 71,
+    "language": [
+      {
+        "pt": "Em comprimento",
+        "en": "In length",
+        "note": "em comprimento = in length: maiores and menores in the options mean longer and shorter, not bigger and smaller."
+      }
+    ],
+    "nudge": "The rabbit's ears are menores que o comprimento da sua cabeça, shorter than its head. Maiores que o comprimento da sua cabeça is the hare (question 88), whose ears are the longer of the two, so neither 'maiores' option fits the rabbit.",
+    "patterns": ["comparative"],
+    "status": "checked"
+  },
+  {
+    "id": 72,
+    "language": [],
+    "nudge": "The peak, the época mais intensa, is março a maio, in spring. Março a agosto runs on into summer, and durante todo o ano names no peak at all.",
+    "patterns": ["comparative"],
+    "status": "checked"
+  },
+  {
+    "id": 73,
+    "language": [],
+    "nudge": "A female rabbit carries her young 28 a 30 dias; all three ranges end at 30, so the start, 28, is the fact to keep. The hare's gestation is longer, 42 a 44 dias (question 98).",
+    "patterns": [],
+    "status": "checked"
+  },
+  {
+    "id": 74,
+    "language": [],
+    "nudge": "Em média a female rabbit has 3 a 5 litters a year. The hare has fewer, 1 a 3 (question 101), the range to keep apart from this one.",
+    "patterns": [],
+    "status": "checked"
+  },
+  {
+    "id": 75,
+    "language": [],
+    "nudge": "Rabbit kits are born helpless: cegos, surdos e sem pelo, blind, deaf and without fur. The near-miss keeps blind and deaf but adds fur, and de olhos abertos e com pelo is how leverets are born (question 99).",
+    "patterns": [],
+    "status": "checked"
+  },
+  {
+    "id": 76,
+    "language": [
+      {
+        "pt": "proceda ao seu controlo sanitário e vacinação",
+        "en": "carry out their health control and vaccination",
+        "note": "proceda is a command, 'carry out': the options are advice to the hunter, so correta means sound practice."
+      },
+      {
+        "pt": "Se esfolar",
+        "en": "If skinning",
+        "note": "esfolar here is the future subjunctive after se, 'if the hunter skins', not the infinitive 'to skin'."
+      }
+    ],
+    "nudge": "Against epidemic disease the sound step is controlo sanitário e vacinação of restocked rabbits. Skinning in the field and giving the vísceras to the dogs are the wrong practices, and question 77 adds burning the rabbits that die of disease.",
+    "patterns": ["which-statement"],
+    "status": "checked"
+  },
+  {
+    "id": 77,
+    "language": [
+      {
+        "pt": "Ao nível das doenças epidémicas",
+        "en": "With regard to epidemic diseases",
+        "note": "ao nível de = as regards: the stem limits the measures to those against epidemic disease."
+      }
+    ],
+    "nudge": "Against disease the measure is to burn the carcasses: queimar os coelhos vítimas de doenças. Building morouços does help the rabbit, as question 87 keys it, but it is a habitat measure, not a disease one.",
+    "patterns": [],
+    "status": "checked"
+  },
+  {
+    "id": 78,
+    "language": [],
+    "nudge": "A rabbit can live up to 10 anos, ten years. Five and fifteen years are the distractors; the number is the whole question.",
+    "patterns": [],
+    "status": "checked"
+  },
+  {
+    "id": 79,
+    "language": [],
+    "nudge": "The serious contagious disease of the rabbit is mixomatose, myxomatosis, which questions 82 and 84 come back to. Coccidiose and brucelose are the distractors.",
+    "patterns": [],
+    "status": "checked"
+  },
+  {
+    "id": 80,
+    "language": [],
+    "nudge": "Rabbit kits, born blind (question 75), open their eyes after 10 dias. Hearing comes first, at 8 dias (question 81), so do not swap the two numbers.",
+    "patterns": [],
+    "status": "checked"
+  },
+  {
+    "id": 81,
+    "language": [],
+    "nudge": "The rabbit's hearing is fully developed at 8 dias, two days before its eyes open at 10 dias (question 80). Ten days is the near-miss, borrowed from the eyes.",
+    "patterns": [],
+    "status": "checked"
+  },
+  {
+    "id": 82,
+    "language": [],
+    "nudge": "Myxomatosis is the rabbit's disease (question 79) and is não transmissível ao homem, not passed to people. Passing to humans or to other espécies cinegéticas are the two distractors.",
+    "patterns": [],
+    "status": "checked"
+  },
+  {
+    "id": 83,
+    "language": [
+      {
+        "pt": "vulgarmente",
+        "en": "commonly",
+        "note": "vulgarmente = commonly, in everyday speech; not 'vulgarly'."
+      }
+    ],
+    "nudge": "Young rabbits are láparos, rabbit kits. Lebrachos are young hares (question 97) and listados are wild boar piglets, named for their striped coat.",
+    "patterns": ["name-question"],
+    "status": "checked"
+  },
+  {
+    "id": 84,
+    "language": [
+      {
+        "pt": "pouco importante",
+        "en": "of little importance",
+        "note": "pouco before an adjective weakens it to 'not very': not very important, not 'a little important'."
+      }
+    ],
+    "nudge": "The true statement is that a mixomatose contribui para a diminuição das populações de coelho, cutting rabbit numbers. The rabbit is not of distribuição restrita, and it is not pouco importante either: the Iberian lynx's diet is based on coelhos-bravos (question 326).",
+    "patterns": ["which-statement", "not-very"],
+    "status": "checked"
+  },
+  {
+    "id": 85,
+    "language": [],
+    "nudge": "The rabbit wants abundant scrub and dry, sandy soil: mato abundante, terrenos secos e arenosos. Each distractor gets both halves wrong, with scarce or no scrub and damp clay or rocky ground.",
+    "patterns": [],
+    "status": "checked"
+  },
+  {
+    "id": 86,
+    "language": [],
+    "nudge": "Rabbits are found em zonas onde o mato é abundante, as in questions 61 and 85. Pousios e terras cultivadas is the hare's ground (question 93), the trap here.",
+    "patterns": ["comparative"],
+    "status": "checked"
+  },
+  {
+    "id": 87,
+    "language": [],
+    "nudge": "Morouços give rabbits ready-made burrows em terrenos onde seja difícil escavar, where the ground is hard to dig. Restocking is sound with controlo sanitário (question 76), not independentemente da origem dos animais and not with domestic coelho-manso females.",
+    "patterns": [],
+    "status": "checked"
+  },
+  {
+    "id": 88,
+    "language": [
+      {
+        "pt": "Em comprimento",
+        "en": "In length",
+        "note": "em comprimento = in length: maiores and menores in the options mean longer and shorter, not bigger and smaller."
+      }
+    ],
+    "nudge": "The hare's ears are maiores que o comprimento da sua cabeça, longer than its head and longer than the rabbit's, which are shorter than its head (question 71). Both 'menores' options are wrong for the hare.",
+    "patterns": ["comparative"],
+    "status": "checked"
+  },
+  {
+    "id": 89,
+    "language": [],
+    "nudge": "The hare's ears are grandes, negras na extremidade, large and black-tipped, as question 103 also says. Small white-tipped ears are wrong on both counts, and ears menores que o comprimento da cabeça are the rabbit's (question 71).",
+    "patterns": [],
+    "status": "checked"
+  },
+  {
+    "id": 90,
+    "language": [],
+    "nudge": "The hare's hind legs are larger than its front ones: membros posteriores maiores que os anteriores, which gives it its speed (question 91). The reverse is the near-miss, and tamanho semelhante ao do coelho is wrong too.",
+    "patterns": ["comparative"],
+    "status": "checked"
+  },
+  {
+    "id": 91,
+    "language": [],
+    "nudge": "Its larger hind legs give the hare grande velocidade, great speed. The zigzag escape is the rabbit's, em apertados ziguezagues (question 60), and boa aderência, good grip, is the other distractor.",
+    "patterns": [],
+    "status": "checked"
+  },
+  {
+    "id": 92,
+    "language": [],
+    "nudge": "Hares are most abundant in the Beira Interior and a Sul do Tejo. All three options share south of the Tejo, so the other region decides: the inland Beira Interior, not Estremadura or the Beira Litoral.",
+    "patterns": ["list-options", "comparative"],
+    "status": "checked"
+  },
+  {
+    "id": 93,
+    "language": [],
+    "nudge": "The hare prefers open farmland: pousios e terras cultivadas, fallow and cultivated land, as question 104 also puts it. Dense cover is not its ground (question 94), and rugged, stony ground is wrong for both hare and rabbit (questions 85 and 104).",
+    "patterns": [],
+    "status": "checked"
+  },
+  {
+    "id": 94,
+    "language": [
+      {
+        "pt": "galerias pouco ramificadas",
+        "en": "little-branched tunnels",
+        "note": "pouco = not much: tunnels with few branches. The same pouco in pouco cobertos means with little cover."
+      }
+    ],
+    "nudge": "The hare prefers terrenos planos, húmidos e pouco cobertos: flat, damp, open ground, where the rabbit wants dry sand and scrub (question 85). Burrows with tunnels are the rabbit's (question 64), and grande densidade de coberto is not what the hare prefers (question 93).",
+    "patterns": ["not-very"],
+    "status": "checked"
+  },
+  {
+    "id": 95,
+    "language": [],
+    "nudge": "Like the rabbit (question 59), the hare is uma espécie herbívora, a plant-eater. Carnivore and omnivore are the distractors.",
+    "patterns": [],
+    "status": "checked"
+  },
+  {
+    "id": 96,
+    "language": [],
+    "nudge": "The hare lives alone: um animal solitário. Large colonies are the rabbit's way of life (question 64), and the hare does not live aos casais, in pairs, either.",
+    "patterns": [],
+    "status": "checked"
+  },
+  {
+    "id": 97,
+    "language": [
+      {
+        "pt": "vulgarmente",
+        "en": "commonly",
+        "note": "vulgarmente = commonly, in everyday speech; not 'vulgarly'."
+      }
+    ],
+    "nudge": "Young hares are lebrachos, leverets. Láparos are young rabbits (question 83) and listados are wild boar piglets, named for their striped coat.",
+    "patterns": ["name-question"],
+    "status": "checked"
+  },
+  {
+    "id": 98,
+    "language": [],
+    "nudge": "The hare carries its young 42 a 44 dias, much longer than the rabbit's 28 a 30 dias (question 73). All three ranges sit between 40 and 44, so the start, 42, is the fact to keep.",
+    "patterns": [],
+    "status": "checked"
+  },
+  {
+    "id": 99,
+    "language": [],
+    "nudge": "Leverets are born de olhos abertos e com pelo, eyes open and with fur. Blind and deaf is how rabbit kits start (question 75), and olhos fechados is the near-miss that keeps the fur.",
+    "patterns": [],
+    "status": "checked"
+  },
+  {
+    "id": 100,
+    "language": [],
+    "nudge": "Leverets are suckled até às 3 semanas, three weeks; 2 and 4 weeks are the distractors. The same three weeks is when the rabbit doe moves her young to the dwelling burrow (question 69).",
+    "patterns": [],
+    "status": "checked"
+  },
+  {
+    "id": 101,
+    "language": [],
+    "nudge": "The hare normally has 1 a 3 litters a year, fewer than the rabbit's 3 a 5 (question 74). Question 227 rules out apenas uma ninhada, just one, as a statement about the hare.",
+    "patterns": [],
+    "status": "checked"
+  },
+  {
+    "id": 102,
+    "language": [],
+    "nudge": "A hare's litter is small, normally 1 ou 2 lebrachos. The other two ranges start at 2, so only the keyed one allows a single leveret.",
+    "patterns": [],
+    "status": "checked"
+  },
+  {
+    "id": 103,
+    "language": [],
+    "nudge": "The hare's mark is its large black-tipped ears, orelhas grandes com a extremidade negra, as in question 89. Front limbs much larger than the back ones is the wrong way round, since the hind legs are the larger (question 90).",
+    "patterns": [],
+    "status": "checked"
+  },
+  {
+    "id": 104,
+    "language": [],
+    "nudge": "The hare's habitat is open farmland: planícies abertas, cultivadas ou em pousio, the pousios e terras cultivadas of question 93. Dense thickets, matagais densos, and rugged, stony areas are the distractors.",
+    "patterns": [],
+    "status": "checked"
+  }
+]

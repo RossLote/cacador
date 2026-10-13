@@ -1,0 +1,349 @@
+[
+  {
+    "id": 168,
+    "language": [],
+    "nudge": "The red-legged partridge has bico e patas vermelhas, a red bill and red legs (question 170), a white throat edged in black and flanks barred black, white and chestnut. The common pheasant is far bigger with a long pointed tail, and the European turtle dove is a slim dove with no barred flanks.",
+    "patterns": [],
+    "status": "checked"
+  },
+  {
+    "id": 169,
+    "language": [],
+    "nudge": "The red bill and legs, bico e patas vermelhas (question 170), the white throat edged in black and the barred flanks mark the red-legged partridge. A common quail is much smaller and streaked buff and brown with no red, and a common pheasant has a long pointed tail.",
+    "patterns": [],
+    "status": "checked"
+  },
+  {
+    "id": 170,
+    "language": [],
+    "nudge": "The perdiz-vermelha has bico e patas vermelhas: both the bill and the legs are red. Each distractor turns one of the two yellow, amarelo or amarelas.",
+    "patterns": [],
+    "status": "checked"
+  },
+  {
+    "id": 171,
+    "language": [
+      {
+        "pt": "uma das formas de distinguir os machos das fêmeas",
+        "en": "one of the ways of telling the males from the females",
+        "note": "das is de + as twice here: 'one of the ways', then 'from the females'. distinguir X de Y = to tell X from Y."
+      }
+    ],
+    "nudge": "Males are maiores e mais pesados que as fêmeas: bigger and heavier than the hens. The near miss flips both directions, menores e menos pesados, and do mesmo tamanho denies any difference.",
+    "patterns": ["comparative"],
+    "status": "checked"
+  },
+  {
+    "id": 172,
+    "language": [
+      {
+        "pt": "uma das formas de distinguir os machos das fêmeas",
+        "en": "one of the ways of telling the males from the females",
+        "note": "das is de + as twice here: 'one of the ways', then 'from the females'. distinguir X de Y = to tell X from Y."
+      },
+      {
+        "pt": "que a das fêmeas",
+        "en": "than that of the females",
+        "note": "a das fêmeas = that of the females: a stands for a cabeça, so the comparison is head against head."
+      }
+    ],
+    "nudge": "The cock's head is mais volumosa que a das fêmeas, bulkier than the hen's. The other two options say the same wrong thing in two ways, the hen with the bigger head, so read which sex each sentence starts from.",
+    "patterns": ["comparative"],
+    "status": "checked"
+  },
+  {
+    "id": 173,
+    "language": [
+      {
+        "pt": "uma das formas de distinguir os machos das fêmeas",
+        "en": "one of the ways of telling the males from the females",
+        "note": "das is de + as twice here: 'one of the ways', then 'from the females'. distinguir X de Y = to tell X from Y."
+      },
+      {
+        "pt": "os tarsos mais curtos e grossos",
+        "en": "the tarsi shorter and thicker",
+        "note": "mais governs both adjectives, shorter and thicker; the comparison is with the other sex, though no que follows."
+      }
+    ],
+    "nudge": "The hen's tarsi are mais curtos e delgados, shorter and slimmer than the cock's, which are mais compridos e grossos (question 174). Mais curtos e grossos is the near miss that flips only the thickness.",
+    "patterns": ["comparative"],
+    "status": "checked"
+  },
+  {
+    "id": 174,
+    "language": [
+      {
+        "pt": "uma das formas de distinguir os machos das fêmeas",
+        "en": "one of the ways of telling the males from the females",
+        "note": "das is de + as twice here: 'one of the ways', then 'from the females'. distinguir X de Y = to tell X from Y."
+      },
+      {
+        "pt": "tarsos mais curtos e grossos",
+        "en": "shorter and thicker tarsi",
+        "note": "mais governs both adjectives, shorter and thicker; the comparison is with the other sex, though no que follows."
+      }
+    ],
+    "nudge": "The cock's tarsi are mais compridos e grossos, longer and thicker than the hen's, which are mais curtos e delgados (question 173). Mais curtos e grossos is the near miss that flips only the length.",
+    "patterns": ["comparative"],
+    "status": "checked"
+  },
+  {
+    "id": 175,
+    "language": [
+      {
+        "pt": "uma das formas de distinguir os machos das fêmeas",
+        "en": "one of the ways of telling the males from the females",
+        "note": "das is de + as twice here: 'one of the ways', then 'from the females'. distinguir X de Y = to tell X from Y."
+      }
+    ],
+    "nudge": "The cock's spurs have base larga e extremidade arredondada: broad at the base, rounded at the tip. The near miss keeps the broad base but makes the tip bicuda, and narrow and pointed is the hen's spur (question 176).",
+    "patterns": [],
+    "status": "checked"
+  },
+  {
+    "id": 176,
+    "language": [
+      {
+        "pt": "uma das formas de distinguir os machos das fêmeas",
+        "en": "one of the ways of telling the males from the females",
+        "note": "das is de + as twice here: 'one of the ways', then 'from the females'. distinguir X de Y = to tell X from Y."
+      },
+      {
+        "pt": "quando apresentam esporões",
+        "en": "when they have spurs",
+        "note": "quando here = in the cases where: not every hen has spurs, and the sentence describes those that do."
+      },
+      {
+        "pt": "estes têm",
+        "en": "these have",
+        "note": "estes refers back to esporões: it is the spurs, not the hens, that have the base described."
+      }
+    ],
+    "nudge": "A hen's spurs, where she has them, have a base estreita and are bicudos: narrow and pointed, the reverse of the cock's broad, rounded spurs (question 175). Redondos and base larga each flip one half.",
+    "patterns": [],
+    "status": "checked"
+  },
+  {
+    "id": 177,
+    "language": [
+      {
+        "pt": "enquanto juvenil",
+        "en": "while juvenile",
+        "note": "enquanto = while: the question is limited to the young bird, not the adult."
+      }
+    ],
+    "nudge": "A young partridge's moult begins ao primeiro mês de vida, in its first month. The second and third months are the distractors; the month alone decides.",
+    "patterns": [],
+    "status": "checked"
+  },
+  {
+    "id": 178,
+    "language": [
+      {
+        "pt": "enquanto juvenil",
+        "en": "while juvenile",
+        "note": "enquanto = while: the question is limited to the young bird, not the adult."
+      },
+      {
+        "pt": "podem apresentar",
+        "en": "may show",
+        "note": "podem = may: the spot is possible, not always there."
+      }
+    ],
+    "nudge": "A juvenile's last two rémiges are pontiagudas, pointed, and may carry uma pequena pinta branca at the tip. Arredondadas is the adult's shape (question 180), and 'sem apresentar uma pequena pinta branca' wrongly rules the spot out.",
+    "patterns": [],
+    "status": "checked"
+  },
+  {
+    "id": 179,
+    "language": [],
+    "nudge": "The adult starts moulting its primaries duas ou três semanas antes do juvenil, two or three weeks before the young bird. Depois do juvenil is the flipped near miss, and they do not start ao mesmo tempo.",
+    "patterns": ["before-after"],
+    "status": "checked"
+  },
+  {
+    "id": 180,
+    "language": [],
+    "nudge": "In the adult the last two feathers têm a extremidade arredondada, rounded tips. The pointed tip and the small white spot belong to the juvenile (question 178), which is how the two are told apart (question 196).",
+    "patterns": [],
+    "status": "checked"
+  },
+  {
+    "id": 181,
+    "language": [],
+    "nudge": "The red-legged partridge prefers zonas de culturas cerealíferas, cereal farmland, as question 197 also keys. Waterlogged ground and forest with scrub are not its preferred habitat.",
+    "patterns": [],
+    "status": "checked"
+  },
+  {
+    "id": 182,
+    "language": [
+      {
+        "pt": "mais de 60% dos efetivos",
+        "en": "more than 60% of the stock",
+        "note": "mais de and menos de = more than and less than: one option sets the kill above 60% of the stock, the other caps it below half."
+      }
+    ],
+    "nudge": "Killing menos de 50% dos efetivos, under half the stock, is sound management; mais de 60% is too many, and question 192 names abater 60% as the wrong rule. Pesticides harm the birds: question 192 counts evitar o abuso de pesticidas among the right rules.",
+    "patterns": ["above-below"],
+    "status": "checked"
+  },
+  {
+    "id": 183,
+    "language": [],
+    "nudge": "In its first month the chick's diet is essencialmente insectívora, mainly insects. The adult eats grain and plant food (question 184), and question 317 confirms that perdigotos do not eat like the adult.",
+    "patterns": [],
+    "status": "checked"
+  },
+  {
+    "id": 184,
+    "language": [],
+    "nudge": "The adult eats plant food: grãos, bolotas, folhas, rebentos, bagas, flores e raízes. Each distractor slips in insetos, the chick's food in its first month (question 183).",
+    "patterns": ["list-options"],
+    "status": "checked"
+  },
+  {
+    "id": 185,
+    "language": [
+      {
+        "pt": "simplesmente coberto de",
+        "en": "simply covered with",
+        "note": "simplesmente = simply, merely: covered with that and nothing else."
+      }
+    ],
+    "nudge": "The partridge nests on the ground, the hollow simplesmente coberto de plantas secas: dry plants and nothing else. It does not line it with its own feathers, either alone or mixed in with the plants.",
+    "patterns": ["only"],
+    "status": "checked"
+  },
+  {
+    "id": 186,
+    "language": [],
+    "nudge": "In the south, laying runs from março a abril. The later ranges, abril a maio and abril a junho, are the distractors; the months alone decide.",
+    "patterns": [],
+    "status": "checked"
+  },
+  {
+    "id": 187,
+    "language": [
+      {
+        "pt": "logo que nascem",
+        "en": "as soon as they are born",
+        "note": "logo que = as soon as: the moment of hatching, not some time after."
+      }
+    ],
+    "nudge": "Partridge chicks abandonam o ninho logo que nascem: they leave the nest as soon as they hatch. Both distractors keep them in it, for at least one week or for two.",
+    "patterns": [],
+    "status": "checked"
+  },
+  {
+    "id": 188,
+    "language": [],
+    "nudge": "Partridge incubation lasts about 23 dias; 21 and 25 are the distractors, and the number is the whole question. The quail's is shorter, 16 a 21 dias (question 223).",
+    "patterns": [],
+    "status": "checked"
+  },
+  {
+    "id": 189,
+    "language": [],
+    "nudge": "An average red-legged partridge nest holds 12 ovos; 10 and 14 are the distractors. Of each nest, about 5 chicks reach adulthood in a well-managed population (question 194).",
+    "patterns": [],
+    "status": "checked"
+  },
+  {
+    "id": 190,
+    "language": [
+      {
+        "pt": "até nova época de acasalamento",
+        "en": "until the new mating season",
+        "note": "até = until: the stem covers the summer and the months after it, up to the next mating season."
+      }
+    ],
+    "nudge": "From summer to the next mating season, partridges move em bandos, in flocks. Aos casais and isoladamente are the distractors; question 270 keys the same em bandos for pigeons outside the breeding season.",
+    "patterns": [],
+    "status": "checked"
+  },
+  {
+    "id": 191,
+    "language": [
+      {
+        "pt": "há que seguir certas regras",
+        "en": "certain rules must be followed",
+        "note": "há que + infinitive = one must, it is necessary to; not 'there is that'."
+      }
+    ],
+    "nudge": "Sound management means providing alimento, água e abrigo: food, water and shelter. Killing 60% of the stock each year and wiping out todos os predadores are the wrong rules of questions 192 and 193.",
+    "patterns": ["which-statement"],
+    "status": "checked"
+  },
+  {
+    "id": 192,
+    "language": [
+      {
+        "pt": "há que seguir certas regras",
+        "en": "certain rules must be followed",
+        "note": "há que + infinitive = one must, it is necessary to; not 'there is that'."
+      },
+      {
+        "pt": "Qual está errada?",
+        "en": "Which is wrong?",
+        "note": "errada = wrong: the stem asks for the one rule that should not be followed."
+      }
+    ],
+    "nudge": "The rule that is errada is abater, anualmente, 60% dos efetivos: too many, since question 182 keys a kill of menos de 50%. Avoiding pesticides and care over the ceifas, the harvesting, both protect the population.",
+    "patterns": ["negative-stem", "which-statement"],
+    "status": "checked"
+  },
+  {
+    "id": 193,
+    "language": [
+      {
+        "pt": "há que seguir certas regras",
+        "en": "certain rules must be followed",
+        "note": "há que + infinitive = one must, it is necessary to; not 'there is that'."
+      }
+    ],
+    "nudge": "The sound rule is evitar a deambulação de cães e gatos vadios: keep stray dogs and cats from roaming. Eliminating todos os predadores, at once or every year, is the wrong rule here as in question 191.",
+    "patterns": ["which-statement"],
+    "status": "checked"
+  },
+  {
+    "id": 194,
+    "language": [
+      {
+        "pt": "chegam em média à idade adulta",
+        "en": "there reach adult age on average",
+        "note": "The verb comes before its subject: the perdigotos counted in the options are what chegam, reach adulthood, per nest."
+      }
+    ],
+    "nudge": "In a well-managed population about 5 perdigotos per nest reach adulthood, out of an average clutch of 12 ovos (question 189). 3 and 7 are the distractors; the number decides.",
+    "patterns": [],
+    "status": "checked"
+  },
+  {
+    "id": 195,
+    "language": [],
+    "nudge": "The partridge nests no chão, on the ground, in a hollow lined with dry plants (question 185). Shrubs and holes in walls are not its nest sites.",
+    "patterns": [],
+    "status": "checked"
+  },
+  {
+    "id": 196,
+    "language": [
+      {
+        "pt": "distingue-se da juvenil",
+        "en": "is distinguished from the juvenile",
+        "note": "distinguir-se de = to be told apart from; da = de + a, 'from the', not 'of the'."
+      }
+    ],
+    "nudge": "Age is read from the rémiges primárias, the ten feathers at the wing tip: the juvenile's last two are pointed and may show a white spot (question 178), the adult's are rounded (question 180). Tarsi and spurs tell the sexes apart (questions 173 to 176), not the ages.",
+    "patterns": [],
+    "status": "checked"
+  },
+  {
+    "id": 197,
+    "language": [],
+    "nudge": "The red-legged partridge prefers zonas de culturas cerealíferas, cereal farmland, as in question 181. Light damp soils and rocky coast are not its preferred ground.",
+    "patterns": [],
+    "status": "checked"
+  }
+]

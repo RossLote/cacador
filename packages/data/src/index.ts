@@ -37,6 +37,25 @@ import translation15 from '../translations/en/15-arco-besta.json' with { type: '
 import translation16 from '../translations/en/16-campos-treino.json' with { type: 'json' };
 import translation17 from '../translations/en/17-caes.json' with { type: 'json' };
 import translation18 from '../translations/en/18-cetraria.json' with { type: 'json' };
+import hint01 from '../hints/en/01-documentos.json' with { type: 'json' };
+import hint02 from '../hints/en/02-conceitos-basicos.json' with { type: 'json' };
+import hint03 from '../hints/en/03-biologia-coelho-lebre.json' with { type: 'json' };
+import hint04 from '../hints/en/04-biologia-raposa-javali.json' with { type: 'json' };
+import hint05 from '../hints/en/05-biologia-veado-corco.json' with { type: 'json' };
+import hint06 from '../hints/en/06-biologia-perdiz.json' with { type: 'json' };
+import hint07 from '../hints/en/07-biologia-pombos-codorniz.json' with { type: 'json' };
+import hint08 from '../hints/en/08-biologia-patos.json' with { type: 'json' };
+import hint09 from '../hints/en/09-biologia-pombos-galinhola-narcejas.json' with { type: 'json' };
+import hint10 from '../hints/en/10-biologia-tarambola-tordos.json' with { type: 'json' };
+import hint11 from '../hints/en/11-nao-cinegeticas.json' with { type: 'json' };
+import hint12 from '../hints/en/12-condicionamentos.json' with { type: 'json' };
+import hint13 from '../hints/en/13-terrenos.json' with { type: 'json' };
+import hint14 from '../hints/en/14-periodos-processos.json' with { type: 'json' };
+import hint15 from '../hints/en/15-arco-besta.json' with { type: 'json' };
+import hint16 from '../hints/en/16-campos-treino.json' with { type: 'json' };
+import hint17 from '../hints/en/17-caes.json' with { type: 'json' };
+import hint18 from '../hints/en/18-cetraria.json' with { type: 'json' };
+import patternsJson from '../hints/patterns.json' with { type: 'json' };
 
 export type OptionKey = 'A' | 'B' | 'C';
 
@@ -109,6 +128,18 @@ export interface HintLanguage {
   note: string;
 }
 
+/** A pattern, one entry in hints/patterns.json (DESIGN.md § 3.3): a tag a hint's `patterns` may carry. */
+export interface Pattern {
+  /** The kebab-case tag, unique in the list. */
+  slug: string;
+  /** The construction as the bank prints it, or a short Portuguese label. */
+  pt: string;
+  /** The English name the app's report shows. */
+  en: string;
+  /** What the construction does to the reading and when to tag it. */
+  note: string;
+}
+
 /** A hint, one entry in a hints/en/ file (DESIGN.md § 3.3). */
 export interface Hint {
   id: number;
@@ -119,6 +150,9 @@ export interface Hint {
 }
 
 export const manifest: Manifest = manifestJson as Manifest;
+
+/** The closed list of pattern tags (DESIGN.md § 4 rule 8 checks every hint's tags against it). */
+export const patterns: readonly Pattern[] = patternsJson;
 
 /** One import per manifest chunk, in manifest order; the JSON widens `answer` to string, so it is narrowed to Question once, here. */
 const chunks = [
@@ -152,7 +186,7 @@ export const topicOf = (question: Question): Topic | undefined => topicBySlug.ge
 /**
  * One import per translations/en/ file, listed in chunk order like `chunks` (the loader test fails
  * when a file on disk is not wired in); the JSON widens `status` to string, so the list is narrowed
- * once, here. hints/en/ joins `hints` the same way in phase 3. import.meta.glob was not used
+ * once, here. hints/en/ is wired into `hints` the same way. import.meta.glob was not used
  * because tsc needs Vite client type shims for it, and the files are few and named.
  */
 const translations = [
@@ -160,7 +194,10 @@ const translations = [
   translation07, translation08, translation09, translation10, translation11, translation12,
   translation13, translation14, translation15, translation16, translation17, translation18,
 ].flat() as Translation[];
-const hints: readonly Hint[] = [];
+const hints = [
+  hint01, hint02, hint03, hint04, hint05, hint06, hint07, hint08, hint09,
+  hint10, hint11, hint12, hint13, hint14, hint15, hint16, hint17, hint18,
+].flat() as Hint[];
 
 const translationById = new Map(translations.map((t) => [t.id, t]));
 const hintById = new Map(hints.map((h) => [h.id, h]));
