@@ -37,6 +37,7 @@ import translation15 from '../translations/en/15-arco-besta.json' with { type: '
 import translation16 from '../translations/en/16-campos-treino.json' with { type: 'json' };
 import translation17 from '../translations/en/17-caes.json' with { type: 'json' };
 import translation18 from '../translations/en/18-cetraria.json' with { type: 'json' };
+import hint01 from '../hints/en/01-documentos.json' with { type: 'json' };
 
 export type OptionKey = 'A' | 'B' | 'C';
 
@@ -160,7 +161,7 @@ const translations = [
   translation07, translation08, translation09, translation10, translation11, translation12,
   translation13, translation14, translation15, translation16, translation17, translation18,
 ].flat() as Translation[];
-const hints: readonly Hint[] = [];
+const hints = [hint01].flat() as Hint[];
 
 const translationById = new Map(translations.map((t) => [t.id, t]));
 const hintById = new Map(hints.map((h) => [h.id, h]));

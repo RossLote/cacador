@@ -1,0 +1,171 @@
+[
+  {
+    "id": 1,
+    "language": [
+      {
+        "pt": "Poderão ser dispensados da",
+        "en": "may be exempted from the",
+        "note": "The future poderão asks who can be, not who will be; the stem names no subject, the options supply it. dispensado de = excused from needing."
+      },
+      {
+        "pt": "desde que habilitados a caçarem",
+        "en": "provided they are qualified to hunt",
+        "note": "desde que = provided that: a condition on the group, not a second group."
+      }
+    ],
+    "nudge": "The one exemption from the carta de caçador is for non-resident foreigners, and only desde que they are qualified to hunt in their own country. Enforcement officers, politicians and ICNF staff get none.",
+    "patterns": [],
+    "status": "draft"
+  },
+  {
+    "id": 2,
+    "language": [
+      {
+        "pt": "além de outros requisitos, é ainda necessário",
+        "en": "besides other requirements, it is also necessary",
+        "note": "ainda here is 'also', not 'still' or 'yet': the stem asks for one more requirement on top of the others."
+      },
+      {
+        "pt": "mais de 16 anos",
+        "en": "over 16 years of age",
+        "note": "mais de = more than; the same form as mais de 6 meses in the dog licence question."
+      }
+    ],
+    "nudge": "The extra requirement is age, mais de 16 anos. Citizenship and residence are not conditions: question 1 lets non-resident foreigners hunt here.",
+    "patterns": [],
+    "status": "draft"
+  },
+  {
+    "id": 3,
+    "language": [
+      {
+        "pt": "que antecedem o final da sua validade",
+        "en": "that precede the end of its validity",
+        "note": "antecedem = come before: the window is the months before it runs out, not after."
+      },
+      {
+        "pt": "caducidade",
+        "en": "expiry",
+        "note": "caducidade is the lapse of validity; validade and caducidade point at the same end date, the number in front is what differs."
+      }
+    ],
+    "nudge": "Renewal opens in the 12 months before the carta runs out. The number is the whole question; 18 and 24 are the distractors.",
+    "patterns": [],
+    "status": "draft"
+  },
+  {
+    "id": 4,
+    "language": [
+      {
+        "pt": "o seu titular",
+        "en": "its holder",
+        "note": "seu refers back to the carta, so 'its', not 'your' or 'his'."
+      },
+      {
+        "pt": "Caduca",
+        "en": "Lapses",
+        "note": "A verb, from caducar: the carta ceases to be valid by itself. Not a noun, and nothing to do with deciduous."
+      }
+    ],
+    "nudge": "A conviction for a crime de caça makes the carta caducar: it lapses outright. There is no correcting or swapping it.",
+    "patterns": ["caduca"],
+    "status": "draft"
+  },
+  {
+    "id": 5,
+    "language": [
+      {
+        "pt": "a que respeita",
+        "en": "to which it relates",
+        "note": "respeitar a = to concern; nothing to do with respect."
+      },
+      {
+        "pt": "apenas é válida para algumas espécies",
+        "en": "is only valid for some species",
+        "note": "apenas = only, placed before the verb; it limits what follows."
+      }
+    ],
+    "nudge": "A regional licence covers a region, the região cinegética a que respeita, with no species limit. Nobody, diplomats included, is exempt from the licença de caça (questions 8 and 9).",
+    "patterns": ["apenas"],
+    "status": "draft"
+  },
+  {
+    "id": 6,
+    "language": [],
+    "nudge": "A hunting dog needs its own licence from mais de 6 meses, six months old. Pair it with the hunter's own age line in question 2: mais de 16 anos.",
+    "patterns": [],
+    "status": "draft"
+  },
+  {
+    "id": 7,
+    "language": [
+      {
+        "pt": "só às narcejas",
+        "en": "only snipe",
+        "note": "só = only, limiting the species; à/às after caçar marks what is hunted (caçar à perdiz, caçar aos coelhos)."
+      },
+      {
+        "pt": "numa única região cinegética",
+        "en": "in a single hunting region",
+        "note": "única = one only, not 'unique'."
+      }
+    ],
+    "nudge": "One region, so a licença regional is enough, and the nacional covers it too. Snipe need no waterfowl licence: question 10 asks the same with rabbits and has the same answer.",
+    "patterns": ["so-only", "species-preposition"],
+    "status": "draft"
+  },
+  {
+    "id": 8,
+    "language": [
+      {
+        "pt": "exercer o ato venatório",
+        "en": "carry out the act of hunting",
+        "note": "venatório = of hunting, a formal adjective; o ato venatório is simply hunting."
+      },
+      {
+        "pt": "se for estrangeiro",
+        "en": "if they are a foreigner",
+        "note": "for is the future subjunctive of ser after se: 'if they are', not the English 'for'."
+      }
+    ],
+    "nudge": "Nunca: no one is excused the licença de caça, whatever their nationality or diplomatic status. The exemption in question 1 is from the carta de caçador, a different document.",
+    "patterns": [],
+    "status": "draft"
+  },
+  {
+    "id": 9,
+    "language": [
+      {
+        "pt": "Ninguém",
+        "en": "No one",
+        "note": "ninguém = nobody; Portuguese needs no second negative with it here."
+      },
+      {
+        "pt": "desde que estejam habilitados a caçar",
+        "en": "provided that they are qualified to hunt",
+        "note": "desde que = provided that, followed by the subjunctive estejam."
+      }
+    ],
+    "nudge": "The licença de caça has no exemptions: ninguém. The non-resident foreigner clause belongs to the carta de caçador (question 1), not to the licence.",
+    "patterns": [],
+    "status": "draft"
+  },
+  {
+    "id": 10,
+    "language": [
+      {
+        "pt": "só coelhos",
+        "en": "only rabbits",
+        "note": "só = only; no preposition this time (compare só às narcejas in question 7): caçar takes the species with or without à."
+      },
+      {
+        "pt": "numa única região cinegética",
+        "en": "in a single hunting region",
+        "note": "única = one only, not 'unique'."
+      }
+    ],
+    "nudge": "Rabbits in one region: a licença regional, or the nacional, is all that is needed. The waterfowl licence is only for aves aquáticas.",
+    "patterns": ["so-only"],
+    "status": "draft"
+  }
+]
