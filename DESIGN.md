@@ -389,6 +389,12 @@ Four phases, each its own epic, in order.
       current IOC name.
    10. No entry is set to `reviewed` in this phase; Ross flips it while studying, through
        the app phase.
+   11. A Portuguese term whose English rendering or gloss would by itself pick the keyed
+       option stays in Portuguese, without a gloss, in the stem and the options; the rest
+       of the sentence is translated. This is the case in a question that asks for a
+       name or what a name means (what groups of boar are called, which teeth are called
+       navalhas, the name of a young boar under six months, what brama is). A gloss there
+       would give the answer away during a peek.
 3. **Hints**: one agent per chunk file writes `language`, `nudge` and `patterns` for
    each question by reading the sentence as a learner; a second pass checks the nudge
    agrees with the keyed answer and every `language.pt` occurs in the question.
@@ -525,3 +531,8 @@ precedent for every choice here, minus the server: this app has no backend.
   totalling 37 to 63 questions and works them one file at a time; the meaning-pass beads
   mirror the same groups one to one. Reason: agents work one chunk file at a time
   (§ 3.1, `CLAUDE.md`).
+- **2026-10-13, Names under test stay unglossed.** In a question that asks for a
+  Portuguese name, the names under test stay in Portuguese without a gloss (§ 5 step 2
+  rule 11), over the terms glossary's gloss. Reason: cac-qre.6 glossed listado and
+  farropo with their ages in the very question that asks which name fits which age, so
+  a peek gave the answer away.
