@@ -7,7 +7,7 @@
       "B": "Greater than 30 metres",
       "C": "Greater than 40 metres"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -18,7 +18,7 @@
       "B": "At the brain",
       "C": "At the thoracic cavity"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -29,18 +29,18 @@
       "B": "Wrapped in paper",
       "C": "Always be visible"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
     "id": 466,
     "question": "The hunter in the act of hunting, when using a bow or crossbow, must:",
     "options": {
-      "A": "Load the bow or crossbow, close to the place of the shot",
+      "A": "Arm the bow or crossbow, close to the place of the shot",
       "B": "Have the bow or crossbow ready to shoot",
       "C": "Always carry two arrows or bolts in the hand"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -51,7 +51,7 @@
       "B": "A power of less than 125 pounds",
       "C": "A power of less than 100 pounds"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -62,7 +62,7 @@
       "B": "With blades",
       "C": "Ogival"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -73,18 +73,18 @@
       "B": "150 metres",
       "C": "200 metres"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
     "id": 470,
     "question": "The hunter, when preparing the shot with a bow or crossbow, finds that the prey has sensed the hunter's presence and is moving away, so the hunter must:",
     "options": {
-      "A": "Shoot, swinging the hand",
+      "A": "Shoot, swinging with the animal",
       "B": "Wait for the animal to stand still",
       "C": "Shoot, calculating the point where the animal crosses the projectile"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -95,7 +95,7 @@
       "B": "22 mm",
       "C": "25 mm"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -106,7 +106,7 @@
       "B": "Put the arrows or bolts in the quiver",
       "C": "Jump with the arrow or bolt mounted on the weapon but without carrying the bow under tension"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -117,7 +117,7 @@
       "B": "Two blades",
       "C": "Two blades with a barb"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -128,7 +128,7 @@
       "B": "The thorax, because it is the place where the vital organs are found",
       "C": "The kidney, because it is a poorly protected area"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   }
 ]

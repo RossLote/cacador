@@ -7,7 +7,7 @@
       "B": "The medium podengo",
       "C": "The large podengo"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -18,7 +18,7 @@
       "B": "The large podengo",
       "C": "The foxhound"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -29,7 +29,7 @@
       "B": "European rabbit",
       "C": "Ducks and Eurasian coot"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -37,10 +37,10 @@
     "question": "Indicate which of the statements is correct:",
     "options": {
       "A": "The Portuguese pointer is the only breed of dogs adapted to partridge hunting",
-      "B": "The small podengo is commonly called cão coelheiro",
+      "B": "The small podengo is commonly called the coelheiro dog",
       "C": "The beagle is used in rabbit hunting"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -51,7 +51,7 @@
       "B": "Big-game blood-trail dogs",
       "C": "Pointing dogs"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -62,7 +62,7 @@
       "B": "Feathered",
       "C": "Furred and feathered"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -73,7 +73,7 @@
       "B": "The coelheiro is a dog of small build, smooth- or wire-coated",
       "C": "The German pointer is a dog of good size, smooth- or wire-coated"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -84,7 +84,7 @@
       "B": "Red fox",
       "C": "Wild boar"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -95,7 +95,7 @@
       "B": "The Irish setter retrieves well in water and on land",
       "C": "The podengo is a dog adapted to the hunting of feathered game"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -106,7 +106,7 @@
       "B": "Pointing dogs",
       "C": "Dogs that retrieve well"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -117,7 +117,7 @@
       "B": "Greyhounds are not considered hunting dogs in Portugal",
       "C": "The pointer is a dog of medium size and with a long coat"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -128,7 +128,7 @@
       "B": "Feathered",
       "C": "Furred and feathered"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -139,7 +139,7 @@
       "B": "Chasing Iberian hares",
       "C": "Chasing partridges"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -150,7 +150,7 @@
       "B": "Small podengo",
       "C": "Portuguese pointer"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -161,7 +161,7 @@
       "B": "Foxhound",
       "C": "Beagle"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -172,7 +172,7 @@
       "B": "Medium podengo",
       "C": "Pointer"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -183,7 +183,7 @@
       "B": "The Brittany retrieves well on land and in water",
       "C": "The terrier is intended to follow blood trails of big game"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -194,7 +194,7 @@
       "B": "The wild boar",
       "C": "The red-legged partridge"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -205,7 +205,7 @@
       "B": "English setter",
       "C": "Fox terrier"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   }
 ]
