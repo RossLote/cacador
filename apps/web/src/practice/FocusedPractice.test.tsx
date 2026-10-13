@@ -39,6 +39,28 @@ const flagsRow = () => screen.queryByRole('group', { name: flagsT.group });
 const englishOff = () => screen.getByRole('button', { name: flagsT.englishOff });
 const hintOff = () => screen.getByRole('button', { name: flagsT.hintOff });
 
+/** Makes every read of the flags store throw, leaving the other stores alone. */
+function failFlagReads() {
+  const getAll = IDBObjectStore.prototype.getAll;
+  return vi.spyOn(IDBObjectStore.prototype, 'getAll').mockImplementation(function (this: IDBObjectStore, ...args) {
+    if (this.name === 'flags') throw new DOMException('broken', 'UnknownError');
+    return getAll.apply(this, args);
+  });
+}
+
+/** Makes the next `count` flag writes (put) throw. */
+function failWrites(count = Infinity) {
+  const put = IDBObjectStore.prototype.put;
+  let left = count;
+  return vi.spyOn(IDBObjectStore.prototype, 'put').mockImplementation(function (this: IDBObjectStore, ...args) {
+    if (left-- > 0) throw new DOMException('full', 'QuotaExceededError');
+    return put.apply(this, args);
+  });
+}
+
+/** Lets the row's writes and reads under way land. */
+const settle = () => new Promise((resolve) => setTimeout(resolve, 50));
+
 async function waitForChange(from: number): Promise<number> {
   await vi.waitFor(async () => expect(await shownId()).not.toBe(from));
   return shownId();
@@ -285,8 +307,100 @@ describe('the flags row (D2)', () => {
     expect(hintOff()).toHaveAttribute('aria-pressed', 'true');
     await vi.waitFor(() => expect(hintOff()).toHaveAttribute('aria-pressed', 'false'));
     expect(put).toHaveBeenCalled();
+    expect(screen.getByText(flagsT.saveFailed)).toBeInTheDocument();
     expect(screen.queryByRole('textbox')).not.toBeInTheDocument();
     expect(await getFlags(1)).toEqual([]);
+  });
+
+  it('a failed Save says so and keeps the field open with the typed note (cac-eil.41)', async () => {
+    const user = userEvent.setup();
+    renderPractice();
+    await shownId();
+    await answer(user);
+    await vi.waitFor(() => expect(englishOff()).toBeEnabled());
+    await user.click(englishOff());
+    await vi.waitFor(async () => expect(await getFlags(1)).toEqual([expect.objectContaining({ kind: 'translation', note: '' })]));
+    const writes = failWrites();
+    await user.type(screen.getByRole('textbox', { name: flagsT.englishNote }), 'option B{Enter}');
+    await vi.waitFor(() => expect(writes).toHaveBeenCalled());
+    await settle();
+    expect(screen.getByRole('textbox', { name: flagsT.englishNote })).toHaveValue('option B');
+    expect(englishOff()).toHaveAttribute('aria-pressed', 'true');
+    expect(screen.queryByText(flagsT.saved)).not.toBeInTheDocument();
+    expect(screen.getByText(flagsT.saveFailed)).toBeInTheDocument();
+    expect(await getFlags(1)).toEqual([expect.objectContaining({ kind: 'translation', note: '' })]);
+  });
+
+  it('a failed write whose re-read fails too shows the row as unknown, never as set (cac-eil.41)', async () => {
+    const user = userEvent.setup();
+    renderPractice();
+    await shownId();
+    await answer(user);
+    await vi.waitFor(() => expect(hintOff()).toBeEnabled());
+    await vi.waitFor(async () => expect(await listAnswers()).toHaveLength(1));
+    const writes = failWrites();
+    failFlagReads();
+    fireEvent.click(hintOff());
+    await vi.waitFor(() => expect(writes).toHaveBeenCalled());
+    await settle();
+    expect(hintOff()).toHaveAttribute('aria-pressed', 'false');
+    expect(hintOff()).toBeDisabled();
+    expect(englishOff()).toBeDisabled();
+    expect(screen.queryByRole('textbox')).not.toBeInTheDocument();
+    expect(screen.getByText(flagsT.loadFailed)).toBeInTheDocument();
+  });
+
+  it('re-reads the row after a failed write only once the writes queued behind it have landed (cac-eil.36)', async () => {
+    const user = userEvent.setup();
+    renderPractice();
+    await shownId();
+    await answer(user);
+    await vi.waitFor(() => expect(hintOff()).toBeEnabled());
+    await vi.waitFor(async () => expect(await listAnswers()).toHaveLength(1));
+    failWrites(1);
+    // Both taps in one tick: the hint write is queued behind the English one, which fails.
+    fireEvent.click(englishOff());
+    fireEvent.click(hintOff());
+    await vi.waitFor(async () => expect(await getFlags(1)).toEqual([expect.objectContaining({ kind: 'hint' })]));
+    await settle();
+    expect(englishOff()).toHaveAttribute('aria-pressed', 'false');
+    expect(hintOff()).toHaveAttribute('aria-pressed', 'true');
+    expect(screen.getByRole('textbox', { name: flagsT.hintNote })).toBeInTheDocument();
+    expect(screen.getByText(flagsT.saveFailed)).toBeInTheDocument();
+  });
+
+  it('shows Saved only while the field still holds the note that was written (cac-eil.37)', async () => {
+    const user = userEvent.setup();
+    renderPractice();
+    await shownId();
+    await answer(user);
+    await vi.waitFor(() => expect(hintOff()).toBeEnabled());
+    await user.click(hintOff());
+    const field = screen.getByRole('textbox', { name: flagsT.hintNote });
+    await vi.waitFor(async () => expect(await getFlags(1)).toEqual([expect.objectContaining({ kind: 'hint' })]));
+    fireEvent.change(field, { target: { value: 'wrong' } });
+    // Save, then keep typing before the write lands.
+    fireEvent.click(screen.getByRole('button', { name: flagsT.save }));
+    fireEvent.change(field, { target: { value: 'wrong verb' } });
+    await vi.waitFor(async () => expect(await getFlags(1)).toEqual([expect.objectContaining({ note: 'wrong' })]));
+    await settle();
+    expect(field).toHaveValue('wrong verb');
+    expect(screen.queryByText(flagsT.saved)).not.toBeInTheDocument();
+  });
+
+  it('a row whose flags cannot be read says so and keeps its buttons disabled (cac-eil.42)', async () => {
+    await setFlag(1, 'translation', 'option B mistranslated');
+    const user = userEvent.setup();
+    renderPractice();
+    await shownId();
+    const reads = failFlagReads();
+    await answer(user);
+    await settle();
+    expect(englishOff()).toBeDisabled();
+    expect(hintOff()).toBeDisabled();
+    expect(screen.getByText(flagsT.loadFailed)).toBeInTheDocument();
+    reads.mockRestore();
+    expect(await getFlags(1)).toEqual([expect.objectContaining({ kind: 'translation', note: 'option B mistranslated' })]);
   });
 
   it('has an English and a Portuguese string for every flags key', () => {

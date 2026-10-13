@@ -15,6 +15,12 @@ interface Shown {
   selected?: OptionKey;
 }
 
+/** A check that stays true until `generation` moves on (a new pool, or the page gone). */
+function staysCurrent(generation: { readonly current: number }): () => boolean {
+  const at = generation.current;
+  return () => generation.current === at;
+}
+
 /**
  * The practice loop (DESIGN.md § 6.4): one question drawn by weight from the
  * pool outside the recent window; tapping an option (or A, B, C, 1, 2, 3)
@@ -22,7 +28,10 @@ interface Shown {
  * The hint panel opens only when asked and closes on Next (D23); the peek is
  * shared by the card's hold button and Space (D9). Once answered, the flags
  * row (D2) shows under the result. `pool` is the ids to draw from
- * (usePracticePool); a new array starts a new draw.
+ * (usePracticePool); a new array starts a new draw, and a draw under way for
+ * the old pool, or for a page that has gone, draws nothing. An answer that
+ * cannot be written keeps its result on screen, says in one line that it was
+ * not saved (DESIGN.md § 6.9), and Next still draws.
  */
 export function PracticeSession({ pool }: { pool: readonly number[] }) {
   const { t } = useI18n();
@@ -31,12 +40,16 @@ export function PracticeSession({ pool }: { pool: readonly number[] }) {
   const [hintOpen, setHintOpen] = useState(false);
   /** Storage could not be read, so no question could be drawn (DESIGN.md § 6.9). */
   const [failed, setFailed] = useState(false);
+  /** The answer on screen could not be written (DESIGN.md § 6.9). */
+  const [answerNotSaved, setAnswerNotSaved] = useState(false);
   /** The answer being written; the next draw waits for it, so its weights count it. */
   const recording = useRef<Promise<unknown>>(Promise.resolve());
   /** The draw already answered, so a second tap or key in the same frame records nothing. */
   const answeredDraw = useRef<Shown>(undefined);
   const advancing = useRef(false);
   const top = useRef<HTMLDivElement>(null);
+  /** Changes whenever the pool changes or the page goes, so a draw begun before then can tell it is stale. */
+  const generation = useRef(0);
 
   /** The next id by the model's weights, once the last answer is written; nothing is drawn for a stale caller. */
   const drawNext = useCallback(
@@ -52,20 +65,22 @@ export function PracticeSession({ pool }: { pool: readonly number[] }) {
   const show = useCallback((id: number) => {
     setShown({ id });
     setHintOpen(false);
+    setAnswerNotSaved(false);
   }, []);
 
   useEffect(() => {
-    let current = true;
-    void drawNext(() => current).then(
+    generation.current += 1;
+    const isCurrent = staysCurrent(generation);
+    void drawNext(isCurrent).then(
       (id) => {
-        if (current && id !== undefined) show(id);
+        if (isCurrent() && id !== undefined) show(id);
       },
       () => {
-        if (current) setFailed(true);
+        if (isCurrent()) setFailed(true);
       },
     );
     return () => {
-      current = false;
+      generation.current += 1;
     };
   }, [drawNext, show]);
 
@@ -77,12 +92,13 @@ export function PracticeSession({ pool }: { pool: readonly number[] }) {
       if (shown === undefined || question === undefined || answeredDraw.current === shown) return;
       answeredDraw.current = shown;
       setShown({ id: shown.id, selected: option });
+      // The next draw waits for this write and then shows the next question, so a failure always lands first.
       recording.current = recordAnswer({
         questionId: shown.id,
         chosen: option,
         correct: option === question.answer,
         mode: 'practice',
-      }).catch(() => undefined);
+      }).catch(() => setAnswerNotSaved(true));
     },
     [shown, question],
   );
@@ -90,14 +106,19 @@ export function PracticeSession({ pool }: { pool: readonly number[] }) {
   const next = useCallback(() => {
     if (advancing.current) return;
     advancing.current = true;
-    void drawNext(() => true)
-      .then((id) => {
-        if (id === undefined) return;
-        show(id);
-        if (document.scrollingElement) document.scrollingElement.scrollTop = 0;
-        top.current?.focus({ preventScroll: true });
-      })
-      .catch(() => setFailed(true))
+    const isCurrent = staysCurrent(generation);
+    void drawNext(isCurrent)
+      .then(
+        (id) => {
+          if (!isCurrent() || id === undefined) return;
+          show(id);
+          if (document.scrollingElement) document.scrollingElement.scrollTop = 0;
+          top.current?.focus({ preventScroll: true });
+        },
+        () => {
+          if (isCurrent()) setFailed(true);
+        },
+      )
       .finally(() => {
         advancing.current = false;
       });
@@ -136,6 +157,11 @@ export function PracticeSession({ pool }: { pool: readonly number[] }) {
           )
         }
       />
+      {answerNotSaved && (
+        <p role="status" className="text-sm text-destructive">
+          {t.practice.answerNotSaved}
+        </p>
+      )}
       {answered && <FlagsRow key={question.id} questionId={question.id} />}
     </div>
   );

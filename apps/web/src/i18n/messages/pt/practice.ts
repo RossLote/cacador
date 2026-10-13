@@ -5,6 +5,7 @@ export const practice: Messages['practice'] = {
   next: 'Seguinte',
   loading: 'A escolher uma pergunta…',
   loadFailed: 'Não foi possível ler o progresso neste dispositivo, por isso não foi escolhida nenhuma pergunta. Recarregue a página para tentar de novo.',
+  answerNotSaved: 'Não foi possível guardar esta resposta neste dispositivo, por isso não conta para o seu progresso.',
   focusedOn: 'A praticar',
   flags: {
     group: 'Assinalar um problema nesta pergunta',
@@ -14,6 +15,8 @@ export const practice: Messages['practice'] = {
     hintNote: 'O que está errado na dica',
     save: 'Guardar',
     saved: 'Guardado',
+    saveFailed: 'Não foi possível guardar esta alteração neste dispositivo.',
+    loadFailed: 'Não foi possível ler as sinalizações desta pergunta neste dispositivo.',
   },
   card: {
     questionNumber: (id: number) => `Pergunta ${id}`,
