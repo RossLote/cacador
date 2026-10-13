@@ -7,7 +7,7 @@
       "B": "Game species roam freely",
       "C": "Game species breed and feed"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -18,7 +18,7 @@
       "B": "Game species neither breed nor feed",
       "C": "The practice of hunting is prohibited"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -29,7 +29,7 @@
       "B": "Those where the practice of hunting is not permitted",
       "C": "The hunting training grounds and the game refuge areas"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -40,7 +40,7 @@
       "B": "The tourist hunting zones",
       "C": "The areas under maritime jurisdiction"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -51,7 +51,7 @@
       "B": "The national hunting zones",
       "C": "The areas under maritime jurisdiction"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -62,7 +62,7 @@
       "B": "Only the no-hunting areas and the hunting training grounds",
       "C": "All the grounds where the practice of hunting is prohibited"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -73,7 +73,7 @@
       "B": "Game refuge area",
       "C": "Municipal hunting zone"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -84,7 +84,7 @@
       "B": "Areas under maritime jurisdiction",
       "C": "Protection areas"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -95,7 +95,7 @@
       "B": "To search for, pursue and flush big-game species with the help of dogs",
       "C": "To search for, pursue and flush big-game species without the help of dogs"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -106,7 +106,7 @@
       "B": "In which the practice of hunting may be carried out",
       "C": "That runs between 15 August and the last Sunday of the month of February of the following year"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -117,7 +117,7 @@
       "B": "Decoy handlers",
       "C": "Houndsmen"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -128,7 +128,7 @@
       "B": "The span of time in which each of the species may be hunted",
       "C": "The period stipulated in the hunting calendar for the practice of hunting small-game species"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -139,7 +139,7 @@
       "B": "Is permitted only when moving between hide positions and in the hides",
       "C": "Is permitted provided that one shoots with the engine running"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -150,18 +150,18 @@
       "B": "Ducks, Eurasian woodcock and Eurasian coot",
       "C": "Ducks, snipe and Eurasian coot"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
     "id": 25,
     "question": "What offence does a hunter commit who, in the month of October, in a hunting zone, uses ten dogs in partridge hunting by the walked-up method?",
     "options": {
-      "A": "He uses a number of dogs greater than that permitted",
-      "B": "He hunts in a month in which the hunting of this species cannot be authorised",
-      "C": "He uses a hunting method prohibited for the species in the month of October"
+      "A": "They use a number of dogs greater than that permitted",
+      "B": "They hunt in a month in which the hunting of this species cannot be authorised",
+      "C": "They use a hunting method prohibited for the species in the month of October"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -172,7 +172,7 @@
       "B": "The span of time in which a hunting licence is valid",
       "C": "The period that runs between 1 June and 31 May of the following year"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -183,7 +183,7 @@
       "B": "Red fox",
       "C": "Wild boar"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -194,7 +194,7 @@
       "B": "Pigeons",
       "C": "Ducks"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -205,7 +205,7 @@
       "B": "Iberian hare",
       "C": "Rabbit"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -216,7 +216,7 @@
       "B": "15 dogs and 2 puppies",
       "C": "50 dogs"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -227,7 +227,7 @@
       "B": "100",
       "C": "Unlimited"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -238,7 +238,7 @@
       "B": "It is prohibited to hunt ducks between sunrise and sunset",
       "C": "It is prohibited to hunt in unmanaged hunting grounds on Thursdays"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -249,7 +249,7 @@
       "B": "In the hunting of big-game species, by the hide method, which is authorised in the period of the full moon",
       "C": "In the hunting of pigeons, thrushes and common starling, which is only permitted until 17 hours"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -260,7 +260,7 @@
       "B": "Small-game species",
       "C": "Waterfowl"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -271,7 +271,7 @@
       "B": "Snipe and European golden plover",
       "C": "The Eurasian coot and common moorhen"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -282,7 +282,7 @@
       "B": "May not transport ammunition",
       "C": "May not transport firearms, bow or crossbow packed in a case or bag"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -293,7 +293,7 @@
       "B": "One search dog and three greyhounds for each Iberian hare",
       "C": "Three search dogs and one greyhound for each Iberian hare"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -304,7 +304,7 @@
       "B": "Ten dogs in European rabbit hunting, by the driven method",
       "C": "Two greyhounds and two search dogs for each Iberian hare, in Iberian hare coursing"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -315,7 +315,7 @@
       "B": "Driven",
       "C": "Stalking"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -326,7 +326,7 @@
       "B": "Driven",
       "C": "From a hide"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -337,7 +337,7 @@
       "B": "May be used in the control of predators",
       "C": "May not be used in hunting"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -348,7 +348,7 @@
       "B": "May be used in the hunting of thrushes",
       "C": "May not be used in hunting"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -359,7 +359,7 @@
       "B": "In which each of the species may be hunted",
       "C": "In which one may only hunt migratory species"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -370,7 +370,7 @@
       "B": "Hunting dogs and horse",
       "C": "Firearms"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -381,7 +381,7 @@
       "B": "There is no limit.",
       "C": "That set in the annual hunting calendar."
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -392,7 +392,7 @@
       "B": "Is permitted in the hunting of ducks and thrushes",
       "C": "Is permitted in the hunting of ducks, red fox, red deer and roe deer"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -403,7 +403,7 @@
       "B": "In the hunting of big-game species, red fox and Iberian hare, and in falconry",
       "C": "Only in the hunting of Iberian hare by falconry"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -414,7 +414,7 @@
       "B": "Dogs and horse",
       "C": "Firearms"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -425,7 +425,7 @@
       "B": "Driven hunt and walked-up",
       "C": "Montaria (driven big-game hunt with hounds) and walked-up"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -434,9 +434,9 @@
     "options": {
       "A": "The use of a boat is permitted in the hunting of snipe and Eurasian woodcock",
       "B": "The use of decoys for snipe and plovers is permitted",
-      "C": "In montarias (driven big-game hunt with hounds) there is no limit on the number of dogs to be used"
+      "C": "In montarias (driven big-game hunts with hounds) there is no limit on the number of dogs to be used"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -447,18 +447,18 @@
       "B": "Coursing",
       "C": "Falconry"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
     "id": 52,
-    "question": "A hunter may not use a firearm when he intends to hunt by the method of:",
+    "question": "A hunter may not use a firearm when they intend to hunt by the method of:",
     "options": {
       "A": "Coursing",
       "B": "Montaria (driven big-game hunt with hounds)",
       "C": "Walked-up"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -469,7 +469,7 @@
       "B": "It is permitted to hunt all species classified as game",
       "C": "It is permitted to hunt any species that causes damage to agriculture"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -480,7 +480,7 @@
       "B": "Three assistants",
       "C": "One assistant"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -491,7 +491,7 @@
       "B": "To search for, pursue and flush big-game species with the help of dogs",
       "C": "To search for, pursue and flush big-game species without the help of dogs"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -502,7 +502,7 @@
       "B": "Driven hunts for red foxes may be held on Wednesdays",
       "C": "Red fox coursing may be carried out on Wednesdays and Saturdays"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -513,7 +513,7 @@
       "B": "Thursdays, Sundays and compulsory national public holidays",
       "C": "Thursdays, Sundays, compulsory national public holidays and municipal public holidays"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -524,7 +524,7 @@
       "B": "Is only permitted on three days of the week of the concession holder's choosing",
       "C": "Is permitted on any day of the week only in tourist hunting zones"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   }
 ]

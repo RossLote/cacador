@@ -1,4 +1,4 @@
-import { cpSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { cpSync, mkdtempSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -80,6 +80,18 @@ function expectFailure(change: (dir: string) => void, message: RegExp): void {
   expect((error as Error).message).toMatch(message);
 }
 
+/**
+ * The translation counts read straight from packages/data/translations/en, so a translation or
+ * meaning-pass bead that adds a file or flips a status does not have to edit this test.
+ */
+function translationsOnDisk() {
+  const dir = fileURLToPath(new URL('../translations/en', import.meta.url));
+  const files = readdirSync(dir).filter((f) => f.endsWith('.json'));
+  const entries = files.flatMap((f) => JSON.parse(readFileSync(join(dir, f), 'utf8')) as { status: string }[]);
+  const count = (status: string) => entries.filter((e) => e.status === status).length;
+  return { entries: entries.length, files: files.length, draft: count('draft'), checked: count('checked'), reviewed: count('reviewed') };
+}
+
 describe('validate on the real data', () => {
   it('passes and returns the counts of DESIGN.md § 2 and § 3, the translations on disk and the glossary sizes', () => {
     expect(validate()).toEqual({
@@ -89,7 +101,7 @@ describe('validate on the real data', () => {
       topics: 29,
       images: 15,
       imageQuestions: 18,
-      translations: { entries: 58, files: 2, draft: 58, checked: 0, reviewed: 0 },
+      translations: translationsOnDisk(),
       glossaries: { species: 99, terms: 166 },
     });
   });
