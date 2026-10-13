@@ -72,9 +72,11 @@ validator (§ 4) catches a regression.
 7. Curly quotes (“espelho alar”) and the apostrophe in galinha-d’água are kept as they
    are in the PDF.
 8. The `pdftotext` mode matters. The default mode drops the hyphen at a wrapped line end
-   (`pôr-do-` / `sol` comes out `pôr-dosol`, 411 and 455) and `-raw` drops spaces on some
-   justified lines (`Desaltoedecetraria`, 443, 455, 461). The extractor uses `-layout`, which
-   keeps both, and rejoins a line ending in `-` to the next without a space.
+   (`pôr-do-` / `sol` comes out `pôr-dosol` in 411 and `perdiz-` / `vermelha` comes out
+   `perdizvermelha` in 455) and `-raw` drops spaces on some justified lines (412 options B
+   and C, 443, 455 and 461, for example `Desaltoedecetraria`). The extractor uses
+   `-layout`, which keeps both, and rejoins a line ending in `-` to the next without a
+   space.
 
 ### 2.3 Images
 
@@ -277,7 +279,8 @@ the file and id. Rules:
    manifest and one of that topic's ranges contains the id.
 3. `options` has exactly the keys A, B, C, each a non-empty single-line string;
    `answer` is one of them; no field contains `*`, a section heading, two consecutive
-   spaces, or leading or trailing whitespace.
+   spaces, whitespace other than a plain space (a tab, a no-break space, U+2028), or
+   leading or trailing whitespace.
 4. The questions the manifest lists under `images` carry that `image`, no other
    question has one, every listed file exists in `images/`, and every file in `images/`
    is listed.

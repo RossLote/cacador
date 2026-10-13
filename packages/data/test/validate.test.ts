@@ -268,6 +268,22 @@ describe('rule 3: options and text', () => {
     expectFailure((dir) => editRows(dir, 'questions/01-alfa.json', (q) => (q[0].question = 'Qual\né?')), /id 1: question is not a single line/);
   });
 
+  it.each([
+    ['U+2028', '\u2028'],
+    ['U+2029', '\u2029'],
+    ['U+0085', '\u0085'],
+  ])('fails on %s as a line break', (_name, char) => {
+    expectFailure((dir) => editRows(dir, 'questions/01-alfa.json', (q) => (q[0].question = `Qual${char}é?`)), /questions\/01-alfa\.json: id 1: question is not a single line/);
+  });
+
+  it('fails on a tab in the text', () => {
+    expectFailure((dir) => editRows(dir, 'questions/01-alfa.json', (q) => (q[0].options.A = 'Dezasseis\tanos')), /questions\/01-alfa\.json: id 1: option A contains whitespace other than a plain space/);
+  });
+
+  it('fails on a no-break space in the text', () => {
+    expectFailure((dir) => editRows(dir, 'questions/02-beta.json', (q) => (q[1].question = 'Qual\u00a0é?')), /questions\/02-beta\.json: id 4: question contains whitespace other than a plain space/);
+  });
+
   it('fails on an asterisk', () => {
     expectFailure((dir) => editRows(dir, 'questions/02-beta.json', (q) => (q[1].options.A = 'Sim*')), /questions\/02-beta\.json: id 4: option A contains "\*"/);
   });
