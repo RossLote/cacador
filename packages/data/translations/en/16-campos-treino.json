@@ -7,7 +7,7 @@
       "B": "Carry out driven hunts for wild boar",
       "C": "Train hunting dogs using non-game species"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -18,7 +18,7 @@
       "B": "Montarias (driven big-game hunts with hounds) for wild boar",
       "C": "Hunting game species of the wild fauna to train birds of prey"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -29,7 +29,7 @@
       "B": "On training grounds the users may not use hunting guns",
       "C": "On training grounds the users must hold a hunting licence"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -40,7 +40,7 @@
       "B": "Shooting practice with a crossbow",
       "C": "Training hunting dogs using wild game species"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -51,7 +51,7 @@
       "B": "The holding of montarias (driven big-game hunts with hounds)",
       "C": "The holding of driven hunts for red foxes"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   }
 ]

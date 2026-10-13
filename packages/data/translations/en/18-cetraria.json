@@ -7,7 +7,7 @@
       "B": "rabbits",
       "C": "Ducks"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -18,18 +18,18 @@
       "B": "The feeding of birds of prey must be identical to what they would consume in the wild state",
       "C": "The food given to birds of prey may not have feathers or fur"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
     "id": 501,
-    "question": "The Eurasian goshawk is a “baixo-voo (low flight, with short-winged hawks)” bird of prey, used in the hunting of:",
+    "question": "The Eurasian goshawk is a “baixo-voo” (low flight, with short-winged hawks) bird of prey, used in the hunting of:",
     "options": {
       "A": "Furred game",
       "B": "Feathered game",
       "C": "Both feathered and furred game"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -40,7 +40,7 @@
       "B": "The Eurasian goshawk is the classic bird of hunting in baixo-voo",
       "C": "The Eurasian sparrowhawk is the classic bird of hunting in alto-voo"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -51,7 +51,7 @@
       "B": "The same size as the female",
       "C": "More agile than the female"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -62,7 +62,7 @@
       "B": "By the size",
       "C": "By the feathers"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -73,7 +73,7 @@
       "B": "The one in which the hunter uses a bow or crossbow to capture game species",
       "C": "The one in which the hunter uses traps to capture game species"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -82,9 +82,9 @@
     "options": {
       "A": "By day",
       "B": "By night",
-      "C": "Indifferently by night or by day"
+      "C": "Either by night or by day"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   }
 ]
