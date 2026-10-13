@@ -138,7 +138,7 @@ packages/data/
       manifest.mjs           dataDir and the range and image lookups both scripts share
       validate.mjs           the rule checks as functions, imported by extract.mjs and the tests
   src/
-    index.ts                 typed loader for the app and the scripts
+    index.ts                 typed loader for the app and the tests
   test/
     fixtures/valid/          a 4-question data directory the validator tests copy and break
 ```
@@ -187,12 +187,12 @@ assigned by id range (decision 2026-10-13):
 | veado | 143–157 | Red deer |
 | corco | 158–164 | Roe deer |
 | muflao | 165–167 | Mouflon |
-| perdiz | 168–197, 267 | Red-legged partridge |
-| pombos-rolas | 198–212, 268–279 | Pigeons and doves |
+| perdiz | 168–197 | Red-legged partridge |
+| pombos-rolas | 198–212, 267–279 | Pigeons and doves |
 | codorniz | 213–227 | Common quail |
 | patos | 228–255 | Ducks |
-| galinha-d-agua | 256–260 | Moorhen |
-| galeirao | 261–266 | Coot |
+| galinha-d-agua | 256–261 | Moorhen |
+| galeirao | 262–266 | Coot |
 | galinhola | 280–292 | Woodcock |
 | narcejas | 293–303 | Snipe |
 | tarambola | 304–308 | Golden plover |

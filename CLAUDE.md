@@ -102,9 +102,9 @@ pnpm workspace. Phase 1 holds one package; the web app arrives in a later phase.
 - `packages/data`: the question bank as data. `source/` holds the official PDF and a
   reference parse; `questions/` holds the Portuguese questions in 18 chunk files, one
   section or species group each, never more than 51 questions; `translations/en/` and
-  `hints/en/` mirror those file names; `images/` holds the 14 species photos;
-  `glossary/` holds species and term lists; `manifest.json` lists sections, topics and
-  chunks with their id ranges. `scripts/extract.mjs` and `scripts/validate.mjs` build
+  `hints/en/` mirror those file names; `images/` holds the 14 species photos and
+  `sinal.jpg`, the sign shared by four questions; `glossary/` holds species and term
+  lists; `manifest.json` lists sections, topics and chunks with their id ranges. `scripts/extract.mjs` and `scripts/validate.mjs` build
   and check it. `src/index.ts` is the typed loader the app will import. The layout and
   shapes are fixed in `DESIGN.md` § 3 and § 4.
 - `apps/web` (later): Vite + React 19 + TypeScript + Tailwind v4 + shadcn/ui on

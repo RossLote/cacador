@@ -5,7 +5,8 @@
   "type": "module",
   "exports": {
     ".": "./src/index.ts",
-    "./manifest.json": "./manifest.json"
+    "./manifest.json": "./manifest.json",
+    "./images/*": "./images/*"
   },
   "scripts": {
     "typecheck": "tsc -p tsconfig.json",
