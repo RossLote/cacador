@@ -26,6 +26,8 @@ import translation04 from '../translations/en/04-biologia-raposa-javali.json' wi
 import translation05 from '../translations/en/05-biologia-veado-corco.json' with { type: 'json' };
 import translation06 from '../translations/en/06-biologia-perdiz.json' with { type: 'json' };
 import translation07 from '../translations/en/07-biologia-pombos-codorniz.json' with { type: 'json' };
+import translation08 from '../translations/en/08-biologia-patos.json' with { type: 'json' };
+import translation10 from '../translations/en/10-biologia-tarambola-tordos.json' with { type: 'json' };
 
 export type OptionKey = 'A' | 'B' | 'C';
 
@@ -154,6 +156,8 @@ const translationFiles = [
   translation05,
   translation06,
   translation07,
+  translation08,
+  translation10,
 ] as (readonly Translation[])[];
 const hintFiles: readonly (readonly Hint[])[] = [];
 
