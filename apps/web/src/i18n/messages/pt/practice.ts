@@ -4,6 +4,16 @@ export const practice: Messages['practice'] = {
   title: 'Praticar',
   next: 'Seguinte',
   loading: 'A escolher uma pergunta…',
+  focusedOn: 'A praticar',
+  flags: {
+    group: 'Assinalar um problema nesta pergunta',
+    englishOff: 'O inglês está errado',
+    hintOff: 'A dica está errada',
+    englishNote: 'O que está errado no inglês',
+    hintNote: 'O que está errado na dica',
+    save: 'Guardar',
+    saved: 'Guardado',
+  },
   card: {
     questionNumber: (id: number) => `Pergunta ${id}`,
     pictureAlt: (id: number) => `A imagem da pergunta ${id}`,
