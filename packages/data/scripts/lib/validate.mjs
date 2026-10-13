@@ -311,23 +311,27 @@ function checkMirrors(dir, files) {
 
 const escapeRegExp = (text) => text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
+/** Curly apostrophes and quotes become straight ones, so a glossary name matches the bank's typography. */
+const straighten = (text) => text.replace(/\u2019/g, "'").replace(/[\u201c\u201d]/g, '"');
+
 /**
- * Rule 6: glossary/species.json is assumed to be an array of
- * { "pt": string, "scientific": string, "en": string, "group": string }.
- * For each entry whose `pt` occurs (case-insensitive, whole word) in a Portuguese question or its options,
- * the translation's question or options must contain `en` (case-insensitive); draft translations are skipped.
+ * Rule 6: glossary/species.json is an array of
+ * { "pt": string, "scientific": string, "en": string, "group": string }, every field a non-empty
+ * string and `pt` unique. For each entry whose `pt` occurs (case-insensitive) as a whole word in a
+ * Portuguese question or its options, the translation's question or options must contain `en`
+ * (case-insensitive); draft translations are skipped. A hyphen is part of the word, so "Perdiz" does
+ * not match inside "perdiz-cinzenta"; curly apostrophes and quotes are matched as straight ones. An
+ * entry that matches no question is fine: the glossary also holds species the bank never names.
  */
 function checkGlossary(dir, files, translations) {
   const rel = 'glossary/species.json';
   if (!existsSync(join(dir, rel))) return;
   const glossary = readJson(dir, rel);
   if (!Array.isArray(glossary)) fail(rel, 'does not hold a list');
-  const ptText = new Map([...files.values()].flat().map((q) => [q.id, textOf(q)]));
+  checkEntries(rel, 'species', glossary, 'pt', { pt: 'string', scientific: 'string', en: 'string', group: 'string' });
+  const ptText = new Map([...files.values()].flat().map((q) => [q.id, straighten(textOf(q))]));
   for (const entry of glossary) {
-    if (!isObject(entry) || typeof entry.pt !== 'string' || typeof entry.en !== 'string') {
-      fail(rel, 'has an entry without string "pt" and "en"');
-    }
-    const word = new RegExp(`(?<![\\p{L}\\p{N}])${escapeRegExp(entry.pt)}(?![\\p{L}\\p{N}])`, 'iu');
+    const word = new RegExp(`(?<![\\p{L}\\p{N}-])${escapeRegExp(straighten(entry.pt))}(?![\\p{L}\\p{N}-])`, 'iu');
     const en = entry.en.toLowerCase();
     for (const [id, translation] of translations) {
       if (translation.status === 'draft' || !word.test(ptText.get(id))) continue;

@@ -291,7 +291,13 @@ the file and id. Rules:
    `pt` text occurs in the question or its options.
 6. Once `glossary/species.json` exists: for every Portuguese species name in a
    question, the matching English name is present in its translation (case-insensitive).
-   Skipped for entries with status `draft`.
+   Skipped for entries with status `draft`. Every glossary entry has non-empty `pt`,
+   `scientific`, `en` and `group`, and `pt` is unique. The glossary `pt` must be the
+   surface form used in the bank: a whole-word, case-insensitive match in which a
+   hyphen counts as part of the word (`Perdiz` does not match inside `perdiz-cinzenta`),
+   curly apostrophes and quotes are read as straight ones, and a plural is its own
+   entry. An entry that matches no question is allowed, because the glossary also
+   holds species of Portaria 67/2024 that the bank never names.
 
 The manifest itself is checked first: every entry has the fields of § 3.4 with their
 types and a unique slug or file name, section ranges tile 1 to 506, chunk ranges tile

@@ -53,7 +53,7 @@ interface ManifestImage {
 interface ManifestJson {
   sections: [{ from: number; to: number; heading?: string }, { from: number; to: number; heading?: string }];
   topics: [ManifestTopic, ManifestTopic, ManifestTopic];
-  chunks: [{ file: string; from: number; to: number }, { file: string; from: number; to: number }];
+  chunks: [{ file: string; section: string; from: number; to: number }, { file: string; section: string; from: number; to: number }];
   images: [ManifestImage, ManifestImage];
 }
 
@@ -141,6 +141,21 @@ describe('manifest tiling', () => {
     );
   });
 
+  it('fails when the topic ranges of a section stop short of its end', () => {
+    expectFailure(
+      (dir) => editManifest(dir, (m) => (m.topics[2].ranges = [])),
+      /manifest\.json: topic ranges of section beta end at 3, expected 4/,
+    );
+  });
+
+  it('fails on a section with no topic', () => {
+    expectFailure((dir) => editManifest(dir, (m) => (m.topics as ManifestTopic[]).splice(1)), /manifest\.json: section beta has no topic/);
+  });
+
+  it('fails when a chunk names an unknown section', () => {
+    expectFailure((dir) => editManifest(dir, (m) => (m.chunks[0].section = 'nope')), /manifest\.json: chunk 01-alfa\.json names unknown section nope/);
+  });
+
   it('fails when a topic names an unknown section', () => {
     expectFailure((dir) => editManifest(dir, (m) => (m.topics[0].section = 'nope')), /topic alfa names unknown section nope/);
   });
@@ -176,6 +191,15 @@ describe('manifest shape', () => {
       writeText(dir, 'images/stray.jpg', '');
       editManifest(dir, (m) => m.images.push({ file: 'stray.jpg', page: 9, index: 1, questions: [999] }));
     }, /manifest\.json: image stray\.jpg names question 999, which is not in 1-4/);
+  });
+
+  it('fails on an image page or index below 1', () => {
+    expectFailure((dir) => editManifest(dir, (m) => (m.images[0].page = 0)), /manifest\.json: image q2\.jpg needs a page and index of at least 1/);
+    expectFailure((dir) => editManifest(dir, (m) => (m.images[1].index = 0)), /manifest\.json: image shared\.jpg needs a page and index of at least 1/);
+  });
+
+  it('fails on an image with an empty questions list', () => {
+    expectFailure((dir) => editManifest(dir, (m) => (m.images[0].questions = [])), /manifest\.json: image q2\.jpg names no question/);
   });
 
   it('fails when a question sits under two images', () => {
@@ -397,6 +421,17 @@ describe('rule 5: translations and hints', () => {
   });
 });
 
+interface GlossaryEntry {
+  pt: string;
+  scientific?: string;
+  en?: string;
+  group?: string;
+}
+
+/** Appends a complete glossary entry for `pt` and `en` to the glossary of `dir`. */
+const addSpecies = (dir: string, { pt, en }: { pt: string; en: string }) =>
+  editJson<GlossaryEntry[]>(dir, 'glossary/species.json', (g) => g.push({ pt, scientific: 'x', en, group: 'x' }));
+
 describe('rule 6: species names', () => {
   it('fails when a checked translation lacks the glossary English name', () => {
     expectFailure(
@@ -423,13 +458,53 @@ describe('rule 6: species names', () => {
 
   it('matches whole words only', () => {
     const dir = copyBase();
-    editJson<{ pt: string; scientific?: string; en?: string; group?: string }[]>(dir, 'glossary/species.json', (g) => g.push({ pt: 'pato', scientific: 'x', en: 'Duck', group: 'patos' }));
-    // "Um pato-real": "pato" is followed by a hyphen, so it counts as a word and "Duck" is required.
-    expect(() => validate(dir)).toThrow(/id 3: "pato" must appear as "Duck"/);
-    editJson<{ pt: string; scientific?: string; en?: string; group?: string }[]>(dir, 'glossary/species.json', (g) => {
-      g[2]!.pt = 'pat';
-    });
+    addSpecies(dir, { pt: 'pato', en: 'Duck' });
+    editRows(dir, 'questions/02-beta.json', (q) => (q[0].options.B = 'Um pato'));
+    expect(() => validate(dir)).toThrow(/translations\/en\/02-beta\.json: id 3: "pato" must appear as "Duck"/);
+    editJson<GlossaryEntry[]>(dir, 'glossary/species.json', (g) => (g[2]!.pt = 'pat'));
     expect(() => validate(dir)).not.toThrow();
+  });
+
+  it('counts a hyphen as part of the word', () => {
+    const dir = copyBase();
+    // Question 4 says "perdiz-vermelha": "Perdiz" alone must not fire on it, nor "pato" on "pato-real".
+    addSpecies(dir, { pt: 'Perdiz', en: 'Grey partridge' });
+    addSpecies(dir, { pt: 'pato', en: 'Duck' });
+    expect(() => validate(dir)).not.toThrow();
+  });
+
+  it('matches a straight apostrophe in the glossary to the bank\u2019s curly one', () => {
+    const dir = copyBase();
+    editRows(dir, 'questions/02-beta.json', (q) => (q[0].options.B = 'Uma galinha-d\u2019água'));
+    addSpecies(dir, { pt: "Galinha-d'água", en: 'Moorhen' });
+    expect(() => validate(dir)).toThrow(/translations\/en\/02-beta\.json: id 3: "Galinha-d'água" must appear as "Moorhen"/);
+    editRows(dir, 'translations/en/02-beta.json', (t) => (t[0].options.B = 'A moorhen'));
+    expect(() => validate(dir)).not.toThrow();
+  });
+
+  it('matches curly double quotes in the bank to straight ones in the glossary', () => {
+    const dir = copyBase();
+    editRows(dir, 'questions/02-beta.json', (q) => (q[0].options.B = 'Uma \u201cfrisada\u201d'));
+    addSpecies(dir, { pt: '"frisada"', en: 'Gadwall' });
+    editRows(dir, 'translations/en/02-beta.json', (t) => (t[0].options.B = 'A pochard'));
+    expect(() => validate(dir)).toThrow(/id 3: ""frisada"" must appear as "Gadwall"/);
+  });
+
+  it('accepts a glossary entry that matches no question', () => {
+    const dir = copyBase();
+    addSpecies(dir, { pt: 'Abetarda', en: 'Great bustard' });
+    expect(() => validate(dir)).not.toThrow();
+  });
+
+  it.each([
+    ['an empty en', (g: GlossaryEntry[]) => (g[0]!.en = ''), /glossary\/species\.json: species Pato-real has no non-empty string "en"/],
+    ['an empty pt', (g: GlossaryEntry[]) => (g[0]!.pt = ''), /glossary\/species\.json: species #1 has no non-empty string "pt"/],
+    ['a duplicate pt', (g: GlossaryEntry[]) => (g[1]!.pt = 'Pato-real'), /glossary\/species\.json: species Pato-real is listed twice/],
+    ['no scientific name', (g: GlossaryEntry[]) => delete g[0]!.scientific, /glossary\/species\.json: species Pato-real has no non-empty string "scientific"/],
+    ['no group', (g: GlossaryEntry[]) => delete g[1]!.group, /glossary\/species\.json: species Perdiz-vermelha has no non-empty string "group"/],
+    ['an entry that is not an object', (g: GlossaryEntry[]) => g.push('x' as unknown as GlossaryEntry), /glossary\/species\.json: species #3 is not an object/],
+  ])('rejects a glossary entry with %s', (_name, change, message) => {
+    expectFailure((dir) => editJson<GlossaryEntry[]>(dir, 'glossary/species.json', change), message);
   });
 
   it('rejects a glossary that is not a list', () => {
