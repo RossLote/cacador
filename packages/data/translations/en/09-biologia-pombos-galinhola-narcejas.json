@@ -1,0 +1,409 @@
+[
+  {
+    "id": 267,
+    "question": "The picture shows:",
+    "options": {
+      "A": "A red-legged partridge",
+      "B": "A European turtle dove",
+      "C": "A common wood pigeon"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 268,
+    "question": "The picture shows:",
+    "options": {
+      "A": "A European turtle dove",
+      "B": "A rock dove",
+      "C": "A common wood pigeon"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 269,
+    "question": "Pigeons can be characterised by having:",
+    "options": {
+      "A": "Robust appearance, pointed wings, small head, long tail and fast flight",
+      "B": "Robust appearance, rounded wings, large head, long tail and fast flight",
+      "C": "Robust appearance, pointed wings, medium head, short tail and very fast flight"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 270,
+    "question": "Normally, pigeons, outside the breeding season:",
+    "options": {
+      "A": "Live in pairs",
+      "B": "Live alone",
+      "C": "Live in flocks"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 271,
+    "question": "The common wood pigeon is distinguished from the other pigeons by having:",
+    "options": {
+      "A": "Two black bars on the wings",
+      "B": "Two white patches on the sides of the neck and of the wings",
+      "C": "Black wing tips and white rump"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 272,
+    "question": "Indicate which of the pigeons has the greatest wingspan:",
+    "options": {
+      "A": "Stock dove",
+      "B": "Rock dove",
+      "C": "Common wood pigeon"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 273,
+    "question": "The common wood pigeon is distinguished from the stock dove and the rock dove by being:",
+    "options": {
+      "A": "The smallest of the three pigeons",
+      "B": "The largest of the three pigeons",
+      "C": "Completely dark"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 274,
+    "question": "Most of the population of common wood pigeon that visits us comes:",
+    "options": {
+      "A": "From northern Europe",
+      "B": "From southern Europe",
+      "C": "From the Middle East"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 275,
+    "question": "The common wood pigeon normally builds its nest in:",
+    "options": {
+      "A": "Trees, at generally great heights",
+      "B": "Holes in trees and in buildings",
+      "C": "Low trees and cliffs"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 276,
+    "question": "Of the pigeons found in our country, which of them has the least widespread distribution?",
+    "options": {
+      "A": "Rock dove",
+      "B": "Common wood pigeon",
+      "C": "Stock dove"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 277,
+    "question": "Of the pigeons found in our country, which of them is partially migratory?",
+    "options": {
+      "A": "Common wood pigeon",
+      "B": "Rock dove",
+      "C": "Stock dove"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 278,
+    "question": "To which of the pigeons found in our country is the name seixa also given?",
+    "options": {
+      "A": "Common wood pigeon",
+      "B": "Rock dove",
+      "C": "Stock dove"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 279,
+    "question": "The diet of the rock dove is based on:",
+    "options": {
+      "A": "Acorns and olives",
+      "B": "Grains and seeds",
+      "C": "Grains, berries, seeds and acorns"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 280,
+    "question": "The picture shows:",
+    "options": {
+      "A": "A common snipe",
+      "B": "A Eurasian woodcock",
+      "C": "A European golden plover"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 281,
+    "question": "Which of the sentences is wrong?",
+    "options": {
+      "A": "The Eurasian woodcock is a migratory bird throughout the national territory",
+      "B": "The Eurasian woodcock is a resident bird in the Azores",
+      "C": "The Eurasian woodcock is a migratory bird in mainland Portugal"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 282,
+    "question": "The period of activity of the Eurasian woodcock is fundamentally:",
+    "options": {
+      "A": "Diurnal and nocturnal",
+      "B": "Crepuscular and diurnal",
+      "C": "Crepuscular and nocturnal"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 283,
+    "question": "The Eurasian woodcock is a bird:",
+    "options": {
+      "A": "Solitary",
+      "B": "That is found in pairs",
+      "C": "That lives in flocks"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 284,
+    "question": "The Eurasian woodcock is characterised by having:",
+    "options": {
+      "A": "Narrow and rounded wings, long and straight bill",
+      "B": "Broad and rounded wings, short and straight bill",
+      "C": "Broad and rounded wings, long and straight bill"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 285,
+    "question": "The flight of the Eurasian woodcock is characterised by being:",
+    "options": {
+      "A": "Fast and silent among the trees",
+      "B": "Fast and straight",
+      "C": "Slow and silent with the bill pointed towards the ground"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 286,
+    "question": "When in flight, the Eurasian woodcock shows a figure:",
+    "options": {
+      "A": "Long and slender, with round wings and bill pointed towards the ground",
+      "B": "Stocky, with round wings and bill pointed towards the ground",
+      "C": "Stocky, with narrow wings and bill pointed towards the ground"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 287,
+    "question": "The Eurasian woodcock, for its breeding, seeks:",
+    "options": {
+      "A": "Countries of central and southern Europe",
+      "B": "Countries of North Africa",
+      "C": "Countries of central and northern Europe"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 288,
+    "question": "The Eurasian woodcock, in mainland Portugal, is a migratory bird:",
+    "options": {
+      "A": "Summer",
+      "B": "Wintering",
+      "C": "Spring"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 289,
+    "question": "The Eurasian woodcock is generally found:",
+    "options": {
+      "A": "In very dense and closed woods",
+      "B": "In woods associated with areas of cultivation",
+      "C": "In woods with shrub vegetation"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 290,
+    "question": "What type of areas does the Eurasian woodcock prefer for feeding?",
+    "options": {
+      "A": "Cool and damp ground",
+      "B": "Stony and damp ground",
+      "C": "Clayey and dry ground"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 291,
+    "question": "The Eurasian woodcock:",
+    "options": {
+      "A": "Is normally found in flocks of large size",
+      "B": "Is normally found in flocks of small size",
+      "C": "Is a solitary bird"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 292,
+    "question": "What is the preferred habitat of the Eurasian woodcock:",
+    "options": {
+      "A": "Open and damp areas",
+      "B": "Holm-oak wood pasture",
+      "C": "Woods with shrub vegetation and cool and damp ground"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 293,
+    "question": "The picture shows a:",
+    "options": {
+      "A": "Jack snipe",
+      "B": "Common snipe",
+      "C": "Eurasian woodcock"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 294,
+    "question": "Snipe are generally linked to:",
+    "options": {
+      "A": "Woods with enough shrub vegetation to provide them with cover",
+      "B": "Areas with light and damp soils",
+      "C": "Large cultivated plains in inland areas"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 295,
+    "question": "Snipe, in order to feed:",
+    "options": {
+      "A": "Scratch the ground with their feet in search of the invertebrates they feed on",
+      "B": "Use the bill to extract from the earth the invertebrates they feed on",
+      "C": "Chase the invertebrates they feed on"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 296,
+    "question": "Snipe are characterised by having:",
+    "options": {
+      "A": "Large bill, relatively short legs and neck",
+      "B": "Relatively short bill, legs and neck",
+      "C": "Relatively long bill, legs and neck"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 297,
+    "question": "Snipe are animals:",
+    "options": {
+      "A": "Very sociable",
+      "B": "Not very sociable",
+      "C": "Summer visitors"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 298,
+    "question": "Snipe, for breeding, seek:",
+    "options": {
+      "A": "Countries of central and southern Europe",
+      "B": "Countries of North Africa",
+      "C": "Countries of central and northern Europe"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 299,
+    "question": "In our country, the snipe is a bird:",
+    "options": {
+      "A": "Summer visitor",
+      "B": "Winter visitor",
+      "C": "Partially migratory"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 300,
+    "question": "How many species of snipe occur in our country?",
+    "options": {
+      "A": "1",
+      "B": "2",
+      "C": "3"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 301,
+    "question": "Which of the occurring species of snipe is extremely rare?",
+    "options": {
+      "A": "Common snipe",
+      "B": "Jack snipe",
+      "C": "Great snipe"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 302,
+    "question": "Of the species of snipe that can be hunted, which is the one that has the greatest wingspan?",
+    "options": {
+      "A": "Great snipe",
+      "B": "Common snipe",
+      "C": "Jack snipe"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 303,
+    "question": "The diet of snipe is based on:",
+    "options": {
+      "A": "Molluscs, insects, plant fragments, grains",
+      "B": "Insects, seeds and aquatic plants",
+      "C": "Rice, maize, snails and small frogs"
+    },
+    "status": "draft",
+    "notes": ""
+  }
+]
