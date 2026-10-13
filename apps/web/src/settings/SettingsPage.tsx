@@ -1,4 +1,4 @@
-import { useId, useRef, useState, type ChangeEvent } from 'react';
+import { useId, useRef, useState, type ChangeEvent, type MouseEvent } from 'react';
 import { LinkButton } from '@/components/LinkButton';
 import {
   AlertDialog,
@@ -57,15 +57,21 @@ export function SettingsPage() {
    * The file Share hands over, made fresh for each tap but started on the
    * press (pointerdown), so the read of the whole log runs while the finger is
    * down and navigator.share still falls inside the tap's user activation,
-   * which a browser may let expire. A keyboard press has no pointerdown and
-   * makes it on the click. Like Export's, it holds what the device holds and
-   * today's date at the moment of the tap.
+   * which a browser may let expire. Like Export's, it holds what the device
+   * holds and today's date at the moment of the tap. Only the click that press
+   * produces uses it: a press the browser takes over (pointercancel, a scroll)
+   * drops it, and a keyboard click (detail 0), which has no press of its own,
+   * always makes a fresh file, so a press dragged off Share never leaves an
+   * older file for a later Share.
    */
   const shareFile = useRef<Promise<File>>(undefined);
   const prepareShare = () => {
     shareFile.current = makeProgressFile();
     // Its failure is reported by the click that uses it.
     shareFile.current.catch(() => undefined);
+  };
+  const dropShare = () => {
+    shareFile.current = undefined;
   };
 
   /** A new Export or Share starts with no line from the last action (an import still running keeps its own). */
@@ -80,10 +86,11 @@ export function SettingsPage() {
     }
   }
 
-  async function share() {
+  async function share(event: MouseEvent) {
     startAction();
-    const pending = shareFile.current ?? makeProgressFile();
+    const pressed = event.detail === 0 ? undefined : shareFile.current;
     shareFile.current = undefined;
+    const pending = pressed ?? makeProgressFile();
     let file: File;
     try {
       file = await pending;
@@ -184,7 +191,14 @@ export function SettingsPage() {
             {t.settings.export}
           </Button>
           {canShare && (
-            <Button variant="outline" size="lg" className="flex-1" onPointerDown={prepareShare} onClick={() => void share()}>
+            <Button
+              variant="outline"
+              size="lg"
+              className="flex-1"
+              onPointerDown={prepareShare}
+              onPointerCancel={dropShare}
+              onClick={(event) => void share(event)}
+            >
               {t.settings.share}
             </Button>
           )}

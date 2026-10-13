@@ -29,13 +29,14 @@ import { withoutLogId } from '@/storage/state';
 import { SettingsPage } from './SettingsPage';
 import { correctOf, wrongOf } from '../../test/fixtures';
 
-/** Makes the next progress file fail to build, as when storage cannot be read, then work again. */
-const fileFaults = vi.hoisted(() => ({ failNext: false }));
+/** Makes the next progress file fail to build, as when storage cannot be read, then work again; counts the files started. */
+const fileFaults = vi.hoisted(() => ({ failNext: false, made: 0 }));
 vi.mock('./progressFile', async (importOriginal) => {
   const actual = await importOriginal<typeof import('./progressFile')>();
   return {
     ...actual,
     makeProgressFile: (...args: Parameters<typeof actual.makeProgressFile>) => {
+      fileFaults.made += 1;
       if (!fileFaults.failNext) return actual.makeProgressFile(...args);
       fileFaults.failNext = false;
       return Promise.reject(new Error('storage read failed'));
@@ -45,6 +46,7 @@ vi.mock('./progressFile', async (importOriginal) => {
 
 afterEach(() => {
   fileFaults.failNext = false;
+  fileFaults.made = 0;
   vi.useRealTimers();
 });
 
@@ -250,6 +252,55 @@ describe('Settings export and share outcome', () => {
 
     await user.click(screen.getByRole('button', { name: en.export }));
     await waitFor(() => expect(downloads).toEqual([files[0]!.name]));
+  });
+});
+
+describe('Settings share press', () => {
+  /** Stubs a share sheet that takes files and returns the files each Share handed it, read as exports. */
+  function catchShares(): () => Promise<ExportFile[]> {
+    const share = vi.fn().mockResolvedValue(undefined);
+    vi.stubGlobal('navigator', Object.create(navigator, { canShare: { value: vi.fn(() => true) }, share: { value: share } }));
+    return () =>
+      Promise.all(
+        (share.mock.calls as [{ files: File[] }][]).map(async ([{ files }]) => JSON.parse(await files[0]!.text()) as ExportFile),
+      );
+  }
+
+  it('shares the current data from the keyboard after a press dragged off Share and a clear (cac-eil.62)', async () => {
+    await makeProgress();
+    const shared = catchShares();
+    const user = userEvent.setup();
+    renderPage();
+    const shareButton = screen.getByRole('button', { name: en.share });
+
+    // Pressed, dragged off and released elsewhere: no click.
+    await user.pointer([{ keys: '[MouseLeft>]', target: shareButton }, { target: screen.getByRole('heading', { level: 1 }) }, { keys: '[/MouseLeft]' }]);
+    await user.click(screen.getByRole('button', { name: 'Clear progress' }));
+    await user.click(within(await screen.findByRole('alertdialog')).getByRole('button', { name: en.clearConfirm }));
+    await waitFor(() => expect(screen.getByRole('status')).toHaveTextContent(en.cleared));
+
+    shareButton.focus();
+    await user.keyboard('{Enter}');
+    await waitFor(async () => expect(await shared()).toHaveLength(1));
+    const [file] = await shared();
+    expect([file!.answers.length, file!.exams.length, file!.flags.length]).toEqual([0, 0, 0]);
+  });
+
+  it('shares the file started on the press of a tap, made once per tap', async () => {
+    const shared = catchShares();
+    const user = userEvent.setup();
+    renderPage();
+    const shareButton = screen.getByRole('button', { name: en.share });
+
+    await user.pointer({ keys: '[MouseLeft>]', target: shareButton });
+    expect(fileFaults.made).toBe(1);
+    await user.pointer({ keys: '[/MouseLeft]', target: shareButton });
+    await waitFor(async () => expect(await shared()).toHaveLength(1));
+    expect(fileFaults.made).toBe(1);
+
+    await user.click(shareButton);
+    await waitFor(async () => expect(await shared()).toHaveLength(2));
+    expect(fileFaults.made).toBe(2);
   });
 });
 
