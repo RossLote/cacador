@@ -1,0 +1,19 @@
+[
+  {
+    "id": 3,
+    "language": [],
+    "nudge": "",
+    "patterns": [],
+    "status": "draft"
+  },
+  {
+    "id": 4,
+    "language": [
+      { "pt": "só às quintas-feiras", "en": "only on Thursdays", "note": "" },
+      { "pt": "Apenas", "en": "only", "note": "" }
+    ],
+    "nudge": "Not restricted to a weekday.",
+    "patterns": ["so-only"],
+    "status": "draft"
+  }
+]

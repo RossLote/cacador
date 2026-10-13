@@ -1,0 +1,20 @@
+[
+  {
+    "id": 3,
+    "section": "beta",
+    "topic": "patos",
+    "image": "shared.jpg",
+    "question": "A seguinte figura representa:",
+    "options": { "A": "Um pato-real", "B": "Uma frisada", "C": "Um arrabio" },
+    "answer": "A"
+  },
+  {
+    "id": 4,
+    "section": "beta",
+    "topic": "perdiz",
+    "image": "shared.jpg",
+    "question": "A perdiz-vermelha caça-se só às quintas-feiras?",
+    "options": { "A": "Sim", "B": "Não", "C": "Apenas em Janeiro" },
+    "answer": "B"
+  }
+]
