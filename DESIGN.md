@@ -566,9 +566,14 @@ everything it knows about the learner stays on the device (§ 7).
 - **No-repeat window**: a draw excludes the most recently drawn ids, the window being
   the smaller of ten and half the pool rounded down: ten for the whole bank and any
   pool of twenty or more, five for a pool of eleven, one for a pool of two or three,
-  nothing for a pool of one. The window is one list for the whole app, not one per
-  filter, kept in sessionStorage under `cacador.recent`, so it survives moving between
-  screens and a reload in the same tab.
+  nothing for a pool of one. The ids come from one recent list for the whole app, not
+  one per filter: the ten most recently drawn ids, oldest first, an id drawn again
+  moving to the end, kept in sessionStorage under `cacador.recent`, so it survives
+  moving between screens and a reload in the same tab. A draw over a pool whose window
+  is N excludes the last N ids of that list that are in the pool, not the last N drawn
+  anywhere: a draw over a filtered pool skips the pool's own recent questions that are
+  still in the list even when whole-bank draws came in between, so a few whole-bank
+  draws do not let a small topic repeat its last question.
 
 ### 6.3 Home
 
@@ -619,7 +624,8 @@ screen has a back control to Home; there is no bottom bar.
   No peek and no Hint during the exam.
 - The clock counts down from 30:00, computed from the start time, so it keeps running
   while the app is closed. Reopening the app with an unfinished exam resumes it with
-  its answers, from Home's card or from `/exam`.
+  its answers, from Home's card or from `/exam`, on its first unanswered question (the
+  first question when every one is answered), where the learner left off.
 - Submit asks first when questions are unanswered. At 30:00 the exam submits itself as
   it stands.
 - Submit runs once: the storage module finishes an exam only while it is still
@@ -712,7 +718,7 @@ touches IndexedDB; every screen records and reads progress through it. Database
 
 | Store | Key | Indexes | Holds |
 | --- | --- | --- | --- |
-| `answers` | `id`, auto-incremented | `questionId`, `at` | one Answer per answer, append-only |
+| `answers` | `id`, auto-incremented | `questionId`, `at` | one Answer per answer, append-only but for an import that replaces an exam (below) |
 | `questionState` | `questionId` | | one QuestionState per question seen, derived |
 | `exams` | `id` | | one Exam per mock exam |
 | `flags` | `[questionId, kind]` | | one Flag per question and kind |
@@ -751,13 +757,18 @@ question's state in the same transaction. The question state is a cache of the l
 is always derivable from `answers`, import rebuilds it from the merged log, and it is
 never exported.
 
-**Exams.** Finishing an exam is conditional: the module finishes it only while it is
-still unfinished and reports whether it did, and the exam's answers are logged only
-when it did, so Submit runs once. Asking for the unfinished exam first settles any exam
-past its deadline: finished as it stands, with `finishedAt` and every logged answer's
-`at` equal to the deadline and each unanswered question logged with no `chosen` and
-`correct` false. The deadline and the score come from the study model
-(`apps/web/src/model/`), which the storage module imports.
+**Exams.** A running exam's answers are saved on the exam record as they change; the
+module refuses the change, and reports that it did, once the exam is finished or its
+deadline has passed. Finishing an exam is conditional: the module finishes it only while
+it is still unfinished and reports whether it did, and the exam's answers are logged
+only when it did, so Submit runs once. The finish time is held to the deadline: it is
+the earlier of the moment of finishing and the start time plus 30 minutes, so an
+auto-submit that fires late and the settling of a stale exam both land on the deadline.
+Asking for the unfinished exam first settles any exam past its deadline: finished as it
+stands, with `finishedAt` and every logged answer's `at` equal to the deadline and each
+unanswered question logged with no `chosen` and `correct` false. The deadline and the
+score come from the study model (`apps/web/src/model/`), which the storage module
+imports.
 
 **Flags.** Setting a flag that exists replaces its note and time; clearing removes it.
 
@@ -774,8 +785,8 @@ fake-indexeddb.
 
 - localStorage `cacador.locale`: the interface language, `en` or `pt`. Nothing else
   goes in localStorage: no theme (the system setting decides) and no last mode.
-- sessionStorage `cacador.recent`: the no-repeat window, the most recently drawn
-  question ids (§ 6.2).
+- sessionStorage `cacador.recent`: the recent list the no-repeat window reads, the ten
+  most recently drawn question ids as a JSON array, oldest first (§ 6.2).
 
 **Export.** One JSON file, `cacador-progress-<YYYY-MM-DD>.json`, holding every store
 but `questionState`, each as an array of its records:
@@ -793,6 +804,12 @@ export without changing anything. Otherwise it merges:
   copies the one with the earlier `finishedAt` stays; between two unfinished copies the
   one with more answers stays, the device's own on a tie;
 - flags by `(questionId, kind)`, the newer kept.
+
+An exam's logged answers follow the copy kept. When the file's copy replaces one the
+device holds, the device's logged answers for that exam id are removed and the file's
+come in; when the device's copy stays, the file's answers to that exam are left out.
+This is the one place the answers log is not append-only, and it keeps one exam from
+counting twice in the question states and the day bars.
 
 When the merge leaves more than one exam unfinished, only the most recently started
 stays unfinished and the others are settled as they stand under the deadline rule
@@ -814,8 +831,10 @@ precedent for every choice here, minus the server: this app has no backend.
 - `packages/data` (`@cacador/data`): the bank, § 3 and § 4.
 - `apps/web` (`@cacador/web`): Vite 8, React 19, TypeScript, Tailwind v4 through
   `@tailwindcss/vite`, react-router 7 (as Sumit pins it, not 8) with `BrowserRouter`,
-  shadcn/ui on Base UI (`@base-ui/react`) with lucide icons, `idb`, vite-plugin-pwa
-  2.0.0 and workbox-window; vitest with jsdom, Testing Library and fake-indexeddb.
+  shadcn/ui on Base UI (`@base-ui/react`) with lucide icons, `idb` and vite-plugin-pwa
+  2.0.0; vitest with jsdom, Testing Library and fake-indexeddb. workbox-window, which
+  the scaffold installed, is not used (§ 8.8); the end-of-epic simplify pass removes it
+  from `apps/web/package.json`.
   Scripts `dev`, `build`, `preview`, `typecheck` and `test`.
 - `e2e` (`@cacador/e2e`): Playwright (`@playwright/test`). Scripts `e2e` and
   `typecheck`, no `test` (§ 8.10).
@@ -839,28 +858,50 @@ precedent for every choice here, minus the server: this app has no backend.
 
 ```
 apps/web/
-  index.html               lang en, color-scheme light dark, the #root mount
-  vite.config.ts           base /cacador/, React, Tailwind, the vitest settings
+  index.html               lang en, color-scheme light dark, the manifest and icon links, #root
+  vite.config.ts           base /cacador/, React, Tailwind, the 404.html copy, vite-plugin-pwa,
+                           the vitest settings
   components.json          shadcn: style base-nova, base colour neutral, lucide icons
-  public/                  web manifest and icons (cac-eil.5)
+  scripts/render-icons.sh  renders every PNG icon from public/favicon.svg
+  public/                  manifest.webmanifest, favicon.svg, favicon-32.png,
+                           apple-touch-icon.png, icons/ (192, 512, maskable 512)
   src/
-    main.tsx               BrowserRouter, basename import.meta.env.BASE_URL
+    main.tsx               BrowserRouter with basename import.meta.env.BASE_URL, the image
+                           map imported, the service worker registered
     App.tsx                the routes and the shared Layout with the back control
     index.css              Tailwind, the shadcn tokens, light and dark
+    home/                  HomePage: readiness, the exam-in-progress card, the four buttons
+    practice/              PracticePage and PracticeSession, FlagsRow, usePracticeKeys (the
+                           laptop keys), usePracticePool (the query filter and its chip),
+                           recent.ts (the recent list in sessionStorage and the draw)
+    exam/                  ExamPage (the sub-routes), ExamStart (start or resume),
+                           RunningExam with ExamMarkers and useExamClock, ExamResultsPage
+                           (the score and the review)
+    progress/              ProgressPage, DayBars, GroupTabs and groups.ts (the three lists),
+                           PastExams
+    settings/              SettingsPage, progressFile.ts (the download and the share sheet)
+    flagged/               FlaggedPage, copyFormat.ts (the fixed copy text, § 6.7)
+    components/question/   QuestionCard with PeekButton and HintPanel, names.ts (a name in
+                           the interface language)
     components/ui/         the 11 generated shadcn components
-    components/question/   the question card (cac-eil.6)
-    i18n/                  locales.ts, locale.ts (the store), useI18n.ts, messages/
-    storage/               types.ts, keys.ts, the storage module (cac-eil.3, .12)
-    model/                 the study model (cac-eil.4)
-    pwa/                   the image map (cac-eil.5)
+    model/                 the study model: draw.ts (weights, window, recent list), states.ts,
+                           progress.ts (readiness, group accuracy, day bars), pools.ts,
+                           exam.ts (draw, deadline, score), random.ts
+    storage/               the storage module: index.ts (the API), backend.ts with
+                           idbBackend.ts and memoryBackend.ts, state.ts (the derived state),
+                           finish.ts (the exam finish), merge.ts (the import merge),
+                           exportFile.ts, keys.ts, types.ts
+    pwa/                   images.ts (the image map), registerServiceWorker.ts
+    i18n/                  locales.ts, locale.ts (the store), useI18n.ts, messages/en/ and pt/
     lib/utils.ts           the cn helper the shadcn components use
-    home/ practice/ exam/ progress/ settings/ flagged/
-                           one folder per screen, its page and its tests
-  test/                    setup.ts (jest-dom, cleanup) and tests outside a screen
+  test/                    setup.ts (jest-dom, cleanup) and data.test.ts (the image import)
 e2e/
   package.json             @cacador/e2e, scripts e2e and typecheck
   playwright.config.ts     the production build under vite preview, locale en-GB
-  *.spec.ts                the acceptance bar (cac-eil.11), installable and offline (cac-eil.5)
+  tsconfig.json
+  installable.spec.ts      the manifest and icons under /cacador/, Chrome's installability check
+  offline.spec.ts          Home, Practice and the 15 images from the cache, offline
+  *.spec.ts                the acceptance-bar suite: steps 2 to 12 of the phase 4 bar
 ```
 
 The study model holds the formulas of § 6.2 and the exam draw, deadline and score, as
@@ -871,10 +912,10 @@ plain functions; the storage module holds § 7. Screens import both and never In
 Under the basename `/cacador/`, taken from Vite's `base` through
 `import.meta.env.BASE_URL`: `/` Home, `/practice` (query `topic`, `section` or
 `pattern`, § 6.4), `/exam/*` registered as a splat so the exam folder owns its
-sub-routes (start, the running exam, `results/<id>`), `/progress`, `/settings` and
-`/flagged`. Each page lives in `apps/web/src/<screen>/`; the scaffold landed a
-placeholder per route that the screen's bead replaces. Home is the hub: the back control
-to Home on every other screen is a shared piece of the `Layout` in `App.tsx`, never part
+sub-routes (`/exam`, which offers Start or resumes the unfinished exam and runs it in
+place, and `/exam/results/<id>`, the results and review), `/progress`, `/settings` and
+`/flagged`. Each page lives in `apps/web/src/<screen>/`. Home is the hub: the back
+control to Home on every other screen is a shared piece of the `Layout` in `App.tsx`, never part
 of a page, and there is no bottom bar.
 
 ### 8.3 Messages
@@ -899,9 +940,9 @@ and no later bead edits them: the root `package.json`, `pnpm-workspace.yaml`,
 `e2e/package.json`, and in `apps/web` the `package.json`, `components.json`,
 `tsconfig.json`, `src/App.tsx`, `src/index.css`, `src/components/ui/**`, the i18n store
 and index files (`locales.ts`, `locale.ts`, `useI18n.ts` and the three message
-indexes) and `src/storage/types.ts`. In phase 4 only the PWA bead (cac-eil.5) edits
+indexes) and `src/storage/types.ts`. In phase 4 only the PWA bead (cac-eil.5) edited
 `apps/web/vite.config.ts`, `index.html` and `src/main.tsx` after the scaffold, and
-only the acceptance bead (cac-eil.11) may edit `e2e/playwright.config.ts`. The scaffold
+only the acceptance bead (cac-eil.11) could edit `e2e/playwright.config.ts`. The scaffold
 installed every dependency the phase needs, each in the workspace it belongs to
 (`apps/web` the app, shadcn and its components, `idb`, the PWA plugin and the test
 tools; the root `eslint-plugin-react-hooks` and `eslint-plugin-react-refresh`; `e2e`
@@ -946,10 +987,20 @@ do; nothing copies them into `public/`.
 ### 8.8 Installable and offline
 
 vite-plugin-pwa 2.0.0 in `generateSW` mode precaches everything in `dist`, the jpg
-assets and the manifest included, with scope `/cacador/`, registered from `main.tsx`.
-A new service worker installs in the background and waits; it takes over on the next
-cold open of the app, never reloading a screen in use and never showing a prompt, so
-there is no `skipWaiting`, no `clientsClaim` and no update prompt. The manifest: id,
+assets and the manifest included, with scope `/cacador/`. A new service worker installs
+in the background and waits; it takes over on the next cold open of the app, never
+reloading a screen in use and never showing a prompt, so there is no `skipWaiting`, no
+`clientsClaim` and no update prompt (the plugin's `registerType: 'prompt'` is the mode
+that leaves both off; no prompt is built on it).
+
+The worker is registered by hand: `main.tsx` calls `registerServiceWorker()` from
+`apps/web/src/pwa/registerServiceWorker.ts`, which, in a production build and in a
+browser with service workers, calls `navigator.serviceWorker.register` for `sw.js`
+under the base with scope `/cacador/` after the page's `load` event, so the first
+visit's precache downloads do not compete with the page's own requests. It listens for
+no update and never reloads. The plugin injects no registration (`injectRegister:
+false`), and neither workbox-window nor `virtual:pwa-register` is used, because both
+carry an update-and-reload path that the silent update rules out. The manifest: id,
 `start_url` and scope `/cacador/`, name and short_name Caçador, display standalone,
 lang en, background and theme colour `#14301f`. The icons are rendered from one
 committed SVG, a flat mark of the letter Ç in off-white `#f2efe6` on dark green
@@ -983,15 +1034,17 @@ server builds `apps/web` and serves it with `vite preview` on port 4173 (`E2E_PO
 overrides it, so two worktrees can run at once) under `/cacador/`, with the browser
 locale `en-GB`. `pnpm e2e` at the root runs it; it is not part of `pnpm lint` or
 `pnpm test`, so the gates stay fast. The `e2e` script stays plain `playwright test`,
-never `--pass-with-no-tests`. The suite performs the phase 4 acceptance bar plus an
-installability spec (Chrome's own installability check reports no errors) and an
-offline spec (after one online load and a reload, Home and Practice open offline and
-all 15 images answer from the cache).
+never `--pass-with-no-tests`. The suite holds the acceptance-bar suite, which performs
+steps 2 to 12 of the phase 4 acceptance bar on a fresh browser profile, plus
+`installable.spec.ts` (the manifest and icons served under `/cacador/`, and Chrome's
+own installability check reporting no errors) and `offline.spec.ts` (after one online
+load and a reload, Home and Practice open offline and all 15 images answer from the
+cache).
 
 ### 8.11 Agents
 
 In phase 4 the Flagged page (cac-eil.8) and focused practice with the flags row
-(cac-eil.14), which copy an existing page, run on Sonnet; every other bead runs on Opus,
+(cac-eil.14), which copied an existing page, ran on Sonnet; every other bead ran on Opus,
 because each sets a pattern, owns hot files, carries the formulas, the schema or the
 merge, or makes a screen judgement call.
 
@@ -1014,7 +1067,9 @@ merge, or makes a screen judgement call.
   Portuguese constructions that change the meaning and are safe before answering; the
   nudge appears after answering.
 - **2026-10-13, IndexedDB for progress.** Append-only answer log plus derived
-  per-question state (§ 7); localStorage only for settings.
+  per-question state (§ 7); localStorage only for settings. One exception since epic
+  cac-eil: an import that keeps the file's copy of an exam replaces the device's
+  answers to it (below).
 - **2026-10-13, No epic ceremony.** No pull requests, no recorded walkthrough; beads
   carry the plan, lint and tests carry the proof. The push to `main` is the deploy: a
   workflow runs the gates and publishes to GitHub Pages, with nothing to do beyond the
@@ -1327,3 +1382,34 @@ merge, or makes a screen judgement call.
   nudge; it closes on Next, so every question starts closed (§ 6.4). Reason: § 6 says
   hints are shown only when asked for (Ross's default on the epic review; epic cac-eil
   D23).
+- **2026-10-13, The window counts the pool's own recent draws.** A draw over a filtered
+  pool excludes the last N drawn ids that are in that pool, N its half-pool window,
+  read from the app-wide recent list of the ten most recent ids, over excluding the
+  last N ids drawn anywhere (§ 6.2). Reason: a small topic would otherwise repeat its
+  own last question after a whole-bank draw in between (orchestrator's choice during
+  epic cac-eil, reversible; landed in cac-eil.4).
+- **2026-10-13, The service worker is registered by hand.**
+  `navigator.serviceWorker.register` in `apps/web/src/pwa/registerServiceWorker.ts`,
+  after `load` and in production only, over workbox-window or `virtual:pwa-register`;
+  workbox-window, installed by the scaffold for D12, is then unused and the end-of-epic
+  simplify pass removes it from `apps/web/package.json` (§ 8.8). Reason: the hand
+  registration leaves no reload path in the bundle, and the silent update wants none
+  (orchestrator's choice during epic cac-eil, reversible; landed in cac-eil.5).
+- **2026-10-13, An imported exam brings its own answers.** When an import keeps the
+  file's copy of an exam over the device's (finished over unfinished, or the earlier
+  `finishedAt`), the device's logged answers for that exam id are replaced by the
+  file's, over leaving both in the log; it is the one place the answers log is not
+  append-only (§ 7). Reason: otherwise one exam would count twice in the question
+  states and the day bars (orchestrator's choice during epic cac-eil, reversible;
+  landed in cac-eil.12).
+- **2026-10-13, A resumed exam opens where it was left.** Reopening an unfinished exam
+  opens it on its first unanswered question, over question 1 (§ 6.5). Reason: that is
+  where the learner left off (orchestrator's choice during epic cac-eil, reversible;
+  landed in cac-eil.9).
+- **2026-10-13, An exam ends at its deadline at the latest.** An exam's finish time is
+  the earlier of now and its start time plus 30 minutes, so a late auto-submit and the
+  settling of a stale exam both land on the deadline, and the storage module refuses
+  answer changes once the deadline has passed (§ 7), over taking the moment the submit
+  ran. Reason: the exam lasts 30 minutes however late the app gets to submit it, so it
+  finishes, and lands on the day bars, at its deadline (orchestrator's choice during
+  epic cac-eil, reversible; landed in cac-eil.3).
