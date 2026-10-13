@@ -1,5 +1,6 @@
 import type { StorageBackend } from './backend';
 import { finishExamRecords, isRunning } from './finish';
+import { planImport } from './merge';
 import { compareAnswers, nextState } from './state';
 import type { Answer, Exam, Flag, FlagKind, QuestionState } from './types';
 
@@ -12,7 +13,7 @@ const flagKey = (questionId: number, kind: FlagKind): string => `${questionId}:$
  * IndexedDB does, so a caller's later edits never reach the stores.
  */
 export function createMemoryBackend(): StorageBackend {
-  const answers: Answer[] = [];
+  let answers: Answer[] = [];
   const states = new Map<number, QuestionState>();
   const exams = new Map<string, Exam>();
   const flags = new Map<string, Flag>();
@@ -79,6 +80,29 @@ export function createMemoryBackend(): StorageBackend {
     },
     getFlags: async (questionId) => [...flags.values()].filter((f) => f.questionId === questionId).map((f) => copy(f)),
     listFlags: async () => [...flags.values()].map((f) => copy(f)),
+
+    readAll: async () => ({
+      answers: answers.toSorted(compareAnswers).map((a) => copy(a)),
+      exams: [...exams.values()].map((e) => copy(e)),
+      flags: [...flags.values()].map((f) => copy(f)),
+    }),
+    importFile: async (file) => {
+      const plan = planImport({ answers, exams: [...exams.values()], flags: [...flags.values()] }, copy(file));
+      const removed = new Set(plan.removeAnswerIds);
+      answers = answers.filter((a) => a.id === undefined || !removed.has(a.id));
+      for (const answer of plan.addAnswers) answers.push({ ...answer, id: nextId++ });
+      for (const exam of plan.putExams) exams.set(exam.id, exam);
+      for (const flag of plan.putFlags) flags.set(flagKey(flag.questionId, flag.kind), flag);
+      states.clear();
+      for (const state of plan.states) states.set(state.questionId, state);
+      return plan.added;
+    },
+    clear: async () => {
+      answers = [];
+      states.clear();
+      exams.clear();
+      flags.clear();
+    },
 
     close: () => {},
   };

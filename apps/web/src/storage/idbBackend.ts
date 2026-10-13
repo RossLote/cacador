@@ -1,12 +1,15 @@
 import { openDB, type DBSchema, type IDBPDatabase, type IDBPTransaction, type StoreNames } from 'idb';
 import type { StorageBackend } from './backend';
 import { finishExamRecords, isRunning } from './finish';
-import { compareAnswers, isInOrder, nextState } from './state';
+import { planImport } from './merge';
+import { compareAnswers, isInOrder, nextState, withoutLogId } from './state';
 import type { Answer, Exam, Flag, FlagKind, QuestionState } from './types';
 
 /** The database (D16). A new store or index is a new version with its own upgrade step. */
 export const DB_NAME = 'cacador';
 export const DB_VERSION = 1;
+
+const STORES = ['answers', 'questionState', 'exams', 'flags'] as const;
 
 export interface CacadorDB extends DBSchema {
   answers: { key: number; value: Answer; indexes: { questionId: number; at: number } };
@@ -54,8 +57,7 @@ async function write<T>(db: IDBPDatabase<CacadorDB>, stores: Store[], work: (tx:
 
 /** Appends `answer` to the log and updates its question's state, inside `tx`. */
 async function appendAnswer(tx: WriteTx, answer: Answer): Promise<Answer> {
-  const record: Answer = { ...answer };
-  delete record.id;
+  const record = withoutLogId(answer);
   const id = await tx.objectStore('answers').add(record);
   const stored: Answer = { ...record, id };
   const states = tx.objectStore('questionState');
@@ -107,6 +109,38 @@ function idbBackend(db: IDBPDatabase<CacadorDB>): StorageBackend {
     // Keys are [questionId, kind]: [q] sorts before every [q, kind] and [q, []] after them.
     getFlags: (questionId) => db.getAll('flags', IDBKeyRange.bound([questionId], [questionId, []])),
     listFlags: () => db.getAll('flags'),
+
+    readAll: async () => {
+      const tx = db.transaction(['answers', 'exams', 'flags']);
+      const [answers, exams, flags] = await Promise.all([
+        tx.objectStore('answers').getAll(),
+        tx.objectStore('exams').getAll(),
+        tx.objectStore('flags').getAll(),
+        tx.done,
+      ]);
+      return { answers: answers.sort(compareAnswers), exams, flags };
+    },
+    importFile: (file) =>
+      write(db, [...STORES], async (tx) => {
+        const answers = tx.objectStore('answers');
+        const exams = tx.objectStore('exams');
+        const flags = tx.objectStore('flags');
+        const states = tx.objectStore('questionState');
+        const [deviceAnswers, deviceExams, deviceFlags] = await Promise.all([answers.getAll(), exams.getAll(), flags.getAll()]);
+        const plan = planImport({ answers: deviceAnswers, exams: deviceExams, flags: deviceFlags }, file);
+        // One request at a time, so a failing one rejects here and aborts the lot with no request left unawaited.
+        for (const id of plan.removeAnswerIds) await answers.delete(id);
+        for (const answer of plan.addAnswers) await answers.add(withoutLogId(answer));
+        for (const exam of plan.putExams) await exams.put(exam);
+        for (const flag of plan.putFlags) await flags.put(flag);
+        await states.clear();
+        for (const state of plan.states) await states.put(state);
+        return plan.added;
+      }),
+    clear: () =>
+      write(db, [...STORES], async (tx) => {
+        for (const store of STORES) await tx.objectStore(store).clear();
+      }),
 
     close: () => db.close(),
   };
