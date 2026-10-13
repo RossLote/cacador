@@ -4,32 +4,27 @@
     "language": [],
     "nudge": "The red fox is um animal solitário, seen in a group only durante o cio das fêmeas (question 112). Grandes colónias and aos casais both give it company it does not keep.",
     "patterns": [],
-    "status": "draft"
+    "status": "checked"
   },
   {
     "id": 106,
     "language": [],
     "nudge": "The red fox is um mamífero de médio porte, neither grande nor pequeno. Question 115 gives the Egyptian mongoose the same size, médio porte.",
     "patterns": [],
-    "status": "draft"
+    "status": "checked"
   },
   {
     "id": 107,
     "language": [
-      {
-        "pt": "por vezes",
-        "en": "at times",
-        "note": "por vezes = at times, sometimes: the head is a mark that works on some foxes, not a sure one."
-      },
       {
         "pt": "menos forte e mais afilada",
         "en": "less strong and more pointed",
         "note": "menos and mais each set a direction against the female: less strong, more tapered. Every option pairs two directions, so read both halves."
       }
     ],
-    "nudge": "The male's head is mais forte e menos afilada: heavier and blunter than the vixen's. Each distractor flips one half, menos forte with mais afilada, or mais forte but still mais afilada.",
+    "nudge": "The male's head is mais forte e menos afilada: stronger and blunter than the vixen's. Menos forte e mais afilada flips both halves, and the near miss keeps mais forte but makes it mais afilada.",
     "patterns": ["comparative"],
-    "status": "draft"
+    "status": "checked"
   },
   {
     "id": 108,
@@ -42,35 +37,35 @@
     ],
     "nudge": "In winter the fox's coat is mais espesso e mais denso, thicker and denser, both in the same direction. Each distractor keeps one half and flips the other.",
     "patterns": ["comparative"],
-    "status": "draft"
+    "status": "checked"
   },
   {
     "id": 109,
     "language": [],
     "nudge": "The fox comes into heat in janeiro. With a gestation of 50 a 60 dias (question 110), the cubs follow about two months later.",
     "patterns": [],
-    "status": "draft"
+    "status": "checked"
   },
   {
     "id": 110,
     "language": [],
     "nudge": "A vixen carries her young 50 a 60 dias, about two months. The wild boar's 120 dias (question 130) is twice that.",
     "patterns": [],
-    "status": "draft"
+    "status": "checked"
   },
   {
     "id": 111,
     "language": [],
     "nudge": "A fox litter averages 3 a 6 crias. The three ranges overlap, so fix both ends: three to six.",
     "patterns": [],
-    "status": "draft"
+    "status": "checked"
   },
   {
     "id": 112,
     "language": [],
     "nudge": "Foxes are solitary (question 105) and gather only durante o cio das fêmeas, while the vixens are in heat. The heat falls in janeiro (question 109), but the group belongs to the heat, not to the whole inverno.",
     "patterns": [],
-    "status": "draft"
+    "status": "checked"
   },
   {
     "id": 113,
@@ -88,21 +83,21 @@
     ],
     "nudge": "The Egyptian mongoose tanto pode ser visto de dia como de noite: it is active both by day and by night. It is not solitário but bastante sociável (question 116), and it lives in vegetação densa, not pouco densa (question 118).",
     "patterns": ["both"],
-    "status": "draft"
+    "status": "checked"
   },
   {
     "id": 114,
     "language": [],
     "nudge": "Its ears are muito curtas e arredondadas, very short and rounded. Afiladas, pointed, is the near miss: it keeps the shortness and changes the shape.",
     "patterns": [],
-    "status": "draft"
+    "status": "checked"
   },
   {
     "id": 115,
     "language": [],
     "nudge": "The Egyptian mongoose is um carnívoro de médio porte. Question 106 gives the red fox the same middle size.",
     "patterns": [],
-    "status": "draft"
+    "status": "checked"
   },
   {
     "id": 116,
@@ -120,7 +115,7 @@
     ],
     "nudge": "The Egyptian mongoose is bastante sociável and moves em grupos when it hunts (question 117). Solitário is the red fox (question 105), and pouco sociável is the near miss, the opposite of bastante.",
     "patterns": [],
-    "status": "draft"
+    "status": "checked"
   },
   {
     "id": 117,
@@ -133,7 +128,7 @@
     ],
     "nudge": "When it hunts, the Egyptian mongoose se desloca em grupos, which fits its being bastante sociável (question 116). Aos casais, in pairs, is the near miss.",
     "patterns": [],
-    "status": "draft"
+    "status": "checked"
   },
   {
     "id": 118,
@@ -146,28 +141,28 @@
     ],
     "nudge": "The Egyptian mongoose habita locais com vegetação densa, thick cover. Pouco densa is the near miss: pouco turns densa into its opposite, and damp, waterlogged ground is not its habitat either.",
     "patterns": [],
-    "status": "draft"
+    "status": "checked"
   },
   {
     "id": 119,
     "language": [],
-    "nudge": "Um saca-rabos: a long, low body on short legs, a grizzled grey-brown coat, a pointed muzzle with very short rounded ears (question 114) and a long tapering tail ending in a dark tuft. A texugo is stocky with a black-and-white striped face and a short tail, and a furão is smaller, with a much shorter tail.",
+    "nudge": "An Egyptian mongoose: a long, low body with a grizzled grey-brown coat, very short rounded ears (question 114) and a long tapering tail. The European badger is stocky with a black-and-white striped face, and the ferret is smaller with a much shorter tail.",
     "patterns": [],
-    "status": "draft"
+    "status": "checked"
   },
   {
     "id": 120,
     "language": [],
     "nudge": "The mongoose is a carnívoro (question 115) with a varied diet: aves, mamíferos, répteis e frutos. Plant products alone or insects alone are too narrow; question 122 calls its diet muito variada.",
     "patterns": [],
-    "status": "draft"
+    "status": "checked"
   },
   {
     "id": 121,
     "language": [],
     "nudge": "The same fact as question 120: pequenas aves e mamíferos, répteis e frutos, animal prey with some fruit. Both distractors are plant food alone, and the mongoose is a carnívoro (question 115).",
     "patterns": [],
-    "status": "draft"
+    "status": "checked"
   },
   {
     "id": 122,
@@ -185,7 +180,7 @@
     ],
     "nudge": "Its diet is muito variada: pequenas aves e mamíferos, invertebrados, répteis e frutos, as in questions 120 and 121. Both distractors fail on exclusivamente, one food and nothing else.",
     "patterns": ["only"],
-    "status": "draft"
+    "status": "checked"
   },
   {
     "id": 123,
@@ -198,14 +193,14 @@
     ],
     "nudge": "A wild boar can breed a partir dos 8 meses, from eight months old. The 6 months of the distractor is a different line, the age until which the young wear the striped coat (question 134).",
     "patterns": [],
-    "status": "draft"
+    "status": "checked"
   },
   {
     "id": 124,
     "language": [],
-    "nudge": "Groups of wild boar are varas or companhias, both 'sounders' in English. Rebanhos and manadas are herds of grazing mammals and bandos are flocks of birds; the third option keeps companhias but pairs it with bandos.",
+    "nudge": "Groups of wild boar are varas or companhias, both 'sounders' in English. Rebanhos and manadas are herds of grazing mammals, and bandos ou companhias fails on bandos, flocks of birds.",
     "patterns": ["name-question"],
-    "status": "draft"
+    "status": "checked"
   },
   {
     "id": 125,
@@ -217,43 +212,43 @@
       }
     ],
     "nudge": "The javali is the big-game species found most widely across Portugal. The raposa is caça menor, so it fails the stem before its range matters, and the veado is big game but less widespread.",
-    "patterns": [],
-    "status": "draft"
+    "patterns": ["comparative"],
+    "status": "checked"
   },
   {
     "id": 126,
     "language": [],
     "nudge": "Navalhas are the boar's caninos inferiores, the lower tusks and its main weapons. The upper canines are the amoladeiras (question 127), against which the navalhas are sharpened.",
     "patterns": ["name-question"],
-    "status": "draft"
+    "status": "checked"
   },
   {
     "id": 127,
     "language": [],
     "nudge": "Amoladeiras, the whetters, are the caninos superiores: the lower tusks, the navalhas of question 126, are sharpened against them. The two questions use the same pair of canines, so fix which one is upper.",
     "patterns": ["name-question"],
-    "status": "draft"
+    "status": "checked"
   },
   {
     "id": 128,
     "language": [],
     "nudge": "The wild boar is omnívoro: it eats plant and animal food alike. Insectívoro and granívoro each name one food only, insects or grain.",
     "patterns": [],
-    "status": "draft"
+    "status": "checked"
   },
   {
     "id": 129,
     "language": [],
     "nudge": "With age, adult males isolar-se progressivamente, living more and more alone. That is why question 133 rejects a boar sociável durante toda a sua vida; grandes grupos só de machos is the near miss.",
     "patterns": [],
-    "status": "draft"
+    "status": "checked"
   },
   {
     "id": 130,
     "language": [],
     "nudge": "Wild boar gestation lasts about 120 dias, roughly four months. The options are ten days apart, so the number is the whole question.",
     "patterns": [],
-    "status": "draft"
+    "status": "checked"
   },
   {
     "id": 131,
@@ -266,7 +261,7 @@
     ],
     "nudge": "A listado is a boar piglet under six months, named for its striped coat, the pelagem raiada of question 134. From 6 months to a year it is a farropo (question 132), and leitão is only a word for a young pig.",
     "patterns": ["name-question"],
-    "status": "draft"
+    "status": "checked"
   },
   {
     "id": 132,
@@ -279,7 +274,7 @@
     ],
     "nudge": "Between 6 months and a year the young boar is a farropo; before 6 months it is a listado (question 131). Bácoro is a young pig in general, not the boar's own designação.",
     "patterns": ["name-question"],
-    "status": "draft"
+    "status": "checked"
   },
   {
     "id": 133,
@@ -290,9 +285,9 @@
         "note": "não … sempre = not always: the timing varies; it does not say the rut never comes in a set season."
       }
     ],
-    "nudge": "The boar's cio não ocorre sempre numa época fixa: its rut has no fixed season. It is not sociable all its life, since old males isolar-se progressivamente (question 129), and its trophy is not a cabeça.",
+    "nudge": "The boar's cio não ocorre sempre numa época fixa: its rut does not always fall in a fixed season. It is not sociable all its life, since old males isolar-se progressivamente (question 129), and its trophy is not a cabeça.",
     "patterns": ["which-statement", "always-never"],
-    "status": "draft"
+    "status": "checked"
   },
   {
     "id": 134,
@@ -305,7 +300,7 @@
     ],
     "nudge": "The pelagem raiada, the striped coat, marks the boar's young under 6 months, the listados of question 131. Two-year-olds and adults no longer wear it.",
     "patterns": ["name-question"],
-    "status": "draft"
+    "status": "checked"
   },
   {
     "id": 135,
@@ -318,13 +313,13 @@
     ],
     "nudge": "The adult male has presas mais desenvolvidas, bigger tusks: the navalhas and amoladeiras of questions 126 and 127. A lighter coat and a longer tail are not the marks.",
     "patterns": [],
-    "status": "draft"
+    "status": "checked"
   },
   {
     "id": 136,
     "language": [],
-    "nudge": "The boar needs extensas zonas de abrigo, thick cover of matos cerrados, and presença de água. Open feeding ground lacks the cover, and the third option keeps the water but swaps the shelter for zonas cerealíferas.",
+    "nudge": "The boar needs extensas zonas de abrigo, thick cover of matos cerrados, and presença de água. Open feeding ground lacks the cover, and the option with zonas cerealíferas keeps the água but swaps the shelter for cereal fields.",
     "patterns": ["list-options"],
-    "status": "draft"
+    "status": "checked"
   }
 ]
