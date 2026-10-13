@@ -1,0 +1,363 @@
+[
+  {
+    "id": 198,
+    "section": "biologia",
+    "topic": "pombos-rolas",
+    "image": "q198.jpg",
+    "question": "A seguinte figura representa:",
+    "options": {
+      "A": "Um pombo-torcaz",
+      "B": "Um pombo-bravo",
+      "C": "Uma rola-comum"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 199,
+    "section": "biologia",
+    "topic": "pombos-rolas",
+    "question": "A rola-comum distingue-se dos pombos por:",
+    "options": {
+      "A": "Ser mais pequena e de silhueta mais esbelta",
+      "B": "Ser mais pequena e de silhueta menos esbelta",
+      "C": "Ser mais pequena e de silhueta mais atarracada"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 200,
+    "section": "biologia",
+    "topic": "pombos-rolas",
+    "question": "A rola-comum distingue-se dos pombos por:",
+    "options": {
+      "A": "Em voo, ter um batimento de asas menos irregular",
+      "B": "Em voo, ter um batimento de asas mais irregular",
+      "C": "Em voo, ter um batimento de asas mais lento"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 201,
+    "section": "biologia",
+    "topic": "pombos-rolas",
+    "question": "A rola-comum distingue-se dos pombos por:",
+    "options": {
+      "A": "Em voo, notar-se a cauda negra com barra terminal escura",
+      "B": "Em voo, notar-se a cauda branca com barra terminal escura",
+      "C": "Em voo, notar-se a cauda negra com barra terminal branca"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 202,
+    "section": "biologia",
+    "topic": "pombos-rolas",
+    "question": "A rola-comum é uma ave migradora que inverna:",
+    "options": {
+      "A": "No continente africano e nidifica na Europa",
+      "B": "No continente europeu e nidifica em África",
+      "C": "No continente americano e nidifica na Europa"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 203,
+    "section": "biologia",
+    "topic": "pombos-rolas",
+    "question": "A entrada das rolas na Europa dá-se a partir do mês de:",
+    "options": {
+      "A": "Março",
+      "B": "Abril",
+      "C": "Maio"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 204,
+    "section": "biologia",
+    "topic": "pombos-rolas",
+    "question": "A rola-comum, é uma espécie que prefere:",
+    "options": {
+      "A": "Matas pouco densas alternando com zonas alagadiças",
+      "B": "Matas densas alternando com searas e pastos",
+      "C": "Zonas alagadiças alternando com searas e pastos"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 205,
+    "section": "biologia",
+    "topic": "pombos-rolas",
+    "question": "A rola-comum, em termos alimentares, é:",
+    "options": {
+      "A": "Uma ave insectívora",
+      "B": "Uma ave insectívora e granívora",
+      "C": "Uma ave granívora"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 206,
+    "section": "biologia",
+    "topic": "pombos-rolas",
+    "question": "A rola-comum baseia a sua alimentação em:",
+    "options": {
+      "A": "Sementes, cereais e também insetos, embora em pequena percentagem",
+      "B": "Sementes, rebentos novos e também insetos, embora em pequena percentagem",
+      "C": "Cereais, rebentos novos e também insetos, embora em pequena percentagem"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 207,
+    "section": "biologia",
+    "topic": "pombos-rolas",
+    "question": "A rola-comum é normalmente avistada:",
+    "options": {
+      "A": "Aos pares ou em grandes grupos",
+      "B": "Aos pares ou isoladas",
+      "C": "Aos pares ou em grupos muito pequenos"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 208,
+    "section": "biologia",
+    "topic": "pombos-rolas",
+    "question": "Os primeiros ninhos de rola-comum são feitos em:",
+    "options": {
+      "A": "Maio",
+      "B": "Abril",
+      "C": "Junho"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 209,
+    "section": "biologia",
+    "topic": "pombos-rolas",
+    "question": "A postura da rola-comum é de:",
+    "options": {
+      "A": "Três ovos, raramente um",
+      "B": "Dois ovos, raramente um",
+      "C": "Quatro ovos, raramente dois"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 210,
+    "section": "biologia",
+    "topic": "pombos-rolas",
+    "question": "A incubação dos ovos, no caso da rola-comum:",
+    "options": {
+      "A": "É feita só pelas fêmeas",
+      "B": "É feita só pelos machos",
+      "C": "É feita por ambos os sexos"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 211,
+    "section": "biologia",
+    "topic": "pombos-rolas",
+    "question": "Em voo, a rola-comum distingue-se dos pombos por se notar:",
+    "options": {
+      "A": "A cauda negra com barra terminal escura",
+      "B": "A cauda branca com barra terminal escura",
+      "C": "A cauda negra com barra terminal branca"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 212,
+    "section": "biologia",
+    "topic": "pombos-rolas",
+    "question": "Qual o habitat preferencial da rola-comum:",
+    "options": {
+      "A": "Matas densas alternando com campos abertos",
+      "B": "Florestas",
+      "C": "Zonas húmidas"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 213,
+    "section": "biologia",
+    "topic": "codorniz",
+    "question": "A codorniz é uma espécie:",
+    "options": {
+      "A": "Migradora invernante em todo o País",
+      "B": "Migradora estival em todo o País",
+      "C": "Migradora invernante no norte do País"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 214,
+    "section": "biologia",
+    "topic": "codorniz",
+    "question": "Pode afirmar-se que a codorniz é:",
+    "options": {
+      "A": "O mais pequeno animal europeu",
+      "B": "O mais pequeno herbívoro europeu",
+      "C": "O mais pequeno galináceo europeu"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 215,
+    "section": "biologia",
+    "topic": "codorniz",
+    "question": "A codorniz é uma espécie que:",
+    "options": {
+      "A": "Vem de África para criar na Europa",
+      "B": "Vem do Médio Oriente para criar na Europa",
+      "C": "Sedentária no norte do País"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 216,
+    "section": "biologia",
+    "topic": "codorniz",
+    "question": "A codorniz é uma espécie que:",
+    "options": {
+      "A": "Se pode encontrar durante todo o ano no norte do País",
+      "B": "Se pode encontrar durante todo o ano no sul do País",
+      "C": "Se pode encontrar durante todo o ano no sul do País e nos Açores"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 217,
+    "section": "biologia",
+    "topic": "codorniz",
+    "question": "O cantar da codorniz pode ser ouvido:",
+    "options": {
+      "A": "De dia e ao crepúsculo da manhã",
+      "B": "De noite e ao crepúsculo da tarde",
+      "C": "Quer de dia quer de noite"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 218,
+    "section": "biologia",
+    "topic": "codorniz",
+    "question": "A codorniz é uma espécie que prefere:",
+    "options": {
+      "A": "Campos cultivados, searas, pastos e espaços abertos em bosques",
+      "B": "Campos cultivados, searas, pastos e zonas alagadiças",
+      "C": "Campos cultivados, searas, pastos e zonas pedregosas"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 219,
+    "section": "biologia",
+    "topic": "codorniz",
+    "question": "A codorniz é uma espécie que:",
+    "options": {
+      "A": "Nidifica em arbustos de pequeno porte",
+      "B": "Nidifica no solo",
+      "C": "Nidifica em arbustos de médio porte"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 220,
+    "section": "biologia",
+    "topic": "codorniz",
+    "question": "O ninho da codorniz é formado por:",
+    "options": {
+      "A": "Uma ligeira depressão forrada com penas da própria codorniz",
+      "B": "Uma ligeira depressão forrada com detritos diversos",
+      "C": "Uma ligeira depressão forrada com material vegetal"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 221,
+    "section": "biologia",
+    "topic": "codorniz",
+    "question": "A codorniz é uma espécie que cria geralmente:",
+    "options": {
+      "A": "De meados de maio a junho",
+      "B": "De meados de maio a julho",
+      "C": "De meados de abril a junho"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 222,
+    "section": "biologia",
+    "topic": "codorniz",
+    "question": "Na codorniz, a incubação dos ovos é feita:",
+    "options": {
+      "A": "Só pelo macho",
+      "B": "Só pela fêmea",
+      "C": "Por ambos os sexos"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 223,
+    "section": "biologia",
+    "topic": "codorniz",
+    "question": "Na codorniz, a incubação dos ovos dura entre:",
+    "options": {
+      "A": "12 a 16 dias",
+      "B": "16 a 21 dias",
+      "C": "18 a 21 dias"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 224,
+    "section": "biologia",
+    "topic": "codorniz",
+    "question": "Na codorniz, a partir de que idade podem os pintos migrar juntamente com os adultos?",
+    "options": {
+      "A": "Com 2 meses",
+      "B": "Com 3 meses",
+      "C": "Com 4 meses"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 225,
+    "section": "biologia",
+    "topic": "codorniz",
+    "question": "Pode afirmar-se que a codorniz é:",
+    "options": {
+      "A": "O mais pequeno animal europeu",
+      "B": "O mais pequeno galináceo europeu",
+      "C": "O mais pequeno herbívoro europeu"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 226,
+    "section": "biologia",
+    "topic": "codorniz",
+    "question": "A codorniz faz geralmente o ninho:",
+    "options": {
+      "A": "Em arbustos e árvores de pequeno porte",
+      "B": "Em árvores de grande porte",
+      "C": "No solo"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 227,
+    "section": "biologia",
+    "topic": "codorniz",
+    "question": "Qual das afirmações está correta:",
+    "options": {
+      "A": "A rola inicia a construção do ninho em abril",
+      "B": "Os pintos da codorniz podem migrar com os adultos com dois meses de vida",
+      "C": "A lebre tem apenas uma ninhada por ano"
+    },
+    "answer": "B"
+  }
+]

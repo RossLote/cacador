@@ -71,6 +71,10 @@ validator (§ 4) catches a regression.
    feed between pages and no running headers or page numbers.
 7. Curly quotes (“espelho alar”) and the apostrophe in galinha-d’água are kept as they
    are in the PDF.
+8. The `pdftotext` mode matters. The default mode drops the hyphen at a wrapped line end
+   (`pôr-do-` / `sol` comes out `pôr-dosol`, 411 and 455) and `-raw` drops spaces on some
+   justified lines (`Desaltoedecetraria`, 443, 455, 461). The extractor uses `-layout`, which
+   keeps both, and rejoins a line ending in `-` to the next without a space.
 
 ### 2.3 Images
 

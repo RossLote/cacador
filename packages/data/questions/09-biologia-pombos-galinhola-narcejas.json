@@ -1,0 +1,450 @@
+[
+  {
+    "id": 267,
+    "section": "biologia",
+    "topic": "perdiz",
+    "image": "q267.jpg",
+    "question": "A seguinte figura representa:",
+    "options": {
+      "A": "Uma perdiz-vermelha",
+      "B": "Uma rola-comum",
+      "C": "Um pombo-torcaz"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 268,
+    "section": "biologia",
+    "topic": "pombos-rolas",
+    "image": "q268.jpg",
+    "question": "A seguinte figura representa:",
+    "options": {
+      "A": "Uma rola-comum",
+      "B": "Um pombo-da-rocha",
+      "C": "Um pombo-torcaz"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 269,
+    "section": "biologia",
+    "topic": "pombos-rolas",
+    "question": "Os pombos podem caracterizar-se por possuírem:",
+    "options": {
+      "A": "Aspeto robusto, asas pontiagudas, cabeça pequena, cauda comprida e voo rápido",
+      "B": "Aspeto robusto, asas arredondadas, cabeça grande, cauda comprida e voo rápido",
+      "C": "Aspeto robusto, asas pontiagudas, cabeça média, cauda curta e voo muito rápido"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 270,
+    "section": "biologia",
+    "topic": "pombos-rolas",
+    "question": "Normalmente, os pombos, fora da época de criação:",
+    "options": {
+      "A": "Vivem aos pares",
+      "B": "Vivem isolados",
+      "C": "Vivem em bandos"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 271,
+    "section": "biologia",
+    "topic": "pombos-rolas",
+    "question": "O pombo-torcaz, distingue-se dos restantes pombos por possuir:",
+    "options": {
+      "A": "Duas barras pretas nas asas",
+      "B": "Duas manchas brancas nos lados do pescoço e das asas",
+      "C": "Pontas das asas negras e uropígio branco"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 272,
+    "section": "biologia",
+    "topic": "pombos-rolas",
+    "question": "Indique qual dos pombos apresenta maior envergadura:",
+    "options": {
+      "A": "Pombo-bravo",
+      "B": "Pombo-da-rocha",
+      "C": "Pombo-torcaz"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 273,
+    "section": "biologia",
+    "topic": "pombos-rolas",
+    "question": "O pombo-torcaz distingue-se do pombo-bravo e do pombo-da-rocha por ser:",
+    "options": {
+      "A": "O menor dos três pombos",
+      "B": "O maior dos três pombos",
+      "C": "Completamente escuro"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 274,
+    "section": "biologia",
+    "topic": "pombos-rolas",
+    "question": "A maioria da população de pombo-torcaz que nos visita é proveniente:",
+    "options": {
+      "A": "Do Norte da Europa",
+      "B": "Do Sul da Europa",
+      "C": "Do Médio Oriente"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 275,
+    "section": "biologia",
+    "topic": "pombos-rolas",
+    "question": "O pombo-torcaz, normalmente constrói o ninho, em:",
+    "options": {
+      "A": "Árvores, a alturas geralmente elevadas",
+      "B": "Buracos de árvores e de edifícios",
+      "C": "Árvores baixas e falésias"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 276,
+    "section": "biologia",
+    "topic": "pombos-rolas",
+    "question": "Dos pombos existentes entre nós, qual deles apresenta distribuição menos alargada?",
+    "options": {
+      "A": "Pombo-da-rocha",
+      "B": "Pombo-torcaz",
+      "C": "Pombo-bravo"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 277,
+    "section": "biologia",
+    "topic": "pombos-rolas",
+    "question": "Dos pombos existentes entre nós, qual deles é parcialmente migrador?",
+    "options": {
+      "A": "Pombo-torcaz",
+      "B": "Pombo-da-rocha",
+      "C": "Pombo-bravo"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 278,
+    "section": "biologia",
+    "topic": "pombos-rolas",
+    "question": "A qual dos pombos existentes entre nós também se dá o nome de seixa?",
+    "options": {
+      "A": "Pombo-torcaz",
+      "B": "Pombo-da-rocha",
+      "C": "Pombo-bravo"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 279,
+    "section": "biologia",
+    "topic": "pombos-rolas",
+    "question": "A alimentação do pombo-da-rocha é à base de:",
+    "options": {
+      "A": "Bolota e azeitona",
+      "B": "Grãos e sementes",
+      "C": "Grãos, bagas, sementes e bolotas"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 280,
+    "section": "biologia",
+    "topic": "galinhola",
+    "image": "q280.jpg",
+    "question": "A seguinte figura representa:",
+    "options": {
+      "A": "Uma narceja-comum",
+      "B": "Uma galinhola",
+      "C": "Uma tarambola-dourada"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 281,
+    "section": "biologia",
+    "topic": "galinhola",
+    "question": "Qual das frases está errada?",
+    "options": {
+      "A": "A galinhola é uma ave migradora em todo o território nacional",
+      "B": "A galinhola é uma ave sedentária nos Açores",
+      "C": "A galinhola é uma ave migradora em Portugal Continental"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 282,
+    "section": "biologia",
+    "topic": "galinhola",
+    "question": "O período de atividade da galinhola, é fundamentalmente:",
+    "options": {
+      "A": "Diurno e noturno",
+      "B": "Crepuscular e diurno",
+      "C": "Crepuscular e noturno"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 283,
+    "section": "biologia",
+    "topic": "galinhola",
+    "question": "A galinhola é uma ave:",
+    "options": {
+      "A": "Solitária",
+      "B": "Que se encontra aos casais",
+      "C": "Que vive em bandos"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 284,
+    "section": "biologia",
+    "topic": "galinhola",
+    "question": "A galinhola caracteriza-se por possuir:",
+    "options": {
+      "A": "Asas estreitas e arredondadas, bico comprido e direito",
+      "B": "Asas largas e arredondadas, bico curto e direito",
+      "C": "Asas largas e arredondadas, bico comprido e direito"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 285,
+    "section": "biologia",
+    "topic": "galinhola",
+    "question": "O voo da galinhola caracteriza-se por ser:",
+    "options": {
+      "A": "Rápido e silencioso entre as árvores",
+      "B": "Rápido e retilíneo",
+      "C": "Lento e silencioso com o bico apontado para o solo"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 286,
+    "section": "biologia",
+    "topic": "galinhola",
+    "question": "Quando em voo, a galinhola apresenta uma figura:",
+    "options": {
+      "A": "Longilínea, de asas redondas e bico apontado para o solo",
+      "B": "Atarracada, de asas redondas e bico apontado para o solo",
+      "C": "Atarracada, de asas estreitas e bico apontado para o solo"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 287,
+    "section": "biologia",
+    "topic": "galinhola",
+    "question": "A galinhola, para a sua criação, procura:",
+    "options": {
+      "A": "Países do centro e sul da Europa",
+      "B": "Países do norte de África",
+      "C": "Países do centro e norte da Europa"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 288,
+    "section": "biologia",
+    "topic": "galinhola",
+    "question": "A galinhola, em Portugal Continental é uma ave migradora:",
+    "options": {
+      "A": "Estival",
+      "B": "Invernante",
+      "C": "Primaveril"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 289,
+    "section": "biologia",
+    "topic": "galinhola",
+    "question": "A galinhola encontra-se geralmente:",
+    "options": {
+      "A": "Em bosques muito densos e fechados",
+      "B": "Em bosques associados a áreas de cultivo",
+      "C": "Em bosques com vegetação arbustiva"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 290,
+    "section": "biologia",
+    "topic": "galinhola",
+    "question": "Qual o tipo de zonas que a galinhola prefere para se alimentar?",
+    "options": {
+      "A": "Terras frescas e húmidas",
+      "B": "Terras pedregosas e húmidas",
+      "C": "Terras argilosas e secas"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 291,
+    "section": "biologia",
+    "topic": "galinhola",
+    "question": "A galinhola:",
+    "options": {
+      "A": "Encontra-se normalmente em bandos de grandes dimensões",
+      "B": "Encontra-se normalmente em bandos de pequenas dimensões",
+      "C": "É uma ave solitária"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 292,
+    "section": "biologia",
+    "topic": "galinhola",
+    "question": "Qual o habitat preferido da galinhola:",
+    "options": {
+      "A": "Zonas abertas e húmidas",
+      "B": "Montados de azinho",
+      "C": "Bosques com vegetação arbustiva e terrenos frescos e húmidos"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 293,
+    "section": "biologia",
+    "topic": "narcejas",
+    "image": "q293.jpg",
+    "question": "A seguinte figura representa:",
+    "options": {
+      "A": "Narceja-galega",
+      "B": "Narceja-comum",
+      "C": "Galinhola"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 294,
+    "section": "biologia",
+    "topic": "narcejas",
+    "question": "As narcejas encontram-se geralmente ligadas a:",
+    "options": {
+      "A": "Bosques com vegetação arbustiva suficiente para lhes fornecer coberto",
+      "B": "Zonas com solos leves e húmidos",
+      "C": "Grandes planícies cultivadas em zonas interiores"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 295,
+    "section": "biologia",
+    "topic": "narcejas",
+    "question": "As narcejas para se alimentarem:",
+    "options": {
+      "A": "Esgravatam o solo com as patas à procura dos invertebrados de que se alimentam",
+      "B": "Utilizam o bico para extraírem da terra os invertebrados de que se alimentam",
+      "C": "Perseguem os invertebrados de que se alimentam"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 296,
+    "section": "biologia",
+    "topic": "narcejas",
+    "question": "As narcejas são caracterizadas por possuírem:",
+    "options": {
+      "A": "Grande bico, pernas e pescoço relativamente curtos",
+      "B": "Bico, pernas e pescoço relativamente curtos",
+      "C": "Bico, pernas e pescoço relativamente compridos"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 297,
+    "section": "biologia",
+    "topic": "narcejas",
+    "question": "As narcejas são animais:",
+    "options": {
+      "A": "Muito sociáveis",
+      "B": "Pouco sociáveis",
+      "C": "Migradoras estivais"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 298,
+    "section": "biologia",
+    "topic": "narcejas",
+    "question": "As narcejas, para criação, procuram:",
+    "options": {
+      "A": "Países do centro e sul da Europa",
+      "B": "Países do norte de África",
+      "C": "Países do centro e norte da Europa"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 299,
+    "section": "biologia",
+    "topic": "narcejas",
+    "question": "Entre nós, a narceja é uma ave:",
+    "options": {
+      "A": "Migradora estival",
+      "B": "Migradora invernante",
+      "C": "Parcialmente migradora"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 300,
+    "section": "biologia",
+    "topic": "narcejas",
+    "question": "Quantas espécies de narcejas ocorrem entre nós?",
+    "options": {
+      "A": "1",
+      "B": "2",
+      "C": "3"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 301,
+    "section": "biologia",
+    "topic": "narcejas",
+    "question": "Qual das espécies de narcejas ocorrentes é extremamente rara?",
+    "options": {
+      "A": "Narceja-comum",
+      "B": "Narceja-galega",
+      "C": "Narceja-grande"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 302,
+    "section": "biologia",
+    "topic": "narcejas",
+    "question": "Das espécies de narcejas que se podem caçar, qual a que tem maior envergadura?",
+    "options": {
+      "A": "Narceja-grande",
+      "B": "Narceja-comum",
+      "C": "Narceja-galega"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 303,
+    "section": "biologia",
+    "topic": "narcejas",
+    "question": "A alimentação das narcejas baseia-se em:",
+    "options": {
+      "A": "Moluscos, insetos, fragmentos vegetais, grãos",
+      "B": "Insetos, sementes e plantas aquáticas",
+      "C": "Arroz, milho, caracóis e pequenas rãs"
+    },
+    "answer": "A"
+  }
+]

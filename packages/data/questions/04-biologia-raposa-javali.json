@@ -1,0 +1,387 @@
+[
+  {
+    "id": 105,
+    "section": "biologia",
+    "topic": "raposa",
+    "question": "A raposa é:",
+    "options": {
+      "A": "Um animal solitário",
+      "B": "Um animal que vive em grandes colónias",
+      "C": "Um animal que vive aos casais"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 106,
+    "section": "biologia",
+    "topic": "raposa",
+    "question": "A raposa é:",
+    "options": {
+      "A": "Um mamífero de médio porte",
+      "B": "Um mamífero de grande porte",
+      "C": "Um mamífero de pequeno porte"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 107,
+    "section": "biologia",
+    "topic": "raposa",
+    "question": "Os machos da raposa, por vezes, podem distinguir-se das fêmeas por:",
+    "options": {
+      "A": "Apresentarem uma cabeça menos forte e mais afilada",
+      "B": "Apresentarem uma cabeça mais forte e menos afilada",
+      "C": "Apresentarem uma cabeça mais forte e mais afilada"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 108,
+    "section": "biologia",
+    "topic": "raposa",
+    "question": "A pelagem da raposa, durante o inverno é:",
+    "options": {
+      "A": "Menos espesso e mais denso que no verão",
+      "B": "Mais espesso e menos denso que no verão",
+      "C": "Mais espesso e mais denso que no verão"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 109,
+    "section": "biologia",
+    "topic": "raposa",
+    "question": "O cio da raposa ocorre geralmente em:",
+    "options": {
+      "A": "Janeiro",
+      "B": "Fevereiro",
+      "C": "Março"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 110,
+    "section": "biologia",
+    "topic": "raposa",
+    "question": "O período de gestação da raposa tem a duração aproximada de:",
+    "options": {
+      "A": "40 a 50 dias",
+      "B": "50 a 60 dias",
+      "C": "60 a 70 dias"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 111,
+    "section": "biologia",
+    "topic": "raposa",
+    "question": "Na raposa, cada ninhada tem em média:",
+    "options": {
+      "A": "1 a 3 crias",
+      "B": "2 a 5 crias",
+      "C": "3 a 6 crias"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 112,
+    "section": "biologia",
+    "topic": "raposa",
+    "question": "As raposas podem ser vistas em grupo:",
+    "options": {
+      "A": "Durante todo o ano",
+      "B": "Durante o período de inverno",
+      "C": "Durante o cio das fêmeas"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 113,
+    "section": "biologia",
+    "topic": "saca-rabos",
+    "question": "O saca-rabos é um animal:",
+    "options": {
+      "A": "Que habita em locais com vegetação pouco densa",
+      "B": "Solitário",
+      "C": "Que tanto pode ser visto de dia como de noite"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 114,
+    "section": "biologia",
+    "topic": "saca-rabos",
+    "question": "O saca-rabos possui orelhas:",
+    "options": {
+      "A": "Grandes e arredondadas",
+      "B": "Muito curtas e arredondadas",
+      "C": "Muito curtas e afiladas"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 115,
+    "section": "biologia",
+    "topic": "saca-rabos",
+    "question": "O saca-rabos é:",
+    "options": {
+      "A": "Um carnívoro de médio porte",
+      "B": "Um carnívoro de grande porte",
+      "C": "Um carnívoro de pequeno porte"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 116,
+    "section": "biologia",
+    "topic": "saca-rabos",
+    "question": "O saca-rabos é um animal:",
+    "options": {
+      "A": "Solitário",
+      "B": "Bastante sociável",
+      "C": "Pouco sociável"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 117,
+    "section": "biologia",
+    "topic": "saca-rabos",
+    "question": "O saca-rabos é um animal que, durante as suas atividades de caça:",
+    "options": {
+      "A": "Se desloca em grupos",
+      "B": "Se desloca aos casais",
+      "C": "Se desloca sozinho"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 118,
+    "section": "biologia",
+    "topic": "saca-rabos",
+    "question": "O saca-rabos é um animal:",
+    "options": {
+      "A": "Que habita locais com vegetação pouco densa",
+      "B": "Que habita locais húmidos e alagadiços",
+      "C": "Que habita locais com vegetação densa"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 119,
+    "section": "biologia",
+    "topic": "saca-rabos",
+    "image": "q119.jpg",
+    "question": "A seguinte figura representa:",
+    "options": {
+      "A": "Um saca-rabos",
+      "B": "Um texugo",
+      "C": "Um furão"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 120,
+    "section": "biologia",
+    "topic": "saca-rabos",
+    "question": "O saca-rabos alimenta-se principalmente de:",
+    "options": {
+      "A": "Aves, mamíferos, répteis e frutos",
+      "B": "Produtos vegetais variados",
+      "C": "Insetos"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 121,
+    "section": "biologia",
+    "topic": "saca-rabos",
+    "question": "O saca-rabos alimenta-se fundamentalmente de:",
+    "options": {
+      "A": "Pequenas aves e mamíferos, répteis e frutos",
+      "B": "Produtos vegetais variados",
+      "C": "Rebentos de árvores e arbustos"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 122,
+    "section": "biologia",
+    "topic": "saca-rabos",
+    "question": "O saca-rabos tem uma alimentação:",
+    "options": {
+      "A": "Pouco variada, exclusivamente à base de peixes",
+      "B": "Pouco variada, exclusivamente à base de insetos",
+      "C": "Muito variada, onde se incluem pequenas aves e mamíferos, invertebrados, répteis e frutos"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 123,
+    "section": "biologia",
+    "topic": "javali",
+    "question": "A partir de que idade se pode reproduzir o javali?",
+    "options": {
+      "A": "A partir dos 6 meses",
+      "B": "A partir dos 8 meses",
+      "C": "A partir dos 10 meses"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 124,
+    "section": "biologia",
+    "topic": "javali",
+    "question": "Como se designam os grupos de javalis?",
+    "options": {
+      "A": "Varas ou companhias",
+      "B": "Rebanhos ou manadas",
+      "C": "Bandos ou companhias"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 125,
+    "section": "biologia",
+    "topic": "javali",
+    "question": "Qual a espécie de caça maior com mais ampla representação em Portugal?",
+    "options": {
+      "A": "Raposa",
+      "B": "Veado",
+      "C": "Javali"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 126,
+    "section": "biologia",
+    "topic": "javali",
+    "question": "No javali, dá-se o nome de navalhas aos dentes:",
+    "options": {
+      "A": "Caninos inferiores",
+      "B": "Caninos superiores",
+      "C": "Pré-molares"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 127,
+    "section": "biologia",
+    "topic": "javali",
+    "question": "No javali, dá-se o nome de amoladeiras aos dentes:",
+    "options": {
+      "A": "Caninos superiores",
+      "B": "Pré-molares",
+      "C": "Caninos inferiores"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 128,
+    "section": "biologia",
+    "topic": "javali",
+    "question": "Em hábitos alimentares, o javali é um animal:",
+    "options": {
+      "A": "Insectívoro",
+      "B": "Granívoro",
+      "C": "Omnívoro"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 129,
+    "section": "biologia",
+    "topic": "javali",
+    "question": "Com a idade, os javalis machos adultos, tendem a:",
+    "options": {
+      "A": "Formar casais",
+      "B": "Formar grandes grupos só de machos",
+      "C": "Isolar-se progressivamente"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 130,
+    "section": "biologia",
+    "topic": "javali",
+    "question": "A gestação do javali, dura em média:",
+    "options": {
+      "A": "100 dias",
+      "B": "110 dias",
+      "C": "120 dias"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 131,
+    "section": "biologia",
+    "topic": "javali",
+    "question": "Que nome se dá à cria de javali com menos de 6 meses de idade?",
+    "options": {
+      "A": "Listado",
+      "B": "Farropo",
+      "C": "Leitão"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 132,
+    "section": "biologia",
+    "topic": "javali",
+    "question": "Entre os 6 meses e 1 ano de idade, a cria de javali tem uma designação própria. Qual?",
+    "options": {
+      "A": "Bácoro",
+      "B": "Listado",
+      "C": "Farropo"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 133,
+    "section": "biologia",
+    "topic": "javali",
+    "question": "Indique qual das seguintes frases está correta:",
+    "options": {
+      "A": "O javali é um animal sociável durante toda a sua vida",
+      "B": "O trofeu do javali é a cabeça",
+      "C": "O cio do javali não ocorre sempre numa época fixa"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 134,
+    "section": "biologia",
+    "topic": "javali",
+    "question": "O javali apresenta diferentes pelagens consoante a idade. A pelagem conhecida como “raiada” é característica dos animais com:",
+    "options": {
+      "A": "Menos de 6 meses de idade",
+      "B": "2 anos de idade",
+      "C": "Idade adulta"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 135,
+    "section": "biologia",
+    "topic": "javali",
+    "question": "No javali adulto, um dos carateres que permitem distinguir o macho da fêmea é:",
+    "options": {
+      "A": "A cor mais clara do macho",
+      "B": "A presença de presas mais desenvolvidas nos machos",
+      "C": "A cauda mais comprida no macho"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 136,
+    "section": "biologia",
+    "topic": "javali",
+    "question": "Em termos de habitat, o javali necessita sobretudo de dois elementos. Indique quais:",
+    "options": {
+      "A": "Zonas abertas com amplas áreas de alimentação",
+      "B": "Extensas zonas de abrigo - essencialmente constituídas por matos cerrados - e presença de água",
+      "C": "Zonas cerealíferas em áreas muito acidentadas e presença de água"
+    },
+    "answer": "B"
+  }
+]

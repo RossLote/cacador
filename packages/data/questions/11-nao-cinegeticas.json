@@ -1,0 +1,494 @@
+[
+  {
+    "id": 321,
+    "section": "nao-cinegeticas",
+    "topic": "nao-cinegeticas",
+    "question": "O principal efeito das aves de rapina sobre as presas em geral e a caça em particular:",
+    "options": {
+      "A": "É de extermínio",
+      "B": "É de seleção",
+      "C": "É insignificante"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 322,
+    "section": "nao-cinegeticas",
+    "topic": "nao-cinegeticas",
+    "question": "Qual das frases está incorreta?",
+    "options": {
+      "A": "O açor é uma ave de rapina diurna",
+      "B": "O grifo é um necrófago",
+      "C": "A coruja-do-mato é uma ave de rapina diurna"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 323,
+    "section": "nao-cinegeticas",
+    "topic": "nao-cinegeticas",
+    "question": "Qual dos seguintes grupos é composto só por rapinas diurnas?",
+    "options": {
+      "A": "Abutres, águias e mochos",
+      "B": "Bufos, corujas e abutres",
+      "C": "Milhafres, falcões e peneireiros"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 324,
+    "section": "nao-cinegeticas",
+    "topic": "nao-cinegeticas",
+    "question": "Qual das frases está correta?",
+    "options": {
+      "A": "As aves de rapina são importantes para a caça e para a agricultura",
+      "B": "As aves de rapina são um fator de desequilíbrio nas populações animais",
+      "C": "As aves de rapina são o principal fator de diminuição da caça"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 325,
+    "section": "nao-cinegeticas",
+    "topic": "nao-cinegeticas",
+    "question": "Em termos alimentares, o lince-ibérico é uma espécie:",
+    "options": {
+      "A": "Exclusivamente insectívora",
+      "B": "Exclusivamente carnívora",
+      "C": "Omnívora"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 326,
+    "section": "nao-cinegeticas",
+    "topic": "nao-cinegeticas",
+    "question": "A alimentação do lince-ibérico baseia-se em:",
+    "options": {
+      "A": "Coelhos-bravos",
+      "B": "Lebres",
+      "C": "Perdizes"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 327,
+    "section": "nao-cinegeticas",
+    "topic": "nao-cinegeticas",
+    "question": "O lince-ibérico é um animal territorial. Cada animal vive numa área individual que oscila:",
+    "options": {
+      "A": "Entre 300 e 500 hectares",
+      "B": "Entre 500 e 800 hectares",
+      "C": "Entre 700 e 900 hectares"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 328,
+    "section": "nao-cinegeticas",
+    "topic": "nao-cinegeticas",
+    "question": "Em Portugal, a abetarda é uma ave:",
+    "options": {
+      "A": "Residente",
+      "B": "Migradora de inverno",
+      "C": "Migradora de verão"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 329,
+    "section": "nao-cinegeticas",
+    "topic": "nao-cinegeticas",
+    "question": "A abetarda pode ser observada:",
+    "options": {
+      "A": "Nas zonas rochosas e muito declivosas",
+      "B": "Nas planícies cerealíferas abertas",
+      "C": "Nas zonas densamente arborizadas"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 330,
+    "section": "nao-cinegeticas",
+    "topic": "nao-cinegeticas",
+    "question": "Qual das afirmações está correta?",
+    "options": {
+      "A": "A abetarda é uma espécie cinegética embora não seja permitida a sua caça",
+      "B": "As aves de rapina são importantes para a caça e para a agricultura",
+      "C": "As espécies que não constam do calendário venatório são consideradas protegidas"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 331,
+    "section": "nao-cinegeticas",
+    "topic": "nao-cinegeticas",
+    "question": "A abetarda:",
+    "options": {
+      "A": "É uma espécie cinegética e pode ser caçada de outubro a dezembro",
+      "B": "Não é uma espécie cinegética",
+      "C": "É uma espécie cinegética e pode ser caçada nas condições definidas em edital do Instituto de Conservação da Natureza e das Florestas"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 332,
+    "section": "nao-cinegeticas",
+    "topic": "nao-cinegeticas",
+    "question": "Durante a maior parte do ano, as abetardas mantêm-se normalmente:",
+    "options": {
+      "A": "Em bandos separados por sexo",
+      "B": "Em casais",
+      "C": "Em bandos com exemplares dos dois sexos"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 333,
+    "section": "nao-cinegeticas",
+    "topic": "nao-cinegeticas",
+    "question": "O lince-ibérico é:",
+    "options": {
+      "A": "Uma espécie de caça maior",
+      "B": "Uma espécie de caça menor",
+      "C": "Uma espécie não cinegética"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 334,
+    "section": "nao-cinegeticas",
+    "topic": "nao-cinegeticas",
+    "question": "O habitat do lince-ibérico é tipicamente constituído por:",
+    "options": {
+      "A": "Matagais densos, em áreas de escassa influência humana",
+      "B": "Zonas cerealíferas, entrecortadas por bosques de árvores de folha caduca",
+      "C": "Terrenos muito acidentados, entrecortados com áreas cultivadas"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 335,
+    "section": "nao-cinegeticas",
+    "topic": "nao-cinegeticas",
+    "question": "As aves de rapina merecem o estatuto de espécies integralmente protegidas, pelo que:",
+    "options": {
+      "A": "Só podem ser caçadas com autorização expressa do ICNF",
+      "B": "Podem ser caçadas sempre que provoquem prejuízos na agricultura",
+      "C": "Nunca podem ser caçadas"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 336,
+    "section": "nao-cinegeticas",
+    "topic": "nao-cinegeticas",
+    "question": "A abundância e diversidade das aves de rapina são indicadores seguros de que uma região:",
+    "options": {
+      "A": "Possui comunidades animais ricas e sãs",
+      "B": "Possui uma elevada degradação do habitat",
+      "C": "Possui fraca densidade das populações presa"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 337,
+    "section": "nao-cinegeticas",
+    "topic": "nao-cinegeticas",
+    "question": "Em que situação pode ser autorizada a caça à águia-pesqueira?",
+    "options": {
+      "A": "Quando se pretende utilizar em cetraria",
+      "B": "Desde que tenha carta de caçador de cetreiro",
+      "C": "Nunca"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 338,
+    "section": "nao-cinegeticas",
+    "topic": "nao-cinegeticas",
+    "question": "Qual das frases está correta?",
+    "options": {
+      "A": "As aves de rapina capturam, preferencialmente, animais velhos e doentes, contribuindo para a sanidade das populações",
+      "B": "As aves de rapina exterminam a caça",
+      "C": "A degradação do habitat provoca o aumento das populações de aves de rapina"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 339,
+    "section": "nao-cinegeticas",
+    "topic": "nao-cinegeticas",
+    "question": "Qual das espécies mencionadas não é cinegética?",
+    "options": {
+      "A": "O gaio",
+      "B": "O melro",
+      "C": "O gavião"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 340,
+    "section": "nao-cinegeticas",
+    "topic": "nao-cinegeticas",
+    "question": "Qual das espécies abaixo mencionadas não é cinegética?",
+    "options": {
+      "A": "Abibe",
+      "B": "Saca-rabos",
+      "C": "Melro"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 341,
+    "section": "nao-cinegeticas",
+    "topic": "nao-cinegeticas",
+    "question": "Indique qual a situação em que se pode caçar uma perdiz-cinzenta ou charrela?",
+    "options": {
+      "A": "Nas condições definidas em edital do Instituto da Conservação da Natureza e das Florestas",
+      "B": "Em terrenos cinegéticos ordenados",
+      "C": "Em nenhuma situação"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 342,
+    "section": "nao-cinegeticas",
+    "topic": "nao-cinegeticas",
+    "question": "A qual destas espécies não pode ser autorizada a sua caça?",
+    "options": {
+      "A": "Pato-trombeteiro",
+      "B": "Tarambola-dourada",
+      "C": "Tarambola-prateada"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 343,
+    "section": "nao-cinegeticas",
+    "topic": "nao-cinegeticas",
+    "question": "Quando se pode caçar um açor?",
+    "options": {
+      "A": "Quando se pretende fazer criação em cativeiro",
+      "B": "Quando se pretende praticar cetraria",
+      "C": "Nunca se pode caçar"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 344,
+    "section": "nao-cinegeticas",
+    "topic": "nao-cinegeticas",
+    "question": "Qual das espécies mencionadas não é cinegética?",
+    "options": {
+      "A": "Pega",
+      "B": "Gaio",
+      "C": "Abetarda"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 345,
+    "section": "nao-cinegeticas",
+    "topic": "nao-cinegeticas",
+    "question": "Indique qual a situação em que se pode capturar uma ave de rapina?",
+    "options": {
+      "A": "Quando se pretende utilizar em cetraria",
+      "B": "Nenhuma",
+      "C": "Desde que se tenha carta de cetreiro"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 346,
+    "section": "nao-cinegeticas",
+    "topic": "nao-cinegeticas",
+    "question": "Qual das espécies abaixo mencionadas não é cinegética?",
+    "options": {
+      "A": "Muflão",
+      "B": "Texugo",
+      "C": "Corço"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 347,
+    "section": "nao-cinegeticas",
+    "topic": "nao-cinegeticas",
+    "question": "Qual das seguintes espécies não pode ser caçada?",
+    "options": {
+      "A": "Muflão",
+      "B": "Gamo",
+      "C": "Charrela ou perdiz-cinzenta"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 348,
+    "section": "nao-cinegeticas",
+    "topic": "nao-cinegeticas",
+    "question": "As aves de rapina podem ser caçadas?",
+    "options": {
+      "A": "Não",
+      "B": "Sim, desde que constem na portaria do calendário venatório",
+      "C": "Sim, com uma autorização do Instituto de Conservação da Natureza e das Florestas caso provoquem prejuízos"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 349,
+    "section": "nao-cinegeticas",
+    "topic": "nao-cinegeticas",
+    "question": "A abetarda:",
+    "options": {
+      "A": "É uma espécie cinegética cuja caça pode ser autorizada de outubro a dezembro",
+      "B": "Não é uma espécie cinegética",
+      "C": "É uma espécie cinegética e pode ser caçada nas condições definidas em edital do Instituto de Conservação da Natureza e das Florestas"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 350,
+    "section": "nao-cinegeticas",
+    "topic": "nao-cinegeticas",
+    "question": "Normalmente as aves de rapina têm sobre as populações de espécies cinegéticas de que se alimentam:",
+    "options": {
+      "A": "Um efeito de seleção tornando-as mais saudáveis",
+      "B": "Um efeito prejudicial, contribuindo para o aumento de doenças",
+      "C": "Um efeito prejudicial, porque reduzem fortemente as populações cinegéticas"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 351,
+    "section": "nao-cinegeticas",
+    "topic": "nao-cinegeticas",
+    "question": "Qual das espécies mencionadas não é cinegética?",
+    "options": {
+      "A": "Pato branco",
+      "B": "Piadeira",
+      "C": "Negrinha"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 352,
+    "section": "nao-cinegeticas",
+    "topic": "nao-cinegeticas",
+    "question": "As aves de rapina alimentam-se preferencialmente de:",
+    "options": {
+      "A": "Animais mais robustos reduzindo substancialmente as populações",
+      "B": "Presas mais saudáveis e robustas",
+      "C": "Presas debilitadas contribuindo assim para populações mais saudáveis"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 353,
+    "section": "nao-cinegeticas",
+    "topic": "nao-cinegeticas",
+    "question": "“As aves de rapina são importantes para a caça” é uma afirmação:",
+    "options": {
+      "A": "Falsa, porque as aves de rapina diminuem drasticamente as populações cinegéticas",
+      "B": "Falsa, porque as aves de rapina não interferem nas populações das espécies cinegéticas",
+      "C": "Verdadeiras, porque capturam preferencialmente animais doentes e velhos contribuindo para a sanidade das populações"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 354,
+    "section": "nao-cinegeticas",
+    "topic": "nao-cinegeticas",
+    "question": "Qual das seguintes espécies é protegida:",
+    "options": {
+      "A": "Gamo",
+      "B": "Lince",
+      "C": "Muflão"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 355,
+    "section": "nao-cinegeticas",
+    "topic": "nao-cinegeticas",
+    "question": "Qual das seguintes espécies não é cinegética?",
+    "options": {
+      "A": "Gamo",
+      "B": "Muflão",
+      "C": "Lince"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 356,
+    "section": "nao-cinegeticas",
+    "topic": "nao-cinegeticas",
+    "question": "Qual destas espécies não é cinegética?",
+    "options": {
+      "A": "Gaio",
+      "B": "Lobo",
+      "C": "Pega-rabuda"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 357,
+    "section": "nao-cinegeticas",
+    "topic": "nao-cinegeticas",
+    "question": "Durante a maior parte do ano, as abetardas:",
+    "options": {
+      "A": "Vivem em bandos do mesmo sexo",
+      "B": "Vivem em bandos de ambos os sexos",
+      "C": "Vivem em casais"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 358,
+    "section": "nao-cinegeticas",
+    "topic": "nao-cinegeticas",
+    "question": "Qual das seguintes espécies não é cinegética?",
+    "options": {
+      "A": "Arrabio",
+      "B": "Milhafre",
+      "C": "Pato-trombeteiro"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 359,
+    "section": "nao-cinegeticas",
+    "topic": "nao-cinegeticas",
+    "question": "Qual das seguintes espécies é protegida?",
+    "options": {
+      "A": "Águia-imperial",
+      "B": "Tarambola-dourada",
+      "C": "Narceja-comum"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 360,
+    "section": "nao-cinegeticas",
+    "topic": "nao-cinegeticas",
+    "question": "Indique qual o grupo constituído unicamente por espécies cinegéticas:",
+    "options": {
+      "A": "Abetarda, arrabio, tarambola-prateada",
+      "B": "Perdiz-cinzenta, piadeira, narceja-grande",
+      "C": "Narceja-galega, pega-rabuda, saca-rabos"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 361,
+    "section": "nao-cinegeticas",
+    "topic": "nao-cinegeticas",
+    "question": "Em que situação se podem caçar aves de rapina?",
+    "options": {
+      "A": "Quando causam prejuízos na agricultura",
+      "B": "Quando o Instituto da Conservação da Natureza e das Florestas autoriza",
+      "C": "Nunca"
+    },
+    "answer": "C"
+  }
+]

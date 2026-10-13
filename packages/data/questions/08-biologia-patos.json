@@ -1,0 +1,473 @@
+[
+  {
+    "id": 228,
+    "section": "biologia",
+    "topic": "patos",
+    "image": "q228.jpg",
+    "question": "A seguinte figura representa:",
+    "options": {
+      "A": "Um arrabio",
+      "B": "Um pato-trombeteiro",
+      "C": "Um pato-real"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 229,
+    "section": "biologia",
+    "topic": "patos",
+    "image": "q229.jpg",
+    "question": "A seguinte figura representa:",
+    "options": {
+      "A": "Arrabio",
+      "B": "Frisada",
+      "C": "Pato-real"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 230,
+    "section": "biologia",
+    "topic": "patos",
+    "question": "Uma das características dos patos de superfície é:",
+    "options": {
+      "A": "Possuírem tamanho pequeno a médio",
+      "B": "Possuírem tamanho médio",
+      "C": "Possuírem tamanho médio a grande"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 231,
+    "section": "biologia",
+    "topic": "patos",
+    "question": "Uma das características dos patos de superfície é:",
+    "options": {
+      "A": "Possuírem pescoço, asas e patas curtas",
+      "B": "Possuírem pescoço e patas de tamanho médio",
+      "C": "Possuírem pescoço e patas compridas"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 232,
+    "section": "biologia",
+    "topic": "patos",
+    "question": "Uma das características dos patos de superfície é:",
+    "options": {
+      "A": "Possuírem espelho alar geralmente com brilho metálico",
+      "B": "Possuírem franja alar branca ou pálida",
+      "C": "Possuírem coloração quase sempre escura"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 233,
+    "section": "biologia",
+    "topic": "patos",
+    "question": "Uma das características dos patos de superfície é:",
+    "options": {
+      "A": "Apresentarem dimorfismo sexual variável conforme as espécies",
+      "B": "Não apresentarem dimorfismo sexual",
+      "C": "Apresentarem dimorfismo sexual acentuado na maioria das espécies"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 234,
+    "section": "biologia",
+    "topic": "patos",
+    "question": "Qual das espécies de patos seguintes não apresenta “espelho alar”?",
+    "options": {
+      "A": "Pato-real",
+      "B": "Frisada",
+      "C": "Zarro-comum"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 235,
+    "section": "biologia",
+    "topic": "patos",
+    "question": "Os patos que apresentam “espelho alar” geralmente com brilho metálico, são os:",
+    "options": {
+      "A": "Patos de superfície",
+      "B": "Patos marinhos",
+      "C": "Patos mergulhadores"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 236,
+    "section": "biologia",
+    "topic": "patos",
+    "question": "Uma das características dos patos de superfície é:",
+    "options": {
+      "A": "Terem uma alimentação preferencialmente animal",
+      "B": "Obterem a sua alimentação através do mergulho",
+      "C": "Arrancarem as plantas do fundo com o terço posterior emerso"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 237,
+    "section": "biologia",
+    "topic": "patos",
+    "question": "Uma das características dos patos de superfície é:",
+    "options": {
+      "A": "Levantarem voo quase na vertical",
+      "B": "Patinharem na água antes de levantar voo",
+      "C": "Emergirem praticamente no local onde imergiram"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 238,
+    "section": "biologia",
+    "topic": "patos",
+    "question": "A alimentação dos patos de superfície é constituída à base de:",
+    "options": {
+      "A": "Microrganismos em suspensão na água e plantas do fundo",
+      "B": "Moluscos, vermes e plantas",
+      "C": "Moluscos, vermes e peixes"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 239,
+    "section": "biologia",
+    "topic": "patos",
+    "question": "Uma das características dos patos mergulhadores é:",
+    "options": {
+      "A": "Possuírem franja alar branca ou pálida",
+      "B": "Possuírem coloração quase sempre escura",
+      "C": "Possuírem espelho com reflexos metálicos"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 240,
+    "section": "biologia",
+    "topic": "patos",
+    "question": "Uma das características dos patos mergulhadores é:",
+    "options": {
+      "A": "Possuírem tamanho pequeno a médio",
+      "B": "Possuírem tamanho médio",
+      "C": "Possuírem tamanho médio a grande"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 241,
+    "section": "biologia",
+    "topic": "patos",
+    "question": "Uma das características dos patos mergulhadores é:",
+    "options": {
+      "A": "Possuírem pescoço e patas compridas",
+      "B": "Possuírem pescoço, asas e patas curtas",
+      "C": "Possuírem pescoço e patas de tamanho médio"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 242,
+    "section": "biologia",
+    "topic": "patos",
+    "question": "Uma das características dos patos mergulhadores é:",
+    "options": {
+      "A": "Apresentarem dimorfismo sexual variável conforme as espécies",
+      "B": "Apresentarem dimorfismo sexual acentuado na maioria das espécies",
+      "C": "Não apresentarem dimorfismo sexual"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 243,
+    "section": "biologia",
+    "topic": "patos",
+    "question": "Uma das características dos patos mergulhadores é:",
+    "options": {
+      "A": "Patinharem na água antes de levantar voo",
+      "B": "Levantarem voo quase na vertical",
+      "C": "Emergirem a alguns metros do local onde mergulharam"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 244,
+    "section": "biologia",
+    "topic": "patos",
+    "question": "Dos seguintes conjuntos de espécies, qual deles é vulgar encontrar no mês de janeiro, num habitat classificado como zona húmida?",
+    "options": {
+      "A": "Pato-trombeteiro, galinha-d’água e galeirão",
+      "B": "Tarambola-dourada, pato-real e lebre",
+      "C": "Arrabio, pombo-torcaz e galeirão"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 245,
+    "section": "biologia",
+    "topic": "patos",
+    "question": "Nos patos mergulhadores, a alimentação é constituída à base de:",
+    "options": {
+      "A": "Moluscos, vermes e peixes",
+      "B": "Moluscos, vermes e plantas",
+      "C": "Microrganismos em suspensão na água e plantas do fundo"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 246,
+    "section": "biologia",
+    "topic": "patos",
+    "question": "À exceção do pato-real e do marreco, as restantes espécies de patos ocorrentes no País:",
+    "options": {
+      "A": "Invernam em Portugal e criam no Norte e Centro da Europa",
+      "B": "Invernam em Portugal e criam no Norte e Sul da Europa",
+      "C": "Invernam em Portugal e criam no Sul e Centro da Europa"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 247,
+    "section": "biologia",
+    "topic": "patos",
+    "question": "A maior parte da população de pato-real ocorrente no nosso País é:",
+    "options": {
+      "A": "Migradora invernante",
+      "B": "Migradora de passagem",
+      "C": "Sedentária"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 248,
+    "section": "biologia",
+    "topic": "patos",
+    "question": "A frisada é um pato de superfície, cujo macho possui um espelho alar:",
+    "options": {
+      "A": "Pequeno branco, orlado em cima por negro e ruivo vivo",
+      "B": "Verde brilhante",
+      "C": "Verde bronze"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 249,
+    "section": "biologia",
+    "topic": "patos",
+    "question": "O pato-trombeteiro macho distingue-se por possuir:",
+    "options": {
+      "A": "Dorso cinzento, pescoço, cabeça e peito cor de tijolo, fronte amarela",
+      "B": "Cabeça verde, peito branco, mancha castanha nos flancos e ventre",
+      "C": "Dorso acinzentado, cabeça verde, peito castanho, partes inferiores claras"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 250,
+    "section": "biologia",
+    "topic": "patos",
+    "question": "A fêmea do zarro-comum, distingue-se do macho por possuir:",
+    "options": {
+      "A": "Coloração acastanhada, com anel cinzento-azulado à volta do bico",
+      "B": "Um bico espatulado negro",
+      "C": "Uma coloração acastanhada, com bico alaranjado"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 251,
+    "section": "biologia",
+    "topic": "patos",
+    "question": "O arrabio é um pato de superfície que se pode distinguir dos outros patos por:",
+    "options": {
+      "A": "Possuir um bico espatulado muito desenvolvido",
+      "B": "Possuir pescoço branco e peito cor de tijolo",
+      "C": "Possuir um pescoço comparativamente mais longo e esbelto"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 252,
+    "section": "biologia",
+    "topic": "patos",
+    "question": "O zarro-comum macho é um pato mergulhador que se pode distinguir por:",
+    "options": {
+      "A": "Possuir cabeça e pescoço castanho avermelhado, peito e corpo cinzentos",
+      "B": "Possuir cabeça avermelhada com sobrancelha branca",
+      "C": "Cor geral castanho acinzentada, pescoço, cabeça e peito cor de tijolo"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 253,
+    "section": "biologia",
+    "topic": "patos",
+    "question": "Qual das seguintes espécies apresenta um “espelho azul”?",
+    "options": {
+      "A": "Zarro-comum",
+      "B": "Pato-real",
+      "C": "Pato-trombeteiro"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 254,
+    "section": "biologia",
+    "topic": "patos",
+    "question": "Como se distinguem os patos de superfície dos patos mergulhadores?",
+    "options": {
+      "A": "São maiores",
+      "B": "Levantam voo quase na vertical",
+      "C": "Têm cores menos brilhantes"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 255,
+    "section": "biologia",
+    "topic": "patos",
+    "question": "Qual das espécies de patos seguintes não apresenta “espelho alar”?",
+    "options": {
+      "A": "Pato-real",
+      "B": "Frisada",
+      "C": "Zarro-comum"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 256,
+    "section": "biologia",
+    "topic": "galinha-d-agua",
+    "question": "A galinha-d’água possui:",
+    "options": {
+      "A": "Bico vermelho com a ponta amarela",
+      "B": "Bico amarelo com ponta vermelha",
+      "C": "Bico vermelho com ponta branca"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 257,
+    "section": "biologia",
+    "topic": "galinha-d-agua",
+    "question": "A galinha-d’água possui:",
+    "options": {
+      "A": "Placa frontal branca",
+      "B": "Placa frontal amarela",
+      "C": "Placa frontal vermelha"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 258,
+    "section": "biologia",
+    "topic": "galinha-d-agua",
+    "question": "A galinha-d’água é muito comum em:",
+    "options": {
+      "A": "Charcos, lagoas, zonas alagadas e cursos de água lentos",
+      "B": "Charcos, lagoas e cursos de água muito rápidos",
+      "C": "Lagoas, zonas alagadas e cursos de água temporários"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 259,
+    "section": "biologia",
+    "topic": "galinha-d-agua",
+    "question": "A galinha-d’água é muito comum em:",
+    "options": {
+      "A": "Charcos, lagoas, zonas alagadas e cursos de água lentos",
+      "B": "Cursos de água muito rápidos sem vegetação nas margens",
+      "C": "Zonas de matos e arvoredo abundante"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 260,
+    "section": "biologia",
+    "topic": "galinha-d-agua",
+    "question": "A atividade da galinha-d’água é:",
+    "options": {
+      "A": "Essencialmente diurna",
+      "B": "Essencialmente noturna",
+      "C": "Essencialmente crepuscular"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 261,
+    "section": "biologia",
+    "topic": "galeirao",
+    "image": "q261.jpg",
+    "question": "A seguinte figura representa:",
+    "options": {
+      "A": "Um galeirão",
+      "B": "Uma galinha-d’água",
+      "C": "Um abibe"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 262,
+    "section": "biologia",
+    "topic": "galeirao",
+    "question": "O galeirão, em relação à galinha-d’água, apresenta um aspeto:",
+    "options": {
+      "A": "Mais pesado e menos vivo",
+      "B": "Menos pesado e menos vivo",
+      "C": "Mais pesado e mais vivo"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 263,
+    "section": "biologia",
+    "topic": "galeirao",
+    "question": "O galeirão distingue-se da galinha-d’água por possuir:",
+    "options": {
+      "A": "Bico branco e placa frontal vermelha",
+      "B": "Bico branco e placa frontal branca",
+      "C": "Bico vermelho e placa frontal branca"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 264,
+    "section": "biologia",
+    "topic": "galeirao",
+    "question": "Os galeirões, durante o inverno:",
+    "options": {
+      "A": "Constituem grandes bandos",
+      "B": "Observam-se aos casais",
+      "C": "São animais solitários"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 265,
+    "section": "biologia",
+    "topic": "galeirao",
+    "question": "Os galeirões, durante a época de reprodução:",
+    "options": {
+      "A": "São animais muito sociáveis, constituindo grandes bandos",
+      "B": "São animais combativos e extremamente territoriais",
+      "C": "São animais que andam sós ou em pequenos grupos"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 266,
+    "section": "biologia",
+    "topic": "galeirao",
+    "question": "Qual a estação do ano em que os galeirões podem ser observados em grandes bandos?",
+    "options": {
+      "A": "Inverno",
+      "B": "Primavera",
+      "C": "Outono"
+    },
+    "answer": "A"
+  }
+]

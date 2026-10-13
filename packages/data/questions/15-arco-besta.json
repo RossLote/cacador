@@ -1,0 +1,146 @@
+[
+  {
+    "id": 463,
+    "section": "arco-besta",
+    "topic": "arco-besta",
+    "question": "O Arqueiro ou Besteiro, ao disparar a um animal, deve encontrar-se a uma distância:",
+    "options": {
+      "A": "Inferior a 30 metros",
+      "B": "Superior a 30 metros",
+      "C": "Superior a 40 metros"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 464,
+    "section": "arco-besta",
+    "topic": "arco-besta",
+    "question": "O Arqueiro ou Besteiro deve disparar sobre o animal, apontando:",
+    "options": {
+      "A": "À espinal medula",
+      "B": "Ao cérebro",
+      "C": "À cavidade torácica"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 465,
+    "section": "arco-besta",
+    "topic": "arco-besta",
+    "question": "Fora do exercício da caça, as pontas das flechas ou virotões para caça maior devem:",
+    "options": {
+      "A": "Ser acondicionadas na aljava",
+      "B": "Embrulhadas em papel",
+      "C": "Estar sempre visíveis"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 466,
+    "section": "arco-besta",
+    "topic": "arco-besta",
+    "question": "O caçador no ato venatório, ao utilizar arco ou besta, deve:",
+    "options": {
+      "A": "Armar o arco ou besta, próximo do local do disparo",
+      "B": "Ter o arco ou besta pronto a disparar",
+      "C": "Transportar sempre duas flechas ou virotões na mão"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 467,
+    "section": "arco-besta",
+    "topic": "arco-besta",
+    "question": "O caçador só poderá utilizar besta, na caça maior, se esta possuir:",
+    "options": {
+      "A": "Patilha de segurança",
+      "B": "Potência inferior a 125 libras",
+      "C": "Potência inferior a 100 libras"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 468,
+    "section": "arco-besta",
+    "topic": "arco-besta",
+    "question": "Na caça com arco ou besta qual o tipo de ponta permitido na caça maior?",
+    "options": {
+      "A": "Com barbela",
+      "B": "Com lâminas",
+      "C": "Ogival"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 469,
+    "section": "arco-besta",
+    "topic": "arco-besta",
+    "question": "Fora do exercício da caça o transporte de arco ou besta deve efetuar-se em estojo próprio, com exceção dos casos de deslocações entre locais de espera, desde que a distância entre eles não exceda:",
+    "options": {
+      "A": "100 metros",
+      "B": "150 metros",
+      "C": "200 metros"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 470,
+    "section": "arco-besta",
+    "topic": "arco-besta",
+    "question": "O caçador ao preparar o disparo com arco ou besta verifica que a presa pressentiu a sua presença e afasta-se pelo que deve:",
+    "options": {
+      "A": "Disparar correndo a mão",
+      "B": "Esperar que o animal se imobilize",
+      "C": "Disparar calculando o ponto de cruzamento do animal com o projétil"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 471,
+    "section": "arco-besta",
+    "topic": "arco-besta",
+    "question": "No exercício da caça com arco ou besta qual a largura mínima de corte das pontas das flechas ou virotões, a utilizar na caça maior?",
+    "options": {
+      "A": "20 mm",
+      "B": "22 mm",
+      "C": "25 mm"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 472,
+    "section": "arco-besta",
+    "topic": "arco-besta",
+    "question": "No exercício da caça com arco ou besta, ao ultrapassar um obstáculo, o caçador deve:",
+    "options": {
+      "A": "Atirar a flecha ou virotão para o outro lado do obstáculo",
+      "B": "Colocar as flechas ou virotões na aljava",
+      "C": "Saltar com a flecha ou virotão montado na arma mas sem levar o arco em tensão"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 473,
+    "section": "arco-besta",
+    "topic": "arco-besta",
+    "question": "Na caça com arco ou besta, as pontas das flechas ou virotões a utilizar na caça maior devem ter, no mínimo:",
+    "options": {
+      "A": "Duas farpas",
+      "B": "Duas lâminas",
+      "C": "Duas lâminas com barbela"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 474,
+    "section": "arco-besta",
+    "topic": "arco-besta",
+    "question": "Na caça com arco ou besta a partir de uma plataforma elevada deve visar-se:",
+    "options": {
+      "A": "A coluna vertebral, por causar morte instantânea",
+      "B": "O tórax, por ser o local onde se encontram órgãos vitais",
+      "C": "O rim, por ser uma zona pouca protegida"
+    },
+    "answer": "B"
+  }
+]

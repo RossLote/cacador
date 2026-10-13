@@ -1,0 +1,122 @@
+[
+  {
+    "id": 1,
+    "section": "documentos",
+    "topic": "documentos",
+    "question": "Poderão ser dispensados da carta de caçador?",
+    "options": {
+      "A": "Os agentes das autoridades com competência na fiscalização da caça",
+      "B": "Os membros do Governo, os Deputados à Assembleia da República e os funcionários do ICNF",
+      "C": "Os estrangeiros não residentes em território português, desde que habilitados a caçarem no país da sua nacionalidade ou residência"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 2,
+    "section": "documentos",
+    "topic": "documentos",
+    "question": "Para a obtenção da carta de caçador, além de outros requisitos, é ainda necessário:",
+    "options": {
+      "A": "Ser cidadão nacional",
+      "B": "Ser residente em território nacional",
+      "C": "Ter mais de 16 anos"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 3,
+    "section": "documentos",
+    "topic": "documentos",
+    "question": "A carta de caçador pode ser renovada:",
+    "options": {
+      "A": "Nos 12 meses que antecedem o final da sua validade",
+      "B": "Nos 18 meses que antecedem o final da sua validade",
+      "C": "Nos 24 meses que antecedem o final da sua caducidade"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 4,
+    "section": "documentos",
+    "topic": "documentos",
+    "question": "Quando o seu titular é condenado por crime de caça, a carta de caçador:",
+    "options": {
+      "A": "Deve ser corrigida",
+      "B": "Caduca",
+      "C": "Deve ser trocada"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 5,
+    "section": "documentos",
+    "topic": "documentos",
+    "question": "Qual das frases está correta?",
+    "options": {
+      "A": "Os membros do corpo diplomático podem ser dispensados de licença de caça",
+      "B": "A licença regional de caça autoriza o exercício da caça na área da região cinegética a que respeita",
+      "C": "A licença regional de caça apenas é válida para algumas espécies"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 6,
+    "section": "documentos",
+    "topic": "documentos",
+    "question": "A licença de cão de caça é exigida para cães:",
+    "options": {
+      "A": "Com mais de 4 meses de idade",
+      "B": "Com mais de 12 meses de idade",
+      "C": "Com mais de 6 meses de idade"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 7,
+    "section": "documentos",
+    "topic": "documentos",
+    "question": "Um caçador que pretenda caçar só às narcejas numa única região cinegética deve ser titular de:",
+    "options": {
+      "A": "Licença para caçar aves aquáticas",
+      "B": "Licença regional de caça ou licença nacional de caça",
+      "C": "Licença regional de caça e licença de aves aquáticas"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 8,
+    "section": "documentos",
+    "topic": "documentos",
+    "question": "Um caçador para exercer o ato venatório pode ser dispensado da licença de caça?",
+    "options": {
+      "A": "Não, nunca pode ser dispensado",
+      "B": "Sim, se for estrangeiro, não residente em território nacional",
+      "C": "Sim, se for membro do corpo diplomático acreditado em Portugal"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 9,
+    "section": "documentos",
+    "topic": "documentos",
+    "question": "Indique quem está dispensado da licença de caça para caçar:",
+    "options": {
+      "A": "Os membros do corpo diplomático e consular acreditados em Portugal",
+      "B": "Os estrangeiros não residentes em território português, desde que estejam habilitados a caçar no pais da sua nacionalidade ou residência",
+      "C": "Ninguém"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 10,
+    "section": "documentos",
+    "topic": "documentos",
+    "question": "Um caçador que pretenda caçar só coelhos numa única região cinegética deve ser titular de:",
+    "options": {
+      "A": "Licença para caçar aves aquáticas",
+      "B": "Licença regional de caça ou licença nacional de caça",
+      "C": "Licença regional de caça e licença de aves aquáticas"
+    },
+    "answer": "B"
+  }
+]

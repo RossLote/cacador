@@ -1,0 +1,554 @@
+[
+  {
+    "id": 59,
+    "section": "biologia",
+    "topic": "coelho",
+    "question": "Em termos alimentares, o coelho é:",
+    "options": {
+      "A": "Um pequeno carnívoro",
+      "B": "Um pequeno omnívoro",
+      "C": "Um pequeno herbívoro"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 60,
+    "section": "biologia",
+    "topic": "coelho",
+    "question": "Quando em fuga, a corrida do coelho caracteriza-se por ser:",
+    "options": {
+      "A": "Retilínea",
+      "B": "Em alongados ziguezagues",
+      "C": "Em apertados ziguezagues"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 61,
+    "section": "biologia",
+    "topic": "coelho",
+    "question": "O coelho vive preferencialmente em:",
+    "options": {
+      "A": "Zonas de mato abundante",
+      "B": "Zonas de arvoredo muito denso",
+      "C": "Zonas arenosas e húmidas"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 62,
+    "section": "biologia",
+    "topic": "coelho",
+    "question": "A alimentação do coelho é constituída essencialmente por:",
+    "options": {
+      "A": "Raízes, caules e pequenos insetos",
+      "B": "Plantas herbáceas, raízes, caules, grãos e cascas suculentas",
+      "C": "Plantas herbáceas, raízes e pequenos batráquios"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 63,
+    "section": "biologia",
+    "topic": "coelho",
+    "question": "O coelho é um animal de hábitos:",
+    "options": {
+      "A": "Noturnos e crepusculares",
+      "B": "Essencialmente diurnos",
+      "C": "Essencialmente noturnos"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 64,
+    "section": "biologia",
+    "topic": "coelho",
+    "question": "Os coelhos vivem, normalmente em:",
+    "options": {
+      "A": "Colónias, com galerias extensas e muito ramificadas",
+      "B": "Colónias, com galerias extensas não ramificadas",
+      "C": "Tocas de habitação individuais"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 65,
+    "section": "biologia",
+    "topic": "coelho",
+    "question": "As coelhas prenhes têm as ninhadas:",
+    "options": {
+      "A": "Numa ramificação profunda da toca de habitação",
+      "B": "Numa toca especial afastada da colónia",
+      "C": "Numa ramificação superficial da toca de habitação"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 66,
+    "section": "biologia",
+    "topic": "coelho",
+    "question": "As tocas de reprodução dos coelhos são formadas por:",
+    "options": {
+      "A": "Uma galeria simples e profunda",
+      "B": "Uma galeria complexa e profunda",
+      "C": "Uma galeria simples e superficial"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 67,
+    "section": "biologia",
+    "topic": "coelho",
+    "question": "As tocas de reprodução dos coelhos são construídas:",
+    "options": {
+      "A": "Pelas fêmeas",
+      "B": "Por ambos os sexos",
+      "C": "Só pelos machos"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 68,
+    "section": "biologia",
+    "topic": "coelho",
+    "question": "As tocas de reprodução dos coelhos são constituídas por:",
+    "options": {
+      "A": "Uma única abertura, forrada com ervas e folhas secas",
+      "B": "Uma única abertura, forrada com pelos da própria fêmea",
+      "C": "Uma única abertura, forrada com ervas, folhas e cascas secas"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 69,
+    "section": "biologia",
+    "topic": "coelho",
+    "question": "Ao fim de quanto tempo, as coelhas mudam os filhos para as tocas de habitação?",
+    "options": {
+      "A": "1 Semana",
+      "B": "2 Semanas",
+      "C": "3 Semanas"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 70,
+    "section": "biologia",
+    "topic": "coelho",
+    "question": "O coelho-bravo está apto a reproduzir-se a partir da idade seguinte:",
+    "options": {
+      "A": "Quatro meses",
+      "B": "Seis meses",
+      "C": "Doze meses"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 71,
+    "section": "biologia",
+    "topic": "coelho",
+    "question": "Em comprimento, as orelhas do coelho são:",
+    "options": {
+      "A": "Maiores que as da lebre",
+      "B": "Maiores que o comprimento da sua cabeça",
+      "C": "Menores que o comprimento da sua cabeça"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 72,
+    "section": "biologia",
+    "topic": "coelho",
+    "question": "A época de reprodução mais intensa do coelho ocorre de:",
+    "options": {
+      "A": "Março a maio",
+      "B": "Março a agosto",
+      "C": "Durante todo o ano"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 73,
+    "section": "biologia",
+    "topic": "coelho",
+    "question": "Nas coelhas, o período de gestação é de:",
+    "options": {
+      "A": "25 a 30 dias",
+      "B": "27 a 30 dias",
+      "C": "28 a 30 dias"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 74,
+    "section": "biologia",
+    "topic": "coelho",
+    "question": "As coelhas têm, em média, quantas ninhadas por ano?",
+    "options": {
+      "A": "1 a 4",
+      "B": "3 a 5",
+      "C": "2 a 5"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 75,
+    "section": "biologia",
+    "topic": "coelho",
+    "question": "Os láparos nascem:",
+    "options": {
+      "A": "Cegos, surdos e sem pelo",
+      "B": "De olhos abertos e com pelo",
+      "C": "Cegos, surdos e com pelo"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 76,
+    "section": "biologia",
+    "topic": "coelho",
+    "question": "Ao nível das doenças epidémicas do coelho, qual das frases está correta?",
+    "options": {
+      "A": "Nos repovoamentos proceda ao seu controlo sanitário e vacinação",
+      "B": "Pode esfolar os coelhos caçados no campo",
+      "C": "Se esfolar os coelhos caçados dê as vísceras aos cães"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 77,
+    "section": "biologia",
+    "topic": "coelho",
+    "question": "Ao nível das doenças epidémicas, qual das seguintes medidas pode contribuir para o ordenamento do coelho-bravo?",
+    "options": {
+      "A": "Queimar os coelhos vítimas de doenças",
+      "B": "Não realizar a queima de restolhos",
+      "C": "Construir tocas ou “morouços”"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 78,
+    "section": "biologia",
+    "topic": "coelho",
+    "question": "O coelho pode viver até aos:",
+    "options": {
+      "A": "5 anos",
+      "B": "10 anos",
+      "C": "15 anos"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 79,
+    "section": "biologia",
+    "topic": "coelho",
+    "question": "O coelho é atacado por uma doença contagiosa grave. Indique qual:",
+    "options": {
+      "A": "Coccidiose",
+      "B": "Mixomatose",
+      "C": "Brucelose"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 80,
+    "section": "biologia",
+    "topic": "coelho",
+    "question": "Os coelhos abrem os olhos ao fim de:",
+    "options": {
+      "A": "5 dias",
+      "B": "10 dias",
+      "C": "15 dias"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 81,
+    "section": "biologia",
+    "topic": "coelho",
+    "question": "O aparelho auditivo do coelho está completamente desenvolvido aos:",
+    "options": {
+      "A": "8 dias",
+      "B": "10 dias",
+      "C": "15 dias"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 82,
+    "section": "biologia",
+    "topic": "coelho",
+    "question": "A mixomatose, doença que ataca os coelhos, é:",
+    "options": {
+      "A": "Transmissível ao homem",
+      "B": "Não transmissível ao homem",
+      "C": "Transmissível a outras espécies cinegéticas"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 83,
+    "section": "biologia",
+    "topic": "coelho",
+    "question": "Aos coelhos recém-nascidos dá-se, vulgarmente, o nome de:",
+    "options": {
+      "A": "Láparos",
+      "B": "Lebrachos",
+      "C": "Listados"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 84,
+    "section": "biologia",
+    "topic": "coelho",
+    "question": "Relativamente ao coelho-bravo indique a frase correta:",
+    "options": {
+      "A": "É uma espécie de distribuição restrita",
+      "B": "É uma espécie pouco importante no equilíbrio ecológico do habitat mediterrânico",
+      "C": "A mixomatose é uma doença que contribui para a diminuição das populações de coelho"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 85,
+    "section": "biologia",
+    "topic": "coelho",
+    "question": "O coelho-bravo é uma espécie que vive:",
+    "options": {
+      "A": "Em zonas onde o mato é raro, preferindo terrenos húmidos e argilosos",
+      "B": "Em zonas abertas sem mato, preferindo terrenos acidentados e rochosos",
+      "C": "Em zonas onde o mato é abundante, preferindo terrenos secos e arenosos"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 86,
+    "section": "biologia",
+    "topic": "coelho",
+    "question": "Onde há maior probabilidade de encontrar o coelho-bravo?",
+    "options": {
+      "A": "Em terrenos húmidos e barrentos",
+      "B": "Em zonas onde o mato é abundante",
+      "C": "Em zonas de pousios e terras cultivadas"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 87,
+    "section": "biologia",
+    "topic": "coelho",
+    "question": "Qual das medidas pode contribuir positivamente para o ordenamento do coelho-bravo:",
+    "options": {
+      "A": "Realizar repovoamentos independentemente da origem dos animais",
+      "B": "Construir tocas ou “morouços” em terrenos onde seja difícil escavar",
+      "C": "Realizar repovoamentos com fêmeas de coelho-manso para aumentar a capacidade de reprodução"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 88,
+    "section": "biologia",
+    "topic": "lebre",
+    "question": "Em comprimento, as orelhas da lebre são:",
+    "options": {
+      "A": "Menores que as do coelho",
+      "B": "Maiores que o comprimento da sua cabeça",
+      "C": "Menores que o comprimento da sua cabeça"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 89,
+    "section": "biologia",
+    "topic": "lebre",
+    "question": "Uma das características da lebre é:",
+    "options": {
+      "A": "Possuir orelhas pequenas, brancas na extremidade",
+      "B": "Possuir orelhas grandes, negras na extremidade",
+      "C": "Possuir orelhas grandes e arredondadas, menores que o comprimento da cabeça"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 90,
+    "section": "biologia",
+    "topic": "lebre",
+    "question": "Uma das características da lebre é:",
+    "options": {
+      "A": "Possuir membros posteriores maiores que os anteriores",
+      "B": "Possuir membros anteriores maiores que os posteriores",
+      "C": "Possuir tamanho semelhante ao do coelho"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 91,
+    "section": "biologia",
+    "topic": "lebre",
+    "question": "O maior tamanho dos membros posteriores da lebre permite-lhe:",
+    "options": {
+      "A": "Adquirir boa aderência",
+      "B": "Adquirir boa capacidade de fuga em ziguezague",
+      "C": "Adquirir grande velocidade"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 92,
+    "section": "biologia",
+    "topic": "lebre",
+    "question": "A lebre é, geralmente mais abundante:",
+    "options": {
+      "A": "Na Estremadura e a Sul do Tejo",
+      "B": "Na Beira Interior e a Sul do Tejo",
+      "C": "Na Beira Litoral e a Sul o Tejo"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 93,
+    "section": "biologia",
+    "topic": "lebre",
+    "question": "A lebre prefere:",
+    "options": {
+      "A": "Pousios e terras cultivadas",
+      "B": "Terrenos acidentados e pedregosos",
+      "C": "Terrenos com grande densidade de coberto"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 94,
+    "section": "biologia",
+    "topic": "lebre",
+    "question": "A lebre é uma espécie que:",
+    "options": {
+      "A": "Vive em tocas com galerias pouco ramificadas",
+      "B": "Prefere terrenos com grande densidade de coberto.",
+      "C": "Prefere terrenos planos, húmidos e pouco cobertos."
+    },
+    "answer": "C"
+  },
+  {
+    "id": 95,
+    "section": "biologia",
+    "topic": "lebre",
+    "question": "A lebre é:",
+    "options": {
+      "A": "Uma espécie herbívora",
+      "B": "Uma espécie carnívora",
+      "C": "Uma espécie omnívora"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 96,
+    "section": "biologia",
+    "topic": "lebre",
+    "question": "A lebre é:",
+    "options": {
+      "A": "Um animal solitário",
+      "B": "Um animal que vive em grandes colónias",
+      "C": "Um animal que vive aos casais"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 97,
+    "section": "biologia",
+    "topic": "lebre",
+    "question": "Às lebres recém-nascidas dá-se, vulgarmente, o nome de:",
+    "options": {
+      "A": "Láparos",
+      "B": "Lebrachos",
+      "C": "Listados"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 98,
+    "section": "biologia",
+    "topic": "lebre",
+    "question": "O período de gestação da lebre é de:",
+    "options": {
+      "A": "40 a 44 dias",
+      "B": "40 a 42 dias",
+      "C": "42 a 44 dias"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 99,
+    "section": "biologia",
+    "topic": "lebre",
+    "question": "Os lebrachos nascem:",
+    "options": {
+      "A": "De olhos abertos e com pelo",
+      "B": "Cegos, surdos e com pelo",
+      "C": "De olhos fechados e com pelo"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 100,
+    "section": "biologia",
+    "topic": "lebre",
+    "question": "Os lebrachos são amamentados até às:",
+    "options": {
+      "A": "2 semanas",
+      "B": "3 semanas",
+      "C": "4 semanas"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 101,
+    "section": "biologia",
+    "topic": "lebre",
+    "question": "A lebre tem, normalmente, quantas ninhadas por ano?",
+    "options": {
+      "A": "1 a 5",
+      "B": "2 a 4",
+      "C": "1 a 3"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 102,
+    "section": "biologia",
+    "topic": "lebre",
+    "question": "Nas lebres, cada ninhada é, normalmente, constituída por quantos lebrachos?",
+    "options": {
+      "A": "1 ou 2",
+      "B": "2 a 3",
+      "C": "2 a 4"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 103,
+    "section": "biologia",
+    "topic": "lebre",
+    "question": "A lebre reconhece-se facilmente por:",
+    "options": {
+      "A": "Ter os membros da frente muito maiores que os de trás",
+      "B": "Ter as orelhas grandes com a extremidade negra",
+      "C": "Ter as orelhas pequenas e pontiagudas"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 104,
+    "section": "biologia",
+    "topic": "lebre",
+    "question": "A lebre é uma espécie que prefere como habitat:",
+    "options": {
+      "A": "Matagais densos e fechados",
+      "B": "Planícies abertas, cultivadas ou em pousio",
+      "C": "Áreas acidentadas e pedregosas"
+    },
+    "answer": "B"
+  }
+]

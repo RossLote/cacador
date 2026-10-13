@@ -1,0 +1,618 @@
+[
+  {
+    "id": 362,
+    "section": "condicionamentos",
+    "topic": "condicionamentos",
+    "question": "Em que locais é proibido caçar, bem como numa faixa de proteção de 500 metros?",
+    "options": {
+      "A": "Nos povoados",
+      "B": "Nos terrenos adjacentes a estabelecimentos hospitalares",
+      "C": "Nos terrenos ocupados com culturas frutícolas"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 363,
+    "section": "condicionamentos",
+    "topic": "condicionamentos",
+    "question": "Em que locais é proibido caçar, bem como numa faixa de proteção de 500 metros?",
+    "options": {
+      "A": "Nos terrenos adjacentes a instalações militares ou de forças de segurança",
+      "B": "Das linhas de caminho-de-ferro",
+      "C": "Nos terrenos ocupados com culturas hortícolas"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 364,
+    "section": "condicionamentos",
+    "topic": "condicionamentos",
+    "question": "Nas estradas nacionais e linhas de caminho-de-ferro, é:",
+    "options": {
+      "A": "Proibido caçar, bem como numa faixa de proteção de 100 metros",
+      "B": "Proibido caçar, bem como numa faixa de proteção de 250 metros",
+      "C": "Proibido caçar, mas só quando existe trânsito"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 365,
+    "section": "condicionamentos",
+    "topic": "condicionamentos",
+    "question": "É proibido caçar nos povoados e numa faixa de proteção de:",
+    "options": {
+      "A": "500 metros",
+      "B": "250 metros",
+      "C": "750 metros"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 366,
+    "section": "condicionamentos",
+    "topic": "condicionamentos",
+    "question": "Em que locais é proibido caçar, bem como numa faixa de proteção de 500 metros?",
+    "options": {
+      "A": "Estradas nacionais, itinerários principais e autoestradas",
+      "B": "Praias de banho e terrenos adjacentes a estabelecimentos de ensino",
+      "C": "Aeródromos, estradas regionais e estradas municipais"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 367,
+    "section": "condicionamentos",
+    "topic": "condicionamentos",
+    "question": "Em que locais é proibido caçar, bem como em quaisquer terrenos que os circundem numa faixa de proteção de 100 metros?",
+    "options": {
+      "A": "Nos apiários e pombais devidamente sinalizados",
+      "B": "Nos aparcamentos de gado devidamente sinalizados",
+      "C": "Nos olivais e pomares com instalação de rega gota-a-gota"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 368,
+    "section": "condicionamentos",
+    "topic": "condicionamentos",
+    "question": "É proibido caçar numa faixa de proteção de 500 metros em terrenos adjacentes a:",
+    "options": {
+      "A": "Aeródromos, cemitérios, estradas regionais e estradas municipais",
+      "B": "Instalações turísticas, parques de campismo e desportivos",
+      "C": "Áreas de refúgio de caça e aparcamentos de gado devidamente sinalizados"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 369,
+    "section": "condicionamentos",
+    "topic": "condicionamentos",
+    "question": "É sempre proibido caçar:",
+    "options": {
+      "A": "Nos aeródromos, cemitérios e estradas municipais",
+      "B": "Nos terrenos ocupados com plantações florestais com altura média superior a 1,50 metros",
+      "C": "Nos olivais, pomares e vinhas"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 370,
+    "section": "condicionamentos",
+    "topic": "condicionamentos",
+    "question": "É proibido caçar:",
+    "options": {
+      "A": "A 300 metros das casas de habitação",
+      "B": "A 250 metros de uma estrada nacional",
+      "C": "Nos aparcamentos de gado"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 371,
+    "section": "condicionamentos",
+    "topic": "condicionamentos",
+    "question": "Num aparcamento de gado devidamente sinalizado:",
+    "options": {
+      "A": "É proibido caçar",
+      "B": "É proibido caçar a menos de 250 metros dos animais",
+      "C": "É proibido caçar a menos de 100 metros de gado bravo"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 372,
+    "section": "condicionamentos",
+    "topic": "condicionamentos",
+    "question": "Nos locais abaixo indicados é proibido caçar sem consentimento de quem de direito, mas há um deles que carece obrigatoriamente de sinalização. Qual é?",
+    "options": {
+      "A": "Quintais anexos a casas de habitação",
+      "B": "Jardins anexos a casas de habitação",
+      "C": "Zonas de caça"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 373,
+    "section": "condicionamentos",
+    "topic": "condicionamentos",
+    "image": "sinal.jpg",
+    "question": "Num olival, onde esteja este sinal, pode-se caçar?",
+    "options": {
+      "A": "Não",
+      "B": "Sim",
+      "C": "Sim, desde que não tenha azeitona"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 374,
+    "section": "condicionamentos",
+    "topic": "condicionamentos",
+    "question": "É proibido o exercício da caça numa estrada nacional, bem como numa faixa de proteção de:",
+    "options": {
+      "A": "100 metros",
+      "B": "250 metros",
+      "C": "300 metros"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 375,
+    "section": "condicionamentos",
+    "topic": "condicionamentos",
+    "image": "sinal.jpg",
+    "question": "Este sinal indica:",
+    "options": {
+      "A": "Zona de caça turística",
+      "B": "Proibição de caçar",
+      "C": "Aparcamento de gado"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 376,
+    "section": "condicionamentos",
+    "topic": "condicionamentos",
+    "question": "A partir de que distância de uma escola se pode caçar?",
+    "options": {
+      "A": "150 metros",
+      "B": "200 metros",
+      "C": "500 metros"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 377,
+    "section": "condicionamentos",
+    "topic": "condicionamentos",
+    "question": "É proibido caçar nas áreas percorridas por incêndios bem como numa faixa de 250 metros em redor:",
+    "options": {
+      "A": "Só enquanto dura o incêndio",
+      "B": "Enquanto dura o incêndio e durante os 30 dias seguintes",
+      "C": "Enquanto dura o incêndio e durante os 10 dias seguintes"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 378,
+    "section": "condicionamentos",
+    "topic": "condicionamentos",
+    "question": "Em terrenos cinegéticos não ordenados, na caça de salto uma linha de caçadores não pode incluir mais de:",
+    "options": {
+      "A": "2 caçadores",
+      "B": "5 caçadores",
+      "C": "10 Caçadores"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 379,
+    "section": "condicionamentos",
+    "topic": "condicionamentos",
+    "question": "É proibido caçar nas praias de banho bem como numa faixa de proteção de:",
+    "options": {
+      "A": "500 metros",
+      "B": "150 metros",
+      "C": "100 metros"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 380,
+    "section": "condicionamentos",
+    "topic": "condicionamentos",
+    "question": "A proibição de caçar sem consentimento de quem de direito, só é eficaz e depende de sinalização em que situação?",
+    "options": {
+      "A": "Nos terrenos circundados em toda sua extensão por um muro de 1,5 metros de altura",
+      "B": "Nos quintais anexos a casas de habitação",
+      "C": "Nas zonas de caça"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 381,
+    "section": "condicionamentos",
+    "topic": "condicionamentos",
+    "question": "Qual das afirmações está correta?",
+    "options": {
+      "A": "É permitido caçar a mais de 100 metros das linhas de caminho de ferro",
+      "B": "É permitido caçar a mais de 100 metros das praias de banho",
+      "C": "É permitido caçar a mais de 100 metros dos aeroportos"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 382,
+    "section": "condicionamentos",
+    "topic": "condicionamentos",
+    "question": "É proibido o exercício da caça numa linha de caminho-de-ferro, bem como numa faixa de proteção de:",
+    "options": {
+      "A": "100 metros",
+      "B": "150 metros",
+      "C": "200 metros"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 383,
+    "section": "condicionamentos",
+    "topic": "condicionamentos",
+    "question": "Numa faixa de terreno de 100 metros ao longo das linhas de caminho-de-ferro, o caçador:",
+    "options": {
+      "A": "Nunca pode caçar",
+      "B": "Pode caçar com consentimento de quem de direito",
+      "C": "Pode caçar sem arma de fogo"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 384,
+    "section": "condicionamentos",
+    "topic": "condicionamentos",
+    "question": "Qual das afirmações está correta?",
+    "options": {
+      "A": "É permitido caçar a 250 metros das linhas de caminho-de-ferro",
+      "B": "É permitido caçar a 250 metros das praias de banho",
+      "C": "É permitido caçar a 250 metros dos aeroportos"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 385,
+    "section": "condicionamentos",
+    "topic": "condicionamentos",
+    "question": "Qual das seguintes frases está correta?",
+    "options": {
+      "A": "É crime caçar com uma taxa de álcool no sangue inferior a 1,2 g/l",
+      "B": "É crime caçar javalis em terrenos cobertos de neve",
+      "C": "É crime caçar em zonas de caça às quais não se tenha legalmente acesso"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 386,
+    "section": "condicionamentos",
+    "topic": "condicionamentos",
+    "question": "Constitui crime de caça:",
+    "options": {
+      "A": "Caçar a 50 metros das estradas municipais alcatroadas",
+      "B": "Utilizar auxiliares fora das condições estabelecidas",
+      "C": "Utilizar chamarizes na caça aos patos"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 387,
+    "section": "condicionamentos",
+    "topic": "condicionamentos",
+    "question": "Indique qual das frases está correta:",
+    "options": {
+      "A": "É permitido caçar as espécies que constem do calendário venatório publicado anualmente",
+      "B": "É permitido caçar todas as espécies classificadas como cinegéticas",
+      "C": "É permitido caçar qualquer espécie que cause prejuízos na agricultura"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 388,
+    "section": "condicionamentos",
+    "topic": "condicionamentos",
+    "question": "A utilização de cartuchos carregados com zagalotes:",
+    "options": {
+      "A": "É permitida aos associados das zonas de caça associativas nas batidas às raposas",
+      "B": "É permitida aos caçadores das zonas de caça municipais nas montarias aos javalis",
+      "C": "É proibida na caça"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 389,
+    "section": "condicionamentos",
+    "topic": "condicionamentos",
+    "question": "Os cartuchos carregados com chumbos de diâmetro superior a 4,5 mm, vulgarmente designados por zagalotes :",
+    "options": {
+      "A": "Podem ser utilizados na caça à raposa",
+      "B": "Não podem ser utilizados na caça",
+      "C": "Podem ser utilizados na caça ao veado pelo processo de aproximação"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 390,
+    "section": "condicionamentos",
+    "topic": "condicionamentos",
+    "question": "Na caça às espécies de caça menor sedentária:",
+    "options": {
+      "A": "É proibida a utilização e a detenção de cartuchos carregados com bala",
+      "B": "É proibida a utilização e a detenção de cartuchos carregados com chumbos",
+      "C": "É proibida a utilização de cães de caça"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 391,
+    "section": "condicionamentos",
+    "topic": "condicionamentos",
+    "question": "A utilização de armas semiautomáticas que comportem mais de três munições:",
+    "options": {
+      "A": "É permitida na caça às espécies de caça maior",
+      "B": "É permitida na caça aos tordos",
+      "C": "É proibida"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 392,
+    "section": "condicionamentos",
+    "topic": "condicionamentos",
+    "question": "Na caça às espécies de caça maior:",
+    "options": {
+      "A": "É proibida a utilização de espingardas caçadeiras",
+      "B": "É proibida a utilização e a detenção de cartuchos carregados com chumbos",
+      "C": "É proibida a utilização e a detenção de cartuchos carregados com bala"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 393,
+    "section": "condicionamentos",
+    "topic": "condicionamentos",
+    "question": "Nos olivais é proibido caçar:",
+    "options": {
+      "A": "Sempre",
+      "B": "Nunca",
+      "C": "Se estiverem sinalizados com o sinal de proibição de caçar"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 394,
+    "section": "condicionamentos",
+    "topic": "condicionamentos",
+    "image": "sinal.jpg",
+    "question": "Numa área delimitada por este sinal:",
+    "options": {
+      "A": "Não se pode caçar",
+      "B": "Pode-se caçar mediante consentimento de quem de direito",
+      "C": "Pode-se caçar mediante consentimento do presidente da junta de freguesia"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 395,
+    "section": "condicionamentos",
+    "topic": "condicionamentos",
+    "question": "Qual dos seguintes atos não constitui crime de caça?",
+    "options": {
+      "A": "Caçar espécies não cinegéticas",
+      "B": "Caçar com uma taxa de álcool no sangue inferior a 1,2 g/l",
+      "C": "Caçar em áreas de não caça"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 396,
+    "section": "condicionamentos",
+    "topic": "condicionamentos",
+    "question": "A partir de que distância de uma instalação militar se pode caçar?",
+    "options": {
+      "A": "200 metros",
+      "B": "250 metros",
+      "C": "500 metros"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 397,
+    "section": "condicionamentos",
+    "topic": "condicionamentos",
+    "image": "sinal.jpg",
+    "question": "Num terreno circundado com este sinal, não é permitido:",
+    "options": {
+      "A": "Treinar cães de caça",
+      "B": "Praticar atividades de caráter cinegético",
+      "C": "Caçar sem consentimento de quem de direito"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 398,
+    "section": "condicionamentos",
+    "topic": "condicionamentos",
+    "question": "Indique a frase correta:",
+    "options": {
+      "A": "É permitido caçar num pinhal em que as espécies florestais tenham uma altura média superior a 80cm",
+      "B": "É permitido caçar num refúgio de caça desde que seja sócio de um clube de caçadores",
+      "C": "É permitido caçar a menos de 100 metros de uma estrada nacional"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 399,
+    "section": "condicionamentos",
+    "topic": "condicionamentos",
+    "question": "Num eucaliptal com altura média de 1 metro:",
+    "options": {
+      "A": "É sempre proibido caçar",
+      "B": "É proibido caçar, desde que o diâmetro do tronco seja inferior a 5 cm",
+      "C": "É permitido caçar"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 400,
+    "section": "condicionamentos",
+    "topic": "condicionamentos",
+    "question": "Qual dos seguintes atos constitui crime de caça?",
+    "options": {
+      "A": "Caçar sem licença de caça",
+      "B": "Caçar em áreas de direito à não caça",
+      "C": "Caçar sem trazer consigo a carta de caçador"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 401,
+    "section": "condicionamentos",
+    "topic": "condicionamentos",
+    "question": "É proibido caçar nos olivais?",
+    "options": {
+      "A": "Sim, é sempre proibido",
+      "B": "Não",
+      "C": "Só quando sinalizados com o sinal de proibição de caçar"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 402,
+    "section": "condicionamentos",
+    "topic": "condicionamentos",
+    "question": "Num quintal de uma casa de habitação, bem como numa faixa envolvente de 250 metros, é:",
+    "options": {
+      "A": "Sempre proibido caçar",
+      "B": "Sempre permitido caçar",
+      "C": "Proibido caçar sem consentimento de quem de direito"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 403,
+    "section": "condicionamentos",
+    "topic": "condicionamentos",
+    "question": "Qual das seguintes situações não constitui crime de caça?",
+    "options": {
+      "A": "Caçar com uma taxa de álcool no sangue superior a 1,2g/l",
+      "B": "Caçar com uma taxa de álcool no sangue inferior a 1,2g/l",
+      "C": "Caçar com uma taxa de álcool no sangue igual a 1,2g/l"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 404,
+    "section": "condicionamentos",
+    "topic": "condicionamentos",
+    "question": "É proibido o exercício da caça numa estrada nacional, bem como numa faixa de proteção de:",
+    "options": {
+      "A": "100 metros",
+      "B": "150 metros",
+      "C": "200 metros"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 405,
+    "section": "condicionamentos",
+    "topic": "condicionamentos",
+    "question": "Qual dos seguintes atos não constitui crime de caça?",
+    "options": {
+      "A": "Deter, transportar ou usar furão sem autorização",
+      "B": "Utilizar auxiliares fora das condições estabelecidas",
+      "C": "Caçar com uma taxa de álcool no sangue inferior a 1,2g/l"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 406,
+    "section": "condicionamentos",
+    "topic": "condicionamentos",
+    "question": "Caçar uma espécie não cinegética, é:",
+    "options": {
+      "A": "Contra ordenação grave",
+      "B": "Crime de caça",
+      "C": "Conduta negligente"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 407,
+    "section": "condicionamentos",
+    "topic": "condicionamentos",
+    "question": "Indique em quais dos terrenos a proibição de caçar só se torna eficaz desde que sinalizados:",
+    "options": {
+      "A": "Áreas de refúgio de caça",
+      "B": "Queimadas e terrenos percorridos por incêndios",
+      "C": "Instalações turísticas e parques de campismo"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 408,
+    "section": "condicionamentos",
+    "topic": "condicionamentos",
+    "question": "A 200 metros de uma casa de habitação pode praticar-se o ato venatório?",
+    "options": {
+      "A": "Sim, mas só pelo processo de espera",
+      "B": "Sim, sem quaisquer restrições",
+      "C": "Sim, mas só com autorização de quem de direito"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 409,
+    "section": "condicionamentos",
+    "topic": "condicionamentos",
+    "question": "Constitui crime de caça:",
+    "options": {
+      "A": "Caçar sem ser portador de bilhete de identidade",
+      "B": "Caçar sem estar habilitado com carta de caçador",
+      "C": "Caçar a 200 metros de um pombal devidamente sinalizado"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 410,
+    "section": "condicionamentos",
+    "topic": "condicionamentos",
+    "question": "Constitui crime de caça:",
+    "options": {
+      "A": "Caçar a 50 metros das estradas municipais alcatroadas",
+      "B": "Utilizar auxiliares fora das condições estabelecidas",
+      "C": "Utilizar chamarizes na caça aos patos"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 411,
+    "section": "condicionamentos",
+    "topic": "condicionamentos",
+    "question": "Constitui crime de caça:",
+    "options": {
+      "A": "Abandonar os animais que auxiliam e acompanham o caçador no exercício da caça",
+      "B": "Caçar patos à espera, até 100 metros dos planos água, depois das 16 horas e até ao pôr-do-sol",
+      "C": "Caçar com uma taxa de álcool no sangue igual a 1,0 g/l"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 412,
+    "section": "condicionamentos",
+    "topic": "condicionamentos",
+    "question": "A criação em cativeiro de espécies cinegéticas e subespécies não identificadas em portaria é:",
+    "options": {
+      "A": "Proibida",
+      "B": "Permitida desde que a produção seja para consumo alimentar",
+      "C": "Permitida desde que a produção se destine a largadas em campos de treino de caça"
+    },
+    "answer": "A"
+  }
+]
