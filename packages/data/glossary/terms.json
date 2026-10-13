@@ -12,7 +12,7 @@
   {
     "pt": "salto",
     "en": "walked-up hunting",
-    "note": "Method in which the hunter walks the ground, alone or in a line, with or without dogs, and shoots the game it flushes. 'de salto' → 'walked-up'; 'caça de salto' → 'walked-up hunting'; 'caçar de salto' → 'hunt walked-up'; 'pelo processo de salto' → 'by the walked-up method'; a bare option ('De salto', 'Salto') → 'Walked-up'. Never 'jump', 'jump hunting', 'walk-up' or 'rough shooting'. In a question whose answer its English would give away (39), it stays in Portuguese, unglossed (rule 11)."
+    "note": "Method in which the hunter walks the ground, alone or in a line, with or without dogs, and shoots the game it flushes. 'de salto' → 'walked-up'; 'caça de salto' → 'walked-up hunting'; 'caçar de salto' → 'hunt walked-up'; 'pelo processo de salto' → 'by the walked-up method'; a bare option ('De salto', 'Salto') → 'Walked-up'. Never 'jump', 'jump hunting', 'walk-up' or 'rough shooting'. In a question whose answer its English would give away (39, 52), it stays in Portuguese, unglossed (rule 11)."
   },
   {
     "pt": "espera",
@@ -27,12 +27,12 @@
   {
     "pt": "montaria",
     "en": "montaria (driven big-game hunt with hounds)",
-    "note": "Portuguese big-game hunt, chiefly wild boar and deer, in which packs of hounds worked by houndsmen (matilheiros) drive the game towards hunters at fixed posts. No English equivalent, so it stays in Portuguese (D4): give the gloss in parentheses at its first use in a sentence, plain 'montaria' after. 'montarias' → 'montarias'; 'montarias aos javalis' → 'montarias for wild boar'; 'de montaria' → 'by montaria'. In a question whose answer its English would give away (40), it stays in Portuguese, unglossed (rule 11)."
+    "note": "Portuguese big-game hunt, chiefly wild boar and deer, in which packs of hounds worked by houndsmen (matilheiros) drive the game towards hunters at fixed posts. No English equivalent, so it stays in Portuguese (D4): give the gloss in parentheses at its first use in a sentence, plain 'montaria' after. 'montarias' → 'montarias'; 'montarias aos javalis' → 'montarias for wild boar'; 'de montaria' → 'by montaria'. In a question whose answer its English would give away (40, 52), it stays in Portuguese, unglossed (rule 11)."
   },
   {
     "pt": "corricão",
     "en": "coursing",
-    "note": "Method in which game (hare, fox) is chased down by dogs, the hunter on foot or on horseback, with or without a stick (pau) and never with a firearm. 'a corricão' → 'by coursing'; 'caça à lebre a corricão' → 'Iberian hare coursing'; 'caça à raposa a corricão' → 'red fox coursing'; 'processo de caça a corricão' → 'coursing'; a bare option ('Corricão', 'A corricão') → 'Coursing'. In a question whose answer its English would give away (51), it stays in Portuguese, unglossed (rule 11)."
+    "note": "Method in which game (hare, fox) is chased down by dogs, the hunter on foot or on horseback, with or without a stick (pau) and never with a firearm. 'a corricão' → 'by coursing'; 'caça à lebre a corricão' → 'Iberian hare coursing'; 'caça à raposa a corricão' → 'red fox coursing'; 'processo de caça a corricão' → 'coursing'; a bare option ('Corricão', 'A corricão') → 'Coursing'. In a question whose answer its English would give away (44, 48, 51, 52), it stays in Portuguese, unglossed (rule 11)."
   },
   {
     "pt": "aproximação",
@@ -52,17 +52,17 @@
   {
     "pt": "batedores",
     "en": "beaters",
-    "note": "Assistants (auxiliares) who walk through cover to drive game towards the hunters in a batida or montaria. Singular 'batedor' → 'beater'."
+    "note": "Assistants (auxiliares) who walk through cover to drive game towards the hunters in a batida or montaria. Singular 'batedor' → 'beater'. In a question whose answer its English would give away (21), it stays in Portuguese, unglossed (rule 11)."
   },
   {
     "pt": "matilheiros",
     "en": "houndsmen",
-    "note": "Assistants who search for, pursue and flush big game with a pack of hounds (matilha), as in a montaria. Singular 'matilheiro' → 'houndsman'; 'matilha' → 'pack'."
+    "note": "Assistants who search for, pursue and flush big game with a pack of hounds (matilha), as in a montaria. Singular 'matilheiro' → 'houndsman'; 'matilha' → 'pack'. In a question whose answer its English would give away (21), it stays in Portuguese, unglossed (rule 11)."
   },
   {
     "pt": "negaceiros",
     "en": "decoy handlers",
-    "note": "Assistants who set and work the decoys (negaças); they do not pursue game with dogs. Singular 'negaceiro' → 'decoy handler'."
+    "note": "Assistants who set and work the decoys (negaças); they do not pursue game with dogs. Singular 'negaceiro' → 'decoy handler'. In a question whose answer its English would give away (21), it stays in Portuguese, unglossed (rule 11)."
   },
   {
     "pt": "auxiliar",
@@ -242,7 +242,7 @@
   {
     "pt": "terrenos não cinegéticos",
     "en": "non-hunting grounds",
-    "note": "Land where hunting is prohibited, such as protection areas, game refuges and no-hunting areas. Singular 'terreno não cinegético' → 'non-hunting ground'. In a question whose answer its English would give away (12, 14, 16), it stays in Portuguese, unglossed (rule 11)."
+    "note": "Land where hunting is prohibited, such as protection areas, game refuges and no-hunting areas. Singular 'terreno não cinegético' → 'non-hunting ground'. In a question whose answer its English would give away (12, 14, 15, 16), it stays in Portuguese, unglossed (rule 11)."
   },
   {
     "pt": "terrenos cinegéticos ordenados",

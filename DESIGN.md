@@ -394,7 +394,11 @@ Four phases, each its own epic, in order.
        of the sentence is translated. This is the case in a question that asks for a
        name or what a name means (what groups of boar are called, which teeth are called
        navalhas, the name of a young boar under six months, what brama is). A gloss there
-       would give the answer away during a peek.
+       would give the answer away during a peek. It applies when the answer follows
+       from what the English word means (how a method works, what a name denotes), not
+       when the question asks a method's legal scope (which game, months or ground it is
+       allowed for), where the English name's associations are the field knowledge the
+       exam tests.
 3. **Hints**: one agent per chunk file writes `language`, `nudge` and `patterns` for
    each question by reading the sentence as a learner; a second pass checks the nudge
    agrees with the keyed answer and every `language.pt` occurs in the question.

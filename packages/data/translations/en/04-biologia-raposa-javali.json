@@ -212,9 +212,9 @@
     "id": 124,
     "question": "What are the groups of wild boar called?",
     "options": {
-      "A": "Varas ou companhias",
-      "B": "Rebanhos ou manadas",
-      "C": "Bandos ou companhias"
+      "A": "Varas or companhias",
+      "B": "Rebanhos or manadas",
+      "C": "Bandos or companhias"
     },
     "status": "checked",
     "notes": ""

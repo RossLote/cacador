@@ -23,25 +23,25 @@
   },
   {
     "id": 306,
-    "question": "How many species of plovers can be found in Portugal?",
+    "question": "How many species of tarambolas (plovers of the genus Pluvialis) can be found in Portugal?",
     "options": {
       "A": "3",
       "B": "2",
       "C": "1"
     },
     "status": "checked",
-    "notes": "\"tarambolas\" here means only the Pluvialis plovers (golden and grey); English \"plovers\" is wider and would also take in the ringed and Kentish plovers, so the count of 2 holds only for the Portuguese sense."
+    "notes": ""
   },
   {
     "id": 307,
-    "question": "Plovers visit Portugal:",
+    "question": "Tarambolas (plovers of the genus Pluvialis) visit Portugal:",
     "options": {
       "A": "During the winter and spring",
       "B": "During the autumn and winter",
       "C": "Only during the winter"
     },
     "status": "checked",
-    "notes": "\"As tarambolas\" means only the Pluvialis plovers (golden and grey), which are winter visitors; English \"plovers\" is wider and would also take in plovers that breed in Portugal, so \"Only during the winter\" holds only for the Portuguese sense."
+    "notes": ""
   },
   {
     "id": 308,
@@ -67,14 +67,14 @@
   },
   {
     "id": 310,
-    "question": "How many species of thrushes can be found in Portugal?",
+    "question": "How many species of tordos (thrushes; the melros, such as the blackbird, are not tordos) can be found in Portugal?",
     "options": {
       "A": "5",
       "B": "4",
       "C": "3"
     },
     "status": "checked",
-    "notes": "\"tordos\" here means the four Turdus species the bank treats as thrushes (song thrush, mistle thrush, redwing, fieldfare); English \"thrushes\" also takes in the common blackbird (melro) and others, so the count of 4 holds only for the Portuguese sense."
+    "notes": ""
   },
   {
     "id": 311,

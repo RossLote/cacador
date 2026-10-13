@@ -45,7 +45,7 @@
   },
   {
     "id": 15,
-    "question": "Non-hunting grounds are considered to be:",
+    "question": "Terrenos não cinegéticos are considered to be:",
     "options": {
       "A": "The protection areas",
       "B": "The national hunting zones",
@@ -113,9 +113,9 @@
     "id": 21,
     "question": "Of the hunting assistants listed, there is one who may not pursue game with the help of dogs:",
     "options": {
-      "A": "Beaters",
-      "B": "Decoy handlers",
-      "C": "Houndsmen"
+      "A": "Batedores",
+      "B": "Negaceiros",
+      "C": "Matilheiros"
     },
     "status": "checked",
     "notes": ""
@@ -364,7 +364,7 @@
   },
   {
     "id": 44,
-    "question": "In coursing, it is not permitted to use:",
+    "question": "In the corricão hunting method, it is not permitted to use:",
     "options": {
       "A": "Stick and horse",
       "B": "Hunting dogs and horse",
@@ -408,7 +408,7 @@
   },
   {
     "id": 48,
-    "question": "In coursing, it is not permitted to use:",
+    "question": "In the corricão hunting method, it is not permitted to use:",
     "options": {
       "A": "Stick and horse",
       "B": "Dogs and horse",
@@ -454,9 +454,9 @@
     "id": 52,
     "question": "A hunter may not use a firearm when they intend to hunt by the method of:",
     "options": {
-      "A": "Coursing",
-      "B": "Montaria (driven big-game hunt with hounds)",
-      "C": "Walked-up"
+      "A": "Corricão",
+      "B": "Montaria",
+      "C": "Salto"
     },
     "status": "checked",
     "notes": ""
