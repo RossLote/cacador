@@ -117,7 +117,7 @@
     "id": 207,
     "language": [],
     "nudge": "The turtle dove is seen aos pares ou em grupos muito pequenos: in pairs or in very small groups. All three options share the pairs, so the other item decides: not grandes grupos, and not isoladas, alone.",
-    "patterns": ["list-options"],
+    "patterns": [],
     "status": "checked"
   },
   {
@@ -332,7 +332,7 @@
       }
     ],
     "nudge": "True: quail chicks podem migrar com os adultos com dois meses de vida, as question 224 keys. Turtle dove nests start in maio, not abril (question 208), and the hare has 1 a 3 litters a year (question 101), not apenas uma.",
-    "patterns": ["which-statement"],
+    "patterns": ["which-statement", "only"],
     "status": "checked"
   }
 ]

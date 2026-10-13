@@ -139,7 +139,7 @@
     "id": 75,
     "language": [],
     "nudge": "Rabbit kits are born helpless: cegos, surdos e sem pelo, blind, deaf and without fur. The near-miss keeps blind and deaf but adds fur, and de olhos abertos e com pelo is how leverets are born (question 99).",
-    "patterns": ["list-options"],
+    "patterns": [],
     "status": "checked"
   },
   {
@@ -245,7 +245,7 @@
     "id": 86,
     "language": [],
     "nudge": "Rabbits are found em zonas onde o mato é abundante, as in questions 61 and 85. Pousios e terras cultivadas is the hare's ground (question 93), the trap here.",
-    "patterns": [],
+    "patterns": ["comparative"],
     "status": "checked"
   },
   {
@@ -293,7 +293,7 @@
     "id": 92,
     "language": [],
     "nudge": "Hares are most abundant in the Beira Interior and a Sul do Tejo. All three options share south of the Tejo, so the other region decides: the inland Beira Interior, not Estremadura or the Beira Litoral.",
-    "patterns": ["list-options"],
+    "patterns": ["list-options", "comparative"],
     "status": "checked"
   },
   {
@@ -354,7 +354,7 @@
     "id": 99,
     "language": [],
     "nudge": "Leverets are born de olhos abertos e com pelo, eyes open and with fur. Blind and deaf is how rabbit kits start (question 75), and olhos fechados is the near-miss that keeps the fur.",
-    "patterns": ["list-options"],
+    "patterns": [],
     "status": "checked"
   },
   {

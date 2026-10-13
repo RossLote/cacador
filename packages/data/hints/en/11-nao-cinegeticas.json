@@ -35,7 +35,7 @@
       }
     ],
     "nudge": "'Milhafres, falcões e peneireiros', kites, falcons and kestrels, are all diurnal raptors. Each distractor slips owls in: 'mochos' in one and 'bufos, corujas' in the other, and question 322 shows the tawny owl, an owl, is not diurnal.",
-    "patterns": ["only", "list-options"],
+    "patterns": ["only"],
     "status": "checked"
   },
   {
@@ -49,7 +49,7 @@
     "id": 325,
     "language": [],
     "nudge": "The Iberian lynx is 'exclusivamente carnívora', a meat-eater whose diet rests on European rabbits (question 326). Omnívora would put plants in its diet, and insectívora gives it the wrong prey altogether.",
-    "patterns": [],
+    "patterns": ["only"],
     "status": "checked"
   },
   {
@@ -462,7 +462,7 @@
       }
     ],
     "nudge": "Jack snipe, magpie and Egyptian mongoose, 'narceja-galega, pega-rabuda, saca-rabos', are all game. Each other group holds a protected species: the great bustard and the grey plover in one (questions 331 and 342), the grey partridge in the other (question 341).",
-    "patterns": ["only", "list-options"],
+    "patterns": ["only"],
     "status": "checked"
   },
   {

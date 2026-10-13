@@ -40,7 +40,7 @@
       }
     ],
     "nudge": "National roads and railway lines are banned 'bem como numa faixa de proteção de 100 metros', whether or not traffic is passing. Questions 374 and 382 ask the same width for each alone, and 250 metres is the strip round settlements (question 365).",
-    "patterns": [],
+    "patterns": ["only"],
     "status": "checked"
   },
   {
@@ -60,7 +60,7 @@
       }
     ],
     "nudge": "'Praias de banho' and land 'adjacentes a estabelecimentos de ensino' both carry the 500-metre strip (questions 376 and 379). National roads carry 100 metres (question 364) and aerodromes are banned ground in themselves (question 369), so neither road list is the 500-metre one.",
-    "patterns": ["as-well-as", "list-options"],
+    "patterns": ["as-well-as"],
     "status": "checked"
   },
   {
@@ -80,7 +80,7 @@
     "id": 368,
     "language": [],
     "nudge": "The 500-metre strip runs round 'Instalações turísticas, parques de campismo e desportivos'. Aerodromes, cemeteries and municipal roads are banned ground in themselves (question 369), and so are game refuges and signposted livestock enclosures (questions 407 and 371), but none of them is keyed with the 500-metre strip.",
-    "patterns": ["list-options"],
+    "patterns": [],
     "status": "checked"
   },
   {
@@ -93,7 +93,7 @@
       }
     ],
     "nudge": "Aerodromes, cemeteries and municipal roads are banned 'sempre', with no condition attached. Olive groves are banned only when signposted (question 401), and question 398 allows hunting among trees averaging over 80cm, so tall plantations are no absolute ban.",
-    "patterns": ["always-never", "list-options"],
+    "patterns": ["always-never"],
     "status": "checked"
   },
   {
