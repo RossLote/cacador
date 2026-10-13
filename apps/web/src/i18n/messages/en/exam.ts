@@ -26,6 +26,10 @@ export const exam = {
   unansweredBody: 'An unanswered question counts as wrong.',
   keepGoing: 'Back to the exam',
   confirmSubmit: 'Submit',
+  /** A tapped answer the device could not save: the screen goes back to the answers stored, which are the ones scored. */
+  answerNotSaved: 'That answer could not be saved on this device. The answers shown are the ones that will be marked.',
+  /** Submit, or the clock reaching zero, could not finish the exam: it stays open here. */
+  submitFailed: 'The exam could not be submitted on this device. Press Submit to try again.',
   /** The results page (/exam/results/<id>). */
   resultsTitle: 'Exam results',
   /** The accessible name of the score panel. */

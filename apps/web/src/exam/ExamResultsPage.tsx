@@ -7,7 +7,7 @@ import { QuestionCard } from '@/components/question/QuestionCard';
 import { useI18n } from '@/i18n/useI18n';
 import { useLoaded } from '@/lib/useLoaded';
 import { cn } from '@/lib/utils';
-import { EXAM_PASS_MARK, examPassed, examResults, isFinished, type FinishedExam } from '@/model';
+import { EXAM_PASS_MARK, examPassed, examResults, isFinished, scoreExam, type FinishedExam } from '@/model';
 import { getExam } from '@/storage';
 
 /** The exam with this id once it is finished: null when there is none or it is still running, undefined while storage is read; `failed` when it cannot be read. */
@@ -51,10 +51,14 @@ function ReviewCard({ question, chosen }: WrongAnswer) {
   );
 }
 
-/** The score out of 20 against the pass mark, and Passed or Not passed (D3). */
+/**
+ * The score out of 20 against the pass mark, and Passed or Not passed (D3),
+ * worked out from the exam's answers with today's key, as the list of wrong
+ * ones is, so the two always agree; the stored score is not shown.
+ */
 function ScorePanel({ exam }: { exam: FinishedExam }) {
   const { t } = useI18n();
-  const { score } = exam;
+  const score = scoreExam(exam);
   const passed = examPassed(score);
   const Icon = passed ? Check : X;
   return (
