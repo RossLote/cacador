@@ -7,6 +7,16 @@ export const practice = {
   title: 'Practice',
   next: 'Next',
   loading: 'Choosing a question…',
+  focusedOn: 'Practising',
+  flags: {
+    group: 'Report a problem with this question',
+    englishOff: 'English is off',
+    hintOff: 'Hint is off',
+    englishNote: 'What is off with the English',
+    hintNote: 'What is off with the hint',
+    save: 'Save',
+    saved: 'Saved',
+  },
   card: {
     questionNumber: (id: number) => `Question ${id}`,
     pictureAlt: (id: number) => `The picture for question ${id}`,

@@ -11,11 +11,21 @@ interface PracticeKeys {
   onPeekChange: (peeking: boolean) => void;
 }
 
-/** Typing into a field (the flags row's note, cac-eil.14) never answers, advances or peeks. */
+/** Marks a region whose controls keep their own keys (the flags row): Enter and Space reach its buttons. */
+export const OWN_KEYS_ATTRIBUTE = 'data-own-keys';
+
+/**
+ * Typing into a field, or using a control inside a region marked
+ * OWN_KEYS_ATTRIBUTE (the flags row, cac-eil.14), never answers, advances or peeks.
+ */
 function isTextEntry(target: EventTarget | null): boolean {
   return (
     target instanceof HTMLElement &&
-    (target.isContentEditable || target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.tagName === 'SELECT')
+    (target.isContentEditable ||
+      target.tagName === 'INPUT' ||
+      target.tagName === 'TEXTAREA' ||
+      target.tagName === 'SELECT' ||
+      target.closest(`[${OWN_KEYS_ATTRIBUTE}]`) !== null)
   );
 }
 
