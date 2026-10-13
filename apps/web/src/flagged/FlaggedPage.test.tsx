@@ -2,7 +2,7 @@ import { questionById } from '@cacador/data';
 import { act, render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router';
-import { describe, expect, it, vi } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import { setLocale } from '@/i18n/locale';
 import type { Locale } from '@/i18n/locales';
 import { MESSAGES } from '@/i18n/messages';
@@ -10,6 +10,22 @@ import { localDateKey } from '@/model';
 import { getFlags, setFlag } from '@/storage';
 import { formatFlagLine, formatFlags } from './copyFormat';
 import { FlaggedPage } from './FlaggedPage';
+
+/** Makes the storage module's removeFlag reject, as when IndexedDB aborts a write, while reads still work. */
+const storageFaults = vi.hoisted(() => ({ removeFlag: false }));
+vi.mock('@/storage', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@/storage')>();
+  return {
+    ...actual,
+    removeFlag: (...args: Parameters<typeof actual.removeFlag>) =>
+      storageFaults.removeFlag ? Promise.reject(new Error('transaction aborted')) : actual.removeFlag(...args),
+  };
+});
+
+afterEach(() => {
+  storageFaults.removeFlag = false;
+  vi.useRealTimers();
+});
 
 const T0 = Date.UTC(2026, 9, 13, 9, 0);
 const en = MESSAGES.en.flagged;
@@ -85,6 +101,41 @@ describe('Flagged page', () => {
     expect(screen.getByRole('listitem')).toHaveTextContent(en.questionNumber(12));
     expect(await getFlags(30)).toEqual([]);
     expect(await getFlags(12)).toHaveLength(1);
+  });
+
+  it('says so when a clear fails although the list still reads', async () => {
+    const user = userEvent.setup();
+    await setFlag(12, 'translation', 'a', T0);
+    renderPage();
+    storageFaults.removeFlag = true;
+
+    await user.click(await screen.findByRole('button', { name: en.clearLabel(12, en.kindEnglish) }));
+
+    expect(await screen.findByText(en.loadFailed)).toBeInTheDocument();
+    expect(await getFlags(12)).toHaveLength(1);
+  });
+
+  it('dates the copied header on the day of the tap, not of the last render', async () => {
+    vi.useFakeTimers({ toFake: ['Date'] });
+    const beforeMidnight = new Date(2026, 9, 13, 23, 58).getTime();
+    const afterMidnight = new Date(2026, 9, 14, 0, 1).getTime();
+    vi.setSystemTime(beforeMidnight);
+    const user = userEvent.setup();
+    await setFlag(12, 'translation', '', T0);
+    renderPage();
+    await screen.findAllByRole('listitem');
+
+    vi.setSystemTime(afterMidnight);
+    await user.click(screen.getByRole('button', { name: en.copy }));
+
+    expect((await navigator.clipboard.readText()).split('\n')[0]).toBe('Caçador flags 2026-10-14');
+  });
+
+  it('counts flags, not questions, in its Portuguese empty line', async () => {
+    act(() => setLocale('pt'));
+    renderPage();
+    expect(await screen.findByText(MESSAGES.pt.flagged.empty)).toBeInTheDocument();
+    expect(MESSAGES.pt.flagged.empty).toMatch(/^Nenhuma assinalação\./);
   });
 
   it('says there are no flags and disables Copy when the list is empty', async () => {

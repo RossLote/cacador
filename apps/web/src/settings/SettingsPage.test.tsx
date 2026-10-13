@@ -1,7 +1,7 @@
 import { act, render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter, Route, Routes } from 'react-router';
-import { describe, expect, it, vi } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import { FlaggedPage } from '@/flagged/FlaggedPage';
 import type { Locale } from '@/i18n/locales';
 import { MESSAGES } from '@/i18n/messages';
@@ -28,6 +28,35 @@ import {
 import { withoutLogId } from '@/storage/state';
 import { SettingsPage } from './SettingsPage';
 import { correctOf, wrongOf } from '../../test/fixtures';
+
+/** Makes the next progress file fail to build, as when storage cannot be read, then work again. */
+const fileFaults = vi.hoisted(() => ({ failNext: false }));
+vi.mock('./progressFile', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('./progressFile')>();
+  return {
+    ...actual,
+    makeProgressFile: (...args: Parameters<typeof actual.makeProgressFile>) => {
+      if (!fileFaults.failNext) return actual.makeProgressFile(...args);
+      fileFaults.failNext = false;
+      return Promise.reject(new Error('storage read failed'));
+    },
+  };
+});
+
+afterEach(() => {
+  fileFaults.failNext = false;
+  vi.useRealTimers();
+});
+
+/** Stubs the anchor click and object URLs, and returns the names of the files downloaded. */
+function catchDownloads(): string[] {
+  vi.stubGlobal('URL', Object.assign(class extends URL {}, { createObjectURL: vi.fn(() => 'blob:cacador/1'), revokeObjectURL: vi.fn() }));
+  const names: string[] = [];
+  vi.spyOn(HTMLAnchorElement.prototype, 'click').mockImplementation(function (this: HTMLAnchorElement) {
+    names.push(this.download);
+  });
+  return names;
+}
 
 const MINUTE = 60 * 1000;
 const T0 = Date.UTC(2026, 9, 13, 9, 0);
@@ -161,6 +190,66 @@ describe('Settings export', () => {
     expect(files[0]!.name).toBe(exportFileName());
     const file = JSON.parse(await files[0]!.text()) as ExportFile;
     expect([file.app, file.version, file.answers.length, file.exams.length, file.flags.length]).toEqual(['cacador', 1, 26, 1, 2]);
+  });
+});
+
+describe('Settings export and share outcome', () => {
+  it('clears a failed Export line once a retry works', async () => {
+    const downloads = catchDownloads();
+    const user = userEvent.setup();
+    renderPage();
+
+    fileFaults.failNext = true;
+    await user.click(screen.getByRole('button', { name: en.export }));
+    await waitFor(() => expect(screen.getByRole('status')).toHaveTextContent(en.failed));
+
+    await user.click(screen.getByRole('button', { name: en.export }));
+    await waitFor(() => expect(downloads).toHaveLength(1));
+    expect(screen.getByRole('status')).toHaveTextContent('');
+  });
+
+  it('clears a failed Share line once a retry works', async () => {
+    const share = vi.fn().mockResolvedValue(undefined);
+    vi.stubGlobal('navigator', Object.create(navigator, { canShare: { value: vi.fn(() => true) }, share: { value: share } }));
+    const user = userEvent.setup();
+    renderPage();
+
+    fileFaults.failNext = true;
+    await user.click(screen.getByRole('button', { name: en.share }));
+    await waitFor(() => expect(screen.getByRole('status')).toHaveTextContent(en.failed));
+    expect(share).not.toHaveBeenCalled();
+
+    await user.click(screen.getByRole('button', { name: en.share }));
+    await waitFor(() => expect(share).toHaveBeenCalledTimes(1));
+    expect(screen.getByRole('status')).toHaveTextContent('');
+  });
+
+  it('shares what the device holds at the tap, dated that day, as Export does', async () => {
+    vi.useFakeTimers({ toFake: ['Date'] });
+    vi.setSystemTime(new Date(2026, 9, 13, 23, 58));
+    const share = vi.fn().mockResolvedValue(undefined);
+    vi.stubGlobal('navigator', Object.create(navigator, { canShare: { value: vi.fn(() => true) }, share: { value: share } }));
+    const downloads = catchDownloads();
+    const user = userEvent.setup();
+    renderPage();
+    await act(async () => {
+      await storageMode();
+    });
+
+    // An answer recorded in another tab after Settings opened, past midnight.
+    vi.setSystemTime(new Date(2026, 9, 14, 0, 1));
+    await recordAnswer({ questionId: 3, chosen: correctOf(3), correct: true, mode: 'practice', at: Date.now() });
+
+    await user.click(screen.getByRole('button', { name: en.share }));
+    await waitFor(() => expect(share).toHaveBeenCalledTimes(1));
+    const [{ files }] = share.mock.calls[0] as [{ files: File[] }];
+    const shared = JSON.parse(await files[0]!.text()) as ExportFile;
+    expect(files[0]!.name).toBe('cacador-progress-2026-10-14.json');
+    expect(shared.answers).toHaveLength(1);
+    expect(shared.exportedAt).toBe(Date.now());
+
+    await user.click(screen.getByRole('button', { name: en.export }));
+    await waitFor(() => expect(downloads).toEqual([files[0]!.name]));
   });
 });
 

@@ -14,7 +14,7 @@ export const progress: Messages['progress'] = {
   unseen: (count) => `${count} por ver`,
   passLine: (percent) => `Linha de aprovação ${percent} %`,
 
-  days: 'Últimos 30 dias',
+  days: (count) => `Últimos ${count} dias`,
   daysChart: 'Respostas por dia, da mais antiga para a mais recente',
   dayBar: (date, total, correct) => `${date}: ${dayCounts(total, correct)}`,
   todayBar: (date, total, correct) => `Hoje, ${date}: ${dayCounts(total, correct)}`,
@@ -39,5 +39,5 @@ export const progress: Messages['progress'] = {
   notPassed: 'Não aprovado',
   examRow: (date, score, size, outcome) => `${date}: ${score} de ${size}, ${outcome}`,
 
-  flagged: (count) => `Assinaladas (${count})`,
+  flagged: (count) => `Assinalações (${count})`,
 };

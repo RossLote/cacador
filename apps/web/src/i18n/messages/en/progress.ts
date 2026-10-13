@@ -16,7 +16,8 @@ export const progress = {
   unseen: (count: number) => `${count} unseen`,
   passLine: (percent: number) => `Pass line ${percent} %`,
 
-  days: 'Last 30 days',
+  /** The chart's heading, with how many days it covers. */
+  days: (count: number) => `Last ${count} days`,
   /** The bar chart's list, for screen readers. */
   daysChart: 'Answers per day, oldest first',
   /** One bar's accessible name: the day (already formatted, "13 Oct") and its counts. */
@@ -48,5 +49,6 @@ export const progress = {
   /** A past exam's accessible name: its date (already formatted), score and outcome. */
   examRow: (date: string, score: number, size: number, outcome: string) => `${date}: ${score} of ${size}, ${outcome}`,
 
+  /** The link to Flagged with the number of flags (a question can carry two), § 6.6. */
   flagged: (count: number) => `Flagged (${count})`,
 };

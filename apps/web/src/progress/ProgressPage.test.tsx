@@ -1,13 +1,23 @@
 import { questionsInTopic } from '@cacador/data';
 import { act, render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { MemoryRouter, Route, Routes, useLocation } from 'react-router';
+import { MemoryRouter, Route, Routes, useLocation, useNavigate } from 'react-router';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { setLocale } from '@/i18n/locale';
 import type { Locale } from '@/i18n/locales';
 import { MESSAGES } from '@/i18n/messages';
 import { drawExam, seededRandom } from '@/model';
-import { createExam, finishExam, recordAnswer, saveExamAnswers, setFlag } from '@/storage';
+import { ACCURACY_DAYS } from '@/model/progress';
+import {
+  clearProgress,
+  createExam,
+  exportProgress,
+  finishExam,
+  importProgress,
+  recordAnswer,
+  saveExamAnswers,
+  setFlag,
+} from '@/storage';
 import { ProgressPage } from './ProgressPage';
 import { correctOf, wrongOf } from '../../test/fixtures';
 
@@ -29,7 +39,15 @@ async function answer(questionId: number, correct: boolean, at = NOW) {
 
 function Where() {
   const { pathname, search } = useLocation();
-  return <p>at {pathname + search}</p>;
+  const navigate = useNavigate();
+  return (
+    <>
+      <p>at {pathname + search}</p>
+      <button type="button" onClick={() => void navigate(-1)}>
+        back
+      </button>
+    </>
+  );
 }
 
 function renderProgress() {
@@ -69,6 +87,7 @@ describe('Progress on a fresh device', () => {
     expect(await screen.findByText('33 %')).toBeInTheDocument();
     expect(screen.getByText('506 unseen')).toBeInTheDocument();
     expect(screen.getByText('Pass line 75 %')).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: en.progress.days(ACCURACY_DAYS) })).toHaveTextContent('Last 30 days');
 
     const bars = dayBars();
     expect(bars).toHaveLength(30);
@@ -113,7 +132,8 @@ describe('Progress on a fresh device', () => {
     await user.click(screen.getByRole('tab', { name: pt.patterns }));
     expect(screen.getByRole('link', { name: /^só, apenas: por começar/ })).toBeInTheDocument();
     expect(screen.getByText(pt.noExams)).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: 'Assinaladas (0)' })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'Assinalações (0)' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Últimos 30 dias' })).toBeInTheDocument();
   });
 });
 
@@ -186,6 +206,53 @@ describe('Progress with answers', () => {
     renderProgress();
     expect(await screen.findByRole('link', { name: 'Flagged (3)' })).toHaveAttribute('href', '/flagged');
   });
+
+  it('counts flags, not questions, in Portuguese: three flags on two questions read Assinalações (3)', async () => {
+    act(() => setLocale('pt'));
+    await setFlag(1, 'translation');
+    await setFlag(1, 'hint');
+    await setFlag(7, 'hint', 'odd');
+    renderProgress();
+    expect(await screen.findByRole('link', { name: 'Assinalações (3)' })).toHaveAttribute('href', '/flagged');
+  });
+
+  it('keeps the chosen list in the address, so back from focused practice returns to it', async () => {
+    const user = userEvent.setup();
+    renderProgress();
+
+    await user.click(await screen.findByRole('tab', { name: 'Sections' }));
+    await user.click(screen.getByRole('link', { name: /^Biology:/ }));
+    expect(screen.getByText('at /practice?section=biologia')).toBeInTheDocument();
+
+    await user.click(screen.getByRole('button', { name: 'back' }));
+    expect(await screen.findByRole('tab', { name: 'Sections' })).toHaveAttribute('aria-selected', 'true');
+    expect(screen.getByRole('link', { name: /^Biology:/ })).toBeInTheDocument();
+
+    // Back to Topics drops the parameter; switching never adds a history entry.
+    await user.click(screen.getByRole('tab', { name: 'Patterns' }));
+    await user.click(screen.getByRole('tab', { name: 'Topics' }));
+    await user.click(screen.getByRole('link', { name: /^Ducks:/ }));
+    await user.click(screen.getByRole('button', { name: 'back' }));
+    expect(await screen.findByRole('tab', { name: 'Topics' })).toHaveAttribute('aria-selected', 'true');
+  });
+
+  it('moves today on when the page is shown again after midnight', async () => {
+    vi.setSystemTime(new Date(2026, 9, 13, 23, 58));
+    await answer(1, true, Date.now());
+    renderProgress();
+    expect(await screen.findByText('Today: 1 answer, 1 right')).toBeInTheDocument();
+    expect(dayBars()[29]).toHaveAccessibleName('Today, 13 Oct: 1 answer, 1 right');
+
+    vi.setSystemTime(new Date(2026, 9, 14, 0, 1));
+    vi.spyOn(document, 'visibilityState', 'get').mockReturnValue('visible');
+    act(() => {
+      document.dispatchEvent(new Event('visibilitychange'));
+    });
+
+    expect(await screen.findByText('Today: 0 answers, 0 right')).toBeInTheDocument();
+    expect(dayBars()[29]).toHaveAccessibleName('Today, 14 Oct: 0 answers, 0 right');
+    expect(dayBars()[28]).toHaveAccessibleName('13 Oct: 1 answer, 1 right');
+  });
 });
 
 describe('Past exams', () => {
@@ -243,6 +310,38 @@ describe('Past exams', () => {
       `/exam/results/${exam.id}`,
     );
     expect(screen.getByText('486 unseen')).toBeInTheDocument();
+  });
+});
+
+describe('Past exams order and score', () => {
+  it('lists overlapping exams newest finished first, as their dates read', async () => {
+    // B started first but finished last; A started later and finished first (two devices merged).
+    const b = await createExam(drawExam(seededRandom(5)), NOW - 70 * MINUTE);
+    const a = await createExam(drawExam(seededRandom(6)), NOW - 60 * MINUTE);
+    expect(await finishExam(a.id, NOW - 58 * MINUTE)).toBe(true);
+    expect(await finishExam(b.id, NOW - 45 * MINUTE)).toBe(true);
+    renderProgress();
+
+    const section = await screen.findByRole('region', { name: en.progress.exams });
+    expect(within(section).getAllByRole('link').map((link) => link.getAttribute('href'))).toEqual([
+      `/exam/results/${b.id}`,
+      `/exam/results/${a.id}`,
+    ]);
+  });
+
+  it('shows the score worked out from the answers, as the results page does, not a stored one that disagrees', async () => {
+    const ids = drawExam(seededRandom(8));
+    const exam = await createExam(ids, NOW - 60 * MINUTE);
+    await saveExamAnswers(exam.id, Object.fromEntries(ids.slice(0, 3).map((id) => [id, correctOf(id)])), NOW - 59 * MINUTE);
+    expect(await finishExam(exam.id, NOW - 50 * MINUTE)).toBe(true);
+    // A file whose stored score says 20 for the same answers.
+    const file = await exportProgress();
+    await clearProgress();
+    await importProgress(JSON.stringify({ ...file, exams: file.exams.map((e) => ({ ...e, score: 20 })) }));
+    renderProgress();
+
+    const section = await screen.findByRole('region', { name: en.progress.exams });
+    expect(within(section).getByRole('link')).toHaveAccessibleName('13 Oct 2026: 3 of 20, Not passed');
   });
 });
 

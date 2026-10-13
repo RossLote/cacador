@@ -14,8 +14,10 @@ type CopyState = 'idle' | 'copied' | 'failed';
 /** Flagged (DESIGN.md § 6.7): every flag newest first, with Copy and Share of the same plain text and a clear on each. */
 export function FlaggedPage() {
   const { t } = useI18n();
-  const { data: flags, failed, reload, set: setFlags } = useLoaded(listFlags);
+  const { data: flags, failed, set: setFlags } = useLoaded(listFlags);
   const [copy, setCopy] = useState<CopyState>('idle');
+  /** A clear that storage refused: the page says so even when the list reads again fine (DESIGN.md § 6.9). */
+  const [clearFailed, setClearFailed] = useState(false);
   const canShare = typeof navigator.share === 'function';
 
   useEffect(() => {
@@ -30,19 +32,18 @@ export function FlaggedPage() {
         await removeFlag(flag.questionId, flag.kind);
         setFlags(await listFlags());
       } catch {
-        // Read the list again; if storage still fails the page says so.
-        reload();
+        setClearFailed(true);
       }
     },
-    [reload, setFlags],
+    [setFlags],
   );
 
   const list = flags ?? [];
-  const text = formatFlags(list);
 
+  // The text is made at the tap, so its header carries the date of the tap (§ 6.7), not of the last render.
   async function copyText() {
     try {
-      await navigator.clipboard.writeText(text);
+      await navigator.clipboard.writeText(formatFlags(list));
       setCopy('copied');
     } catch {
       setCopy('failed');
@@ -51,7 +52,7 @@ export function FlaggedPage() {
 
   async function shareText() {
     try {
-      await navigator.share({ text });
+      await navigator.share({ text: formatFlags(list) });
     } catch {
       // Closing the share sheet rejects too; nothing to say.
     }
@@ -77,7 +78,7 @@ export function FlaggedPage() {
         {copy === 'copied' ? t.flagged.copied : copy === 'failed' ? t.flagged.copyFailed : ''}
       </span>
 
-      {failed ? (
+      {failed || clearFailed ? (
         <p role="status" className="text-muted-foreground">
           {t.flagged.loadFailed}
         </p>
