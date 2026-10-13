@@ -65,10 +65,12 @@ describe('manifest topics', () => {
     }
   });
 
-  it('gives perdiz and pombos-rolas their split ranges', () => {
+  it('gives pombos-rolas, galinha-d-agua and galeirao the edges of DESIGN.md § 3.2', () => {
     const ranges = (slug: string) => manifest.topics.find((t) => t.slug === slug)?.ranges;
-    expect(ranges('perdiz')).toEqual([[168, 197], [267, 267]]);
-    expect(ranges('pombos-rolas')).toEqual([[198, 212], [268, 279]]);
+    expect(ranges('perdiz')).toEqual([[168, 197]]);
+    expect(ranges('pombos-rolas')).toEqual([[198, 212], [267, 279]]);
+    expect(ranges('galinha-d-agua')).toEqual([[256, 261]]);
+    expect(ranges('galeirao')).toEqual([[262, 266]]);
   });
 });
 
@@ -81,14 +83,24 @@ describe('manifest images', () => {
     ]);
   });
 
-  it('names species photos after their question and keeps sinal.jpg once', () => {
-    for (const image of manifest.images) {
-      if (image.file === 'sinal.jpg') {
-        expect(image).toEqual({ file: 'sinal.jpg', page: 38, index: 1, questions: [373, 375, 394, 397] });
-      } else {
-        expect(image.questions.map((q) => `q${q}.jpg`)).toEqual([image.file]);
-      }
-      expect(image.index).toBeGreaterThanOrEqual(1);
-    }
+  // DESIGN.md § 2.3: page, placement on the page (index) and question per file.
+  it('matches the DESIGN.md § 2.3 table, page and index included', () => {
+    expect(manifest.images).toEqual([
+      { file: 'q119.jpg', page: 13, index: 1, questions: [119] },
+      { file: 'q143.jpg', page: 15, index: 1, questions: [143] },
+      { file: 'q168.jpg', page: 18, index: 1, questions: [168] },
+      { file: 'q169.jpg', page: 18, index: 2, questions: [169] },
+      { file: 'q198.jpg', page: 21, index: 1, questions: [198] },
+      { file: 'q228.jpg', page: 24, index: 1, questions: [228] },
+      { file: 'q229.jpg', page: 24, index: 2, questions: [229] },
+      { file: 'q261.jpg', page: 27, index: 1, questions: [261] },
+      { file: 'q267.jpg', page: 27, index: 2, questions: [267] },
+      { file: 'q268.jpg', page: 27, index: 3, questions: [268] },
+      { file: 'q280.jpg', page: 29, index: 1, questions: [280] },
+      { file: 'q293.jpg', page: 30, index: 1, questions: [293] },
+      { file: 'q319.jpg', page: 32, index: 1, questions: [319] },
+      { file: 'q320.jpg', page: 32, index: 2, questions: [320] },
+      { file: 'sinal.jpg', page: 38, index: 1, questions: [373, 375, 394, 397] },
+    ]);
   });
 });
