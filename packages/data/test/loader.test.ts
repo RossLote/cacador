@@ -57,6 +57,12 @@ describe('loader', () => {
     if (onDisk.length === 0) for (const id of [1, 229, 506]) expect(lookup(id)).toBeUndefined();
   });
 
+  it('resolves a hint for the last question, a draft until a checker bead moves it on', () => {
+    const hint = hintFor(506);
+    expect(hint?.id).toBe(506);
+    expect(['draft', 'checked', 'reviewed']).toContain(hint?.status);
+  });
+
   it('resolves translations that have passed the meaning pass', () => {
     for (const id of [1, 229, 506]) expect(['checked', 'reviewed']).toContain(translationFor(id)?.status);
   });

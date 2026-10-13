@@ -13,6 +13,8 @@ try {
     `validate: translations ${t.entries} entries in ${t.files} files, ${t.draft} draft, ${t.checked} checked, ${t.reviewed} reviewed; ` +
       `glossaries ${c.glossaries.species} species, ${c.glossaries.terms} terms`,
   );
+  const h = c.hints;
+  console.log(`validate: hints ${h.entries} entries in ${h.files} files, ${h.draft} draft, ${h.checked} checked, ${h.reviewed} reviewed`);
 } catch (error) {
   if (!(error instanceof ValidationError)) throw error;
   console.error(`validate: ${error.message}`);
