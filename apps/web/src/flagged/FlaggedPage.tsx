@@ -1,7 +1,118 @@
+import { questionById } from '@cacador/data';
+import { useCallback, useEffect, useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
 import { useI18n } from '@/i18n/useI18n';
+import { listFlags, removeFlag, type Flag } from '@/storage';
+import { formatFlags } from './copyFormat';
 
-/** Placeholder for the Flagged screen, replaced by its screen bead. */
+const COPIED_MS = 2000;
+
+type CopyState = 'idle' | 'copied' | 'failed';
+
+/** Flagged (DESIGN.md § 6.7): every flag newest first, with Copy and Share of the same plain text and a clear on each. */
 export function FlaggedPage() {
   const { t } = useI18n();
-  return <h1 className="text-2xl font-semibold tracking-tight">{t.flagged.title}</h1>;
+  const [flags, setFlags] = useState<Flag[] | undefined>();
+  const [copy, setCopy] = useState<CopyState>('idle');
+  const canShare = typeof navigator.share === 'function';
+
+  useEffect(() => {
+    let active = true;
+    void listFlags().then((list) => {
+      if (active) setFlags(list);
+    });
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  useEffect(() => {
+    if (copy === 'idle') return;
+    const timer = setTimeout(() => setCopy('idle'), COPIED_MS);
+    return () => clearTimeout(timer);
+  }, [copy]);
+
+  const clear = useCallback(async (flag: Flag) => {
+    await removeFlag(flag.questionId, flag.kind);
+    setFlags(await listFlags());
+  }, []);
+
+  const list = flags ?? [];
+  const text = formatFlags(list);
+
+  async function copyText() {
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopy('copied');
+    } catch {
+      setCopy('failed');
+    }
+  }
+
+  async function shareText() {
+    try {
+      await navigator.share({ text });
+    } catch {
+      // Closing the share sheet rejects too; nothing to say.
+    }
+  }
+
+  const kindLabel = (flag: Flag) => (flag.kind === 'translation' ? t.flagged.kindEnglish : t.flagged.kindHint);
+
+  return (
+    <section className="flex flex-col gap-4">
+      <h1 className="text-2xl font-semibold tracking-tight">{t.flagged.title}</h1>
+
+      <div className="flex gap-2">
+        <Button variant="outline" size="lg" className="flex-1" disabled={list.length === 0} onClick={() => void copyText()}>
+          {t.flagged.copy}
+        </Button>
+        {canShare && (
+          <Button variant="outline" size="lg" className="flex-1" disabled={list.length === 0} onClick={() => void shareText()}>
+            {t.flagged.share}
+          </Button>
+        )}
+      </div>
+      <span role="status" className="text-sm text-muted-foreground empty:hidden">
+        {copy === 'copied' ? t.flagged.copied : copy === 'failed' ? t.flagged.copyFailed : ''}
+      </span>
+
+      {flags === undefined ? (
+        <p role="status" className="text-muted-foreground">
+          {t.flagged.loading}
+        </p>
+      ) : list.length === 0 ? (
+        <p className="text-muted-foreground">{t.flagged.empty}</p>
+      ) : (
+        <ul aria-label={t.flagged.list} className="flex flex-col gap-2">
+          {list.map((flag) => (
+            <li key={`${flag.questionId}-${flag.kind}`}>
+              <Card size="sm" className="px-(--card-spacing)">
+                <div className="flex items-start justify-between gap-3">
+                  <div className="flex min-w-0 flex-col gap-1">
+                    <p className="font-medium">
+                      {t.flagged.questionNumber(flag.questionId)} <span className="text-muted-foreground">· {kindLabel(flag)}</span>
+                    </p>
+                    <p>{flag.note.trim() === '' ? <span className="text-muted-foreground">{t.flagged.noNote}</span> : flag.note}</p>
+                    <p lang="pt-PT" className="text-sm text-muted-foreground">
+                      {questionById(flag.questionId)?.question}
+                    </p>
+                  </div>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    aria-label={t.flagged.clearLabel(flag.questionId, kindLabel(flag))}
+                    onClick={() => void clear(flag)}
+                  >
+                    {t.flagged.clear}
+                  </Button>
+                </div>
+              </Card>
+            </li>
+          ))}
+        </ul>
+      )}
+    </section>
+  );
 }

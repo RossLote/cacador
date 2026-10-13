@@ -1,3 +1,16 @@
 export const flagged = {
   title: 'Flagged',
+  empty: 'No flags. Flag a question after answering it in Practice.',
+  loading: 'Loading flags',
+  list: 'Flags, newest first',
+  questionNumber: (id: number) => `Question ${id}`,
+  kindEnglish: 'English',
+  kindHint: 'Hint',
+  noNote: 'No note',
+  copy: 'Copy',
+  copied: 'Copied',
+  copyFailed: 'Could not copy',
+  share: 'Share',
+  clear: 'Clear',
+  clearLabel: (id: number, kind: string) => `Clear the ${kind} flag on question ${id}`,
 };
