@@ -328,34 +328,23 @@ function readGlossary(dir, rel, label, spec) {
 /**
  * Rule 6 (DESIGN.md § 4): a glossary `pt` that occurs as a whole word in a question (a hyphen is part
  * of the word, curly quotes straightened) must have its `en` in every non-draft translation of it.
- * Returns the number of glossary entries, 0 when there is no glossary.
  */
-function checkGlossary(dir, files, translations) {
-  const rel = 'glossary/species.json';
-  const glossary = readGlossary(dir, rel, 'species', { pt: 'string', scientific: 'string', en: 'string', group: 'string' });
-  if (!glossary) return 0;
+function checkGlossary(files, translations, glossary) {
   const ptText = new Map([...files.values()].flat().map((q) => [q.id, straighten(textOf(q))]));
+  const ptLower = new Map([...ptText].map(([id, text]) => [id, text.toLowerCase()]));
   for (const entry of glossary) {
-    const word = new RegExp(`(?<![\\p{L}\\p{N}-])${escapeRegExp(straighten(entry.pt))}(?![\\p{L}\\p{N}-])`, 'iu');
+    const name = straighten(entry.pt);
+    const needle = name.toLowerCase();
+    const word = new RegExp(`(?<![\\p{L}\\p{N}-])${escapeRegExp(name)}(?![\\p{L}\\p{N}-])`, 'iu');
     const en = entry.en.toLowerCase();
     for (const [id, translation] of translations) {
-      if (translation.status === 'draft' || !word.test(ptText.get(id))) continue;
+      // The substring test is a cheap filter; the word-boundary regex decides.
+      if (translation.status === 'draft' || !ptLower.get(id).includes(needle) || !word.test(ptText.get(id))) continue;
       if (!translation.text.includes(en)) {
         failAt(translation.file, id, `"${entry.pt}" must appear as "${entry.en}" (glossary/species.json)`);
       }
     }
   }
-  return glossary.length;
-}
-
-/**
- * Rule 7 (DESIGN.md § 4): glossary/terms.json, when it exists, is a list of { pt, en, note } with
- * `pt` and `en` non-empty, `note` a string and `pt` unique. Only its shape is checked: the use of a
- * term in translations is the meaning pass's job, not a rule's. Returns the number of terms, 0 when
- * there is no terms file.
- */
-function checkTerms(dir) {
-  return readGlossary(dir, 'glossary/terms.json', 'term', { pt: 'string', en: 'string', note: 'text' })?.length ?? 0;
 }
 
 /** The translation counts `validate` reports: entries, files, and entries at each status. */
@@ -377,8 +366,11 @@ export function validate(dir = dataDir) {
   checkText(manifest, files);
   checkImages(dir, manifest, files);
   const translations = checkMirrors(dir, files);
-  const species = checkGlossary(dir, files, translations);
-  const terms = checkTerms(dir);
+  const species = readGlossary(dir, 'glossary/species.json', 'species', { pt: 'string', scientific: 'string', en: 'string', group: 'string' });
+  if (species) checkGlossary(files, translations, species);
+  // Rule 7 (DESIGN.md § 4): only the terms glossary's shape is checked; a term's use in translations
+  // is the meaning pass's job, not a rule's.
+  const terms = readGlossary(dir, 'glossary/terms.json', 'term', { pt: 'string', en: 'string', note: 'text' });
 
   const all = [...files.values()].flat();
   return {
@@ -389,6 +381,6 @@ export function validate(dir = dataDir) {
     images: manifest.images.length,
     imageQuestions: all.filter((q) => q.image !== undefined).length,
     translations: countTranslations(translations),
-    glossaries: { species, terms },
+    glossaries: { species: species?.length ?? 0, terms: terms?.length ?? 0 },
   };
 }

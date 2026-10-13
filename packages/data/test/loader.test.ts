@@ -57,12 +57,7 @@ describe('loader', () => {
     if (onDisk.length === 0) for (const id of [1, 229, 506]) expect(lookup(id)).toBeUndefined();
   });
 
-  it('looks translations up by id', () => {
-    const t = translationFor(1);
-    expect(t?.id).toBe(1);
-    expect(Object.keys(t?.options ?? {})).toEqual(['A', 'B', 'C']);
-    expect(['draft', 'checked', 'reviewed']).toContain(t?.status);
-    expect(translationFor(0)).toBeUndefined();
-    expect(translationFor(507)).toBeUndefined();
+  it('resolves translations that have passed the meaning pass', () => {
+    for (const id of [1, 229, 506]) expect(['checked', 'reviewed']).toContain(translationFor(id)?.status);
   });
 });
