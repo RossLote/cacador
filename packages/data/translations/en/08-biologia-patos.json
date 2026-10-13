@@ -7,7 +7,7 @@
       "B": "A northern shoveler",
       "C": "A mallard"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -18,7 +18,7 @@
       "B": "Gadwall",
       "C": "Mallard"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -29,7 +29,7 @@
       "B": "Having a medium size",
       "C": "Having a medium to large size"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -40,7 +40,7 @@
       "B": "Having a neck and legs of medium size",
       "C": "Having a long neck and legs"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -51,7 +51,7 @@
       "B": "Having a white or pale wing bar",
       "C": "Having an almost always dark colouring"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -62,7 +62,7 @@
       "B": "Not showing sexual dimorphism",
       "C": "Showing marked sexual dimorphism in most species"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -73,7 +73,7 @@
       "B": "Gadwall",
       "C": "Common pochard"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -84,18 +84,18 @@
       "B": "Sea ducks",
       "C": "Diving ducks"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
     "id": 236,
     "question": "One of the characteristics of dabbling ducks is:",
     "options": {
-      "A": "Having a preferably animal diet",
+      "A": "Having a preferentially animal diet",
       "B": "Obtaining their food by diving",
       "C": "Pulling up the plants from the bottom with the rear third out of the water"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -106,7 +106,7 @@
       "B": "Pattering on the water before taking off",
       "C": "Emerging practically at the place where they submerged"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -117,7 +117,7 @@
       "B": "Molluscs, worms and plants",
       "C": "Molluscs, worms and fish"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -128,7 +128,7 @@
       "B": "Having an almost always dark colouring",
       "C": "Having a speculum with a metallic sheen"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -139,7 +139,7 @@
       "B": "Having a medium size",
       "C": "Having a medium to large size"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -150,7 +150,7 @@
       "B": "Having a short neck, wings and legs",
       "C": "Having a neck and legs of medium size"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -161,7 +161,7 @@
       "B": "Showing marked sexual dimorphism in most species",
       "C": "Not showing sexual dimorphism"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -172,7 +172,7 @@
       "B": "Taking off almost vertically",
       "C": "Emerging a few metres from the place where they dived"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -183,7 +183,7 @@
       "B": "European golden plover, mallard and Iberian hare",
       "C": "Northern pintail, common wood pigeon and Eurasian coot"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -194,7 +194,7 @@
       "B": "Molluscs, worms and plants",
       "C": "Micro-organisms suspended in the water and plants from the bottom"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -205,7 +205,7 @@
       "B": "Winter in Portugal and breed in northern and southern Europe",
       "C": "Winter in Portugal and breed in southern and central Europe"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -216,7 +216,7 @@
       "B": "Passage migrant",
       "C": "Resident"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -227,7 +227,7 @@
       "B": "Bright green",
       "C": "Bronze green"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -238,7 +238,7 @@
       "B": "Green head, white breast, brown patch on the flanks and belly",
       "C": "Greyish back, green head, brown breast, pale underparts"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -249,7 +249,7 @@
       "B": "A black spatulate bill",
       "C": "A brownish colouring, with an orange bill"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -260,7 +260,7 @@
       "B": "Having a white neck and brick-coloured breast",
       "C": "Having a comparatively longer and more slender neck"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -271,7 +271,7 @@
       "B": "Having a reddish head with a white eyebrow",
       "C": "General colour greyish brown, brick-coloured neck, head and breast"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -282,7 +282,7 @@
       "B": "Mallard",
       "C": "Northern shoveler"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -293,7 +293,7 @@
       "B": "They take off almost vertically",
       "C": "They have less bright colours"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -304,7 +304,7 @@
       "B": "Gadwall",
       "C": "Common pochard"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -315,7 +315,7 @@
       "B": "Yellow bill with a red tip",
       "C": "Red bill with a white tip"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -326,7 +326,7 @@
       "B": "Yellow frontal shield",
       "C": "Red frontal shield"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -337,7 +337,7 @@
       "B": "Pools, lakes and very fast watercourses",
       "C": "Lakes, flooded areas and temporary watercourses"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -348,7 +348,7 @@
       "B": "Very fast watercourses without vegetation on the banks",
       "C": "Areas of scrub and abundant trees"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -359,7 +359,7 @@
       "B": "Essentially nocturnal",
       "C": "Essentially crepuscular"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -370,7 +370,7 @@
       "B": "A common moorhen",
       "C": "A northern lapwing"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -381,7 +381,7 @@
       "B": "Less heavy and less lively",
       "C": "Heavier and more lively"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -392,7 +392,7 @@
       "B": "White bill and white frontal shield",
       "C": "Red bill and white frontal shield"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -403,7 +403,7 @@
       "B": "Are seen in pairs",
       "C": "Are solitary animals"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -414,7 +414,7 @@
       "B": "Are combative and extremely territorial animals",
       "C": "Are animals that go about alone or in small groups"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -425,7 +425,7 @@
       "B": "Spring",
       "C": "Autumn"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   }
 ]
