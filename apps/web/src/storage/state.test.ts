@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { EXAM_DURATION_MS } from '@/model';
-import { finishExamRecords, isRunning } from './finish';
-import { applyAnswer, deriveState, isInOrder, nextState } from './state';
+import { finishExamRecords, isRunning, runningExam } from './finish';
+import { applyAnswer, deriveState, isInOrder, isWellFormedAnswer, nextState } from './state';
 import type { Answer, Exam } from './types';
 import { correctOf } from '../../test/fixtures';
 
@@ -71,9 +71,39 @@ describe('finishExamRecords', () => {
     expect(answers.every((a) => a.at === deadline)).toBe(true);
   });
 
+  it('holds the finish to the start, never before it', () => {
+    const { exam: finished, answers } = finishExamRecords(exam, 500);
+    expect(finished.finishedAt).toBe(1000);
+    expect(answers.every((a) => a.at === 1000)).toBe(true);
+  });
+
   it('runs until the deadline and not after finishing', () => {
     expect(isRunning(exam, 1000 + EXAM_DURATION_MS - 1)).toBe(true);
     expect(isRunning(exam, 1000 + EXAM_DURATION_MS)).toBe(false);
     expect(isRunning({ ...exam, finishedAt: 1500 }, 1600)).toBe(false);
+  });
+});
+
+describe('runningExam', () => {
+  const questionIds = Array.from({ length: 20 }, (_, i) => i + 1);
+  const at = (id: string, startedAt: number, finishedAt?: number): Exam => ({ id, startedAt, questionIds, answers: {}, finishedAt });
+
+  it('is the most recently started exam still running, or none', () => {
+    const exams = [at('old', 0), at('newer', 1000), at('done', 2000, 2500)];
+    expect(runningExam(exams, 3000)?.id).toBe('newer');
+    expect(runningExam(exams, 1000 + EXAM_DURATION_MS)).toBeUndefined();
+    expect(runningExam([], 0)).toBeUndefined();
+  });
+});
+
+describe('isWellFormedAnswer', () => {
+  it('needs a chosen option and no exam in practice; an exam id, and a chosen option or a wrong mark, in an exam', () => {
+    expect(isWellFormedAnswer({ mode: 'practice', chosen: 'A', correct: true })).toBe(true);
+    expect(isWellFormedAnswer({ mode: 'practice', correct: false })).toBe(false);
+    expect(isWellFormedAnswer({ mode: 'practice', chosen: 'A', correct: true, examId: 'e' })).toBe(false);
+    expect(isWellFormedAnswer({ mode: 'exam', chosen: 'A', correct: true, examId: 'e' })).toBe(true);
+    expect(isWellFormedAnswer({ mode: 'exam', correct: false, examId: 'e' })).toBe(true);
+    expect(isWellFormedAnswer({ mode: 'exam', correct: true, examId: 'e' })).toBe(false);
+    expect(isWellFormedAnswer({ mode: 'exam', chosen: 'A', correct: true })).toBe(false);
   });
 });

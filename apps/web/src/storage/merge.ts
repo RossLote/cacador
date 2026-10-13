@@ -4,9 +4,8 @@
  * Both backends read the device's records, call `planImport` and apply the
  * plan in one transaction, so the rules live only here.
  */
-import { examDeadline } from '@/model';
 import type { ProgressRecords } from './exportFile';
-import { finishExamRecords } from './finish';
+import { finishExamRecords, newestFirst } from './finish';
 import { rebuildStates } from './state';
 import type { Answer, Exam, ExportFile, Flag, QuestionState } from './types';
 
@@ -75,11 +74,12 @@ export const flagKey = (f: Pick<Flag, 'questionId' | 'kind'>): string => `${f.qu
  * - flags by (questionId, kind) under `replacesFlag`.
  *
  * When more than one exam is then unfinished, the most recently started stays
- * so and each other is settled as .3's settling does (D3): finished as it
- * stands at its deadline, one answer per question logged at the deadline.
- * Every question state is rebuilt from the merged log.
+ * so and each other is submitted as it stands at `now`, the import's moment,
+ * held to its deadline (`finishExamRecords`, D3): one still inside its 30
+ * minutes finishes now, never at a deadline still to come. Every question
+ * state is rebuilt from the merged log.
  */
-export function planImport(device: ProgressRecords, file: ExportFile): ImportPlan {
+export function planImport(device: ProgressRecords, file: ExportFile, now: number): ImportPlan {
   // Exams: the device's, then the file's folded in; `fromFile` marks the ids whose kept copy came from the file.
   const exams = new Map(device.exams.map((exam) => [exam.id, exam]));
   const onDevice = new Set(exams.keys());
@@ -110,11 +110,11 @@ export function planImport(device: ProgressRecords, file: ExportFile): ImportPla
     addAnswers.push(answer);
   }
 
-  // At most one unfinished exam: the most recently started; the others settled at their deadlines.
+  // At most one unfinished exam: the most recently started; the others submitted now, or at their deadlines if past.
   const settled = new Set<string>();
-  const unfinished = [...exams.values()].filter((exam) => exam.finishedAt === undefined).sort((a, b) => b.startedAt - a.startedAt);
+  const unfinished = [...exams.values()].filter((exam) => exam.finishedAt === undefined).sort(newestFirst);
   for (const exam of unfinished.slice(1)) {
-    const finished = finishExamRecords(exam, examDeadline(exam));
+    const finished = finishExamRecords(exam, now);
     exams.set(exam.id, finished.exam);
     addAnswers.push(...finished.answers);
     settled.add(exam.id);

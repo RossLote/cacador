@@ -8,6 +8,7 @@ import {
   examPassed,
   examResults,
   examTimeLeft,
+  isCorrectOption,
   scoreExam,
 } from './exam';
 import { seededRandom } from './random';
@@ -66,5 +67,14 @@ describe('exam score', () => {
     expect(scoreExam(exam(15, 0))).toBe(15);
     expect(examPassed(scoreExam(exam(15, 0)))).toBe(true);
     expect(examPassed(20)).toBe(true);
+  });
+});
+
+describe('isCorrectOption', () => {
+  it('is right only for the bank answer, and no option chosen is wrong', () => {
+    expect(isCorrectOption(4, correctOf(4))).toBe(true);
+    expect(isCorrectOption(4, wrongOf(correctOf(4)))).toBe(false);
+    expect(isCorrectOption(4, undefined)).toBe(false);
+    expect(isCorrectOption(507, 'A')).toBe(false);
   });
 });

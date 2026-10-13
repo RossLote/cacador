@@ -8,11 +8,12 @@
 import { examDeadline, indexStates, type StateMap } from '@/model';
 import type { StorageBackend, StorageMode } from './backend';
 import { readExportFile, toExportFile, type ExportRefusal } from './exportFile';
-import { isRunning } from './finish';
+import { isRunning, newestFirst, runningExam } from './finish';
 import { openIdbBackend } from './idbBackend';
 import { RECENT_KEY } from './keys';
 import type { ImportCounts } from './merge';
 import { createMemoryBackend } from './memoryBackend';
+import { isWellFormedAnswer } from './state';
 import type { Answer, AnswerMode, Exam, ExportFile, Flag, FlagKind, OptionKey } from './types';
 
 export { LOCALE_KEY, RECENT_KEY } from './keys';
@@ -91,12 +92,14 @@ export interface NewAnswer {
 
 /**
  * Appends an answer to the log and updates its question's state, in one
- * transaction; returns it with its id. An answer with no chosen option counts
- * wrong whatever `correct` says.
+ * transaction; returns it with its id. Rejects, writing nothing, an answer the
+ * log does not allow (`isWellFormedAnswer`): a practice answer with no chosen
+ * option or naming an exam, an exam answer naming no exam, or one with no
+ * chosen option counted right.
  */
 export async function recordAnswer(answer: NewAnswer): Promise<Answer> {
-  const correct = answer.chosen !== undefined && answer.correct;
-  return (await backend()).addAnswer({ ...answer, correct, at: answer.at ?? Date.now() });
+  if (!isWellFormedAnswer(answer)) throw new Error(`Not a well-formed answer to question ${answer.questionId}`);
+  return (await backend()).addAnswer({ ...answer, at: answer.at ?? Date.now() });
 }
 
 /** The answers log in time order, from `since` (ms, inclusive) when given. */
@@ -111,14 +114,34 @@ export async function getStates(): Promise<StateMap> {
 
 // Exams (D3)
 
-/** Saves a new unfinished exam over the drawn `questionIds` (the model's drawExam) and returns it. */
+/**
+ * Starts an exam over the drawn `questionIds` (the model's drawExam) at
+ * `startedAt` and returns it, unless an exam is already running then (a stale
+ * start screen, a second tab): that one is returned instead, with its own id,
+ * start and answers, and nothing new is saved, so the caller resumes it. Any
+ * exam past its deadline is settled first, as every read settles it (D3). The
+ * check and the write are one transaction, so two starts at once make one exam.
+ */
 export async function createExam(questionIds: readonly number[], startedAt: number = Date.now()): Promise<Exam> {
   const exam: Exam = { id: crypto.randomUUID(), startedAt, questionIds: [...questionIds], answers: {} };
-  await (await backend()).addExam(exam);
-  return exam;
+  return (await settled(startedAt)).startExam(exam);
 }
 
-/** Replaces a running exam's answers; false once it is finished or past its deadline at `now`. */
+/**
+ * Sets one question's option on a running exam, merged into its answers as
+ * stored, so two screens on one exam never undo each other's choices. `at` is
+ * when the option was chosen: false, writing nothing, once the exam is
+ * finished or `at` is past its deadline, or for a question not in the exam.
+ */
+export async function saveExamAnswer(id: string, questionId: number, option: OptionKey, at: number = Date.now()): Promise<boolean> {
+  return (await backend()).setExamAnswer(id, questionId, option, at);
+}
+
+/**
+ * Replaces a running exam's answers; false once it is finished or past its
+ * deadline at `now`. Superseded by `saveExamAnswer`, which cannot overwrite
+ * another screen's answers; kept until the running exam moves to it.
+ */
 export async function saveExamAnswers(id: string, answers: Record<number, OptionKey>, now: number = Date.now()): Promise<boolean> {
   return (await backend()).setExamAnswers(id, answers, now);
 }
@@ -139,8 +162,6 @@ export async function getExam(id: string): Promise<Exam | undefined> {
   return (await settled()).getExam(id);
 }
 
-const newestFirst = (a: Exam, b: Exam): number => b.startedAt - a.startedAt;
-
 /** Every exam, finished or not, newest started first. */
 export async function listExams(): Promise<Exam[]> {
   return (await (await settled()).listExams()).sort(newestFirst);
@@ -152,8 +173,7 @@ export async function listExams(): Promise<Exam[]> {
  * running, the most recently started is the one returned.
  */
 export async function getUnfinishedExam(now: number = Date.now()): Promise<Exam | undefined> {
-  const exams = await (await settled(now)).listExams();
-  return exams.sort(newestFirst).find((exam) => isRunning(exam, now));
+  return runningExam(await (await settled(now)).listExams(), now);
 }
 
 // Flags (D2)
@@ -190,19 +210,23 @@ export async function exportProgress(exportedAt: number = Date.now()): Promise<E
 export type ImportResult = { ok: true; added: ImportCounts } | { ok: false; reason: ExportRefusal };
 
 /**
- * Imports an export from the file's text (`await file.text()`). Anything that
- * is not a well-formed version 1 Caçador export is refused and nothing
- * changes. Otherwise, in one transaction, it merges answers by (questionId,
- * at), exams by id and flags by (questionId, kind) under D8's rules, leaves at
- * most one exam unfinished (the most recently started; the others settled at
- * their deadlines as D3 settles them), rebuilds every question state from the
- * merged log, and reports the answers inserted, the exams inserted or replaced
- * by the file's copy and the flags inserted or replaced by a newer one.
+ * Imports an export from the file's text (`await file.text()`) at `now`.
+ * Anything that is not a well-formed version 1 Caçador export holding only
+ * records the app writes, every time no later than `now` give or take five
+ * minutes, is refused and nothing changes (`validateExportFile`); an answer's
+ * `correct` and an exam's `score` are worked out again from the bank's key, not
+ * taken from the file. Otherwise, in one transaction, it merges answers by
+ * (questionId, at), exams by id and flags by (questionId, kind) under D8's
+ * rules, leaves at most one exam unfinished (the most recently started; the
+ * others submitted as they stand at `now`, held to their deadlines as D3
+ * holds them), rebuilds every question state from the merged log, and reports
+ * the answers inserted, the exams inserted or replaced by the file's copy and
+ * the flags inserted or replaced by a newer one.
  */
-export async function importProgress(text: string): Promise<ImportResult> {
-  const read = readExportFile(text);
+export async function importProgress(text: string, now: number = Date.now()): Promise<ImportResult> {
+  const read = readExportFile(text, now);
   if (!read.ok) return read;
-  return { ok: true, added: await (await backend()).importFile(read.file) };
+  return { ok: true, added: await (await backend()).importFile(read.file, now) };
 }
 
 /** Clear progress (D8): empties every store and forgets the no-repeat window (sessionStorage `cacador.recent`); the UI language stays. */

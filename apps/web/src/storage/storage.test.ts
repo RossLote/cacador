@@ -19,6 +19,7 @@ import {
   recordAnswer,
   RECENT_KEY,
   removeFlag,
+  saveExamAnswer,
   saveExamAnswers,
   setFlag,
   storageMode,
@@ -76,11 +77,22 @@ describe.each([
       expect(await answersFor(5)).toHaveLength(4);
     });
 
-    it('accepts an answer with no chosen option and counts it wrong', async () => {
-      const recorded = await recordAnswer({ questionId: 8, correct: true, mode: 'exam', examId: 'x', at: T0 });
+    it('accepts an exam answer with no chosen option, wrong, and counts it', async () => {
+      const recorded = await recordAnswer({ questionId: 8, correct: false, mode: 'exam', examId: 'x', at: T0 });
       expect(recorded).toMatchObject({ questionId: 8, correct: false });
       expect('chosen' in recorded).toBe(false);
       expect(await stateOf(8)).toMatchObject({ attempts: 1, correct: 0, streak: 0, recent: [false] });
+    });
+
+    it.each([
+      ['a practice answer with no chosen option', { mode: 'practice', correct: false }],
+      ['a practice answer naming an exam', { mode: 'practice', chosen: 'A', correct: false, examId: 'x' }],
+      ['an exam answer naming no exam', { mode: 'exam', chosen: 'A', correct: false }],
+      ['an exam answer with no chosen option counted right', { mode: 'exam', correct: true, examId: 'x' }],
+    ] as const)('refuses %s and writes nothing', async (_, fields) => {
+      await expect(recordAnswer({ questionId: 8, at: T0, ...fields })).rejects.toThrow('Not a well-formed answer');
+      expect(await listAnswers()).toEqual([]);
+      expect(await stateOf(8)).toBeUndefined();
     });
 
     it('stamps an answer with the current time when none is given', async () => {
@@ -197,16 +209,68 @@ describe.each([
       expect((await answersFor(id)).map((a) => a.mode)).toEqual(['exam', 'practice']);
     });
 
-    it('returns the running exam, the newest when there are several, and lists exams newest first', async () => {
+    it('returns the running exam and lists exams newest first', async () => {
       expect(await getUnfinishedExam(T0)).toBeUndefined();
       const older = await createExam(questionIds, T0);
+      await finishExam(older.id, T0 + MINUTE);
       const newer = await createExam(questionIds, T0 + 5 * MINUTE);
       expect(await getUnfinishedExam(T0 + 10 * MINUTE)).toEqual(newer);
       expect((await listExams()).map((e) => e.id)).toEqual([newer.id, older.id]);
+    });
 
-      // 32 minutes on, the older is past its deadline and settled; the newer still runs.
-      expect(await getUnfinishedExam(T0 + 32 * MINUTE)).toEqual(newer);
-      expect((await getExam(older.id))?.finishedAt).toBe(examDeadline(older));
+    it('starts no second exam while one runs: a stale start screen gets the running one back to resume', async () => {
+      const running = await createExam(questionIds, T0);
+      const first = questionIds[0] as number;
+      await saveExamAnswer(running.id, first, 'B', T0 + MINUTE);
+
+      const again = await createExam(drawExam(seededRandom(9)), T0 + 2 * MINUTE);
+      expect(again).toEqual({ ...running, answers: { [first]: 'B' } });
+      expect(await listExams()).toHaveLength(1);
+
+      // Two starts at once still make one exam.
+      const [a, b] = await Promise.all([createExam(questionIds, T0 + 3 * MINUTE), createExam(questionIds, T0 + 3 * MINUTE)]);
+      expect([a.id, b.id]).toEqual([running.id, running.id]);
+      expect(await listExams()).toHaveLength(1);
+    });
+
+    it('settles an exam past its deadline before starting a new one', async () => {
+      const stale = await createExam(questionIds, T0);
+      vi.setSystemTime(T0 + 31 * MINUTE);
+      const fresh = await createExam(questionIds, T0 + 31 * MINUTE);
+      expect(fresh.id).not.toBe(stale.id);
+      expect(fresh).toMatchObject({ startedAt: T0 + 31 * MINUTE, answers: {} });
+      expect(await getExam(stale.id)).toMatchObject({ finishedAt: examDeadline(stale), score: 0 });
+      expect(await getUnfinishedExam(T0 + 31 * MINUTE)).toEqual(fresh);
+    });
+
+    it('saves one answer at a time, merged into the stored answers, so two screens on one exam keep both', async () => {
+      const exam = await createExam(questionIds, T0);
+      const [q1, q2] = questionIds as [number, number];
+      // Two screens loaded the exam with no answers; each saves its own question.
+      expect(await saveExamAnswer(exam.id, q1, 'A', T0 + MINUTE)).toBe(true);
+      expect(await saveExamAnswer(exam.id, q2, 'C', T0 + MINUTE)).toBe(true);
+      expect((await getExam(exam.id))?.answers).toEqual({ [q1]: 'A', [q2]: 'C' });
+
+      // A change replaces that question's option only.
+      expect(await saveExamAnswer(exam.id, q1, 'B', T0 + 2 * MINUTE)).toBe(true);
+      expect((await getExam(exam.id))?.answers).toEqual({ [q1]: 'B', [q2]: 'C' });
+    });
+
+    it('refuses an answer chosen after the deadline, to a finished exam, to a question not in it, or to no exam', async () => {
+      const exam = await createExam(questionIds, T0);
+      const first = questionIds[0] as number;
+      const outside = [1, 2, 3, 4].find((id) => !questionIds.includes(id)) as number;
+
+      // Judged by when it was chosen, not when the write lands.
+      expect(await saveExamAnswer(exam.id, first, 'A', examDeadline(exam) - 1)).toBe(true);
+      expect(await saveExamAnswer(exam.id, first, 'B', examDeadline(exam))).toBe(false);
+      expect(await saveExamAnswer(exam.id, outside, 'A', T0 + MINUTE)).toBe(false);
+      expect(await saveExamAnswer('missing', first, 'A', T0 + MINUTE)).toBe(false);
+      expect((await getExam(exam.id))?.answers).toEqual({ [first]: 'A' });
+
+      await finishExam(exam.id, T0 + 2 * MINUTE);
+      expect(await saveExamAnswer(exam.id, first, 'C', T0 + 3 * MINUTE)).toBe(false);
+      expect((await getExam(exam.id))?.answers).toEqual({ [first]: 'A' });
     });
   });
 

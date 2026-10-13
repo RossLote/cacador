@@ -59,11 +59,16 @@ export interface ExamQuestionResult {
   correct: boolean;
 }
 
+/** Whether `chosen` is the bank's answer to the question; no option chosen is wrong (D3). */
+export function isCorrectOption(questionId: number, chosen: OptionKey | undefined): boolean {
+  return chosen !== undefined && questionById(questionId)?.answer === chosen;
+}
+
 /** Each exam question in order with what was chosen and whether it was right; an unanswered one is wrong (D3). */
 export function examResults(exam: Pick<Exam, 'questionIds' | 'answers'>): ExamQuestionResult[] {
   return exam.questionIds.map((questionId) => {
     const chosen = exam.answers[questionId];
-    const correct = chosen !== undefined && questionById(questionId)?.answer === chosen;
+    const correct = isCorrectOption(questionId, chosen);
     return chosen === undefined ? { questionId, correct } : { questionId, chosen, correct };
   });
 }

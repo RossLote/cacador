@@ -28,6 +28,7 @@ export {
   examResults,
   examResultsPath,
   examTimeLeft,
+  isCorrectOption,
   isFinished,
   MINUTE_MS,
   scoreExam,

@@ -55,8 +55,8 @@ async function makeProgress(): Promise<{ finished: Exam; running: Exam }> {
   const finished = await createExam(questionIds, T0 + 10 * MINUTE);
   await saveExamAnswers(finished.id, allOf(questionIds.slice(0, 15), correctOf), T0 + 11 * MINUTE);
   await finishExam(finished.id, T0 + 20 * MINUTE);
-  const running = await createExam(otherIds, T0 + 60 * MINUTE);
-  await saveExamAnswers(running.id, allOf(otherIds.slice(0, 2), wrongOf), T0 + 61 * MINUTE);
+  const running = await createExam(otherIds, T0 + 22 * MINUTE);
+  await saveExamAnswers(running.id, allOf(otherIds.slice(0, 2), wrongOf), T0 + 23 * MINUTE);
   await setFlag(3, 'translation', 'says deer', T0 + 5 * MINUTE);
   await setFlag(40, 'hint', '', T0 + 6 * MINUTE);
   return { finished, running: (await getExam(running.id)) as Exam };
@@ -67,8 +67,9 @@ describe.each([
   ['memory', false],
 ] as const)('export, import and clear on %s', (mode, available) => {
   beforeEach(async () => {
-    // Every read settles the exams past their deadline at the clock's time (D3): held where the exams these
-    // tests start at T0 to T0 + 60 minutes are all still running.
+    // Every read settles the exams past their deadline at the clock's time (D3), and an import refuses a time
+    // more than five minutes ahead of it: held where the exams these tests start at T0 to T0 + 22 minutes are
+    // all still running and none has started in the future.
     vi.useFakeTimers({ toFake: ['Date'] });
     vi.setSystemTime(T0 + 25 * MINUTE);
     await closeStorage();
@@ -143,19 +144,20 @@ describe.each([
   });
 
   describe('a second unfinished exam', () => {
-    it('settles the file one at its deadline when the device started later', async () => {
+    it('submits the file one at the moment of the import when the device started later, never at its deadline still ahead', async () => {
       const own = await createExam(questionIds, T0 + 5 * MINUTE);
       const other: Exam = { id: 'from-laptop', startedAt: T0, questionIds: otherIds, answers: allOf(otherIds.slice(0, 4), correctOf) };
       const text = fileText({ exams: [other] });
 
       expect(await importProgress(text)).toEqual({ ok: true, added: { answers: 20, exams: 1, flags: 0 } });
-      const deadline = T0 + EXAM_DURATION_MS;
-      expect(await getExam(other.id)).toEqual({ ...other, finishedAt: deadline, score: 4 });
+      // The clock reads T0 + 25 minutes; the deadline, T0 + 30, has not come.
+      const now = T0 + 25 * MINUTE;
+      expect(await getExam(other.id)).toEqual({ ...other, finishedAt: now, score: 4 });
       const logged = await examLog(other.id);
       expect(logged).toHaveLength(20);
-      expect(logged.every((a) => a.at === deadline && a.mode === 'exam')).toBe(true);
+      expect(logged.every((a) => a.at === now && a.mode === 'exam')).toBe(true);
       expect(logged.filter((a) => !('chosen' in a) && !a.correct)).toHaveLength(16);
-      expect((await getStates()).get(otherIds[0] as number)).toMatchObject({ attempts: 1, correct: 1, lastSeenAt: deadline });
+      expect((await getStates()).get(otherIds[0] as number)).toMatchObject({ attempts: 1, correct: 1, lastSeenAt: now });
       expect(await getExam(own.id)).toEqual(own);
 
       // The settled copy now beats the file's unfinished one: nothing more is added or logged.
@@ -163,13 +165,23 @@ describe.each([
       expect(await examLog(other.id)).toHaveLength(20);
     });
 
-    it('settles the device own when the file one started later', async () => {
+    it('submits the file one at its deadline once that has passed', async () => {
+      await createExam(questionIds, T0 + 5 * MINUTE);
+      const other: Exam = { id: 'from-laptop', startedAt: T0 - 10 * MINUTE, questionIds: otherIds, answers: {} };
+
+      expect(await importProgress(fileText({ exams: [other] }))).toMatchObject({ ok: true, added: { answers: 20 } });
+      const deadline = T0 - 10 * MINUTE + EXAM_DURATION_MS;
+      expect(await getExam(other.id)).toMatchObject({ finishedAt: deadline, score: 0 });
+      expect((await examLog(other.id)).every((a) => a.at === deadline)).toBe(true);
+    });
+
+    it('submits the device own at the moment of the import when the file one started later', async () => {
       const own = await createExam(questionIds, T0);
       await saveExamAnswers(own.id, allOf(questionIds.slice(0, 2), correctOf), T0 + MINUTE);
       const other: Exam = { id: 'from-laptop', startedAt: T0 + 10 * MINUTE, questionIds: otherIds, answers: {} };
 
       expect(await importProgress(fileText({ exams: [other] }))).toEqual({ ok: true, added: { answers: 20, exams: 1, flags: 0 } });
-      expect(await getExam(own.id)).toMatchObject({ finishedAt: T0 + EXAM_DURATION_MS, score: 2 });
+      expect(await getExam(own.id)).toMatchObject({ finishedAt: T0 + 25 * MINUTE, score: 2 });
       expect(await examLog(own.id)).toHaveLength(20);
       expect(await getExam(other.id)).toEqual(other);
       expect((await listExams()).filter((e) => e.finishedAt === undefined).map((e) => e.id)).toEqual([other.id]);
@@ -253,6 +265,39 @@ describe.each([
     expect((await listFlags()).map((f) => `${f.questionId} ${f.kind} ${f.note}`)).toEqual(['4 hint newer', '3 translation mine', '3 hint new']);
   });
 
+  it('works out each answer and exam score from the bank key, not from what the file states', async () => {
+    const q = questionIds[0] as number;
+    const claimed = finishExamRecords({ id: 'claims-a-pass', startedAt: T0, questionIds, answers: allOf(questionIds, wrongOf) }, T0 + 10 * MINUTE);
+    const text = fileText({
+      answers: [
+        { questionId: 5, at: T0, chosen: wrongOf(5), correct: true, mode: 'practice' },
+        ...claimed.answers.map((a) => ({ ...a, correct: true })),
+      ],
+      exams: [{ ...claimed.exam, score: 20 }],
+    });
+
+    expect(await importProgress(text)).toEqual({ ok: true, added: { answers: 21, exams: 1, flags: 0 } });
+    expect(await getExam(claimed.exam.id)).toMatchObject({ score: 0 });
+    expect((await listAnswers()).every((a) => !a.correct)).toBe(true);
+    expect((await getStates()).get(5)).toMatchObject({ attempts: 1, correct: 0, streak: 0 });
+    expect((await getStates()).get(q)).toMatchObject({ attempts: 1, correct: 0, streak: 0 });
+  });
+
+  it('refuses a file whose exam starts in the future, leaving the running exam on the device alone', async () => {
+    const own = await createExam(questionIds, T0 + 20 * MINUTE);
+    const before = { answers: await listAnswers(), exams: await listExams(), states: await getStates() };
+    const ahead: Exam = { id: 'fast-clock', startedAt: T0 + 31 * MINUTE, questionIds: otherIds, answers: {} };
+
+    expect(await importProgress(fileText({ exams: [ahead] }))).toEqual({ ok: false, reason: 'malformed' });
+    expect({ answers: await listAnswers(), exams: await listExams(), states: await getStates() }).toEqual(before);
+    expect(await getExam(own.id)).toEqual(own);
+
+    // Within five minutes of the clock it is a clock that runs a little fast, and the newer exam stays the running one.
+    const close: Exam = { ...ahead, startedAt: T0 + 30 * MINUTE };
+    expect(await importProgress(fileText({ exams: [close] }))).toMatchObject({ ok: true, added: { exams: 1 } });
+    expect(await getExam(own.id)).toMatchObject({ finishedAt: T0 + 25 * MINUTE });
+  });
+
   it('refuses a file that is not a version 1 Caçador export and changes nothing', async () => {
     await makeProgress();
     const before = { answers: await listAnswers(), exams: await listExams(), flags: await listFlags(), states: await getStates() };
@@ -289,10 +334,18 @@ describe.each([
 });
 
 describe('import on IndexedDB', () => {
+  beforeEach(() => {
+    vi.useFakeTimers({ toFake: ['Date'] });
+    vi.setSystemTime(T0 + 25 * MINUTE);
+  });
+  afterEach(() => {
+    vi.useRealTimers();
+  });
+
   it('is all or nothing: a write that fails leaves every store as it was', async () => {
     await makeProgress();
     const before = { answers: await listAnswers(), exams: await listExams(), flags: await listFlags(), states: await getStates() };
-    const other: Exam = { id: 'from-laptop', startedAt: T0 + 90 * MINUTE, questionIds: otherIds, answers: {} };
+    const other: Exam = { id: 'from-laptop', startedAt: T0 + 24 * MINUTE, questionIds: otherIds, answers: {} };
     const text = fileText({
       exams: [other],
       answers: [{ questionId: 9, at: T0, chosen: 'A', correct: true, mode: 'practice' }],
