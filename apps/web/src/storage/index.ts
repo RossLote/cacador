@@ -7,12 +7,17 @@
  */
 import { examDeadline, indexStates, type StateMap } from '@/model';
 import type { StorageBackend, StorageMode } from './backend';
+import { readExportFile, toExportFile, type ExportRefusal } from './exportFile';
 import { isRunning } from './finish';
 import { openIdbBackend } from './idbBackend';
+import { RECENT_KEY } from './keys';
+import type { ImportCounts } from './merge';
 import { createMemoryBackend } from './memoryBackend';
-import type { Answer, AnswerMode, Exam, Flag, FlagKind, OptionKey, QuestionState } from './types';
+import type { Answer, AnswerMode, Exam, ExportFile, Flag, FlagKind, OptionKey, QuestionState } from './types';
 
 export { LOCALE_KEY, RECENT_KEY } from './keys';
+export { exportFileName, type ExportRefusal } from './exportFile';
+export type { ImportCounts } from './merge';
 export type { StorageMode } from './backend';
 export type { Answer, AnswerMode, Exam, ExportFile, Flag, FlagKind, OptionKey, QuestionState } from './types';
 
@@ -168,4 +173,40 @@ export async function getFlags(questionId: number): Promise<Flag[]> {
 /** Every flag, newest first (the Flagged page, D2). */
 export async function listFlags(): Promise<Flag[]> {
   return (await (await backend()).listFlags()).sort((a, b) => b.at - a.at);
+}
+
+// Export, import and clear (D8)
+
+/** Every answer, exam and flag on this device as the version 1 export file; question state is never exported. Save it under `exportFileName(exportedAt)`. */
+export async function exportProgress(exportedAt: number = Date.now()): Promise<ExportFile> {
+  return toExportFile(await (await backend()).readAll(), exportedAt);
+}
+
+/** What an import did: what it added, or why the file was refused (nothing changed). */
+export type ImportResult = { ok: true; added: ImportCounts } | { ok: false; reason: ExportRefusal };
+
+/**
+ * Imports an export from the file's text (`await file.text()`). Anything that
+ * is not a well-formed version 1 Caçador export is refused and nothing
+ * changes. Otherwise, in one transaction, it merges answers by (questionId,
+ * at), exams by id and flags by (questionId, kind) under D8's rules, leaves at
+ * most one exam unfinished (the most recently started; the others settled at
+ * their deadlines as D3 settles them), rebuilds every question state from the
+ * merged log, and reports the answers inserted, the exams inserted or replaced
+ * by the file's copy and the flags inserted or replaced by a newer one.
+ */
+export async function importProgress(text: string): Promise<ImportResult> {
+  const read = readExportFile(text);
+  if (!read.ok) return read;
+  return { ok: true, added: await (await backend()).importFile(read.file) };
+}
+
+/** Clear progress (D8): empties every store and forgets the no-repeat window (sessionStorage `cacador.recent`); the UI language stays. */
+export async function clearProgress(): Promise<void> {
+  await (await backend()).clear();
+  try {
+    globalThis.sessionStorage?.removeItem(RECENT_KEY);
+  } catch {
+    // Web Storage blocked: there is no window to forget.
+  }
 }

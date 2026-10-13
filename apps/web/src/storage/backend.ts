@@ -1,4 +1,6 @@
-import type { Answer, Exam, Flag, FlagKind, OptionKey, QuestionState } from './types';
+import type { ProgressRecords } from './exportFile';
+import type { ImportCounts } from './merge';
+import type { Answer, Exam, ExportFile, Flag, FlagKind, OptionKey, QuestionState } from './types';
 
 /** Where progress is kept: IndexedDB, or memory when IndexedDB cannot be opened (nothing is saved, D16). */
 export type StorageMode = 'indexeddb' | 'memory';
@@ -40,6 +42,17 @@ export interface StorageBackend {
   deleteFlag(questionId: number, kind: FlagKind): Promise<void>;
   getFlags(questionId: number): Promise<Flag[]>;
   listFlags(): Promise<Flag[]>;
+
+  /** Every answer (in log order), exam and flag, read together, for the export (D8). */
+  readAll(): Promise<ProgressRecords>;
+  /**
+   * Merges a validated export into the stores (`planImport`) and rebuilds
+   * every question state from the merged log, all or nothing; returns what it
+   * added (D8).
+   */
+  importFile(file: ExportFile): Promise<ImportCounts>;
+  /** Empties every store (D8: Clear progress). */
+  clear(): Promise<void>;
 
   /** Releases the connection; the backend is not used again. */
   close(): void;

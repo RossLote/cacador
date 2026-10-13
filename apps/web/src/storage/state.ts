@@ -26,6 +26,13 @@ export function compareAnswers(a: Answer, b: Answer): number {
   return a.at - b.at || (a.id ?? 0) - (b.id ?? 0);
 }
 
+/** A copy of `answer` without its log id, which only means something in this device's log. */
+export function withoutLogId(answer: Answer): Answer {
+  const copy: Answer = { ...answer };
+  delete copy.id;
+  return copy;
+}
+
 /** One question's state rebuilt from its answers in any order, or undefined when it has none. */
 export function deriveState(answers: readonly Answer[]): QuestionState | undefined {
   return [...answers].sort(compareAnswers).reduce<QuestionState | undefined>(applyAnswer, undefined);
@@ -45,4 +52,15 @@ export function isInOrder(state: QuestionState | undefined, answer: Pick<Answer,
 export function nextState(state: QuestionState | undefined, answer: Answer, log: () => readonly Answer[]): QuestionState {
   if (isInOrder(state, answer)) return applyAnswer(state, answer);
   return deriveState(log()) ?? applyAnswer(undefined, answer);
+}
+
+/** Every question's state rebuilt from the whole log (import, D8): one per question that has answers. */
+export function rebuildStates(answers: readonly Answer[]): QuestionState[] {
+  const byQuestion = new Map<number, Answer[]>();
+  for (const answer of answers) {
+    const list = byQuestion.get(answer.questionId);
+    if (list === undefined) byQuestion.set(answer.questionId, [answer]);
+    else list.push(answer);
+  }
+  return [...byQuestion.values()].flatMap((log) => deriveState(log) ?? []);
 }
