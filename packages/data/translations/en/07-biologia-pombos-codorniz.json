@@ -7,7 +7,7 @@
       "B": "A stock dove",
       "C": "A European turtle dove"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -18,7 +18,7 @@
       "B": "Being smaller and of a less slender silhouette",
       "C": "Being smaller and of a stockier silhouette"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -29,7 +29,7 @@
       "B": "In flight, having a more irregular wingbeat",
       "C": "In flight, having a slower wingbeat"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -40,7 +40,7 @@
       "B": "In flight, the white tail with a dark terminal band being noticeable",
       "C": "In flight, the black tail with a white terminal band being noticeable"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -51,7 +51,7 @@
       "B": "On the European continent and nests in Africa",
       "C": "On the American continent and nests in Europe"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -62,7 +62,7 @@
       "B": "April",
       "C": "May"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -73,7 +73,7 @@
       "B": "Dense woodland alternating with cereal fields and pastures",
       "C": "Waterlogged areas alternating with cereal fields and pastures"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -84,7 +84,7 @@
       "B": "An insectivorous and granivorous bird",
       "C": "A granivorous bird"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -95,7 +95,7 @@
       "B": "Seeds, young shoots and also insects, although in a small percentage",
       "C": "Cereals, young shoots and also insects, although in a small percentage"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -106,7 +106,7 @@
       "B": "In pairs or alone",
       "C": "In pairs or in very small groups"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -117,7 +117,7 @@
       "B": "April",
       "C": "June"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -128,7 +128,7 @@
       "B": "Two eggs, rarely one",
       "C": "Four eggs, rarely two"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -139,7 +139,7 @@
       "B": "Is done only by the males",
       "C": "Is done by both sexes"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -150,7 +150,7 @@
       "B": "The white tail with a dark terminal band",
       "C": "The black tail with a white terminal band"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -161,7 +161,7 @@
       "B": "Forests",
       "C": "Wetlands"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -172,7 +172,7 @@
       "B": "Summer visitor throughout the country",
       "C": "Winter visitor in the north of the country"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -183,7 +183,7 @@
       "B": "The smallest European herbivore",
       "C": "The smallest European galliform"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -194,7 +194,7 @@
       "B": "Comes from the Middle East to breed in Europe",
       "C": "Resident in the north of the country"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -205,7 +205,7 @@
       "B": "Can be found throughout the whole year in the south of the country",
       "C": "Can be found throughout the whole year in the south of the country and in the Azores"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -216,7 +216,7 @@
       "B": "By night and at evening twilight",
       "C": "Both by day and by night"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -227,7 +227,7 @@
       "B": "Cultivated fields, cereal fields, pastures and waterlogged areas",
       "C": "Cultivated fields, cereal fields, pastures and stony areas"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -238,7 +238,7 @@
       "B": "Nests on the ground",
       "C": "Nests in medium-sized shrubs"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -249,7 +249,7 @@
       "B": "A slight depression lined with various debris",
       "C": "A slight depression lined with plant material"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -260,7 +260,7 @@
       "B": "From mid-May to July",
       "C": "From mid-April to June"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -271,7 +271,7 @@
       "B": "Only by the female",
       "C": "By both sexes"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -282,7 +282,7 @@
       "B": "16 to 21 days",
       "C": "18 to 21 days"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -293,7 +293,7 @@
       "B": "At 3 months",
       "C": "At 4 months"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -304,7 +304,7 @@
       "B": "The smallest European galliform",
       "C": "The smallest European herbivore"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -315,7 +315,7 @@
       "B": "In large-sized trees",
       "C": "On the ground"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -326,7 +326,7 @@
       "B": "The chicks of the common quail can migrate with the adults at two months of life",
       "C": "The Iberian hare has only one litter a year"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   }
 ]

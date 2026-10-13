@@ -7,7 +7,7 @@
       "B": "Common pheasant",
       "C": "European turtle dove"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -18,7 +18,7 @@
       "B": "A red-legged partridge",
       "C": "A common pheasant"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -29,7 +29,7 @@
       "B": "Yellow bill and red legs",
       "C": "Red bill and yellow legs"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -40,7 +40,7 @@
       "B": "The males being larger and heavier than the females",
       "C": "The males being the same size as the females"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -51,7 +51,7 @@
       "B": "The head of the males being less bulky than that of the females",
       "C": "The head of the females being bulkier than that of the males"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -62,7 +62,7 @@
       "B": "The females having the tarsi longer and thicker",
       "C": "The females having the tarsi shorter and thicker"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -73,7 +73,7 @@
       "B": "The males having longer and thicker tarsi",
       "C": "The males having shorter and more slender tarsi"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -84,7 +84,7 @@
       "B": "The males having spurs with a narrow base and a pointed tip",
       "C": "The males having spurs with a broad base and a pointed tip"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -95,18 +95,18 @@
       "B": "The females, when they have spurs, these have a narrow base and are rounded",
       "C": "The females, when they have spurs, these have a broad base and are pointed"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
     "id": 177,
     "question": "In the red-legged partridge, while juvenile, the moult of the feathers begins:",
     "options": {
-      "A": "At the first month of life",
-      "B": "At the second month of life",
-      "C": "At the third month of life"
+      "A": "In the first month of life",
+      "B": "In the second month of life",
+      "C": "In the third month of life"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -117,7 +117,7 @@
       "B": "Rounded and may show a small white spot at the tip",
       "C": "Pointed and without showing a small white spot at the tip"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -128,7 +128,7 @@
       "B": "Two or three weeks before the juvenile",
       "C": "Two or three weeks after the juvenile"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -139,7 +139,7 @@
       "B": "Have a rounded tip",
       "C": "Have a pointed tip"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -150,7 +150,7 @@
       "B": "Forested areas with scrub",
       "C": "Areas of cereal crops"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -161,7 +161,7 @@
       "B": "The killing of more than 60% of the stock",
       "C": "The killing of less than 50% of the stock"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -172,7 +172,7 @@
       "B": "Essentially granivorous",
       "C": "Essentially plant-based"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -183,7 +183,7 @@
       "B": "Grains, acorns, leaves, roots and insects",
       "C": "Grains, acorns, leaves, shoots, berries, flowers and roots"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -194,7 +194,7 @@
       "B": "On the ground, with the bottom simply covered with its own feathers",
       "C": "On the ground, with the bottom covered with dry plants and its own feathers"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -205,7 +205,7 @@
       "B": "April to May",
       "C": "April to June"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -216,7 +216,7 @@
       "B": "Remain in the nest for at least one week",
       "C": "Abandon the nest"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -227,7 +227,7 @@
       "B": "23 days",
       "C": "25 days"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -238,7 +238,7 @@
       "B": "12 eggs",
       "C": "14 eggs"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -249,7 +249,7 @@
       "B": "Alone",
       "C": "In flocks"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -260,7 +260,7 @@
       "B": "Kill, annually, 60% of the stock",
       "C": "Eliminate all predators"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -271,7 +271,7 @@
       "B": "Take care over the way the harvesting is done",
       "C": "Kill, annually, 60% of the stock"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -282,7 +282,7 @@
       "B": "Kill, annually, all predators",
       "C": "Avoid the roaming of stray dogs and cats"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -293,7 +293,7 @@
       "B": "5 partridge chicks",
       "C": "7 partridge chicks"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -304,7 +304,7 @@
       "B": "On the ground",
       "C": "In holes in outdoor walls and building walls"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -315,7 +315,7 @@
       "B": "By observation of the primary flight feathers (the ten feathers at the tip of the wing)",
       "C": "By the tarsi and spurs"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   },
   {
@@ -326,7 +326,7 @@
       "B": "Areas with light and damp soils",
       "C": "Rocky areas including the coastal fringe"
     },
-    "status": "draft",
+    "status": "checked",
     "notes": ""
   }
 ]
