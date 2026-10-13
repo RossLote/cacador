@@ -11,7 +11,10 @@ export interface ValidationCounts {
   imageQuestions: number;
 }
 
-/** Checks the manifest's ranges tile the bank; throws a ValidationError; returns the bank size. */
+/** Reads and parses a JSON file under `dir`; throws a ValidationError naming the file when it cannot. */
+export function readJson(dir: string, rel: string): unknown;
+
+/** Checks the manifest's shape, that its ranges tile the bank and that its images name existing questions; throws a ValidationError; returns the bank size. */
 export function checkManifest(manifest: unknown): number;
 
 /** Checks the data directory against DESIGN.md § 4; throws a ValidationError naming the file and id of the first broken rule. */

@@ -134,8 +134,13 @@ packages/data/
   scripts/
     extract.mjs              PDF to questions/ and images/, deterministic
     validate.mjs             the rules in § 4, run by pnpm lint
+    lib/
+      manifest.mjs           dataDir and the range and image lookups both scripts share
+      validate.mjs           the rule checks as functions, imported by extract.mjs and the tests
   src/
     index.ts                 typed loader for the app and the scripts
+  test/
+    fixtures/valid/          a 4-question data directory the validator tests copy and break
 ```
 
 ### 3.1 Chunks
@@ -278,14 +283,17 @@ the file and id. Rules:
    is listed.
 5. When `translations/en/` or `hints/en/` has a file, it has the same name as a
    `questions/` file, the same ids once each, the same option keys, and a `status` from
-   the three allowed values. A `language` entry's `pt` text occurs in the question or
-   its options.
+   the three allowed values; each entry carries the other fields of § 3.3 with their
+   types (strings non-empty except `notes`, `note` and `nudge`). A `language` entry's
+   `pt` text occurs in the question or its options.
 6. Once `glossary/species.json` exists: for every Portuguese species name in a
    question, the matching English name is present in its translation (case-insensitive).
    Skipped for entries with status `draft`.
 
-The manifest itself is checked first: section ranges tile 1 to 506, chunk ranges tile
-1 to 506 without crossing a section, topic ranges tile every section.
+The manifest itself is checked first: every entry has the fields of § 3.4 with their
+types and a unique slug or file name, section ranges tile 1 to 506, chunk ranges tile
+1 to 506 without crossing a section, topic ranges tile every section, and every image
+names existing questions, each under one image only.
 
 ## 5. Pipeline
 

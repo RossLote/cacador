@@ -30,7 +30,40 @@ const sameList = (a, b) => a.length === b.length && a.every((value, i) => value 
 const visibleFiles = (dir) => (existsSync(dir) ? readdirSync(dir).filter((name) => !name.startsWith('.')).sort() : []);
 const textOf = (entry) => [entry.question, ...Object.values(entry.options)].join('\n');
 
-function readJson(dir, rel) {
+/** Field types a shape check can ask for: the name used in messages and the test. */
+const TYPES = {
+  string: ['non-empty string', (value) => typeof value === 'string' && value !== ''],
+  text: ['string', (value) => typeof value === 'string'],
+  integer: ['integer', Number.isInteger],
+  list: ['list', Array.isArray],
+};
+
+/** Throws unless `value` has the TYPES entry `type`. */
+function expectType(rel, id, field, value, type) {
+  const [name, test] = TYPES[type];
+  if (!test(value)) failAt(rel, id, `${field} is not a ${name}`);
+}
+
+/**
+ * Every item of `items` is an object whose fields have the types `spec` names ({ field: type }),
+ * and its `key` field is unique across the list. `label` names the items in messages.
+ */
+function checkEntries(rel, label, items, key, spec) {
+  const keys = new Set();
+  items.forEach((item, i) => {
+    if (!isObject(item)) fail(rel, `${label} #${i + 1} is not an object`);
+    const name = `${label} ${TYPES.string[1](item[key]) ? item[key] : `#${i + 1}`}`;
+    for (const [field, type] of Object.entries(spec)) {
+      const [typeName, test] = TYPES[type];
+      if (!test(item[field])) fail(rel, `${name} has no ${typeName} "${field}"`);
+    }
+    if (keys.has(item[key])) fail(rel, `${name} is listed twice`);
+    keys.add(item[key]);
+  });
+}
+
+/** Reads and parses `rel` under `dir`; throws a ValidationError naming the file when it cannot. */
+export function readJson(dir, rel) {
   let text;
   try {
     text = readFileSync(join(dir, rel), 'utf8');
@@ -59,19 +92,23 @@ function tile(items, first, rel, label) {
 }
 
 /**
+ * Every entry has the fields of DESIGN.md § 3.4 with their types and a unique slug or file name.
  * Section ranges tile 1 to the bank size, chunk ranges tile the same span without crossing a
- * section, topic ranges tile every section. Reads no question file. Returns the bank size.
+ * section, topic ranges tile every section, and every image names existing questions, each
+ * under one image only. Reads no question file. Returns the bank size.
  */
 export function checkManifest(manifest) {
   const rel = 'manifest.json';
+  if (!isObject(manifest)) fail(rel, 'does not hold an object');
   for (const key of ['sections', 'topics', 'chunks', 'images']) {
     if (!Array.isArray(manifest[key])) fail(rel, `${key} is missing or not a list`);
   }
-  const sections = new Map();
-  for (const s of manifest.sections) {
-    if (sections.has(s.slug)) fail(rel, `section ${s.slug} is listed twice`);
-    sections.set(s.slug, s);
-  }
+  checkEntries(rel, 'section', manifest.sections, 'slug', { slug: 'string', heading: 'string', pt: 'string', en: 'string', from: 'integer', to: 'integer' });
+  checkEntries(rel, 'topic', manifest.topics, 'slug', { slug: 'string', pt: 'string', en: 'string', section: 'string', ranges: 'list' });
+  checkEntries(rel, 'chunk', manifest.chunks, 'file', { file: 'string', section: 'string', from: 'integer', to: 'integer' });
+  checkEntries(rel, 'image', manifest.images, 'file', { file: 'string', page: 'integer', index: 'integer', questions: 'list' });
+
+  const sections = new Map(manifest.sections.map((s) => [s.slug, s]));
   const total = tile(manifest.sections, 1, rel, (s) => `section ${s.slug}`);
   if (total < 1) fail(rel, 'has no section');
 
@@ -87,6 +124,11 @@ export function checkManifest(manifest) {
 
   for (const t of manifest.topics) {
     if (!sections.has(t.section)) fail(rel, `topic ${t.slug} names unknown section ${t.section}`);
+    for (const range of t.ranges) {
+      if (!Array.isArray(range) || range.length !== 2 || !range.every(Number.isInteger)) {
+        fail(rel, `topic ${t.slug} has a range that is not a pair of integers`);
+      }
+    }
   }
   for (const s of manifest.sections) {
     const ranges = manifest.topics
@@ -96,6 +138,17 @@ export function checkManifest(manifest) {
     if (ranges.length === 0) fail(rel, `section ${s.slug} has no topic`);
     const last = tile(ranges, s.from, rel, (r) => `topic ${r.slug} in section ${s.slug}`);
     if (last !== s.to) fail(rel, `topic ranges of section ${s.slug} end at ${last}, expected ${s.to}`);
+  }
+
+  const imageOf = new Map();
+  for (const image of manifest.images) {
+    if (image.page < 1 || image.index < 1) fail(rel, `image ${image.file} needs a page and index of at least 1`);
+    if (image.questions.length === 0) fail(rel, `image ${image.file} names no question`);
+    for (const id of image.questions) {
+      if (!Number.isInteger(id) || id < 1 || id > total) fail(rel, `image ${image.file} names question ${id}, which is not in 1-${total}`);
+      if (imageOf.has(id)) fail(rel, `image ${image.file} names question ${id}, already under ${imageOf.get(id)}`);
+      imageOf.set(id, image.file);
+    }
   }
   return total;
 }
@@ -145,7 +198,7 @@ function checkSectionsAndTopics(manifest, files) {
 function checkText(manifest, files) {
   const headings = manifest.sections.map((s) => s.heading);
   const checkField = (rel, id, field, value) => {
-    if (typeof value !== 'string' || value === '') failAt(rel, id, `${field} is not a non-empty string`);
+    expectType(rel, id, field, value, 'string');
     if (/[\r\n]/.test(value)) failAt(rel, id, `${field} is not a single line`);
     if (value.includes('*')) failAt(rel, id, `${field} contains "*"`);
     if (value.includes('  ')) failAt(rel, id, `${field} contains two consecutive spaces`);
@@ -188,24 +241,38 @@ function checkImages(dir, manifest, files) {
   }
 }
 
+/** A translation entry (DESIGN.md § 3.3): question and options are non-empty strings, notes a string. */
 function checkTranslation(rel, e, pt) {
+  expectType(rel, e.id, 'question', e.question, 'string');
   if (!isObject(e.options) || !sameList(Object.keys(e.options).sort(), Object.keys(pt.options).sort())) {
     failAt(rel, e.id, `options must have the keys ${Object.keys(pt.options).join(', ')}`);
   }
+  for (const [key, value] of Object.entries(e.options)) expectType(rel, e.id, `option ${key}`, value, 'string');
+  expectType(rel, e.id, 'notes', e.notes, 'text');
 }
 
+/** A hint entry (DESIGN.md § 3.3): language entries whose pt occurs in the question, a nudge, pattern tags. */
 function checkHint(rel, e, pt) {
-  if (!Array.isArray(e.language)) failAt(rel, e.id, 'language is not a list');
+  expectType(rel, e.id, 'language', e.language, 'list');
   const text = textOf(pt).toLowerCase();
-  for (const item of e.language) {
-    if (typeof item?.pt !== 'string' || !text.includes(item.pt.toLowerCase())) {
-      failAt(rel, e.id, `language text "${item?.pt}" does not occur in the question or its options`);
+  e.language.forEach((item, i) => {
+    const field = `language entry ${i + 1}`;
+    if (!isObject(item)) failAt(rel, e.id, `${field} is not an object`);
+    expectType(rel, e.id, `${field} pt`, item.pt, 'string');
+    expectType(rel, e.id, `${field} en`, item.en, 'string');
+    expectType(rel, e.id, `${field} note`, item.note, 'text');
+    if (!text.includes(item.pt.toLowerCase())) {
+      failAt(rel, e.id, `language text "${item.pt}" does not occur in the question or its options`);
     }
-  }
+  });
+  expectType(rel, e.id, 'nudge', e.nudge, 'text');
+  expectType(rel, e.id, 'patterns', e.patterns, 'list');
+  for (const pattern of e.patterns) expectType(rel, e.id, 'patterns entry', pattern, 'string');
 }
 
 /**
- * Rule 5: translations and hints mirror the question files. Only files that exist are checked.
+ * Rule 5: translations and hints mirror the question files, with the fields of DESIGN.md § 3.3.
+ * Only files that exist are checked.
  * Returns the translations by id, each with the file it came from and its lowercased text, for rule 6.
  */
 function checkMirrors(dir, files) {

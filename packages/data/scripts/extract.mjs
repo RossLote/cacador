@@ -4,8 +4,8 @@ import { execFileSync } from 'node:child_process';
 import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { dataDir, imageByQuestion, readManifest, topicOfId } from './lib/manifest.mjs';
-import { checkManifest, ValidationError } from './lib/validate.mjs';
+import { dataDir, imageByQuestion, topicOfId } from './lib/manifest.mjs';
+import { checkManifest, readJson, ValidationError } from './lib/validate.mjs';
 
 const LETTERS = ['A', 'B', 'C'];
 const OPTION_LINE = /^([ABC])\) ?(.*)$/;
@@ -103,8 +103,9 @@ function parseQuestions(lines, manifest, total) {
       if (marked) fail(`question ${q.id} (page ${page}): "*" in the stem`);
       q.stem.push(body);
     } else {
+      // A lone "*" under a wrapped option leaves an empty body: it marks, but adds no text.
       const current = q.options[q.options.length - 1];
-      current.pieces.push(body);
+      if (body !== '') current.pieces.push(body);
       current.marked ||= marked;
     }
   }
@@ -118,11 +119,9 @@ function parseQuestions(lines, manifest, total) {
   return questions;
 }
 
+/** Entries in the § 3.3 shape; checkManifest has already confirmed every image names an existing question. */
 function toEntries(questions, manifest) {
   const images = imageByQuestion(manifest);
-  for (const id of images.keys()) {
-    if (id < 1 || id > questions.length) fail(`manifest image names question ${id}, which does not exist`);
-  }
   for (const id of Object.keys(CORRECTIONS)) {
     if (id < 1 || id > questions.length) fail(`correction table names question ${id}, which does not exist`);
   }
@@ -189,7 +188,7 @@ function extractImages(pdf, manifest, questions, tmp) {
 // Output ---------------------------------------------------------------------------------------
 
 function main() {
-  const manifest = readManifest();
+  const manifest = readJson(dataDir, 'manifest.json');
   const total = checkManifest(manifest);
   const pdf = join(dataDir, 'source', 'questionario-2016.pdf');
   const tmp = mkdtempSync(join(tmpdir(), 'cacador-extract-'));

@@ -28,18 +28,33 @@ interface Row {
   section: string;
   topic: string;
   image?: string;
-  question: string;
-  options: Record<string, string>;
+  question?: string;
+  options: Record<string, string | number>;
   answer: string;
   status: string;
-  language: [{ pt: string }, { pt: string }];
+  notes?: string;
+  language: [{ pt: string; en: string; note: string }, { pt: string; en: string; note: string }] | string;
+  nudge: string | number;
+  patterns: string[] | string;
 }
 type Rows = [Row, Row];
 
+interface ManifestTopic {
+  slug: string;
+  section: string;
+  ranges?: number[][];
+}
+interface ManifestImage {
+  file: string;
+  page: number;
+  index: number;
+  questions?: number[];
+}
 interface ManifestJson {
-  sections: [{ from: number; to: number }, { from: number; to: number }];
-  topics: [{ section: string; ranges: number[][] }, { section: string; ranges: number[][] }, { section: string; ranges: number[][] }];
-  chunks: [{ from: number; to: number }, { from: number; to: number }];
+  sections: [{ from: number; to: number; heading?: string }, { from: number; to: number; heading?: string }];
+  topics: [ManifestTopic, ManifestTopic, ManifestTopic];
+  chunks: [{ file: string; from: number; to: number }, { file: string; from: number; to: number }];
+  images: [ManifestImage, ManifestImage];
 }
 
 function editJson<T>(dir: string, rel: string, change: (data: T) => void): void {
@@ -128,6 +143,43 @@ describe('manifest tiling', () => {
 
   it('fails when a topic names an unknown section', () => {
     expectFailure((dir) => editManifest(dir, (m) => (m.topics[0].section = 'nope')), /topic alfa names unknown section nope/);
+  });
+});
+
+describe('manifest shape', () => {
+  it('fails on a section without a heading', () => {
+    expectFailure((dir) => editManifest(dir, (m) => delete m.sections[0].heading), /manifest\.json: section alfa has no non-empty string "heading"/);
+  });
+
+  it('fails on a topic without ranges', () => {
+    expectFailure((dir) => editManifest(dir, (m) => delete m.topics[1].ranges), /manifest\.json: topic patos has no list "ranges"/);
+  });
+
+  it('fails on a topic range that is not a pair', () => {
+    expectFailure((dir) => editManifest(dir, (m) => (m.topics[1].ranges = [[3]])), /manifest\.json: topic patos has a range that is not a pair of integers/);
+  });
+
+  it('fails on a topic slug listed twice, even across sections', () => {
+    expectFailure((dir) => editManifest(dir, (m) => (m.topics[0].slug = 'perdiz')), /manifest\.json: topic perdiz is listed twice/);
+  });
+
+  it('fails on a chunk without a file name', () => {
+    expectFailure((dir) => editManifest(dir, (m) => (m.chunks[1].file = '')), /manifest\.json: chunk #2 has no non-empty string "file"/);
+  });
+
+  it('fails on an image without questions', () => {
+    expectFailure((dir) => editManifest(dir, (m) => delete m.images[0].questions), /manifest\.json: image q2\.jpg has no list "questions"/);
+  });
+
+  it('fails on an image that names a question outside the bank', () => {
+    expectFailure((dir) => {
+      writeText(dir, 'images/stray.jpg', '');
+      editManifest(dir, (m) => m.images.push({ file: 'stray.jpg', page: 9, index: 1, questions: [999] }));
+    }, /manifest\.json: image stray\.jpg names question 999, which is not in 1-4/);
+  });
+
+  it('fails when a question sits under two images', () => {
+    expectFailure((dir) => editManifest(dir, (m) => (m.images[0].questions = [2, 3])), /manifest\.json: image shared\.jpg names question 3, already under q2\.jpg/);
   });
 });
 
@@ -293,9 +345,39 @@ describe('rule 5: translations and hints', () => {
 
   it('fails on language text that is not in the question or options', () => {
     expectFailure(
-      (dir) => editRows(dir, 'hints/en/02-beta.json', (h) => (h[1].language[0].pt = 'às terças')),
+      (dir) => editRows(dir, 'hints/en/02-beta.json', (h) => ((h[1].language as [{ pt: string }, { pt: string }])[0].pt = 'às terças')),
       /hints\/en\/02-beta\.json: id 4: language text "às terças" does not occur/,
     );
+  });
+
+  it('fails on empty language text', () => {
+    expectFailure(
+      (dir) => editRows(dir, 'hints/en/02-beta.json', (h) => ((h[1].language as [{ pt: string }, { pt: string }])[0].pt = '')),
+      /hints\/en\/02-beta\.json: id 4: language entry 1 pt is not a non-empty string/,
+    );
+  });
+
+  it('fails on a language entry without an English rendering', () => {
+    expectFailure(
+      (dir) => editRows(dir, 'hints/en/02-beta.json', (h) => ((h[1].language as [{ en: string }, { en: string }])[1].en = '')),
+      /hints\/en\/02-beta\.json: id 4: language entry 2 en is not a non-empty string/,
+    );
+  });
+
+  it('fails on a hint whose language is not a list', () => {
+    expectFailure((dir) => editRows(dir, 'hints/en/02-beta.json', (h) => (h[1].language = 'x')), /hints\/en\/02-beta\.json: id 4: language is not a list/);
+  });
+
+  it('fails on a hint whose nudge is not a string or patterns not a list of strings', () => {
+    expectFailure((dir) => editRows(dir, 'hints/en/02-beta.json', (h) => (h[1].nudge = 7)), /hints\/en\/02-beta\.json: id 4: nudge is not a string/);
+    expectFailure((dir) => editRows(dir, 'hints/en/02-beta.json', (h) => (h[1].patterns = 'x')), /hints\/en\/02-beta\.json: id 4: patterns is not a list/);
+    expectFailure((dir) => editRows(dir, 'hints/en/02-beta.json', (h) => (h[1].patterns = [''])), /hints\/en\/02-beta\.json: id 4: patterns entry is not a non-empty string/);
+  });
+
+  it('fails on a translation without a question, with a non-string option, or without notes', () => {
+    expectFailure((dir) => editRows(dir, 'translations/en/01-alfa.json', (t) => delete t[0].question), /translations\/en\/01-alfa\.json: id 1: question is not a non-empty string/);
+    expectFailure((dir) => editRows(dir, 'translations/en/01-alfa.json', (t) => (t[0].options.A = 5)), /translations\/en\/01-alfa\.json: id 1: option A is not a non-empty string/);
+    expectFailure((dir) => editRows(dir, 'translations/en/01-alfa.json', (t) => delete t[0].notes), /translations\/en\/01-alfa\.json: id 1: notes is not a string/);
   });
 });
 
