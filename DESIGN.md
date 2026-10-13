@@ -244,7 +244,8 @@ which constructions trip the learner.
 `manifest.json` is hand-maintained and drives both the extractor and the validator:
 
 ```json
-{ "sections": [ { "slug": "biologia", "pt": "Biologia", "en": "Biology", "from": 59, "to": 320 } ],
+{ "sections": [ { "slug": "biologia", "heading": "BIOLOGIA", "pt": "Biologia", "en": "Biology",
+                  "from": 59, "to": 320 } ],
   "topics":   [ { "slug": "patos", "pt": "Patos", "en": "Ducks", "section": "biologia",
                   "ranges": [[228, 255]] } ],
   "chunks":   [ { "file": "08-biologia-patos.json", "section": "biologia", "from": 228, "to": 266 } ],
@@ -252,7 +253,9 @@ which constructions trip the learner.
                 { "file": "sinal.jpg", "page": 38, "index": 1, "questions": [373, 375, 394, 397] } ] }
 ```
 
-The tables in § 2.1, § 2.3, § 3.1 and § 3.2 are its contents.
+The tables in § 2.1, § 2.3, § 3.1 and § 3.2 are its contents. `heading` is the all-caps
+section heading exactly as the PDF prints it; the extractor uses it to split sections
+and the validator to reject heading text, so neither script hard-codes a heading.
 
 ## 4. Validation rules
 
