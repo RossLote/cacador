@@ -21,6 +21,7 @@ import chunk17 from '../questions/17-caes.json' with { type: 'json' };
 import chunk18 from '../questions/18-cetraria.json' with { type: 'json' };
 import translation01 from '../translations/en/01-documentos.json' with { type: 'json' };
 import translation02 from '../translations/en/02-conceitos-basicos.json' with { type: 'json' };
+import translation03 from '../translations/en/03-biologia-coelho-lebre.json' with { type: 'json' };
 
 export type OptionKey = 'A' | 'B' | 'C';
 
@@ -141,7 +142,7 @@ export const topicOf = (question: Question): Topic | undefined => topicBySlug.ge
  * `status` to string, so each list is narrowed once, here. import.meta.glob was not used
  * because tsc needs Vite client type shims for it, and the files are few and named.
  */
-const translationFiles = [translation01, translation02] as (readonly Translation[])[];
+const translationFiles = [translation01, translation02, translation03] as (readonly Translation[])[];
 const hintFiles: readonly (readonly Hint[])[] = [];
 
 const translationById = new Map(translationFiles.flat().map((t) => [t.id, t]));
