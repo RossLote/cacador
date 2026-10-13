@@ -1,0 +1,343 @@
+[
+  {
+    "id": 137,
+    "question": "At what time of year do fallow deer cast their antlers?",
+    "options": {
+      "A": "March to April",
+      "B": "February to March",
+      "C": "January to February"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 138,
+    "question": "When do births begin among fallow does?",
+    "options": {
+      "A": "April",
+      "B": "May",
+      "C": "June"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 139,
+    "question": "The antlers of the fallow deer are made up of:",
+    "options": {
+      "A": "Two palmate beams, rounded at the base",
+      "B": "Two rounded beams, palmate at the base",
+      "C": "Two cylindrical beams, more or less branched"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 140,
+    "question": "The head of the fallow deer buck reaches its characteristic form:",
+    "options": {
+      "A": "At 5 years",
+      "B": "At 6 years",
+      "C": "At 7 years"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 141,
+    "question": "The fallow deer prefers:",
+    "options": {
+      "A": "Areas with abundant trees and thickets, with areas of pasture",
+      "B": "Open areas, with areas of pasture and shade",
+      "C": "Waterlogged and damp areas"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 142,
+    "question": "The rut in the fallow deer begins:",
+    "options": {
+      "A": "At the beginning of summer",
+      "B": "At the beginning of autumn",
+      "C": "At the beginning of winter"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 143,
+    "question": "The picture shows a:",
+    "options": {
+      "A": "Red deer",
+      "B": "Roe deer",
+      "C": "Fallow deer"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 144,
+    "question": "What is the name of the female of the red deer?",
+    "options": {
+      "A": "Roe doe",
+      "B": "Hind",
+      "C": "Fallow doe (gama or gamela)"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 145,
+    "question": "At what time of year do red deer cast their antlers?",
+    "options": {
+      "A": "Late February to March",
+      "B": "Late March to April",
+      "C": "Late January to February"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 146,
+    "question": "The antlers of the red deer reach their characteristic form at around:",
+    "options": {
+      "A": "7 to 8 years of life",
+      "B": "8 to 9 years of life",
+      "C": "6 to 7 years of life"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 147,
+    "question": "The antlers of the red deer, besides constituting a hunting trophy, are also:",
+    "options": {
+      "A": "Indicative of the age of the male",
+      "B": "Indicative of the age of the female",
+      "C": "Indicative of the age of both sexes"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 148,
+    "question": "The preferred habitats of the red deer are:",
+    "options": {
+      "A": "Deciduous woods and thickets, very closed",
+      "B": "Deciduous woods, with open areas, and thickets",
+      "C": "Coniferous woods, thickets and wetlands"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 149,
+    "question": "Hinds can breed for the first time at the age of:",
+    "options": {
+      "A": "1 year",
+      "B": "2 years",
+      "C": "3 years"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 150,
+    "question": "The name roar is given:",
+    "options": {
+      "A": "To the cry of challenge that the red deer stag utters to its rivals in the rutting season",
+      "B": "To the cry that hinds use to call their young",
+      "C": "To the cry that red deer stags use to call the females"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 151,
+    "question": "When do births begin among hinds?",
+    "options": {
+      "A": "March",
+      "B": "April",
+      "C": "May"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 152,
+    "question": "The antlers of the red deer are composed of:",
+    "options": {
+      "A": "Two palmate beams, rounded at the base",
+      "B": "Two cylindrical beams, more or less branched",
+      "C": "Two cylindrical beams, palmate at the tips"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 153,
+    "question": "The term “velvet” means:",
+    "options": {
+      "A": "The coat of red deer young up to the first two weeks of life",
+      "B": "The covering of grey skin with hairs that protects the beams of the red deer while they are forming",
+      "C": "The rump patch of the roe deer"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 154,
+    "question": "The antlers of the adult red deer:",
+    "options": {
+      "A": "Fall only up to the sixth year of life",
+      "B": "Fall every year during the rutting season",
+      "C": "Fall every year after the rutting season"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 155,
+    "question": "Which of the Portuguese deer is the most heavily built?",
+    "options": {
+      "A": "Roe deer",
+      "B": "Fallow deer",
+      "C": "Red deer"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 156,
+    "question": "The red deer is distinguished from the roe deer by:",
+    "options": {
+      "A": "Being more heavily built",
+      "B": "Having branched beams",
+      "C": "Only the males having antlers"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 157,
+    "question": "At what time of year do red deer stags cast their antlers?",
+    "options": {
+      "A": "October to November",
+      "B": "Late February and March",
+      "C": "Never"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 158,
+    "question": "In which of the species are births frequently of twins?",
+    "options": {
+      "A": "Fallow deer",
+      "B": "Mouflon",
+      "C": "Roe deer"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 159,
+    "question": "The roe deer rut occurs between:",
+    "options": {
+      "A": "July and August",
+      "B": "August and September",
+      "C": "September and October"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 160,
+    "question": "In the roe deer, births generally occur in:",
+    "options": {
+      "A": "January",
+      "B": "May",
+      "C": "August"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 161,
+    "question": "The gestation time of the roe doe is:",
+    "options": {
+      "A": "8 months",
+      "B": "9 months",
+      "C": "10 months"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 162,
+    "question": "The roe deer is an animal:",
+    "options": {
+      "A": "Fundamentally solitary",
+      "B": "That forms herds during winter",
+      "C": "That forms herds during summer"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 163,
+    "question": "The roe deer rut occurs",
+    "options": {
+      "A": "In autumn",
+      "B": "In summer",
+      "C": "In spring"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 164,
+    "question": "During the time of year in which the roe deer has no antlers, how can the male be distinguished from the female?",
+    "options": {
+      "A": "By the colour of the skin",
+      "B": "By the rump patch",
+      "C": "By the size of the ears"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 165,
+    "question": "At what time does the rut occur in the mouflon?",
+    "options": {
+      "A": "In the month of November",
+      "B": "In the month of December",
+      "C": "In the month of October"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 166,
+    "question": "Births in the mouflon normally take place in:",
+    "options": {
+      "A": "March",
+      "B": "April",
+      "C": "May"
+    },
+    "status": "draft",
+    "notes": ""
+  },
+  {
+    "id": 167,
+    "question": "Adult male mouflon gather in independent groups:",
+    "options": {
+      "A": "In winter",
+      "B": "In spring",
+      "C": "In summer"
+    },
+    "status": "draft",
+    "notes": ""
+  }
+]
