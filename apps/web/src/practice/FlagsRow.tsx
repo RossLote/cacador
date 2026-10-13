@@ -1,4 +1,4 @@
-import { useCallback, useId, useRef } from 'react';
+import { useCallback, useId, useRef, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useI18n } from '@/i18n/useI18n';
@@ -16,10 +16,17 @@ interface KindState {
 
 type FlagState = Partial<Record<FlagKind, KindState>>;
 
-/** The row as stored: every stored kind set, its note in the field, the field closed. */
-function fromFlags(flags: readonly Flag[]): FlagState {
+/**
+ * The row as stored: every stored kind set and every other kind unset. A
+ * stored kind whose note field is open in `shown` keeps the field and what is
+ * typed in it; any other shows its stored note in a closed field.
+ */
+function fromFlags(flags: readonly Flag[], shown: FlagState = {}): FlagState {
   const state: FlagState = {};
-  for (const flag of flags) state[flag.kind] = { draft: flag.note, open: false, justSaved: false };
+  for (const flag of flags) {
+    const kept = shown[flag.kind];
+    state[flag.kind] = kept?.open ? kept : { draft: flag.note, open: false, justSaved: false };
+  }
   return state;
 }
 
@@ -33,20 +40,31 @@ function fromFlags(flags: readonly Flag[]): FlagState {
  *
  * A tap changes the row at once and queues its write behind the row's earlier
  * ones, so a second tap before the first write lands acts on what the row
- * shows and the writes land in tap order. A failed write puts the row back to
- * what is stored.
+ * shows and the writes land in tap order. A failed write says so in one line
+ * (DESIGN.md § 6.9) and, once the writes queued behind it have landed, the row
+ * goes back to what is stored, keeping an open note field and its draft. A row
+ * whose flags cannot be read, at first or after a failed write, says so and
+ * keeps its buttons disabled rather than act on flags it does not know.
  */
 export function FlagsRow({ questionId }: { questionId: number }) {
   const { t } = useI18n();
   const words = t.practice.flags;
-  // A row whose flags cannot be read starts with none set.
-  const load = useCallback(() => getFlags(questionId).then(fromFlags, (): FlagState => ({})), [questionId]);
+  const load = useCallback(() => getFlags(questionId).then((flags) => fromFlags(flags)), [questionId]);
   /** Undefined until the stored flags are read; the buttons wait for them. */
-  const { data: loadedState, set: setState } = useLoaded(load);
-  const state = loadedState ?? {};
+  const { data: loadedState, failed: loadFailed, set: setState } = useLoaded(load);
+  /** A write failed (DESIGN.md § 6.9). */
+  const [saveFailed, setSaveFailed] = useState(false);
+  /** The flags could not be read again after a failed write, so what is stored is unknown. */
+  const [unknown, setUnknown] = useState(false);
+  const usable = loadedState !== undefined && !loadFailed && !unknown;
+  const state = usable ? loadedState : {};
   const idPrefix = useId();
   /** The row's writes, chained so they land in the order they were asked for. */
   const writes = useRef<Promise<void>>(Promise.resolve());
+  /** How many writes have been queued; a write knows it is the last one queued when this still equals its own count. */
+  const queued = useRef(0);
+  /** A write failed, so the row is to be read again once the queue has drained. */
+  const stale = useRef(false);
 
   const patch = (kind: FlagKind, change: Partial<KindState>) =>
     setState((previous = {}) => {
@@ -54,18 +72,31 @@ export function FlagsRow({ questionId }: { questionId: number }) {
       return kept === undefined ? previous : { ...previous, [kind]: { ...kept, ...change } };
     });
 
-  /** Runs `write` once the row's earlier writes have landed; if it fails, the row goes back to what is stored. */
+  /**
+   * Runs `write` once the row's earlier writes have landed. If any of them
+   * failed, the last one queued reads the row back from storage after it has
+   * landed; a read overtaken by a newer write is left for that write to redo.
+   */
   const queue = (write: () => Promise<unknown>) => {
+    const count = ++queued.current;
+    const isLast = () => count === queued.current;
     writes.current = writes.current
       .then(write)
-      .then(
-        () => undefined,
-        () =>
-          getFlags(questionId).then(
-            (flags) => setState(fromFlags(flags)),
-            () => undefined,
-          ),
-      );
+      .catch(() => {
+        stale.current = true;
+        setSaveFailed(true);
+      })
+      .then(async () => {
+        if (!stale.current || !isLast()) return;
+        stale.current = false;
+        try {
+          const flags = await getFlags(questionId);
+          if (isLast()) setState((shown = {}) => fromFlags(flags, shown));
+          else stale.current = true;
+        } catch {
+          setUnknown(true);
+        }
+      });
   };
 
   const toggle = (kind: FlagKind) => {
@@ -78,10 +109,17 @@ export function FlagsRow({ questionId }: { questionId: number }) {
     }
   };
 
-  /** Stores the note in the field; "Saved" shows once the write has landed. */
+  /** Stores the note in the field; "Saved" shows once the write has landed, while the field still holds that note. */
   const save = (kind: FlagKind) => {
     const draft = state[kind]?.draft ?? '';
-    queue(() => setFlag(questionId, kind, draft).then(() => patch(kind, { justSaved: true })));
+    queue(() =>
+      setFlag(questionId, kind, draft).then(() =>
+        setState((previous = {}) => {
+          const kept = previous[kind];
+          return kept?.draft === draft ? { ...previous, [kind]: { ...kept, justSaved: true } } : previous;
+        }),
+      ),
+    );
   };
 
   const label = (kind: FlagKind) => (kind === 'translation' ? words.englishOff : words.hintOff);
@@ -96,7 +134,7 @@ export function FlagsRow({ questionId }: { questionId: number }) {
             type="button"
             variant={state[kind] === undefined ? 'outline' : 'default'}
             aria-pressed={state[kind] !== undefined}
-            disabled={loadedState === undefined}
+            disabled={!usable}
             onClick={() => toggle(kind)}
           >
             {label(kind)}
@@ -137,6 +175,11 @@ export function FlagsRow({ questionId }: { questionId: number }) {
           </form>
         );
       })}
+      {(loadFailed || unknown || saveFailed) && (
+        <p role="status" className="text-sm text-destructive">
+          {loadFailed || unknown ? words.loadFailed : words.saveFailed}
+        </p>
+      )}
     </div>
   );
 }

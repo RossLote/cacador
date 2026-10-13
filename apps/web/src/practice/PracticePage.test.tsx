@@ -1,12 +1,14 @@
 import { hintFor, sectionOf, topicOf, translationFor, type OptionKey } from '@cacador/data';
 import { act, fireEvent, render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { IDBObjectStore } from 'fake-indexeddb';
 import { MemoryRouter } from 'react-router';
 import { describe, expect, it, vi } from 'vitest';
 import { MESSAGES } from '@/i18n/messages';
-import { RECENT_LIMIT } from '@/model';
-import { closeStorage, listAnswers, RECENT_KEY } from '@/storage';
+import { bankPool, RECENT_LIMIT } from '@/model';
+import { closeStorage, getStates, listAnswers, RECENT_KEY } from '@/storage';
 import { PracticePage } from './PracticePage';
+import { PracticeSession } from './PracticeSession';
 import { question, wrongOf } from '../../test/fixtures';
 
 const t = MESSAGES.en.practice;
@@ -48,6 +50,22 @@ async function answerAndNext(user: ReturnType<typeof userEvent.setup>): Promise<
 async function waitForChange(from: number): Promise<number> {
   await vi.waitFor(async () => expect(await shownId()).not.toBe(from));
   return shownId();
+}
+
+/** The recent window as stored. */
+const storedRecent = (): unknown => JSON.parse(sessionStorage.getItem(RECENT_KEY)!);
+
+/** Lets a draw already under way finish: its storage read and the draw after it. */
+async function settle(): Promise<void> {
+  await getStates();
+  await new Promise((resolve) => setTimeout(resolve, 50));
+}
+
+/** Answers question 1 wrongly, waits for the answer to be stored, then taps Next in the same tick as the caller's next step. */
+async function answerThenTapNext(): Promise<void> {
+  fireEvent.click(optionFor(wrongOf(1)));
+  await vi.waitFor(async () => expect(await listAnswers()).toHaveLength(1));
+  fireEvent.click(nextButton()!);
 }
 
 describe('PracticePage', () => {
@@ -118,6 +136,48 @@ describe('PracticePage', () => {
     await vi.waitFor(async () =>
       expect(await listAnswers()).toEqual([expect.objectContaining({ questionId: q.id, chosen: q.answer, correct: true })]),
     );
+  });
+
+  it('says when an answer could not be saved, keeps the result, and Next still draws (cac-eil.25)', async () => {
+    const user = userEvent.setup();
+    renderPractice();
+    const id = await shownId();
+    const add = vi.spyOn(IDBObjectStore.prototype, 'add').mockImplementation(() => {
+      throw new DOMException('full', 'QuotaExceededError');
+    });
+    await user.click(optionFor(wrongOf(id)));
+    expect(within(optionFor(wrongOf(id))).getByText(card.wrong)).toBeInTheDocument();
+    expect(await screen.findByText(t.answerNotSaved)).toBeInTheDocument();
+    expect(add).toHaveBeenCalled();
+    expect(await listAnswers()).toEqual([]);
+    add.mockRestore();
+
+    await user.click(nextButton()!);
+    expect(await waitForChange(id)).toBe(2);
+    expect(screen.queryByText(t.answerNotSaved)).not.toBeInTheDocument();
+  });
+
+  describe('a Next under way when the page changes (cac-eil.38)', () => {
+    it('draws nothing once the page has gone', async () => {
+      const view = renderPractice();
+      expect(await shownId()).toBe(1);
+      await answerThenTapNext();
+      view.unmount();
+      await settle();
+      expect(storedRecent()).toEqual([1]);
+    });
+
+    it('draws nothing from the old pool once the pool has changed', async () => {
+      vi.spyOn(Math, 'random').mockReturnValue(0);
+      const view = render(<PracticeSession pool={bankPool} />);
+      expect(await shownId()).toBe(1);
+      await answerThenTapNext();
+      view.rerender(<PracticeSession pool={[413, 414, 415]} />);
+      expect(await waitForChange(1)).toBe(413);
+      await settle();
+      expect(await shownId()).toBe(413);
+      expect(storedRecent()).toEqual([1, 413]);
+    });
   });
 
   describe('the hint panel (D23)', () => {
@@ -296,6 +356,18 @@ describe('PracticePage', () => {
       await user.keyboard('{Enter}');
       expect(hintPanel()).toBeInTheDocument();
       expect(await shownId()).toBe(1);
+    });
+
+    it('advances with Enter after the hold button was pressed with the mouse: the hold button takes no focus (cac-eil.33)', async () => {
+      const user = userEvent.setup();
+      renderPractice();
+      await shownId();
+      await user.keyboard('a');
+      const hold = screen.getByRole('button', { name: card.holdForEnglish });
+      await user.pointer({ keys: '[MouseLeft]', target: hold });
+      expect(hold).not.toHaveFocus();
+      await user.keyboard('{Enter}');
+      expect(await waitForChange(1)).toBe(2);
     });
 
     it('ignores the keys while typing in a text field', async () => {

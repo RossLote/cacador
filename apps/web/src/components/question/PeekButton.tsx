@@ -14,7 +14,9 @@ interface PeekButtonProps {
  * down until the pointer is released, cancelled or leaves the button, and is
  * never a toggle. A long press selects no text and opens no context menu, and
  * the button takes no part in scrolling, so the browser never cancels a hold.
- * Space on a keyboard belongs to the page (D9), which drives the same state.
+ * A press never moves focus to it, so Enter afterwards still belongs to the
+ * page (cac-eil.33). Space on a keyboard belongs to the page (D9), which
+ * drives the same state.
  */
 export function PeekButton({ label, peeking, onPeekChange }: PeekButtonProps) {
   const start = (event: PointerEvent<HTMLButtonElement>) => {
@@ -37,6 +39,7 @@ export function PeekButton({ label, peeking, onPeekChange }: PeekButtonProps) {
       onPointerCancel={stop}
       onPointerLeave={stop}
       onLostPointerCapture={stop}
+      onMouseDown={(event) => event.preventDefault()}
       onContextMenu={(event) => event.preventDefault()}
     >
       <Languages aria-hidden="true" />
