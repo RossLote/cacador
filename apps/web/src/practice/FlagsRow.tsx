@@ -1,8 +1,8 @@
-import { useEffect, useId, useState } from 'react';
+import { useEffect, useId, useRef, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useI18n } from '@/i18n/useI18n';
-import { getFlags, removeFlag, setFlag, type FlagKind } from '@/storage';
+import { getFlags, removeFlag, setFlag, type Flag, type FlagKind } from '@/storage';
 import { OWN_KEYS_ATTRIBUTE } from './usePracticeKeys';
 
 const KINDS: readonly FlagKind[] = ['translation', 'hint'];
@@ -18,6 +18,13 @@ interface KindState {
 
 type FlagState = Partial<Record<FlagKind, KindState>>;
 
+/** The row as stored: every stored kind set, its note saved and in the field, the field closed. */
+function fromFlags(flags: readonly Flag[]): FlagState {
+  const state: FlagState = {};
+  for (const flag of flags) state[flag.kind] = { saved: flag.note, draft: flag.note, open: false, justSaved: false };
+  return state;
+}
+
 /**
  * The flags row (D2), shown under the result once a practice question is
  * answered: "English is off" (kind translation) and "Hint is off" (kind hint).
@@ -25,6 +32,11 @@ type FlagState = Partial<Record<FlagKind, KindState>>;
  * a one-line note field; Save updates the note; a tap on a set kind removes
  * the flag. A question drawn again shows its stored flags as set. Render it
  * keyed by question id.
+ *
+ * A tap changes the row at once and queues its write behind the row's earlier
+ * ones, so a second tap before the first write lands acts on what the row
+ * shows and the writes land in tap order. A failed write puts the row back to
+ * what is stored.
  */
 export function FlagsRow({ questionId }: { questionId: number }) {
   const { t } = useI18n();
@@ -32,15 +44,14 @@ export function FlagsRow({ questionId }: { questionId: number }) {
   const [state, setState] = useState<FlagState>({});
   const [loaded, setLoaded] = useState(false);
   const idPrefix = useId();
+  /** The row's writes, chained so they land in the order they were asked for. */
+  const writes = useRef<Promise<void>>(Promise.resolve());
 
   useEffect(() => {
     let current = true;
     void getFlags(questionId)
       .then((flags) => {
-        if (!current) return;
-        const next: FlagState = {};
-        for (const flag of flags) next[flag.kind] = { saved: flag.note, draft: flag.note, open: false, justSaved: false };
-        setState(next);
+        if (current) setState(fromFlags(flags));
       })
       .catch(() => undefined)
       .finally(() => {
@@ -57,23 +68,34 @@ export function FlagsRow({ questionId }: { questionId: number }) {
       return kept === undefined ? previous : { ...previous, [kind]: { ...kept, ...change } };
     });
 
+  /** Runs `write` once the row's earlier writes have landed; if it fails, the row goes back to what is stored. */
+  const queue = (write: () => Promise<unknown>) => {
+    writes.current = writes.current
+      .then(write)
+      .then(
+        () => undefined,
+        () =>
+          getFlags(questionId).then(
+            (flags) => setState(fromFlags(flags)),
+            () => undefined,
+          ),
+      );
+  };
+
   const toggle = (kind: FlagKind) => {
     if (state[kind] === undefined) {
-      void setFlag(questionId, kind, '')
-        .then(() => setState((previous) => ({ ...previous, [kind]: { saved: '', draft: '', open: true, justSaved: false } })))
-        .catch(() => undefined);
+      setState((previous) => ({ ...previous, [kind]: { saved: '', draft: '', open: true, justSaved: false } }));
+      queue(() => setFlag(questionId, kind, ''));
     } else {
-      void removeFlag(questionId, kind)
-        .then(() => setState((previous) => ({ ...previous, [kind]: undefined })))
-        .catch(() => undefined);
+      setState((previous) => ({ ...previous, [kind]: undefined }));
+      queue(() => removeFlag(questionId, kind));
     }
   };
 
+  /** Stores the note in the field; "Saved" shows once the write has landed. */
   const save = (kind: FlagKind) => {
     const draft = state[kind]?.draft ?? '';
-    void setFlag(questionId, kind, draft)
-      .then(() => patch(kind, { saved: draft, justSaved: true }))
-      .catch(() => undefined);
+    queue(() => setFlag(questionId, kind, draft).then(() => patch(kind, { saved: draft, justSaved: true })));
   };
 
   const label = (kind: FlagKind) => (kind === 'translation' ? words.englishOff : words.hintOff);

@@ -1,15 +1,15 @@
 import 'fake-indexeddb/auto';
 import { hintFor, questionById, type OptionKey, type Question } from '@cacador/data';
-import { render, renderHook, screen, within } from '@testing-library/react';
+import { fireEvent, render, renderHook, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { IDBFactory } from 'fake-indexeddb';
+import { IDBFactory, IDBObjectStore } from 'fake-indexeddb';
 import type { ReactNode } from 'react';
 import { MemoryRouter } from 'react-router';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { MESSAGES } from '@/i18n/messages';
 import { getLocale, setLocale } from '@/i18n/locale';
 import { bankPool, patternPool, seededRandom, type RandomSource } from '@/model';
-import { closeStorage, getFlags, setFlag } from '@/storage';
+import { closeStorage, getFlags, listAnswers, setFlag } from '@/storage';
 import { PracticePage } from './PracticePage';
 import { usePracticePool } from './usePracticePool';
 
@@ -77,6 +77,7 @@ afterEach(async () => {
   setLocale('en');
   await closeStorage();
   vi.unstubAllGlobals();
+  vi.restoreAllMocks();
 });
 
 describe('focused practice (D4)', () => {
@@ -191,18 +192,20 @@ describe('the flags row (D2)', () => {
     expect(hintOff()).toHaveAttribute('aria-pressed', 'true');
     expect(englishOff()).toHaveAttribute('aria-pressed', 'false');
     const field = screen.getByRole('textbox', { name: flagsT.hintNote });
-    expect(await getFlags(1)).toEqual([expect.objectContaining({ questionId: 1, kind: 'hint', note: '' })]);
+    await vi.waitFor(async () =>
+      expect(await getFlags(1)).toEqual([expect.objectContaining({ questionId: 1, kind: 'hint', note: '' })]),
+    );
 
     await user.type(field, 'wrong verb');
     expect((await getFlags(1))[0]!.note).toBe('');
     await user.click(screen.getByRole('button', { name: flagsT.save }));
     await vi.waitFor(async () => expect(await getFlags(1)).toEqual([expect.objectContaining({ kind: 'hint', note: 'wrong verb' })]));
-    expect(screen.getByRole('status')).toHaveTextContent(flagsT.saved);
+    expect(await screen.findByRole('status')).toHaveTextContent(flagsT.saved);
 
     await user.click(hintOff());
-    await vi.waitFor(() => expect(hintOff()).toHaveAttribute('aria-pressed', 'false'));
+    expect(hintOff()).toHaveAttribute('aria-pressed', 'false');
     expect(screen.queryByRole('textbox')).not.toBeInTheDocument();
-    expect(await getFlags(1)).toEqual([]);
+    await vi.waitFor(async () => expect(await getFlags(1)).toEqual([]));
   });
 
   it('English is off stores a translation flag', async () => {
@@ -247,6 +250,8 @@ describe('the flags row (D2)', () => {
     expect(await shownId()).toBe(1);
     expect(nextButton()).toBeInTheDocument();
     expect(optionFor('A')).toBeDisabled();
+    // Enter in the field saved the note; the test ends once that write has landed.
+    await vi.waitFor(async () => expect(await getFlags(1)).toEqual([expect.objectContaining({ kind: 'hint', note: 'a1 b' })]));
   });
 
   it('Enter on a focused flag button toggles it without advancing', async () => {
@@ -259,9 +264,47 @@ describe('the flags row (D2)', () => {
     await user.keyboard('{Enter}');
     expect(hintOff()).toHaveAttribute('aria-pressed', 'true');
     expect(await shownId()).toBe(1);
+    await vi.waitFor(async () => expect(await getFlags(1)).toEqual([expect.objectContaining({ kind: 'hint' })]));
     await user.keyboard(' ');
     expect(hintOff()).toHaveAttribute('aria-pressed', 'false');
     expect(await shownId()).toBe(1);
+    await vi.waitFor(async () => expect(await getFlags(1)).toEqual([]));
+  });
+
+  it('a second tap before the first write lands removes the flag, and the writes land in tap order', async () => {
+    const user = userEvent.setup();
+    renderPractice();
+    await shownId();
+    await answer(user);
+    await vi.waitFor(() => expect(hintOff()).toBeEnabled());
+    // Both taps in one tick, so the first write cannot have landed before the second tap.
+    fireEvent.click(hintOff());
+    fireEvent.click(hintOff());
+    expect(hintOff()).toHaveAttribute('aria-pressed', 'false');
+    // The row's writes are queued in order, so once the English flag is stored the two hint writes have landed.
+    fireEvent.click(englishOff());
+    await vi.waitFor(async () => expect(await getFlags(1)).toEqual([expect.objectContaining({ kind: 'translation' })]));
+    expect(hintOff()).toHaveAttribute('aria-pressed', 'false');
+    expect(englishOff()).toHaveAttribute('aria-pressed', 'true');
+  });
+
+  it('a write that fails puts the row back to what is stored', async () => {
+    const user = userEvent.setup();
+    renderPractice();
+    await shownId();
+    await answer(user);
+    await vi.waitFor(() => expect(hintOff()).toBeEnabled());
+    await vi.waitFor(async () => expect(await listAnswers()).toHaveLength(1));
+    const put = vi.spyOn(IDBObjectStore.prototype, 'put').mockImplementation(() => {
+      throw new DOMException('full', 'QuotaExceededError');
+    });
+    // A synchronous tap, so the row is checked before the failed write can put it back.
+    fireEvent.click(hintOff());
+    expect(hintOff()).toHaveAttribute('aria-pressed', 'true');
+    await vi.waitFor(() => expect(hintOff()).toHaveAttribute('aria-pressed', 'false'));
+    expect(put).toHaveBeenCalled();
+    expect(screen.queryByRole('textbox')).not.toBeInTheDocument();
+    expect(await getFlags(1)).toEqual([]);
   });
 
   it('has an English and a Portuguese string for every flags key', () => {
