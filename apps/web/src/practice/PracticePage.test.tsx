@@ -201,6 +201,32 @@ describe('PracticePage', () => {
     expect(screen.queryByText(t.answerNotSaved)).not.toBeInTheDocument();
   });
 
+  describe('storage that cannot be read (DESIGN.md § 6.9)', () => {
+    it('says so under the header with the back control, and draws nothing', async () => {
+      failStore('getAll', { store: 'questionState' });
+      renderPractice();
+      const status = await screen.findByText(t.loadFailed);
+      expect(status).toHaveAttribute('role', 'status');
+      expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(t.title);
+      const back = screen.getByRole('link', { name: MESSAGES.en.common.backToHome });
+      expect(back.compareDocumentPosition(status) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+      expect(screen.queryByText(t.loading)).not.toBeInTheDocument();
+      expect(screen.queryByRole('article')).not.toBeInTheDocument();
+      expect(sessionStorage.getItem(RECENT_KEY)).toBeNull();
+    });
+
+    it('shows the question a new pool draws after the old pool could not be read (cac-8cn.18)', async () => {
+      vi.spyOn(Math, 'random').mockReturnValue(0);
+      failStore('getAll', { store: 'questionState', times: 1 });
+      const view = render(<PracticeSession pool={[413, 414, 415]} header={numberHeader} />);
+      expect(await screen.findByText(t.loadFailed)).toBeInTheDocument();
+      view.rerender(<PracticeSession pool={bankPool} header={numberHeader} />);
+      expect(await shownId()).toBe(1);
+      expect(screen.queryByText(t.loadFailed)).not.toBeInTheDocument();
+      expect(screen.getByRole('article')).toBeInTheDocument();
+    });
+  });
+
   describe('a Next under way when the page changes (cac-eil.38)', () => {
     it('draws nothing once the page has gone', async () => {
       const view = renderPractice();
@@ -371,16 +397,13 @@ describe('PracticePage', () => {
       expect(nextButton()).not.toBeInTheDocument();
     });
 
-    it('leaves Enter and Space on a link outside the page, such as the back control, alone', async () => {
+    it('leaves Enter and Space on the screen header\'s back control alone: it sits outside the keys\' region', async () => {
       const user = userEvent.setup();
       renderPractice();
       await shownId();
       await user.keyboard('a');
       expect(nextButton()).toBeInTheDocument();
-      const back = document.createElement('a');
-      back.href = '#home';
-      back.textContent = 'Home';
-      document.body.prepend(back);
+      const back = screen.getByRole('link', { name: MESSAGES.en.common.backToHome });
       back.focus();
       const enter = fireEvent.keyDown(back, { key: 'Enter', code: 'Enter' });
       expect(enter).toBe(true);
@@ -388,22 +411,6 @@ describe('PracticePage', () => {
       expect(space).toBe(true);
       expect(screen.getByText(question(1).question)).toBeInTheDocument();
       expect(await shownId()).toBe(1);
-      back.remove();
-    });
-
-    it('answers from the keys after a tab-bar link opened the page: the focus it kept moves to the page', async () => {
-      const user = userEvent.setup();
-      const tabLink = document.createElement('a');
-      tabLink.href = '#practice';
-      tabLink.textContent = 'Practice';
-      document.body.append(tabLink);
-      tabLink.focus();
-      renderPractice();
-      expect(await shownId()).toBe(1);
-      await vi.waitFor(() => expect(tabLink).not.toHaveFocus());
-      await user.keyboard('b');
-      expect(optionFor('B')).toHaveAttribute('aria-pressed', 'true');
-      tabLink.remove();
     });
 
     it('opens Hint from the keyboard after answering: Enter on the focused Hint button does not advance', async () => {

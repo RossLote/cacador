@@ -28,7 +28,7 @@ export function PracticePage() {
       {group !== undefined && (
         <p className="flex items-center gap-2 text-sm text-muted-foreground">
           {t.practice.focusedOn}
-          <Badge variant="secondary" className="rounded-md">
+          <Badge variant="secondary">
             {nameIn(group, locale)}
           </Badge>
         </p>

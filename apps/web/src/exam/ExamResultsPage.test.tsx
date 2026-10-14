@@ -4,6 +4,7 @@ import userEvent from '@testing-library/user-event';
 import { openDB } from 'idb';
 import { MemoryRouter, Route, Routes } from 'react-router';
 import { describe, expect, it } from 'vitest';
+import { PLATE } from '@/components/styles';
 import { setLocale } from '@/i18n/locale';
 import { MESSAGES } from '@/i18n/messages';
 import { drawExam, seededRandom } from '@/model';
@@ -11,7 +12,7 @@ import { createExam, finishExam, getExam, saveExamAnswer, type Exam } from '@/st
 import { DB_NAME, DB_VERSION } from '@/storage/idbBackend';
 import { ExamPage } from './ExamPage';
 import { question, wrongOf } from '../../test/fixtures';
-import { answerExam } from '../../test/storage';
+import { answerExam, failStore } from '../../test/storage';
 
 const t = MESSAGES.en.exam;
 const card = MESSAGES.en.practice.card;
@@ -195,6 +196,23 @@ describe('an id that is not a finished exam', () => {
     expect(await screen.findByText(t.notFound)).toBeInTheDocument();
     expect(screen.queryByRole('list', { name: t.wrongAnswers })).not.toBeInTheDocument();
     expect((await getExam(exam.id))?.finishedAt).toBeUndefined();
+  });
+});
+
+describe('results that cannot be read', () => {
+  it('says so in the plate, under the header with the back control (DESIGN.md § 6.9)', async () => {
+    const { id } = await finishedExam(14);
+    failStore('getAll', { store: 'exams' });
+    renderResults(id);
+    const status = await screen.findByText(t.loadFailed);
+    expect(status).toHaveAttribute('role', 'status');
+    expect(status.parentElement).toHaveClass(...PLATE.split(' '));
+    expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(t.title);
+    const back = screen.getByRole('link', { name: MESSAGES.en.common.backToHome });
+    expect(back.compareDocumentPosition(status) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    expect(screen.queryByText(t.loading)).not.toBeInTheDocument();
+    expect(screen.queryByText(t.notFound)).not.toBeInTheDocument();
+    expect(screen.queryByText(/out of 20/)).not.toBeInTheDocument();
   });
 });
 
