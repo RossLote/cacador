@@ -129,14 +129,18 @@ pnpm workspace of three packages: `packages/data`, `apps/web` and `e2e`
   and check it. `src/index.ts` is the typed loader the app imports. The layout and
   shapes are fixed in `DESIGN.md` § 3 and § 4.
 - `apps/web` (`@cacador/web`): Vite 8 with base `/cacador/`, React 19, TypeScript,
-  Tailwind v4 with light and dark tokens following `prefers-color-scheme`, shadcn/ui
-  style `base-nova` on `@base-ui/react` (the generated components in
+  Tailwind v4 with the Campo light and dark tokens following `prefers-color-scheme`,
+  Fraunces and Source Sans 3 self-hosted from Fontsource (four woff2 files, precached),
+  shadcn/ui style `base-nova` on `@base-ui/react` (the generated components in
   `src/components/ui/`). `src/main.tsx` mounts `BrowserRouter` with the basename from
   `import.meta.env.BASE_URL`; `src/App.tsx` holds the routes (`/`, `/practice`,
   `/exam/*`, `/progress`, `/settings`, `/flagged`, and a not-found page for any other
-  address) and the shared layout with the back control to Home. Under `src/`:
-  - one folder per screen, each with its page and its tests: `home` (readiness, the
-    exam-in-progress card, the four buttons), `practice` (the session, the flags row,
+  address) and the shared layout. The menu is a bottom tab bar (Home, Practice, Exam,
+  Progress) on every screen but the `/exam` route; every screen but Home opens with a
+  screen header holding the back control to Home. Under `src/`:
+  - one folder per screen, each with its page and its tests: `home` (the header with
+    the Settings control, readiness, the exam-in-progress card, the Practice and Exam
+    cards, Weakest topics), `practice` (the session, the flags row,
     the laptop keys, the focused-practice pool from the query and `recent.ts`, the
     draw over the no-repeat window), `exam` (`ExamPage` owns the sub-routes:
     `/exam` starts or resumes the running exam, `/exam/results/<id>` the results and
@@ -144,7 +148,8 @@ pnpm workspace of three packages: `packages/data`, `apps/web` and `e2e`
     exams), `settings` (language, export and share, import, clear), `flagged` (the list
     and `copyFormat.ts`, the fixed copy text) and `notfound` (the page for an address
     that names no screen);
-  - `components/question/`: the question card, a controlled component with the peek
+  - `components/nav/`: the tab bar and the screen header with the back control;
+    `components/question/`: the question card, a controlled component with the peek
     button and the hint panel, shared by practice and the exam; `components/ui/`: the
     generated shadcn components;
   - `model/`: the study model, pure functions for the draw weights and the no-repeat
@@ -174,6 +179,10 @@ pnpm workspace of three packages: `packages/data`, `apps/web` and `e2e`
   `/cacador/` precache and URLs). `pnpm e2e:browsers` installs the browser.
   `DESIGN.md` § 8.10.
 
+Outside the workspace, `design/campo/` holds the design reference: the Campo style tile
+and one artboard each for Home, Practice, the exam and Progress, with a README; read for
+values, never built. `DESIGN.md` § 8.5 wins where they disagree.
+
 ## Conventions & Patterns
 
 - Portuguese question files are the source of truth and are only ever written by
@@ -186,6 +195,12 @@ pnpm workspace of three packages: `packages/data`, `apps/web` and `e2e`
 - UI components come from shadcn/ui on Base UI (`apps/web/src/components/ui/`). Radix
   is banned: ESLint's `no-restricted-imports` and `scripts/check-no-radix.mjs` enforce
   it inside `pnpm lint`.
+- The look is Campo (`DESIGN.md` § 8.5, reference `design/campo/`): the paper ground,
+  ink, forest and rust tokens in light and dark, keyed on `prefers-color-scheme`, never
+  a class; Fraunces 600 for the stems, titles and headline numbers and Source Sans 3 for
+  the rest, self-hosted as exactly four woff2 files in the precache, never from Google
+  Fonts or any font host; hairlines and plates, no shadows, no pill buttons, lucide
+  icons, never emoji. The menu is the bottom tab bar of four tabs.
 - No user-facing text in components; strings live in the i18n messages files, English
   and European Portuguese (`pt-PT`, never Brazilian). The one exception is the Flagged
   page's copy format (`Caçador flags <date>`, `#<id> English: <note>`), a fixed English
