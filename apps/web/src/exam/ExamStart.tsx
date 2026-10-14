@@ -40,25 +40,30 @@ export function ExamStart() {
   return (
     <section className="flex flex-col gap-4">
       <ScreenHeader eyebrow={t.common.nav.exam} />
-      <h1 className="text-xl font-semibold tracking-tight">{t.exam.title}</h1>
-      {failed ? (
-        <p role="status" className="text-muted-foreground">
-          {t.exam.loadFailed}
-        </p>
-      ) : exam === undefined ? (
-        <p role="status" className="text-muted-foreground">
-          {t.exam.loading}
-        </p>
-      ) : (
-        <>
-          <p className="text-lg leading-snug">{t.exam.intro(EXAM_SIZE, EXAM_DURATION_MS / MINUTE_MS, EXAM_PASS_MARK)}</p>
-          <p className="text-muted-foreground">{t.exam.rules}</p>
-          <Button type="button" size="lg" className="h-12 text-base sm:self-start sm:px-8" disabled={starting} onClick={start}>
-            {t.exam.start}
-          </Button>
-          {startFailed && <FailureLine>{t.exam.loadFailed}</FailureLine>}
-        </>
-      )}
+      <h1 className="sr-only">{t.exam.title}</h1>
+      {/* The plate (D9): the intro and the rules over Start in rust; the shell shows no tab bar on /exam (D5). */}
+      <div className="flex flex-col gap-2.5 rounded-lg border border-line bg-card px-5 pt-4.5 pb-5">
+        {failed ? (
+          <p role="status" className="text-muted-foreground">
+            {t.exam.loadFailed}
+          </p>
+        ) : exam === undefined ? (
+          <p role="status" className="text-muted-foreground">
+            {t.exam.loading}
+          </p>
+        ) : (
+          <>
+            <p className="font-heading text-xl/snug font-semibold text-ink">
+              {t.exam.intro(EXAM_SIZE, EXAM_DURATION_MS / MINUTE_MS, EXAM_PASS_MARK)}
+            </p>
+            <p className="text-muted-foreground">{t.exam.rules}</p>
+            <Button type="button" size="lg" className="mt-2 w-full" disabled={starting} onClick={start}>
+              {t.exam.start}
+            </Button>
+            {startFailed && <FailureLine>{t.exam.loadFailed}</FailureLine>}
+          </>
+        )}
+      </div>
     </section>
   );
 }

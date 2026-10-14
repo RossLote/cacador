@@ -18,9 +18,14 @@ export const exam = {
   marker: (n: number) => `Question ${n}`,
   /** Read after a marker's name when its question has an answer. */
   answered: 'Answered',
+  /** The line under the options on the running exam. */
+  notMarked: 'Answers are not marked until you submit. No English and no hints during the exam.',
   previous: 'Previous',
   next: 'Next',
+  /** Submit's label once every question has an answer. */
   submit: 'Submit',
+  /** Submit's label while questions are unanswered. */
+  submitUnanswered: (count: number) => `Submit · ${count} unanswered`,
   /** The confirmation shown when Submit is pressed with questions unanswered. */
   unansweredTitle: (count: number) => `${count} unanswered — submit anyway?`,
   unansweredBody: 'An unanswered question counts as wrong.',
