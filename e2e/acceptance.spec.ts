@@ -1,17 +1,27 @@
 import { readFileSync } from 'node:fs';
-import { hintFor, questionById, sectionOf, topicOf, topics, translationFor, type OptionKey, type Question } from '@cacador/data';
+import {
+  hintFor,
+  questionById,
+  questions,
+  sectionOf,
+  topicOf,
+  topics,
+  translationFor,
+  type OptionKey,
+  type Question,
+} from '@cacador/data';
 import { expect, test, type Locator, type Page } from '@playwright/test';
 // Dependency-free leaves of the app's model: seededRandom is serialised into the page.
 import { localDateKey } from '../apps/web/src/model/dates';
 import { seededRandom } from '../apps/web/src/model/random';
-import { background, contrastRatio, DARK, expectFraunces, LIGHT, TEXT_CONTRAST, textColour } from './look';
+import { background, contrastRatio, DARK, expectFraunces, ground, LIGHT, TEXT_CONTRAST, textColour } from './look';
 
 /**
  * ACCEPTANCE BAR steps 2 to 9 (epic cac-8cn, Campo), in order, in one fresh browser context at 390 px wide
  * (playwright.config.ts): the counts build on each other (5 answers, then 6, then the exam's 20). Step 10, offline
  * with the service worker, is offline.spec.ts; step 11, the built dist, is build-output.spec.ts. After step 9 the
- * phase 4 behaviours the Campo bar does not walk run on the same state: an exam surviving a closed tab, Flagged and
- * its copy, and export, clear and import.
+ * phase 4 behaviours the Campo bar does not walk run on the same state: an exam answered from the key that passes,
+ * an exam surviving a closed tab, Flagged and its copy, and export, clear and import.
  *
  * Practice and the exam draw with Math.random; every page load replaces it with the app's own seeded source, so every
  * run draws the same questions. SEED is one whose Ducks draw in step 6 is a question not answered before.
@@ -42,7 +52,10 @@ function seconds(clock: string): number {
   return Number(match[1]) * 60 + Number(match[2]);
 }
 
-/** The row every screen but Home opens with: the back control, the eyebrow over the line, the right-hand slot. */
+/**
+ * The row every screen but Home opens with (DESIGN.md § 8.2): the back control, then the eyebrow over its line or, on
+ * Progress, Settings, Flagged and not-found, the screen's title, then the right-hand slot.
+ */
 const screenHeader = (page: Page): Locator => page.getByRole('main').locator('header').first();
 const tabBar = (page: Page): Locator => page.getByRole('navigation', { name: 'Main' });
 const tab = (page: Page, name: string): Locator => tabBar(page).getByRole('link', { name, exact: true });
@@ -309,6 +322,8 @@ test('acceptance bar steps 2 to 9, in order, in one browser context', async ({ c
     await expect(screenHeader(page)).toContainText('· Ducks');
 
     await tab(page, 'Home').click();
+    // Home's readiness plate follows the stored answers: six questions seen, so 500 of the bank's 506 unseen.
+    expect((await homeReadiness(page)).unseen).toBe(`${questions.length - new Set(answered).size} unseen`);
     const weakest = page.getByRole('region', { name: 'Weakest topics' });
     await expect(weakest.getByRole('heading', { name: 'Weakest topics' })).toBeVisible();
     await expect(weakest.getByRole('link', { name: 'All topics', exact: true })).toBeVisible();
@@ -416,7 +431,7 @@ test('acceptance bar steps 2 to 9, in order, in one browser context', async ({ c
     await expectTabBar(page, TABS);
   });
 
-  await test.step('step 8: dark: with prefers-color-scheme dark emulated, Home\'s body is #151A17, the heading #EDE8DB, and the heading, the muted unseen count and the rust pass line each pass 4.5:1 against the body', async () => {
+  await test.step('step 8: dark: with prefers-color-scheme dark emulated, Home\'s body is #151A17, the heading #EDE8DB, and the heading against the body, and the muted unseen count and the rust pass line against the plate they sit on, each pass 4.5:1', async () => {
     await tab(page, 'Home').click();
     await expect(homeHeading(page)).toBeVisible();
     await page.emulateMedia({ colorScheme: 'dark' });
@@ -429,15 +444,16 @@ test('acceptance bar steps 2 to 9, in order, in one browser context', async ({ c
     await expect(unseen).toHaveCSS('color', DARK.muted);
     await expect(passLine).toHaveCSS('color', DARK.rust);
 
-    const ground = await background(body);
-    for (const [what, text] of [
-      ['the heading', homeHeading(page)],
-      ['the unseen count', unseen],
-      ['the pass line', passLine],
+    // Each text against the colour it sits on (DESIGN.md § 8.5): the heading on the body, the other two on the plate.
+    for (const [what, text, on, under, token] of [
+      ['the heading', homeHeading(page), 'the body', await background(body), DARK.paper],
+      ['the unseen count', unseen, 'the plate', await ground(unseen), DARK.card],
+      ['the pass line', passLine, 'the plate', await ground(passLine), DARK.card],
     ] as const) {
-      const ratio = contrastRatio(await textColour(text), ground);
-      test.info().annotations.push({ type: 'dark contrast', description: `${what}: ${ratio.toFixed(2)}:1` });
-      expect(ratio, `${what} against the body`).toBeGreaterThanOrEqual(TEXT_CONTRAST);
+      expect(under, `the ground under ${what}`).toBe(token);
+      const ratio = contrastRatio(await textColour(text), under);
+      test.info().annotations.push({ type: 'dark contrast', description: `${what} on ${on}: ${ratio.toFixed(2)}:1` });
+      expect(ratio, `${what} against ${on}`).toBeGreaterThanOrEqual(TEXT_CONTRAST);
     }
     await page.emulateMedia({ colorScheme: 'light' });
     await expect(body).toHaveCSS('background-color', LIGHT.paper);
@@ -486,7 +502,60 @@ test('acceptance bar steps 2 to 9, in order, in one browser context', async ({ c
     await expect(screenHeader(page).getByRole('link', { name: 'Back to Home', exact: true })).toBeVisible();
   });
 
-  await test.step('after the bar: a second exam with 3 answers survives closing the tab, its clock still running, and Home\'s card counts them', async () => {
+  await test.step('after the bar: a second exam answered in full from the key, 16 right and 4 wrong, submits with the plain "Submit": "16 out of 20", the "Passed" chip in moss, only the 4 wrong ones listed; Progress lists it as Passed', async () => {
+    await goHome(page);
+    await tab(page, 'Exam').click();
+    await page.getByRole('button', { name: 'Start' }).click();
+    const header = screenHeader(page);
+    const ids: number[] = [];
+    const wrongIds: number[] = [];
+    for (let n = 1; n <= EXAM_SIZE; n++) {
+      await expect(header.getByText(`${n} of 20`, { exact: true })).toBeVisible();
+      const question = questionFor(await examShownId(page));
+      ids.push(question.id);
+      // Every fifth one wrong: questions 5, 10, 15 and 20.
+      const key = n % 5 === 0 ? wrongOf(question) : question.answer;
+      if (key !== question.answer) wrongIds.push(question.id);
+      await cardOf(page).option(key).click();
+      await expect(page.getByRole('button', { name: `Question ${n}`, exact: true })).toHaveAttribute('data-answered', 'true');
+      if (n < EXAM_SIZE) await page.getByRole('button', { name: 'Next', exact: true }).click();
+    }
+    expect(new Set(ids).size, 'the exam holds 20 different questions').toBe(EXAM_SIZE);
+
+    // All 20 answered: Submit reads plain "Submit" and scores at once, with no confirm.
+    await page.getByRole('button', { name: 'Submit', exact: true }).click();
+    await expect(page.getByRole('alertdialog')).toHaveCount(0);
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Exam results');
+    const score = page.getByRole('region', { name: 'Score' });
+    const points = score.getByText(/^\d+ out of 20$/);
+    await expect(points).toHaveText('16 out of 20');
+    await expect(score.getByText('Pass mark 15', { exact: true })).toBeVisible();
+    const passed = score.getByText('Passed', { exact: true });
+    await expect(passed).toHaveCSS('background-color', LIGHT.moss);
+    await expect(passed).toHaveCSS('color', LIGHT.forest);
+    await expect(score.getByText('Not passed', { exact: true })).toHaveCount(0);
+
+    const wrong = page.getByRole('list', { name: 'Wrong answers' }).locator(':scope > li');
+    await expect(wrong).toHaveCount(wrongIds.length);
+    for (const [i, id] of wrongIds.entries()) {
+      const item = wrong.nth(i);
+      const question = questionFor(id);
+      await expect(item.getByText(`Question ${id}`, { exact: true })).toBeVisible();
+      await expect(cardOf(item).option(wrongOf(question))).toHaveAttribute('data-mark', 'wrong');
+      await expect(cardOf(item).option(question.answer)).toHaveAttribute('data-mark', 'correct');
+      await expect(item.getByText('Not answered', { exact: true })).toHaveCount(0);
+    }
+
+    await tab(page, 'Progress').click();
+    const past = page.getByRole('region', { name: 'Past exams' }).getByRole('link');
+    await expect(past).toHaveCount(2);
+    await expect(past.first()).toHaveAccessibleName(/: 16 of 20, Passed$/);
+    await expect(past.first().getByText('16 / 20', { exact: true })).toBeVisible();
+    await expect(past.first().getByText('Passed', { exact: true })).toHaveCSS('background-color', LIGHT.moss);
+    await expect(past.last()).toHaveAccessibleName(/: 0 of 20, Not passed$/);
+  });
+
+  await test.step('after the bar: a third exam with 3 answers survives closing the tab, its clock still running, and Home\'s card counts them', async () => {
     await goHome(page);
     await tab(page, 'Exam').click();
     const startClicked = Date.now();
@@ -530,13 +599,15 @@ test('acceptance bar steps 2 to 9, in order, in one browser context', async ({ c
     await expect.poll(clockSeconds).toBeLessThan(first);
   });
 
-  await test.step('after the bar: Progress lists the first exam and 26 answers; Flagged holds the one hint flag; Copy puts the header and its line; clearing it leaves none', async () => {
+  await test.step('after the bar: Progress lists the two finished exams, the passed one first, and 46 answers; Flagged holds the one hint flag; Copy puts the header and its line; clearing it leaves none', async () => {
     await goHome(page);
     await tab(page, 'Progress').click();
     const past = page.getByRole('region', { name: 'Past exams' }).getByRole('link');
-    await expect(past).toHaveCount(1);
-    await expect(past).toHaveAccessibleName(/: 0 of 20, Not passed$/);
-    await expect(page.getByText(/^Today: /)).toHaveText('Today: 26 answers, 4 right');
+    await expect(past).toHaveCount(2);
+    await expect(past.first()).toHaveAccessibleName(/: 16 of 20, Passed$/);
+    await expect(past.last()).toHaveAccessibleName(/: 0 of 20, Not passed$/);
+    // 6 practice answers, 4 right; the first exam's 20, none right; the passed exam's 20, 16 right.
+    await expect(page.getByText(/^Today: /)).toHaveText('Today: 46 answers, 20 right');
 
     await page.getByRole('link', { name: 'Flagged (1)' }).click();
     await expect(page.getByRole('heading', { level: 1 })).toHaveText('Flagged');
@@ -557,7 +628,7 @@ test('acceptance bar steps 2 to 9, in order, in one browser context', async ({ c
     await expect(rows).toHaveCount(0);
   });
 
-  await test.step('after the bar: Export, clear, import: the same readiness, exam card, 26 answers and 1 past exam come back', async () => {
+  await test.step('after the bar: Export, clear, import: the same readiness, exam card, 46 answers and 2 past exams come back', async () => {
     await goHome(page);
     const before = await homeReadiness(page);
     await expect(examCard(page)).toBeVisible();
@@ -574,9 +645,9 @@ test('acceptance bar steps 2 to 9, in order, in one browser context', async ({ c
       exams: Array<{ finishedAt?: number; answers: Record<string, string> }>;
       flags: unknown[];
     };
-    expect(exported.answers).toHaveLength(26);
-    expect(exported.exams).toHaveLength(2);
-    expect(exported.exams.filter((exam) => exam.finishedAt !== undefined)).toHaveLength(1);
+    expect(exported.answers).toHaveLength(46);
+    expect(exported.exams).toHaveLength(3);
+    expect(exported.exams.filter((exam) => exam.finishedAt !== undefined)).toHaveLength(2);
     const unfinished = exported.exams.filter((exam) => exam.finishedAt === undefined);
     expect(unfinished).toHaveLength(1);
     expect(Object.keys(unfinished[0]?.answers ?? {})).toHaveLength(3);
@@ -592,13 +663,15 @@ test('acceptance bar steps 2 to 9, in order, in one browser context', async ({ c
 
     await page.getByRole('link', { name: 'Settings', exact: true }).click();
     await page.getByLabel('Progress file to import').setInputFiles(file);
-    await expect(page.getByRole('status')).toHaveText('Added 26 answers, 2 exams and 0 flags');
+    await expect(page.getByRole('status')).toHaveText('Added 46 answers, 3 exams and 0 flags');
 
     await goHome(page);
     expect(await homeReadiness(page)).toEqual(before);
     await expect(examCard(page)).toBeVisible();
     await tab(page, 'Progress').click();
-    await expect(page.getByText(/^Today: /)).toHaveText('Today: 26 answers, 4 right');
-    await expect(page.getByRole('region', { name: 'Past exams' }).getByRole('link')).toHaveCount(1);
+    await expect(page.getByText(/^Today: /)).toHaveText('Today: 46 answers, 20 right');
+    const past = page.getByRole('region', { name: 'Past exams' }).getByRole('link');
+    await expect(past).toHaveCount(2);
+    await expect(past.first()).toHaveAccessibleName(/: 16 of 20, Passed$/);
   });
 });

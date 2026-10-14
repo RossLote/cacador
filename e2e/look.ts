@@ -15,6 +15,7 @@ export const LIGHT = {
 
 export const DARK = {
   paper: 'rgb(21, 26, 23)',
+  card: 'rgb(28, 35, 32)',
   ink: 'rgb(237, 232, 219)',
   muted: 'rgb(179, 186, 174)',
   rust: 'rgb(224, 120, 79)',
@@ -48,6 +49,19 @@ export function contrastRatio(a: string, b: string): number {
 export const textColour = (locator: Locator): Promise<string> => locator.evaluate((element) => getComputedStyle(element).color);
 export const background = (locator: Locator): Promise<string> =>
   locator.evaluate((element) => getComputedStyle(element).backgroundColor);
+
+/**
+ * The colour `locator`'s text sits on, which the contrast rule of DESIGN.md § 8.5 measures against: the background of
+ * the element itself or of its nearest ancestor whose background is not transparent (a plate, a card, else the body).
+ */
+export const ground = (locator: Locator): Promise<string> =>
+  locator.evaluate((element) => {
+    for (let node: Element | null = element; node; node = node.parentElement) {
+      const colour = getComputedStyle(node).backgroundColor;
+      if (colour !== 'rgba(0, 0, 0, 0)' && colour !== 'transparent') return colour;
+    }
+    return getComputedStyle(document.documentElement).backgroundColor;
+  });
 
 /**
  * `element` is set in Fraunces and the page has the face: its computed family leads with Fraunces, a Fraunces face

@@ -69,12 +69,17 @@ test('step 11: the precache holds exactly 4 woff2 URLs and the 15 jpg URLs, ever
   for (const url of urls) expect(url, 'precache').toMatch(/^\/cacador\//);
   const fonts = urls.filter((url) => url.endsWith('.woff2'));
   expect(fonts).toHaveLength(4);
-  expect(fonts.map((url) => url.replace(/^\/cacador\/assets\/(.+)-[\w-]+\.woff2$/, '$1')).sort()).toEqual([
+  // Each URL is named by the one font file it starts with. Vite's content hash may itself hold a '-', so the name is
+  // matched as a prefix rather than cut at the last '-'; no name is a prefix of another followed by '-'.
+  const fontFiles = [
     'fraunces-latin-ext-opsz-normal',
     'fraunces-latin-opsz-normal',
     'source-sans-3-latin-ext-wght-normal',
     'source-sans-3-latin-wght-normal',
-  ]);
+  ];
+  const fontFile = (url: string) => fontFiles.find((name) => url.startsWith(`/cacador/assets/${name}-`)) ?? url;
+  for (const url of fonts) expect(url, 'a hashed font file under assets/').toMatch(/^\/cacador\/assets\/[\w-]+\.woff2$/);
+  expect(fonts.map(fontFile).sort()).toEqual(fontFiles);
   expect(urls.filter((url) => url.endsWith('.jpg'))).toHaveLength(15);
   expect(distFiles().filter((file) => file.endsWith('.woff2')), 'font files in dist').toHaveLength(4);
 
