@@ -9,6 +9,7 @@ export const practice: Messages['practice'] = {
   focusedOn: 'A praticar',
   flags: {
     group: 'Assinalar um problema nesta pergunta',
+    report: 'Assinalar:',
     englishOff: 'O inglês está errado',
     hintOff: 'A dica está errada',
     englishNote: 'O que está errado no inglês',

@@ -31,8 +31,9 @@ export function PeekButton({ label, peeking, onPeekChange }: PeekButtonProps) {
       variant="secondary"
       data-peeking={peeking || undefined}
       className={cn(
-        'h-auto min-h-14 w-full touch-none text-base select-none [-webkit-touch-callout:none]',
-        'data-peeking:bg-primary data-peeking:text-primary-foreground',
+        'h-auto min-h-12 w-full gap-2.5 px-3 py-3 whitespace-normal touch-none select-none [-webkit-touch-callout:none]',
+        // Inverted to ink with card text while held (DESIGN.md § 8.6).
+        'data-peeking:bg-ink data-peeking:text-card data-peeking:hover:bg-ink',
       )}
       onPointerDown={start}
       onPointerUp={stop}
@@ -42,7 +43,7 @@ export function PeekButton({ label, peeking, onPeekChange }: PeekButtonProps) {
       onMouseDown={(event) => event.preventDefault()}
       onContextMenu={(event) => event.preventDefault()}
     >
-      <Languages aria-hidden="true" />
+      <Languages aria-hidden="true" className="size-5" />
       {label}
     </Button>
   );

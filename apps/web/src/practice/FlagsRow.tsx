@@ -1,3 +1,4 @@
+import { Flag as FlagIcon } from 'lucide-react';
 import { useCallback, useId, useRef, useState } from 'react';
 import { FailureLine } from '@/components/FailureLine';
 import { Button } from '@/components/ui/button';
@@ -6,6 +7,14 @@ import { useI18n } from '@/i18n/useI18n';
 import { useLoaded } from '@/lib/useLoaded';
 import { FLAG_KINDS, getFlags, removeFlag, setFlag, type Flag, type FlagKind } from '@/storage';
 import { OWN_KEYS_ATTRIBUTE } from './usePracticeKeys';
+
+/**
+ * A flag chip (DESIGN.md § 8.6): card with the hairline, 8 px corners, 36 px
+ * tall with the flag icon, its touch target stretched to 44 px; a set flag is
+ * filled forest with its icon filled.
+ */
+const CHIP =
+  "relative h-9 gap-1.5 px-3 text-[13px] after:absolute after:inset-x-0 after:-inset-y-1 after:content-[''] aria-pressed:border-forest aria-pressed:bg-forest aria-pressed:text-on-fill aria-pressed:hover:bg-forest/90";
 
 /** One kind's flag on this question: the draft in the note field, and whether the field is open. */
 interface KindState {
@@ -33,7 +42,7 @@ function fromFlags(flags: readonly Flag[], shown: FlagState = {}): FlagState {
 
 /**
  * The flags row (D2), shown under the result once a practice question is
- * answered: "English is off" (kind translation) and "Hint is off" (kind hint).
+ * answered: "Report:", then "English is off" (kind translation) and "Hint is off" (kind hint).
  * A tap on an unset kind stores the flag at once with an empty note and opens
  * a one-line note field; Save updates the note; a tap on a set kind removes
  * the flag. A question drawn again shows its stored flags as set. Render it
@@ -127,16 +136,19 @@ export function FlagsRow({ questionId }: { questionId: number }) {
 
   return (
     <div role="group" aria-label={words.group} {...{ [OWN_KEYS_ATTRIBUTE]: '' }} className="flex flex-col gap-3">
-      <div className="flex flex-wrap gap-2">
+      <div className="flex flex-wrap items-center gap-2">
+        <span className="text-[13px] text-muted-foreground">{words.report}</span>
         {FLAG_KINDS.map((kind) => (
           <Button
             key={kind}
             type="button"
-            variant={state[kind] === undefined ? 'outline' : 'default'}
+            variant="outline"
             aria-pressed={state[kind] !== undefined}
             disabled={!usable}
             onClick={() => toggle(kind)}
+            className={CHIP}
           >
+            <FlagIcon aria-hidden="true" className="group-aria-pressed/button:fill-current" />
             {label(kind)}
           </Button>
         ))}
