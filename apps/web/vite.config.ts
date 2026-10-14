@@ -42,9 +42,9 @@ export default defineConfig({
       // Say so in the build output if a file is ever left out of the precache for its size.
       showMaximumFileSizeToCacheInBytesWarning: true,
       workbox: {
-        // Everything in dist: the shell, the JS (the question bank is in it), the css, the 15 pictures from the
-        // image map, the icons and the manifest.
-        globPatterns: ['**/*.{html,js,css,webmanifest,png,svg,jpg}'],
+        // Everything in dist: the shell, the JS (the question bank is in it), the css, the four font files from
+        // index.css (DESIGN.md § 8.5), the 15 pictures from the image map, the icons and the manifest.
+        globPatterns: ['**/*.{html,js,css,woff2,webmanifest,png,svg,jpg}'],
         // The question bank rides in the main JS chunk: about 0.56 MB of JSON, so the chunk stays near 1 MB, under
         // workbox's 2 MiB default. The ceiling is raised to 4 MiB so growth never silently drops it from the precache.
         maximumFileSizeToCacheInBytes: 4 * 1024 * 1024,
@@ -68,5 +68,7 @@ export default defineConfig({
     environment: 'jsdom',
     include: ['src/**/*.test.{ts,tsx}'],
     setupFiles: ['./test/setup.ts'],
+    // The multi-draw page tests take 1 to 2 s alone and pass vitest's 5 s default when the machine is loaded.
+    testTimeout: 20000,
   },
 });

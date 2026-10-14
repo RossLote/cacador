@@ -1,4 +1,4 @@
-import { hintFor, sectionOf, topicOf, translationFor, type OptionKey } from '@cacador/data';
+import { hintFor, sectionOf, topicOf, translationFor, type OptionKey, type Question } from '@cacador/data';
 import { act, fireEvent, render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router';
@@ -27,6 +27,9 @@ function renderPractice() {
     </MemoryRouter>,
   );
 }
+
+/** A bare header for PracticeSession on its own: the question's number, which shownId reads. */
+const numberHeader = (q: Question | undefined) => q && <p>{card.questionNumber(q.id)}</p>;
 
 /** The number of the question on screen, once one is. */
 async function shownId(): Promise<number> {
@@ -86,6 +89,49 @@ describe('PracticePage', () => {
     expect(screen.getByRole('button', { name: card.hint })).toBeInTheDocument();
     expect(nextButton()).not.toBeInTheDocument();
     expect(JSON.parse(sessionStorage.getItem(RECENT_KEY)!)).toEqual([1]);
+  });
+
+  it('names the question in the screen header: the section · topic eyebrow over "Question N", outside the card', async () => {
+    renderPractice();
+    expect(await shownId()).toBe(1);
+    const q = question(1);
+    const article = screen.getByRole('article');
+    const place = screen.getByText(`${sectionOf(q)!.en} · ${topicOf(q)!.en}`);
+    const number = screen.getByText(card.questionNumber(1));
+    expect(place).toHaveClass('eyebrow');
+    expect(number).toHaveClass('font-heading');
+    expect(article).not.toContainElement(place);
+    expect(article).not.toContainElement(number);
+    expect(screen.getByRole('link', { name: MESSAGES.en.common.backToHome })).toBeInTheDocument();
+  });
+
+  it('shows the header with the screen name before a question is drawn', async () => {
+    renderPractice();
+    expect(screen.getByRole('status')).toHaveTextContent(t.loading);
+    expect(screen.getByText(MESSAGES.en.common.nav.practice, { selector: 'p.eyebrow' })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: MESSAGES.en.common.backToHome })).toBeInTheDocument();
+    await shownId();
+  });
+
+  it('reads Report: before the two flag chips, and puts the rust Next under them', async () => {
+    const user = userEvent.setup();
+    renderPractice();
+    await user.click(optionFor(wrongOf(await shownId())));
+    const flags = screen.getByRole('group', { name: t.flags.group });
+    const report = within(flags).getByText(t.flags.report);
+    const chips = [t.flags.englishOff, t.flags.hintOff].map((name) => within(flags).getByRole('button', { name }));
+    for (const chip of chips) {
+      expect(report.compareDocumentPosition(chip) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+      expect(chip).toHaveClass('h-9');
+      expect(chip.querySelector('svg.lucide-flag')).toBeInTheDocument();
+    }
+    const next = nextButton()!;
+    expect(next).toHaveClass('bg-primary');
+    expect(flags.compareDocumentPosition(next) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+  });
+
+  it('has the Report: word in Portuguese too', () => {
+    expect(MESSAGES.pt.practice.flags.report).toBe('Assinalar:');
   });
 
   it('shows the English while the hold button is held and the Portuguese on release or when the pointer leaves', async () => {
@@ -155,6 +201,32 @@ describe('PracticePage', () => {
     expect(screen.queryByText(t.answerNotSaved)).not.toBeInTheDocument();
   });
 
+  describe('storage that cannot be read (DESIGN.md § 6.9)', () => {
+    it('says so under the header with the back control, and draws nothing', async () => {
+      failStore('getAll', { store: 'questionState' });
+      renderPractice();
+      const status = await screen.findByText(t.loadFailed);
+      expect(status).toHaveAttribute('role', 'status');
+      expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(t.title);
+      const back = screen.getByRole('link', { name: MESSAGES.en.common.backToHome });
+      expect(back.compareDocumentPosition(status) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+      expect(screen.queryByText(t.loading)).not.toBeInTheDocument();
+      expect(screen.queryByRole('article')).not.toBeInTheDocument();
+      expect(sessionStorage.getItem(RECENT_KEY)).toBeNull();
+    });
+
+    it('shows the question a new pool draws after the old pool could not be read (cac-8cn.18)', async () => {
+      vi.spyOn(Math, 'random').mockReturnValue(0);
+      failStore('getAll', { store: 'questionState', times: 1 });
+      const view = render(<PracticeSession pool={[413, 414, 415]} header={numberHeader} />);
+      expect(await screen.findByText(t.loadFailed)).toBeInTheDocument();
+      view.rerender(<PracticeSession pool={bankPool} header={numberHeader} />);
+      expect(await shownId()).toBe(1);
+      expect(screen.queryByText(t.loadFailed)).not.toBeInTheDocument();
+      expect(screen.getByRole('article')).toBeInTheDocument();
+    });
+  });
+
   describe('a Next under way when the page changes (cac-eil.38)', () => {
     it('draws nothing once the page has gone', async () => {
       const view = renderPractice();
@@ -167,10 +239,10 @@ describe('PracticePage', () => {
 
     it('draws nothing from the old pool once the pool has changed', async () => {
       vi.spyOn(Math, 'random').mockReturnValue(0);
-      const view = render(<PracticeSession pool={bankPool} />);
+      const view = render(<PracticeSession pool={bankPool} header={numberHeader} />);
       expect(await shownId()).toBe(1);
       await answerThenTapNext();
-      view.rerender(<PracticeSession pool={[413, 414, 415]} />);
+      view.rerender(<PracticeSession pool={[413, 414, 415]} header={numberHeader} />);
       expect(await waitForChange(1)).toBe(413);
       await settle();
       expect(await shownId()).toBe(413);
@@ -325,16 +397,13 @@ describe('PracticePage', () => {
       expect(nextButton()).not.toBeInTheDocument();
     });
 
-    it('leaves Enter and Space on a link outside the page, such as the back control, alone', async () => {
+    it('leaves Enter and Space on the screen header\'s back control alone: it sits outside the keys\' region', async () => {
       const user = userEvent.setup();
       renderPractice();
       await shownId();
       await user.keyboard('a');
       expect(nextButton()).toBeInTheDocument();
-      const back = document.createElement('a');
-      back.href = '#home';
-      back.textContent = 'Home';
-      document.body.prepend(back);
+      const back = screen.getByRole('link', { name: MESSAGES.en.common.backToHome });
       back.focus();
       const enter = fireEvent.keyDown(back, { key: 'Enter', code: 'Enter' });
       expect(enter).toBe(true);
@@ -342,7 +411,6 @@ describe('PracticePage', () => {
       expect(space).toBe(true);
       expect(screen.getByText(question(1).question)).toBeInTheDocument();
       expect(await shownId()).toBe(1);
-      back.remove();
     });
 
     it('opens Hint from the keyboard after answering: Enter on the focused Hint button does not advance', async () => {

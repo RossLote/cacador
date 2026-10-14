@@ -1,8 +1,9 @@
 import { questionById, type OptionKey } from '@cacador/data';
-import { ArrowLeft, ArrowRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Timer } from 'lucide-react';
 import { useCallback, useRef, useState } from 'react';
 import { Navigate } from 'react-router';
 import { FailureLine } from '@/components/FailureLine';
+import { ScreenHeader } from '@/components/nav/ScreenHeader';
 import { QuestionCard } from '@/components/question/QuestionCard';
 import {
   AlertDialog,
@@ -26,7 +27,12 @@ function ExamClock({ exam, onExpire }: { exam: Exam; onExpire: () => void }) {
   const { t } = useI18n();
   const left = useExamClock(exam, onExpire);
   return (
-    <p role="timer" aria-label={t.exam.timeLeft} className="text-2xl font-semibold tabular-nums">
+    <p
+      role="timer"
+      aria-label={t.exam.timeLeft}
+      className="flex shrink-0 items-center gap-2 rounded-md border border-ink bg-card px-3 py-2 font-heading text-[22px] leading-none font-semibold text-ink tabular-nums"
+    >
+      <Timer aria-hidden="true" className="size-5" strokeWidth={1.75} />
       {formatClock(left)}
     </p>
   );
@@ -49,9 +55,11 @@ type Failure = 'answer' | 'submit';
 /**
  * The running mock exam (DESIGN.md § 6.5, D3): one question at a time on the
  * card with the selection shown and nothing revealed, no peek, no hint and no
- * keys (D9, D20); markers, Previous and Next move freely; every answer change
+ * keys (D9, D20), under the screen header with "n of 20" and the clock chip
+ * (Campo D6, D9); markers, Previous and Next move freely; every answer change
  * is saved at once, checked against the deadline at the moment of the tap;
- * the clock counts down from the start time. Submit, after asking when
+ * the clock counts down from the start time. Submit, which counts the
+ * unanswered in its label ("Submit · N unanswered", "Submit" at 0), after asking when
  * questions are unanswered, and the clock reaching zero both finish the exam
  * through the storage module's once-only finish and open its results, whether
  * this page's finish ran or an earlier one had. What the page shows is what
@@ -160,11 +168,12 @@ export function RunningExam({ exam }: { exam: Exam }) {
   return (
     <div className="flex flex-col gap-4">
       {done && <Navigate to={examResultsPath(exam.id)} replace />}
-      <div className="flex items-baseline justify-between gap-4">
-        <h1 className="text-xl font-semibold tracking-tight">{t.exam.title}</h1>
-        <p className="text-muted-foreground tabular-nums">{t.exam.position(current + 1, total)}</p>
-        <ExamClock exam={exam} onExpire={end} />
-      </div>
+      <ScreenHeader
+        eyebrow={t.common.nav.exam}
+        line={t.exam.position(current + 1, total)}
+        aside={<ExamClock exam={exam} onExpire={end} />}
+        heading={t.exam.title}
+      />
 
       <ExamMarkers
         answered={exam.questionIds.map((id) => answers[id] !== undefined)}
@@ -173,54 +182,51 @@ export function RunningExam({ exam }: { exam: Exam }) {
       />
 
       {question && (
-        <QuestionCard
-          question={question}
-          selected={answers[questionId]}
-          revealed={false}
-          locked={ending}
-          onSelect={select}
-          peekEnabled={false}
-          hintEnabled={false}
-        />
+        // The screen header carries "n of 20", so the card draws no place of its own (D6, D9); the bank id is on the wrapper.
+        <div data-question-id={question.id}>
+          <QuestionCard
+            question={question}
+            selected={answers[questionId]}
+            revealed={false}
+            locked={ending}
+            onSelect={select}
+            peekEnabled={false}
+            hintEnabled={false}
+          />
+        </div>
       )}
+
+      <p className="text-center text-sm text-muted-foreground">{t.exam.notMarked}</p>
 
       {failure && <FailureLine>{failure === 'answer' ? t.exam.answerNotSaved : t.exam.submitFailed}</FailureLine>}
 
-      <div className="flex gap-2">
-        <Button
-          type="button"
-          variant="outline"
-          size="lg"
-          className="min-w-28"
-          disabled={current === 0}
-          onClick={() => move(current - 1)}
-        >
-          <ArrowLeft aria-hidden="true" />
-          {t.exam.previous}
-        </Button>
-        <Button
-          type="button"
-          variant="outline"
-          size="lg"
-          className="ml-auto min-w-28"
-          disabled={current === total - 1}
-          onClick={() => move(current + 1)}
-        >
-          {t.exam.next}
-          <ArrowRight aria-hidden="true" />
+      <div className="flex flex-col gap-2.5">
+        <div className="grid grid-cols-2 gap-2.5">
+          <Button
+            type="button"
+            variant="secondary"
+            size="lg"
+            disabled={current === 0}
+            onClick={() => move(current - 1)}
+          >
+            <ChevronLeft aria-hidden="true" />
+            {t.exam.previous}
+          </Button>
+          <Button
+            type="button"
+            size="lg"
+            className="border-forest bg-forest text-on-fill hover:border-forest/90 hover:bg-forest/90"
+            disabled={current === total - 1}
+            onClick={() => move(current + 1)}
+          >
+            {t.exam.next}
+            <ChevronRight aria-hidden="true" />
+          </Button>
+        </div>
+        <Button type="button" variant="destructive" disabled={ending} onClick={submit}>
+          {unanswered > 0 ? t.exam.submitUnanswered(unanswered) : t.exam.submit}
         </Button>
       </div>
-
-      <Button
-        type="button"
-        size="lg"
-        variant={unanswered === 0 ? 'default' : 'secondary'}
-        className="h-11 text-base"
-        disabled={ending}
-        onClick={submit}
-      >
-        {t.exam.submit}
-      </Button>
 
       <AlertDialog open={confirming} onOpenChange={setConfirming}>
         <AlertDialogContent>

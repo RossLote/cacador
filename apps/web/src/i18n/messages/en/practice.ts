@@ -14,6 +14,8 @@ export const practice = {
   focusedOn: 'Practising',
   flags: {
     group: 'Report a problem with this question',
+    /** Read before the two chips. */
+    report: 'Report:',
     englishOff: 'English is off',
     hintOff: 'Hint is off',
     englishNote: 'What is off with the English',

@@ -1,7 +1,9 @@
-/** Shared words: the app name, the navigation labels (Home included, for the back control) and the page for an unknown address. */
+/** Shared words: the app name, the navigation labels (Home included, for the back control), the tab bar's name and the page for an unknown address. */
 export const common = {
   appName: 'Caçador',
   backToHome: 'Back to Home',
+  /** The accessible name of the tab bar. */
+  mainNav: 'Main',
   nav: {
     home: 'Home',
     practice: 'Practice',

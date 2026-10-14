@@ -135,6 +135,32 @@ describe('Settings language', () => {
   });
 });
 
+describe('Settings looks that carry meaning', () => {
+  it('fills the current language chip forest through its pressed state and leaves the other on the card', () => {
+    renderPage();
+    for (const name of ['English', 'Português']) {
+      const chip = screen.getByRole('button', { name });
+      expect(chip).toHaveClass('aria-pressed:bg-forest', 'aria-pressed:text-on-fill', 'aria-pressed:border-forest', 'bg-card');
+    }
+    expect(screen.getByRole('button', { name: 'English' })).toHaveAttribute('aria-pressed', 'true');
+    expect(screen.getByRole('button', { name: 'Português' })).toHaveAttribute('aria-pressed', 'false');
+  });
+
+  it('draws Export and Import as card buttons with the ink hairline and Clear progress as a rust outline', () => {
+    renderPage();
+    for (const name of [en.export, en.import]) {
+      expect(screen.getByRole('button', { name })).toHaveClass('border-ink', 'bg-secondary');
+    }
+    expect(screen.getByRole('button', { name: en.clear })).toHaveClass('border-destructive', 'bg-card', 'text-destructive');
+  });
+
+  it('heads the two sections with eyebrows', () => {
+    renderPage();
+    expect(screen.getByRole('heading', { level: 2, name: en.language })).toHaveClass('eyebrow');
+    expect(screen.getByRole('heading', { level: 2, name: en.progress })).toHaveClass('eyebrow');
+  });
+});
+
 describe('Settings export', () => {
   it('downloads cacador-progress-<date>.json holding the device answers, exams and flags', async () => {
     await makeProgress();
@@ -379,7 +405,10 @@ describe('Settings storage line', () => {
     await closeStorage();
     vi.stubGlobal('indexedDB', undefined);
     renderPage();
-    expect(await screen.findByText(en.notSaving)).toBeInTheDocument();
+    const line = await screen.findByText(en.notSaving);
+    expect(line).toBeInTheDocument();
+    // On the clay plate with a rust hairline; the text is ink, never rust.
+    expect(line).toHaveClass('bg-clay', 'border-rust', 'text-ink');
     expect(await storageMode()).toBe('memory');
   });
 

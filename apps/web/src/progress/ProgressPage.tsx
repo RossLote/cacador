@@ -1,5 +1,5 @@
-import { ArrowRight } from 'lucide-react';
-import { LinkButton } from '@/components/LinkButton';
+import { ScreenHeader } from '@/components/nav/ScreenHeader';
+import { FlaggedLink } from '@/flagged/FlaggedLink';
 import { useI18n } from '@/i18n/useI18n';
 import { useLoaded } from '@/lib/useLoaded';
 import {
@@ -52,24 +52,27 @@ async function loadProgress(): Promise<ProgressData> {
   };
 }
 
-/** Readiness and the unseen count, worded as on Home (D11). */
+/**
+ * Readiness at the right of the header (D10): the percentage in Fraunces 26 px, then the unseen count, worded as on
+ * Home (D11). It stays the region named Readiness, and the pass line stays in the text for a screen reader.
+ */
 function ReadinessSummary({ value }: { value: Readiness }) {
   const { t } = useI18n();
   return (
-    <section aria-labelledby="progress-readiness" className="flex flex-col gap-1">
-      <h2 id="progress-readiness" className="text-sm font-medium text-muted-foreground">
-        {t.progress.readiness}
-      </h2>
-      <p className="flex flex-wrap items-baseline gap-x-4 gap-y-1">
-        <span className="text-5xl font-semibold tracking-tight tabular-nums">{t.progress.percent(value.percent)}</span>
-        <span className="text-lg text-muted-foreground tabular-nums">{t.progress.unseen(value.unseen)}</span>
-      </p>
-      <p className="text-sm text-muted-foreground">{t.progress.passLine(READINESS_TARGET_PERCENT)}</p>
+    <section aria-label={t.progress.readiness} className="flex shrink-0 items-baseline gap-1.5 pr-0.5">
+      <span className="font-heading text-[26px] leading-none font-semibold tabular-nums">
+        {t.progress.percent(value.percent)}
+      </span>
+      <span aria-hidden="true" className="text-[13px] text-muted-foreground">
+        ·
+      </span>
+      <span className="text-[13px] text-muted-foreground tabular-nums">{t.progress.unseen(value.unseen)}</span>
+      <span className="sr-only">{t.progress.passLine(READINESS_TARGET_PERCENT)}</span>
     </section>
   );
 }
 
-/** Progress (DESIGN.md § 6.6, D11): readiness, 30 days of answers, the group lists, past exams and the Flagged link. */
+/** Progress (DESIGN.md § 6.6, D11): readiness in the header, 30 days of answers, the group lists, past exams and the Flagged link. */
 export function ProgressPage() {
   const { t } = useI18n();
   const { data, failed, reload } = useLoaded(loadProgress);
@@ -77,8 +80,11 @@ export function ProgressPage() {
   useDayRefresh(reload);
 
   return (
-    <section className="flex flex-col gap-8">
-      <h1 className="text-2xl font-semibold tracking-tight">{t.progress.title}</h1>
+    <section className="flex flex-col gap-4.5">
+      <ScreenHeader
+        title={t.progress.title}
+        aside={data === undefined ? undefined : <ReadinessSummary value={data.readiness} />}
+      />
       {failed ? (
         <p role="status" className="text-muted-foreground">
           {t.progress.loadFailed}
@@ -89,14 +95,10 @@ export function ProgressPage() {
         </p>
       ) : (
         <>
-          <ReadinessSummary value={data.readiness} />
           <DayBars days={data.days} />
           <GroupTabs states={data.states} />
           <PastExams exams={data.exams} />
-          <LinkButton to="/flagged" variant="outline" size="lg" className="h-12 justify-between text-base">
-            {t.progress.flagged(data.flagCount)}
-            <ArrowRight aria-hidden="true" />
-          </LinkButton>
+          <FlaggedLink>{t.progress.flagged(data.flagCount)}</FlaggedLink>
         </>
       )}
     </section>

@@ -1,5 +1,5 @@
 import { questionsInTopic } from '@cacador/data';
-import { act, render, screen, within } from '@testing-library/react';
+import { act, render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter, Route, Routes, useLocation, useNavigate } from 'react-router';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
@@ -248,6 +248,112 @@ describe('Progress with answers', () => {
     expect(await screen.findByText('Today: 0 answers, 0 right')).toBeInTheDocument();
     expect(dayBars()[29]).toHaveAccessibleName('Today, 14 Oct: 0 answers, 0 right');
     expect(dayBars()[28]).toHaveAccessibleName('13 Oct: 1 answer, 1 right');
+  });
+});
+
+describe('Progress restyle (D10)', () => {
+  it('puts the readiness in the header region, and today in rust over forest days on the plate', async () => {
+    await answer(1, true, NOW - 2 * DAY);
+    await answer(2, true);
+    await answer(3, false);
+    renderProgress();
+
+    const readinessRegion = await screen.findByRole('region', { name: en.progress.readiness });
+    expect(readinessRegion).toHaveTextContent(/34 %·503 unseen/);
+    expect(within(screen.getByRole('banner')).getByRole('region', { name: en.progress.readiness })).toBe(readinessRegion);
+    expect(readinessRegion.querySelector('span')).toHaveClass('font-heading');
+
+    // One visible h1 in the header, in Fraunces, between the back control and the readiness; no eyebrow.
+    const banner = screen.getByRole('banner');
+    const h1 = screen.getByRole('heading', { level: 1 });
+    expect(screen.getAllByRole('heading', { level: 1 })).toHaveLength(1);
+    expect(h1).toHaveTextContent('Progress');
+    expect(h1).toHaveClass('font-heading', 'text-[28px]');
+    expect(h1).not.toHaveClass('sr-only');
+    expect(banner.querySelector('.eyebrow')).toBeNull();
+    expect(banner.firstElementChild).toHaveAccessibleName(en.common.backToHome);
+    expect(h1.nextElementSibling).toBe(readinessRegion);
+
+    const plate = screen.getByRole('region', { name: en.progress.days(ACCURACY_DAYS) });
+    expect(within(plate).getByText('Today: 2 answers, 1 right')).toBeInTheDocument();
+    expect(within(plate).getByText('14 Sept')).toBeInTheDocument();
+    expect(within(plate).getByText('Today')).toHaveClass('text-rust');
+    expect(within(plate).getByRole('list', { name: en.progress.daysChart })).toHaveClass('border-ink');
+
+    const older = dayBars()[27] as HTMLElement;
+    const today = dayBars()[29] as HTMLElement;
+    expect(older.querySelector('[data-slot="day-right"]')).toHaveClass('bg-forest');
+    expect(today.querySelector('[data-slot="day-right"]')).toHaveClass('bg-rust');
+    expect(today.querySelector('.bg-track')).not.toBeNull();
+    // A day with no answers draws no block.
+    expect(dayBars()[10]?.querySelector('div')).toBeNull();
+  });
+
+  it('colours a 50 % row rust and a 100 % row forest, and shows a dash in muted when not started (the 75 % edge is in groups.test.ts)', async () => {
+    const ducks = [firstIn('patos', 0), firstIn('patos', 1)];
+    await answer(ducks[0] as number, true);
+    await answer(ducks[1] as number, false);
+    await answer(firstIn('lebre'), true);
+    renderProgress();
+
+    const percentOf = (name: RegExp) =>
+      within(screen.getByRole('link', { name })).getByText((_, el) => el?.getAttribute('data-slot') === 'row-percent');
+    const fillOf = (name: RegExp) =>
+      screen.getByRole('link', { name }).querySelector('[data-slot="mini-bar-fill"]') as HTMLElement;
+
+    const ducksPercent = await waitFor(() => percentOf(/^Ducks:/));
+    expect(ducksPercent).toHaveTextContent('50 %');
+    expect(ducksPercent).toHaveClass('text-rust', 'font-heading');
+    expect(fillOf(/^Ducks:/)).toHaveStyle({ width: '50%' });
+    expect(fillOf(/^Ducks:/)).toHaveClass('bg-rust');
+
+    expect(percentOf(/^Iberian hare:/)).toHaveTextContent('100 %');
+    expect(percentOf(/^Iberian hare:/)).toHaveClass('text-forest');
+    expect(fillOf(/^Iberian hare:/)).toHaveStyle({ width: '100%' });
+    expect(fillOf(/^Iberian hare:/)).toHaveClass('bg-forest');
+
+    const untouched = screen.getByRole('link', { name: "Hunter's documents: not started, 10 questions" });
+    expect(untouched).toHaveTextContent('Not started · 10 questions');
+    expect(within(untouched).getByText('—')).toHaveClass('text-muted-foreground');
+    expect(untouched.querySelector('[data-slot="mini-bar-fill"]')).toHaveStyle({ width: '0%' });
+  });
+
+  it('shows the Flagged row with its flag icon and chevron', async () => {
+    renderProgress();
+    const link = await screen.findByRole('link', { name: 'Flagged (0)' });
+    expect(link).toHaveClass('border-ink');
+    expect(link.querySelectorAll('svg')).toHaveLength(2);
+  });
+
+  it('draws the open tab underlined in forest and the chips as moss and clay', async () => {
+    const failedIds = drawExam(seededRandom(1));
+    const failed = await createExam(failedIds, NOW - 3 * DAY);
+    await answerExam(failed.id, Object.fromEntries(failedIds.slice(0, 14).map((id) => [id, correctOf(id)])), NOW - 3 * DAY);
+    await finishExam(failed.id, NOW - 3 * DAY + 10 * MINUTE);
+    const passedIds = drawExam(seededRandom(2));
+    const passed = await createExam(passedIds, NOW - 2 * 60 * MINUTE);
+    await answerExam(passed.id, Object.fromEntries(passedIds.slice(0, 15).map((id) => [id, correctOf(id)])), NOW - 2 * 60 * MINUTE);
+    await finishExam(passed.id, NOW - 60 * MINUTE);
+    renderProgress();
+
+    // The open tab: forest text, bold and the 2 px forest line shown (opacity 100); the others draw neither.
+    const open = await screen.findByRole('tab', { name: 'Topics' });
+    const shut = screen.getByRole('tab', { name: 'Sections' });
+    expect(open).toHaveAttribute('data-active');
+    expect(open).toHaveClass('data-active:text-forest', 'data-active:font-bold', 'after:bg-forest', 'group-data-horizontal/tabs:after:h-0.5', 'data-active:after:opacity-100');
+    expect(shut).not.toHaveAttribute('data-active');
+    expect(shut).toHaveClass('after:opacity-0');
+
+    const section = await screen.findByRole('region', { name: en.progress.exams });
+    const [passedRow, failedRow] = within(section).getAllByRole('link');
+    const passedChip = within(passedRow as HTMLElement).getByText('Passed');
+    const failedChip = within(failedRow as HTMLElement).getByText('Not passed');
+    expect(passedChip).toHaveAttribute('data-variant', 'success');
+    expect(passedChip).toHaveClass('bg-accent', 'text-success');
+    expect(failedChip).toHaveClass('border-destructive');
+    expect(failedChip).toHaveAttribute('data-variant', 'destructive');
+    expect(failedChip).toHaveClass('bg-clay', 'text-ink');
+    expect(within(passedRow as HTMLElement).getByText('15 / 20')).toHaveClass('font-heading');
   });
 });
 

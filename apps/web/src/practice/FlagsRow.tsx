@@ -1,5 +1,7 @@
+import { Flag as FlagIcon } from 'lucide-react';
 import { useCallback, useId, useRef, useState } from 'react';
 import { FailureLine } from '@/components/FailureLine';
+import { CHIP } from '@/components/styles';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useI18n } from '@/i18n/useI18n';
@@ -33,7 +35,7 @@ function fromFlags(flags: readonly Flag[], shown: FlagState = {}): FlagState {
 
 /**
  * The flags row (D2), shown under the result once a practice question is
- * answered: "English is off" (kind translation) and "Hint is off" (kind hint).
+ * answered: "Report:", then "English is off" (kind translation) and "Hint is off" (kind hint).
  * A tap on an unset kind stores the flag at once with an empty note and opens
  * a one-line note field; Save updates the note; a tap on a set kind removes
  * the flag. A question drawn again shows its stored flags as set. Render it
@@ -127,16 +129,19 @@ export function FlagsRow({ questionId }: { questionId: number }) {
 
   return (
     <div role="group" aria-label={words.group} {...{ [OWN_KEYS_ATTRIBUTE]: '' }} className="flex flex-col gap-3">
-      <div className="flex flex-wrap gap-2">
+      <div className="flex flex-wrap items-center gap-2">
+        <span className="text-[13px] text-muted-foreground">{words.report}</span>
         {FLAG_KINDS.map((kind) => (
           <Button
             key={kind}
             type="button"
-            variant={state[kind] === undefined ? 'outline' : 'default'}
+            variant="outline"
             aria-pressed={state[kind] !== undefined}
             disabled={!usable}
             onClick={() => toggle(kind)}
+            className={CHIP}
           >
+            <FlagIcon aria-hidden="true" className="group-aria-pressed/button:fill-current" />
             {label(kind)}
           </Button>
         ))}

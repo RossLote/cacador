@@ -18,7 +18,8 @@ export default defineConfig({
     locale: 'en-GB',
     trace: 'retain-on-failure',
   },
-  projects: [{ name: 'chromium', use: { ...devices['Desktop Chrome'] } }],
+  // The acceptance bar is performed at a phone's width (epic cac-8cn): 390 px wide.
+  projects: [{ name: 'chromium', use: { ...devices['Desktop Chrome'], viewport: { width: 390, height: 844 } } }],
   // Always the production build, served by vite preview with the base path, as deployed.
   webServer: {
     command: `pnpm --filter @cacador/web build && pnpm --filter @cacador/web preview --port ${PORT} --strictPort`,

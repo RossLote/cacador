@@ -1,5 +1,6 @@
 import { useId, useRef, useState, type ChangeEvent, type MouseEvent } from 'react';
-import { LinkButton } from '@/components/LinkButton';
+import { ScreenHeader } from '@/components/nav/ScreenHeader';
+import { CHIP, PLATE } from '@/components/styles';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -12,10 +13,11 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
-import { Separator } from '@/components/ui/separator';
+import { FlaggedLink } from '@/flagged/FlaggedLink';
 import { LOCALE_NAMES, LOCALE_TAGS, LOCALES } from '@/i18n/locales';
 import { useI18n } from '@/i18n/useI18n';
 import { useLoaded } from '@/lib/useLoaded';
+import { cn } from '@/lib/utils';
 import { clearProgress, importProgress, storageMode, type ImportCounts } from '@/storage';
 import { canShareProgressFile, downloadFile, makeProgressFile } from './progressFile';
 
@@ -151,16 +153,16 @@ export function SettingsPage() {
 
   return (
     <section className="flex flex-col gap-6">
-      <h1 className="text-2xl font-semibold tracking-tight">{t.settings.title}</h1>
+      <ScreenHeader title={t.settings.title} />
 
       {inMemory && (
-        <p className="rounded-lg border border-destructive/30 bg-destructive/10 p-3 text-sm text-foreground">
+        <p className="rounded-lg border border-rust bg-clay px-4 py-3 text-sm text-ink">
           {t.settings.notSaving}
         </p>
       )}
 
-      <section aria-labelledby={languageId} className="flex flex-col gap-3">
-        <h2 id={languageId} className="text-lg font-medium">
+      <section aria-labelledby={languageId} className={cn('flex flex-col gap-2.5', PLATE)}>
+        <h2 id={languageId} className="eyebrow">
           {t.settings.language}
         </h2>
         <div role="group" aria-labelledby={languageId} className="grid grid-cols-2 gap-2">
@@ -168,8 +170,8 @@ export function SettingsPage() {
             <Button
               key={code}
               lang={LOCALE_TAGS[code]}
-              size="lg"
-              variant={code === locale ? 'default' : 'outline'}
+              variant="outline"
+              className={CHIP}
               aria-pressed={code === locale}
               onClick={() => setLocale(code)}
             >
@@ -179,20 +181,18 @@ export function SettingsPage() {
         </div>
       </section>
 
-      <Separator />
-
-      <section aria-labelledby={progressId} className="flex flex-col gap-3">
-        <h2 id={progressId} className="text-lg font-medium">
+      <section aria-labelledby={progressId} className={cn('flex flex-col gap-2.5', PLATE)}>
+        <h2 id={progressId} className="eyebrow">
           {t.settings.progress}
         </h2>
         <p className="text-sm text-muted-foreground">{t.settings.progressHelp}</p>
         <div className="flex flex-wrap gap-2">
-          <Button variant="outline" size="lg" className="flex-1" onClick={() => void exportFile()}>
+          <Button variant="secondary" size="lg" className="flex-1" onClick={() => void exportFile()}>
             {t.settings.export}
           </Button>
           {canShare && (
             <Button
-              variant="outline"
+              variant="secondary"
               size="lg"
               className="flex-1"
               onPointerDown={prepareShare}
@@ -203,7 +203,7 @@ export function SettingsPage() {
             </Button>
           )}
           <Button
-            variant="outline"
+            variant="secondary"
             size="lg"
             className="flex-1"
             disabled={outcome?.kind === 'importing'}
@@ -241,11 +241,7 @@ export function SettingsPage() {
         </AlertDialog>
       </section>
 
-      <Separator />
-
-      <LinkButton to="/flagged" variant="outline" size="lg">
-        {t.settings.flaggedLink}
-      </LinkButton>
+      <FlaggedLink>{t.settings.flaggedLink}</FlaggedLink>
     </section>
   );
 }

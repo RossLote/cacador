@@ -1,7 +1,8 @@
 import { questionById } from '@cacador/data';
 import { useCallback, useEffect, useState } from 'react';
+import { ScreenHeader } from '@/components/nav/ScreenHeader';
+import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
 import { useI18n } from '@/i18n/useI18n';
 import { useLoaded } from '@/lib/useLoaded';
 import { listFlags, removeFlag, type Flag } from '@/storage';
@@ -62,14 +63,14 @@ export function FlaggedPage() {
 
   return (
     <section className="flex flex-col gap-4">
-      <h1 className="text-2xl font-semibold tracking-tight">{t.flagged.title}</h1>
+      <ScreenHeader title={t.flagged.title} />
 
       <div className="flex gap-2">
-        <Button variant="outline" size="lg" className="flex-1" disabled={list.length === 0} onClick={() => void copyText()}>
+        <Button size="lg" className="flex-1" disabled={list.length === 0} onClick={() => void copyText()}>
           {t.flagged.copy}
         </Button>
         {canShare && (
-          <Button variant="outline" size="lg" className="flex-1" disabled={list.length === 0} onClick={() => void shareText()}>
+          <Button variant="secondary" size="lg" className="flex-1" disabled={list.length === 0} onClick={() => void shareText()}>
             {t.flagged.share}
           </Button>
         )}
@@ -92,27 +93,27 @@ export function FlaggedPage() {
         <ul aria-label={t.flagged.list} className="flex flex-col gap-2">
           {list.map((flag) => (
             <li key={`${flag.questionId}-${flag.kind}`}>
-              <Card size="sm" className="px-(--card-spacing)">
-                <div className="flex items-start justify-between gap-3">
-                  <div className="flex min-w-0 flex-col gap-1">
-                    <p className="font-medium">
-                      {t.flagged.questionNumber(flag.questionId)} <span className="text-muted-foreground">· {kindLabel(flag)}</span>
-                    </p>
-                    <p>{flag.note.trim() === '' ? <span className="text-muted-foreground">{t.flagged.noNote}</span> : flag.note}</p>
-                    <p lang="pt-PT" className="text-sm text-muted-foreground">
-                      {questionById(flag.questionId)?.question}
-                    </p>
-                  </div>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    aria-label={t.flagged.clearLabel(flag.questionId, kindLabel(flag))}
-                    onClick={() => void clear(flag)}
-                  >
-                    {t.flagged.clear}
-                  </Button>
+              <div className="flex items-start justify-between gap-3 rounded-md border border-line bg-card px-3.5 py-3">
+                <div className="flex min-w-0 flex-col gap-1">
+                  <p className="flex items-center gap-2">
+                    <span className="font-heading text-base font-semibold">{t.flagged.questionNumber(flag.questionId)}</span>
+                    <span className="sr-only"> · </span>
+                    <Badge variant="outline">{kindLabel(flag)}</Badge>
+                  </p>
+                  <p>{flag.note.trim() === '' ? <span className="text-muted-foreground">{t.flagged.noNote}</span> : flag.note}</p>
+                  <p lang="pt-PT" className="text-sm text-muted-foreground">
+                    {questionById(flag.questionId)?.question}
+                  </p>
                 </div>
-              </Card>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  aria-label={t.flagged.clearLabel(flag.questionId, kindLabel(flag))}
+                  onClick={() => void clear(flag)}
+                >
+                  {t.flagged.clear}
+                </Button>
+              </div>
             </li>
           ))}
         </ul>

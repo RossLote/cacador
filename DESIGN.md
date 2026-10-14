@@ -535,8 +535,12 @@ Four phases, each its own epic, in order.
 Built in phase 4 (epic cac-eil). The rules in § 6 to § 8 come from that epic's
 decisions D1 to D23 and from the choices the orchestrator made during the epic and
 marked reversible, which carry no D number; § 9 records both kinds, and the fixes from
-the epic's review fill in detail under them. The app is a static site with no backend:
-everything it knows about the learner stays on the device (§ 7).
+the epic's review fill in detail under them. The Campo design round (epic cac-8cn)
+restyled every screen (§ 8.5, § 8.6), replaced Home's buttons with the tab bar
+(§ 6.3) and added three things the chosen artboards carry: Weakest topics on Home, the
+count answered on the exam-in-progress card and the count unanswered on Submit. The
+app is a static site with no backend: everything it knows about the learner stays on
+the device (§ 7).
 
 ### 6.1 Language
 
@@ -579,11 +583,33 @@ everything it knows about the learner stays on the device (§ 7).
 
 ### 6.3 Home
 
-The hub, at `/`: the name Caçador; readiness against the 75 % line with the unseen
-count; when the storage module returns an unfinished exam, a card for the exam in
-progress with the minutes left, which opens it (the module never returns an exam past
-its deadline, § 6.5); and the buttons Practice, Exam, Progress and Settings. Every other
-screen has a back control to Home; there is no bottom bar.
+The hub, at `/`, top to bottom:
+
+- The header: the name Caçador, and at its right a control to Settings (a
+  sliders icon, accessible name "Settings").
+- The readiness plate: readiness against the 75 % line with the unseen count beside it
+  (§ 6.2), and a bar with a tick at 75 % and "Pass line 75 %" under it.
+- When the storage module returns an unfinished exam, a card for the exam in progress,
+  which opens it: "N minutes left · A of 20 answered", A the answers the exam holds
+  (the module never returns an exam past its deadline, § 6.5).
+- Two cards side by side: Practice ("Weak ones first"), which opens practice over the
+  whole bank, and Exam ("20 questions · 30 min", the numbers from the study model),
+  which opens `/exam`. Each card's accessible name is its title and its line, so a
+  link named exactly "Practice" or "Exam" is the tab, never the card.
+- Weakest topics: the two lowest started topics by group accuracy, in the Progress
+  topic list's worst-first order (§ 6.6), each a row with the name, "Seen x of y" and
+  the percentage, linking to focused practice on that topic (§ 6.4), under an "All
+  topics" link to Progress. One row when only one topic is started; the section is
+  absent while none is, so a fresh device shows none.
+
+**The menu** is a bar of four tabs along the bottom: Home, Practice, Exam and Progress,
+named exactly by the navigation words, the current one marked (`aria-current="page"`).
+It shows on every screen except the `/exam` route itself: the start screen and the
+running exam take the whole screen and keep only the back control. The results
+(`/exam/results/<id>`), Settings, Flagged and the not-found page show the bar with no
+tab current. Settings is reached from Home's header control, Flagged from Progress and
+Settings. Every screen but Home has the back control to Home ("Back to Home") at the
+start of its screen header (§ 8.2).
 
 ### 6.4 Practice
 
@@ -607,8 +633,9 @@ screen has a back control to Home; there is no bottom bar.
 - **Flags**: after answering, a row of two taps, "English is off" and "Hint is off". A
   tap creates the flag at once with an empty note and opens a one-line note field; Save
   updates the note; a second tap on the same kind removes the flag. One flag per
-  question and kind; a question drawn again shows its existing flags as set. Flags are
-  a practice control only: the exam and its review have no flags row.
+  question and kind; a question drawn again shows its existing flags as set. The row
+  reads "Report:" before the two taps. Flags are a practice control only: the exam and
+  its review have no flags row.
 - **Laptop keys**: A, B, C and 1, 2, 3 answer; Enter advances; holding Space peeks for
   as long as it is held. The keys belong to the practice page, not to the question
   card, so the exam leaves Space unbound. They act from the page itself, never from the
@@ -625,18 +652,21 @@ screen has a back control to Home; there is no bottom bar.
 - Start draws 20 distinct questions uniformly from the whole bank and records the start
   time. A strip of 20 markers shows which are answered and which is current; Previous
   and Next move one at a time, a marker jumps. Movement is free and an answer can be
-  changed until Submit. The chosen option is shown and nothing is marked right or wrong.
-  No peek and no Hint during the exam.
+  changed until Submit. The chosen option is shown and nothing is marked right or wrong;
+  a line under the options says so: "Answers are not marked until you submit. No
+  English and no hints during the exam." No peek and no Hint during the exam.
 - Each answer is saved at the tap, one question at a time, merged into the exam as
   stored. It counts when it was chosen before the deadline, even when its save reaches
   storage after it; an answer the storage module refuses because the exam is over ends
   the exam on this screen too.
 - The clock counts down from 30:00, computed from the start time, so it keeps running
   while the app is closed. Reopening the app with an unfinished exam resumes it with
-  its answers, from Home's card or from `/exam`, on its first unanswered question (the
-  first question when every one is answered), where the learner left off.
-- Submit asks first when questions are unanswered. At 30:00 the exam submits itself as
-  it stands.
+  its answers, from Home's card (which gives the minutes left and the count answered,
+  § 6.3) or from `/exam`, on its first unanswered question (the first question when
+  every one is answered), where the learner left off.
+- Submit reads "Submit · N unanswered" while N questions are unanswered and "Submit"
+  once none is, and asks first when questions are unanswered. At 30:00 the exam submits
+  itself as it stands.
 - Submit runs once: the storage module finishes an exam only while it is still
   unfinished, and the answers are logged only when that succeeded. At Submit, and only
   then, the 20 answers go into the answers log with mode exam and the exam id; an
@@ -659,7 +689,7 @@ screen has a back control to Home; there is no bottom bar.
 
 At `/progress`, top to bottom:
 
-- Readiness and the unseen count, worded as on Home.
+- Readiness and the unseen count in the screen header, "N % · M unseen".
 - Accuracy by day: one bar per calendar day for the last 30 days, in the device's time
   zone, each giving that day's answers, practice and exam, and how many were right;
   today is labelled. Plain blocks, no chart library. The bars and "today" follow the
@@ -671,7 +701,8 @@ At `/progress`, top to bottom:
   the not-started rows last, and each row links into focused practice for its group.
   The open list is kept in the address (`/progress?tab=section` or `?tab=pattern`, the
   topics having none), so back from focused practice returns to the list the row was
-  in.
+  in. Home's Weakest topics are the first two started rows of the topic list, in the
+  same order (§ 6.3).
 - Past exams, newest finished first, finished exams only (an unfinished exam is Home's
   card, never a row): date, score out of 20, worked out from the exam's answers as the
   results page does, and Passed or Not passed, each linking to its results.
@@ -709,7 +740,8 @@ this device when storage is unavailable (§ 6.9); and a link to Flagged.
 
 ### 6.9 Empty and failure states
 
-- **A fresh device**: Home shows 33 % and 506 unseen and no exam card; Progress shows
+- **A fresh device**: Home shows 33 % and 506 unseen, no exam card and no Weakest
+  topics; Progress shows
   empty day bars, every list row not started and no past exams; Flagged says there are
   no flags, and Copy is disabled.
 - **Storage unavailable**: when IndexedDB cannot be opened (a private window, blocked
@@ -914,20 +946,27 @@ precedent for every choice here, minus the server: this app has no backend.
 ### 8.1 Layout
 
 ```
+design/campo/              the design reference (§ 8.5): README.md, style-tile.html and one
+                           artboard per screen, home.html, practice.html, exam.html and
+                           progress.html; read for values, never built or served
 apps/web/
   index.html               lang en, color-scheme light dark, the manifest and icon links, #root
-  vite.config.ts           base /cacador/, React, Tailwind, the 404.html copy, vite-plugin-pwa,
-                           the vitest settings
-  components.json          shadcn: style base-nova, base colour neutral, lucide icons
+  vite.config.ts           base /cacador/, React, Tailwind, the 404.html copy, vite-plugin-pwa
+                           (the precache, the four font files included), the vitest settings
+  components.json          shadcn: style base-nova, lucide icons (its base colour is
+                           overridden by the Campo tokens in index.css)
   scripts/render-icons.sh  renders every PNG icon from public/favicon.svg
   public/                  manifest.webmanifest, favicon.svg, favicon-32.png,
                            apple-touch-icon.png, icons/ (192, 512, maskable 512)
   src/
     main.tsx               BrowserRouter with basename import.meta.env.BASE_URL, the image
                            map imported, the service worker registered
-    App.tsx                the routes and the shared Layout with the back control
-    index.css              Tailwind, the shadcn tokens, light and dark
-    home/                  HomePage: readiness, the exam-in-progress card, the four buttons
+    App.tsx                the routes and the shared Layout around every page
+    index.css              Tailwind, the Campo tokens light and dark mapped onto the shadcn
+                           tokens, the @font-face rules of the two fonts
+    home/                  HomePage: the header with the Settings control, the readiness
+                           plate, the exam-in-progress card, the Practice and Exam cards,
+                           Weakest topics
     practice/              PracticePage and PracticeSession, FlagsRow, usePracticeKeys (the
                            laptop keys), usePracticePool (the query filter and its chip),
                            recent.ts (the draw over the recent list)
@@ -938,12 +977,19 @@ apps/web/
                            rows), PastExams, useDayRefresh (the read again at midnight and
                            when shown)
     settings/              SettingsPage, progressFile.ts (the download and the share sheet)
-    flagged/               FlaggedPage, copyFormat.ts (the fixed copy text, § 6.7)
+    flagged/               FlaggedPage, FlaggedLink (the row linking to Flagged at the foot
+                           of Progress and Settings), copyFormat.ts (the fixed copy text,
+                           § 6.7)
     notfound/              NotFoundPage, for any address that names no screen
+    components/nav/        the tab bar, on every screen but the /exam route, and the screen
+                           header with the back control, on every screen but Home (§ 8.2)
     components/question/   QuestionCard with PeekButton and HintPanel, names.ts (a name in
                            the interface language)
     components/LinkButton.tsx  a router link drawn as a button
     components/FailureLine.tsx the one line a screen uses to say something did not work
+    components/styles.ts   the shared class strings (§ 8.5): FOCUS_RING (the keyboard focus
+                           ring), PLATE (a plate's box), CHIP (the flag and language chips)
+                           and ROW_LINK (a card row that links somewhere)
     components/ui/         the 11 generated shadcn components
     model/                 the study model: draw.ts (weights, window, recent list), states.ts,
                            progress.ts (readiness, group accuracy, day bars), pools.ts,
@@ -967,11 +1013,15 @@ e2e/
   package.json             @cacador/e2e, scripts e2e, browsers and typecheck
   playwright.config.ts     the production build under vite preview, locale en-GB
   tsconfig.json
-  acceptance.spec.ts       steps 2 to 11 of the phase 4 acceptance bar, in order
-  offline.spec.ts          step 12: Home, Practice and the 15 images from the cache, offline
+  look.ts                  the Campo colour values, the contrast helper, the colour a text
+                           sits on, the Fraunces check
+  acceptance.spec.ts       steps 2 to 9 of the Campo acceptance bar, in order, then four
+                           steps after the bar
+  offline.spec.ts          step 10: Home, Practice, Fraunces and the 15 images from the
+                           cache, offline
   installable.spec.ts      the manifest and icons under /cacador/, Chrome's installability check
   build-output.spec.ts     the built dist: the 404.html copy, the waiting worker, the
-                           /cacador/ precache and URLs
+                           /cacador/ precache and URLs, and step 11 (four woff2, 15 jpg)
 ```
 
 The study model holds the formulas of § 6.2 and the exam draw, deadline and score, as
@@ -987,8 +1037,30 @@ place, and `/exam/results/<id>`, the results and review), `/progress` (query `ta
 `section` or `pattern`, the open list, § 6.6), `/settings` and `/flagged`. Any other
 address, an unknown one under `/exam/` included, shows a not-found page inside the
 `Layout`, with the back control to Home. Each page lives in `apps/web/src/<screen>/`.
-Home is the hub: the back control to Home on every other screen is a shared piece of the
-`Layout` in `App.tsx`, never part of a page, and there is no bottom bar.
+
+The menu is the tab bar along the bottom (§ 6.3): Home, Practice, Exam and Progress,
+the labels the navigation words of `common`, the current tab in forest with a filled
+icon and `aria-current="page"`. It shows on every route except `/exam` itself, the
+start screen and the running exam; the results route, `/settings`, `/flagged` and the
+not-found page show it with no tab current. Every screen but Home
+opens with one screen header row: the back control to Home (a left arrow, accessible
+name "Back to Home"), then the caption, and a slot at the right. The caption takes one
+of two forms:
+
+- **Eyebrow**, on Practice and the exam's screens: an eyebrow (the section · topic on
+  Practice, "Exam" on the exam) over a muted line in Fraunces 16 px (the question number
+  on Practice, "n of 20" on the running exam; none on the start screen and the
+  results), with the page's h1 ("Practice", "Exam") for screen readers only. The clock
+  sits in the slot on the running exam. The results page sets its visible h1, "Exam
+  results", in Fraunces 28 px under the row.
+- **Title**, on Progress, Settings, Flagged and the not-found page: the screen's name
+  as the visible h1 in Fraunces 28 px, with no eyebrow and no line. Progress puts
+  "N % · M unseen" in the slot at the right, the percentage in Fraunces 26 px and the
+  unseen count in muted 13 px.
+
+Home's header is the app name with the Settings control at its right. The tab bar and
+the screen header are shared pieces in `apps/web/src/components/nav/`; each page
+renders its own header, so its own data can sit in it.
 
 ### 8.3 Messages
 
@@ -1033,14 +1105,76 @@ script to the root and `e2e` package files and the not-found route to `App.tsx` 
 
 ### 8.5 Look
 
-The theme follows `prefers-color-scheme`, light and dark both rendered: the dark
-tokens and Tailwind's `dark:` variant are keyed on the media query, never on a class
-(Sumit's dark-only `index.css`, class-keyed variant and Google Fonts are not the
-precedent here). shadcn/ui on Base UI, style `base-nova`, base colour neutral. A
-phone-first single column that also works at laptop width. The system font stack, no
-web fonts. No design canvas. On every screen: no cream backgrounds, no pill buttons, no
-"01 / 02 / 03" section labels, no italic accent words, no gradient hero, no chart
-library.
+Campo, design direction 1 (epic cac-8cn): a field notebook. A warm paper ground, ink
+text, forest green as the working colour (tabs, right answers, bars), rust for the one
+thing to do next and for a wrong answer, hairlines and plates, no shadows. The
+reference is `design/campo/`: the style tile and one artboard each for Home, Practice,
+the exam and Progress, read for their values; where a file and this section disagree,
+this section wins. Settings, Flagged and the not-found page have no artboard and follow
+the style tile's rules.
+
+**Palette.** The theme follows `prefers-color-scheme`, light and dark both rendered: the
+dark tokens and Tailwind's `dark:` variant are keyed on the media query, never on a
+class, and there is no toggle (Sumit's dark-only `index.css`, class-keyed variant and
+Google Fonts are not the precedent here). Dark is the same notebook by lamplight.
+
+| Token | Light | Dark | Use |
+| --- | --- | --- | --- |
+| paper | `#F4F0E6` | `#151A17` | the ground |
+| card | `#FBF8F1` | `#1C2320` | cards, plates, rows |
+| line | `#D9D2C2` | `#33403A` | hairlines |
+| track | `#E6E0D2` | `#2A332D` | the empty part of a bar |
+| ink | `#1C2620` | `#EDE8DB` | text |
+| muted | `#5A6256` | `#B3BAAE` | secondary text |
+| eyebrow | `#4F6650` | `#9DBAA2` | section and topic captions |
+| forest | `#2E5A3A` | `#7FB58C` | the working colour |
+| moss tint | `#DDE8DA` | `#243A2C` | the right answer, the hint panel |
+| moss line | `#B9C9B6` | `#3A5543` | the hint panel's rule |
+| rust | `#B5461C` | `#E0784F` | the next thing to do, a wrong answer |
+| clay tint | `#F3DED2` | `#3E2419` | the wrong answer, the exam in progress |
+
+Text on a forest or rust fill is the card colour in light and the ground in dark. The
+contrast rule: every text colour passes 4.5:1 against the colour it sits on (3:1 at
+24 px and above), in both themes; a change to a value, or a new pairing, is checked
+against it before it lands. Text on the clay tint is ink, never rust, in both themes:
+the Not passed chip (clay with ink text and a rust hairline), the word "Wrong" on the
+chosen wrong row and the text of Home's exam-in-progress card. Rust appears on clay
+only as the hairline, the rust-filled letter (card text on rust, 5.13:1) and the icon
+(not text, 3:1). The Passed chip is moss tint with forest text. The shadcn tokens map
+onto these: background paper, card card, border line, foreground ink, muted-foreground
+muted, primary rust, secondary card with the ink hairline, accent moss tint, destructive
+rust, success forest and ring forest. The paper ground is the one cream the app allows,
+by Ross's choice (2026-10-14).
+
+**Type.** Two fonts. Fraunces, variable on the opsz and wght axes, at weight 600, for
+the app name, the screen titles, the question stem, every number that is the point of
+its screen (readiness, the clock, percentages, scores) and the option letters. Progress's
+"Today: N answers, M right" is a secondary line in Source Sans, beside its plate's
+eyebrow. Source Sans 3, variable on wght, for everything else: body 16 to 17 px,
+secondary 13 to 14 px, eyebrows 12 px uppercase with 0.14em tracking at 600, the way a
+plate is captioned. Both are self-hosted from `@fontsource-variable/fraunces` and
+`@fontsource-variable/source-sans-3`, upright only, the latin and latin-ext subsets
+only, declared by the app's own `@font-face` rules in `index.css` under the family names
+"Fraunces" and "Source Sans 3" with `font-display: swap` over the system stack. The
+build therefore carries exactly four woff2 files, about 220 KB: Fraunces latin and
+latin-ext (the opsz files, which carry the wght axis too) and Source Sans 3 latin and
+latin-ext (the wght files). All four are in the precache (§ 8.8), so the fonts work
+offline and never fall back after the first visit. Google Fonts, or any font host, is
+never linked.
+
+**Shape.** Corners 6 px (chips, markers, badges), 8 px (controls and rows) and 10 px
+(cards and plates); 1 px hairlines in the line colour; no shadows and no gradients.
+Every touch target is at least 44 px. The page gutter is 20 px, and the column is
+phone-first, `max-w-2xl`, and also works at laptop width.
+
+**Icons** are lucide at stroke 1.75, never emoji: house, target, timer and
+chart-no-axes-column for the four tabs, sliders-horizontal for Settings, flag,
+languages (Hold for English), lightbulb (Hint), check, x, chevron-right and arrow-left
+(the back control).
+
+**Exclusions** on every screen: no pill buttons, no "01 / 02 / 03" section labels, no
+italic accent words, no gradient hero, no chart library (the day bars are plain blocks),
+and no cream beyond the paper ground.
 
 ### 8.6 The question card
 
@@ -1052,6 +1186,33 @@ selected), whether the options are locked, and whether peek and hint are enabled
 card records nothing and handles no keys. Practice reveals on tap; the running exam
 shows the selection with nothing revealed and peek and hint off; the exam review shows
 it revealed with peek and hint on.
+
+Its look (§ 8.5):
+
+- **The picture plate.** A question's picture sits whole on a plate (card, 8 px padding,
+  hairline, 10 px corners), centred, at most 240 px tall, and is never cropped: the
+  species must be identifiable, and the bank's pictures are small.
+- **The stem** is Fraunces 24 px.
+- **The options** are rows (card, hairline, 8 px corners), each with its letter in a
+  28 px circle outlined in ink, in Fraunces 15 px.
+- **Revealed**: the correct row turns moss tint with a forest hairline, its letter
+  filled forest, with a tick and the word "Right"; the chosen wrong row turns clay tint
+  with a rust hairline, its letter filled rust, with a cross and the word "Wrong" in
+  ink (§ 8.5). The other rows stay as they were. In the exam review an unanswered
+  question carries "Not answered" above it and only its correct row marked.
+- **Unrevealed**: an untouched row is the plain row; the exam's chosen row is filled ink
+  with card-coloured text and a card-outlined letter.
+- **Peek and Hint** sit in one row under the options: "Hold for English" (three fifths,
+  card with an ink hairline, languages icon, inverted to ink with card text while held)
+  and "Hint" (two fifths, card, hairline, lightbulb icon).
+- **The hint panel** is a moss-tint block with no border and 10 px corners: the eyebrows
+  "Language notes" and "Nudge" in forest, each note's Portuguese phrase in Fraunces 600,
+  a middle dot and its English in the eyebrow colour, then the note; the nudge sits
+  under a moss-line rule.
+
+Outside the card, Practice's flags row reads "Report:" in muted before two chips (card,
+hairline, 6 px corners, 36 px tall, flag icon), and Next is a rust button with a
+chevron.
 
 ### 8.7 Data and images
 
@@ -1066,11 +1227,11 @@ do; nothing copies them into `public/`.
 ### 8.8 Installable and offline
 
 vite-plugin-pwa 2.0.0 in `generateSW` mode precaches everything in `dist`, the jpg
-assets and the manifest included, with scope `/cacador/`. A new service worker installs
-in the background and waits; it takes over on the next cold open of the app, never
-reloading a screen in use and never showing a prompt, so there is no `skipWaiting`, no
-`clientsClaim` and no update prompt (the plugin's `registerType: 'prompt'` is the mode
-that leaves both off; no prompt is built on it).
+assets, the four font files (§ 8.5) and the manifest included, with scope `/cacador/`.
+A new service worker installs in the background and waits; it takes over on the next
+cold open of the app, never reloading a screen in use and never showing a prompt, so
+there is no `skipWaiting`, no `clientsClaim` and no update prompt (the plugin's
+`registerType: 'prompt'` is the mode that leaves both off; no prompt is built on it).
 
 The worker is registered by hand: `main.tsx` calls `registerServiceWorker()` from
 `apps/web/src/pwa/registerServiceWorker.ts`, which, in a production build and in a
@@ -1115,23 +1276,40 @@ browser locale `en-GB`. `pnpm e2e` at the root runs it; it is not part of `pnpm 
 `pnpm test`, so the gates stay fast. `pnpm e2e:browsers` installs Chromium for it, once
 before the first run and again after each Playwright bump. The `e2e` script stays plain
 `playwright test`, never `--pass-with-no-tests`. The specs import the bank from
-`@cacador/data`. Four spec files:
+`@cacador/data`. The viewport is 390 x 844 in `playwright.config.ts`, because epic
+cac-8cn's Campo acceptance bar is performed at a phone's width. `look.ts` holds the
+Campo colour values the colour checks read (light and dark, § 8.5), the WCAG contrast
+helper and the check that an element is set in Fraunces and the face has loaded. Four
+spec files:
 
-- `acceptance.spec.ts` performs steps 2 to 11 of the phase 4 acceptance bar, in order,
-  in one fresh browser context, with the page's random draws seeded so every run draws
-  the same questions;
-- `offline.spec.ts` is step 12: after one online load and a reload, Home and Practice
-  open offline and all 15 images answer from the cache;
+- `acceptance.spec.ts` performs steps 2 to 9 of the Campo acceptance bar, in order,
+  one named step each, in one fresh browser context, with the page's random draws seeded
+  so every run draws the same questions: Home, the Practice tab, a wrong answer, the
+  Progress tab, the Ducks row and Home's weakest topics with the unseen count, the exam
+  through its results, the dark colours with their 4.5:1 contrast (the heading against
+  the body, the unseen count and the pass line against the plate they sit on), and the
+  language switch in Settings. Four steps after the bar run on the same state: an exam
+  answered in full from the bank's key, 16 right, which shows Passed with only the wrong
+  ones listed and is listed as Passed on Progress; an exam with answers that survives a
+  closed tab with its clock running; the past exams on Progress with Flagged and its
+  copy; and export, clear and import;
+- `offline.spec.ts` is step 10: after one online load and a reload, Home and Practice
+  open offline with Fraunces available, and all 15 images answer from the cache;
 - `installable.spec.ts`: the manifest and icons served under `/cacador/`, and Chrome's
   own installability check reporting no errors;
 - `build-output.spec.ts` reads the built `dist` rather than the served pages, because
   `vite preview` answers any sub-route itself: `404.html` is a byte-for-byte copy of
   `index.html`, the service worker waits (nothing claims clients or skips waiting, and
   the app never asks it to), the precache holds every built file under `/cacador/`, and
-  every URL in `index.html` starts with `/cacador/`.
+  every URL in `index.html` starts with `/cacador/`. It also carries step 11: the
+  precache holds exactly four woff2 URLs (Fraunces and Source Sans 3, latin and
+  latin-ext) and the 15 jpg URLs, every URL under `/cacador/`, and no file served
+  points at a font host.
 
-Step 1 of the bar, a fresh clone through install, lint, test and `pnpm e2e`, is run by
-hand, and step 13 is Ross's, on the phone after the first push.
+The orchestrator performs the other two steps of the bar by hand: step 1, a fresh clone
+on Node 26 with `pnpm install`, `pnpm lint` and `pnpm test` green, and step 12, after
+the epic's merge into `main` and its push: the deploy workflow run for that push green,
+and the live site serving Home with the paper ground, the tab bar and the two fonts.
 
 ### 8.11 Agents
 
@@ -1385,7 +1563,9 @@ merge, or makes a screen judgement call.
   buttons, numbered section labels, italic accent words, gradient hero or chart library
   (§ 8.5). Reason: no ceremony; the content is the product. Sumit's dark-only, class-keyed
   theme and Google Fonts are not the precedent, since offline needs nothing fetched
-  (epic cac-eil D7; brief cac-aqy D7 and D12).
+  (epic cac-eil D7; brief cac-aqy D7 and D12). Reversed 2026-10-14 by epic cac-8cn for
+  the neutral base, the system fonts, the design canvas and the cream (the Campo look
+  and the two fonts, below); the media-query theme and the other exclusions stand.
 - **2026-10-13, Export, import with merge, clear.** The export is
   `{ app: "cacador", version: 1, exportedAt, answers, exams, flags }` without question
   state; import refuses anything else unchanged, merges answers by `(questionId, at)`,
@@ -1409,7 +1589,9 @@ merge, or makes a screen judgement call.
   Flagged link; each practice question shows its section, topic and number (§ 6.3,
   § 6.6). Reason: stated as defaults in the brief with no objection; the number lets a
   nudge's cross-reference be found; the counts and the wording came from the epic
-  review (epic cac-eil D11; brief cac-aqy D11 and D14).
+  review (epic cac-eil D11; brief cac-aqy D11 and D14). Amended 2026-10-14 by epic
+  cac-8cn: Home's buttons are replaced by two cards and the tab bar, and Home gains
+  Weakest topics (below).
 - **2026-10-13, Installable, offline, updated silently.** vite-plugin-pwa 2.0.0 in
   `generateSW` mode precaches all of `dist`; a new service worker waits and takes over
   on the next cold open, with no prompt and no reload of a screen in use; a flat Ç icon
@@ -1458,7 +1640,9 @@ merge, or makes a screen judgement call.
 - **2026-10-13, Routes with Home as the hub.** `/`, `/practice`, `/exam/*`, `/progress`,
   `/settings` and `/flagged` under `/cacador/`, a placeholder page per route, the back
   control to Home in the shared layout, no bottom bar (§ 8.2). Reason: fewer shared
-  pieces, and the study loop is Practice (epic cac-eil D19).
+  pieces, and the study loop is Practice (epic cac-eil D19). Reversed 2026-10-14 by epic
+  cac-8cn for the bottom bar and the back control's place: the menu is a tab bar and
+  the back control sits in each screen's header (below).
 - **2026-10-13, One question card.** The stem, picture, options, peek, result marking and
   hint panel are one controlled component the page drives (selection, revealed, locked,
   peek and hint enabled); it records nothing and handles no keys (§ 8.6). Reason: one
@@ -1515,3 +1699,52 @@ merge, or makes a screen judgement call.
   import, and an exam answer with no finished exam beside it is not one the app writes
   (orchestrator's choice during epic cac-eil, reversible; landed in cac-eil.29 and
   cac-eil.30).
+- **2026-10-14, The Campo look.** The app is restyled to design direction 1, Campo, a
+  field notebook: the paper ground `#F4F0E6`, ink text, forest for the working colour,
+  rust for the one thing to do next and for a wrong answer, hairlines and plates, no
+  shadows, with the light and dark tokens, the contrast rule, the shapes, the lucide
+  icons and the exclusions of § 8.5, and the card's looks of § 8.6. The paper ground
+  is the one cream the app allows, by Ross's choice. The reference is `design/campo/`,
+  five artboards and a README; the two other directions on the design canvas are never
+  precedent. Reason: Ross found the neutral app "not something I would want to use"
+  and chose Campo over Alvo and Azulejo on the canvas (epic cac-8cn D1 to D4, D8 to
+  D11).
+- **2026-10-14, Fraunces and Source Sans 3, self-hosted.** Fraunces 600 for the app
+  name, the titles, the stem, the numbers that are the point of a screen and the option
+  letters; Source Sans 3 for everything else; both from Fontsource's variable packages,
+  upright, latin and latin-ext only, declared by the app's own `@font-face` rules with
+  `font-display: swap`, so the build carries exactly four woff2 files, all precached;
+  Google Fonts is never linked (§ 8.5, § 8.8). Reverses the system font stack of epic
+  cac-eil D7. Reason: the serif is the look, and offline is a product rule, so the
+  fonts must come from the app's own cache (epic cac-8cn D3).
+- **2026-10-14, A bottom tab bar.** Four tabs, Home, Practice, Exam and Progress, named
+  by the navigation words, on every screen except the `/exam` route (the start screen
+  and the running exam keep only the back control); Settings from a control on Home's
+  header, Flagged from Progress and Settings; the back control to Home at the start of
+  every other screen's header, its name unchanged; Home's two cards carry a longer name
+  than the tabs (§ 6.3, § 8.2). Reverses epic cac-eil D19's "no bottom bar". Reason:
+  Ross asked for "a decent menu system", and four destinations fit a tab bar (epic
+  cac-8cn D5 to D7).
+- **2026-10-14, Weakest topics on Home.** The two lowest started topics by group
+  accuracy, in Progress's worst-first order, each linking to focused practice, with an
+  "All topics" link to Progress, and absent while no topic is started; with it the two
+  other additions the artboards carry, the count answered on the exam-in-progress card
+  and "Submit · N unanswered" (§ 6.3, § 6.5, § 6.6). Reason: the weakest rows make
+  Home the place to start; the counts tell the learner where the exam stands (epic
+  cac-8cn D7, D9).
+- **2026-10-14, Campo ships by merge and push.** The epic branch is merged into `main`
+  and `main` is pushed; the push is the deploy, so the site serves the new look at
+  once. No pull request and no recording (No epic ceremony, above). Reason: Ross,
+  2026-10-14: "merge it straight into main ... available immediately on GitHub pages";
+  the authority covers the merge and the push for this epic only (epic cac-8cn D14).
+- **2026-10-14, Text on clay is ink.** Text on the clay tint is ink, never rust, in both
+  themes: the Not passed chip (clay with ink text and a rust hairline), the word "Wrong"
+  on the chosen wrong row and the exam-in-progress card's text; rust appears on clay
+  only as the hairline, the rust-filled letter (card text on rust, 5.13:1) and the icon
+  (not text, 3:1) (§ 8.5, § 8.6), over the artboards' rust text on clay. Reason: rust
+  `#B5461C` on clay `#F3DED2` is 4.20:1, under the 4.5:1 rule, and the tokens are not
+  widened to fix it (orchestrator's choice during epic cac-8cn, reversible).
+- **2026-10-14, Chips have 6 px corners.** The flag chips on Practice and the language
+  chips on Settings take the chip corner of 6 px (§ 8.5 Shape, § 8.6), over the 8 px
+  epic cac-8cn D8 gave the flags-row chips. Reason: every chip draws the same shape
+  (orchestrator's choice during epic cac-8cn, reversible).

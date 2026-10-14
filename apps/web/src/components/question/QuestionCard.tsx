@@ -1,13 +1,13 @@
-import { hintFor, sectionOf, topicOf, translationFor, type OptionKey, type Question } from '@cacador/data';
+import { hintFor, translationFor, type OptionKey, type Question } from '@cacador/data';
 import { Check, Lightbulb, X } from 'lucide-react';
-import { useId, type ReactNode } from 'react';
+import { useId } from 'react';
 import { Button } from '@/components/ui/button';
 import { useI18n } from '@/i18n/useI18n';
 import { cn } from '@/lib/utils';
 import { imageUrl } from '@/pwa/images';
 import { OPTION_KEYS } from '@/storage';
 import { HintPanel } from './HintPanel';
-import { nameIn } from './names';
+import { placeOf } from './names';
 import { PeekButton } from './PeekButton';
 
 /**
@@ -41,8 +41,12 @@ export interface QuestionCardProps {
   hintOpen?: boolean;
   /** The Hint button was tapped. The panel never closes from the card, only when the page says so. */
   onHintOpen?: () => void;
-  /** Controls placed at the end of the row under the peek button, beside Hint (practice puts Next here). */
-  actions?: ReactNode;
+  /**
+   * Show the section · topic and "Question N" over the picture. The exam review
+   * passes it; Practice and the running exam leave it off and show the place in
+   * their screen header instead (D6).
+   */
+  showPlace?: boolean;
 }
 
 type Mark = 'right' | 'wrong' | 'correct';
@@ -52,6 +56,60 @@ function markOf(option: OptionKey, question: Question, selected: OptionKey | und
   if (!revealed) return undefined;
   if (option === selected) return option === question.answer ? 'right' : 'wrong';
   return option === question.answer ? 'correct' : undefined;
+}
+
+/**
+ * The look of each row state (DESIGN.md § 8.6): the row, then its letter circle.
+ * Plain: card with the hairline, the letter outlined in ink. Chosen while
+ * unrevealed (the running exam): filled ink, card text, the letter outlined in
+ * card. Right or correct: moss with a forest hairline, the letter filled
+ * forest. Wrong: clay with a rust hairline, the letter filled rust; the text
+ * on clay stays ink (§ 8.5).
+ */
+const ROW = {
+  plain: { row: '', letter: 'border-ink' },
+  chosen: { row: 'border-ink bg-ink text-card hover:bg-ink', letter: 'border-card' },
+  right: { row: 'border-forest bg-moss text-ink', letter: 'border-forest bg-forest text-on-fill' },
+  wrong: { row: 'border-rust bg-clay text-ink', letter: 'border-rust bg-rust text-on-fill' },
+} as const;
+
+function rowLook(mark: Mark | undefined, chosen: boolean): (typeof ROW)[keyof typeof ROW] {
+  if (mark === 'wrong') return ROW.wrong;
+  if (mark !== undefined) return ROW.right;
+  return chosen ? ROW.chosen : ROW.plain;
+}
+
+/**
+ * The word and icon at the end of a revealed row: a forest tick and "Right" on
+ * the correct row, a rust cross and "Wrong" (in ink) on the chosen wrong one.
+ * The correct row the learner did not choose reads "Right" on screen and
+ * "Correct answer" to a screen reader, the name it has always had (D12).
+ */
+function MarkWord({ mark }: { mark: Mark }) {
+  const { t } = useI18n();
+  const card = t.practice.card;
+  return (
+    <span className="flex shrink-0 items-center gap-1 self-center text-[13px] font-bold">
+      {mark === 'wrong' ? (
+        <>
+          <X aria-hidden="true" className="size-5 text-rust" strokeWidth={1.75} />
+          <span className="text-ink">{card.wrong}</span>
+        </>
+      ) : (
+        <span className="flex items-center gap-1 text-forest">
+          <Check aria-hidden="true" className="size-5" strokeWidth={1.75} />
+          {mark === 'right' ? (
+            card.right
+          ) : (
+            <>
+              <span aria-hidden="true">{card.right}</span>
+              <span className="sr-only">{card.correctAnswer}</span>
+            </>
+          )}
+        </span>
+      )}
+    </span>
+  );
 }
 
 export function QuestionCard({
@@ -66,7 +124,7 @@ export function QuestionCard({
   hintEnabled,
   hintOpen = false,
   onHintOpen,
-  actions,
+  showPlace = false,
 }: QuestionCardProps) {
   const { t, locale } = useI18n();
   const card = t.practice.card;
@@ -76,28 +134,28 @@ export function QuestionCard({
   const shown = english ?? question;
   const textLang = english ? 'en' : 'pt-PT';
   const picture = question.image === undefined ? undefined : imageUrl(question.image);
-  const place = [sectionOf(question), topicOf(question)]
-    .map((entry) => entry && nameIn(entry, locale))
-    .filter(Boolean)
-    .join(' · ');
-  const markLabel: Record<Mark, string> = { right: card.right, wrong: card.wrong, correct: card.correctAnswer };
 
   return (
-    <article className="flex flex-col gap-4">
-      <header className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 text-sm">
-        <p className="text-muted-foreground">{place}</p>
-        <p className="font-medium">{card.questionNumber(question.id)}</p>
-      </header>
-
-      {picture && (
-        <img
-          src={picture}
-          alt={card.pictureAlt(question.id)}
-          className="mx-auto max-h-72 w-auto max-w-full rounded-lg border object-contain"
-        />
+    <article className="flex flex-col gap-3.5">
+      {showPlace && (
+        <header className="flex flex-col gap-0.5">
+          <p className="eyebrow">{placeOf(question, locale)}</p>
+          <p className="font-heading text-base text-muted-foreground">{card.questionNumber(question.id)}</p>
+        </header>
       )}
 
-      <p lang={textLang} className="text-lg leading-snug font-medium">
+      {picture && (
+        // The plate: whole and centred, never cropped, the plate at most 240 px tall (8 px padding and the hairline included).
+        <figure className="m-0 flex justify-center rounded-lg border border-line bg-card p-2">
+          <img
+            src={picture}
+            alt={card.pictureAlt(question.id)}
+            className="block h-auto max-h-[222px] w-auto max-w-full rounded-sm object-contain"
+          />
+        </figure>
+      )}
+
+      <p lang={textLang} className="font-heading text-2xl/[1.25] font-semibold text-ink">
         {shown.question}
       </p>
 
@@ -105,6 +163,7 @@ export function QuestionCard({
         {OPTION_KEYS.map((option) => {
           const mark = markOf(option, question, selected, revealed);
           const isSelected = option === selected;
+          const look = rowLook(mark, isSelected && !revealed);
           return (
             <Button
               key={option}
@@ -115,51 +174,40 @@ export function QuestionCard({
               data-mark={mark}
               onClick={() => onSelect?.(option)}
               className={cn(
-                'h-auto min-h-14 w-full items-start justify-start gap-3 px-3 py-3 text-left text-base font-normal whitespace-normal disabled:opacity-100',
-                isSelected && !revealed && 'border-foreground bg-muted dark:border-foreground dark:bg-muted',
-                (mark === 'right' || mark === 'correct') &&
-                  'border-success bg-success/10 dark:border-success dark:bg-success/15',
-                mark === 'wrong' && 'border-destructive bg-destructive/10 dark:border-destructive dark:bg-destructive/15',
+                'h-auto min-h-14 w-full justify-start gap-3 px-3.5 py-3 text-left text-[17px]/[1.35] font-normal whitespace-normal disabled:opacity-100',
+                look.row,
               )}
             >
               <span
                 aria-hidden="true"
                 className={cn(
-                  'flex size-7 shrink-0 items-center justify-center rounded-md border text-sm font-semibold',
-                  isSelected && !revealed && 'border-foreground bg-foreground text-background',
-                  (mark === 'right' || mark === 'correct') && 'border-success bg-success text-background',
-                  mark === 'wrong' && 'border-destructive bg-destructive text-background',
+                  'flex size-7 shrink-0 items-center justify-center rounded-full border font-heading text-[15px] font-semibold',
+                  look.letter,
                 )}
               >
-                {mark === 'wrong' ? <X /> : mark ? <Check /> : option}
+                {option}
               </span>
-              <span className="flex min-w-0 flex-1 flex-col gap-1 pt-0.5">
+              <span className="min-w-0 flex-1">
                 <span className="sr-only">{option}. </span>
                 <span lang={textLang}>{shown.options[option]}</span>
-                {mark && (
-                  <span
-                    className={cn('text-sm font-medium', mark === 'wrong' ? 'text-destructive' : 'text-success')}
-                  >
-                    {markLabel[mark]}
-                  </span>
-                )}
               </span>
+              {mark && <MarkWord mark={mark} />}
             </Button>
           );
         })}
       </div>
 
-      {peekEnabled && (
-        <PeekButton label={card.holdForEnglish} peeking={peeking} onPeekChange={(next) => onPeekChange?.(next)} />
-      )}
-
-      {(hintEnabled || actions) && (
-        <div className="flex flex-wrap items-center gap-2">
+      {(peekEnabled || hintEnabled) && (
+        <div className={cn('grid gap-2.5', peekEnabled && hintEnabled && 'grid-cols-[minmax(0,3fr)_minmax(0,2fr)]')}>
+          {peekEnabled && (
+            <PeekButton label={card.holdForEnglish} peeking={peeking} onPeekChange={(next) => onPeekChange?.(next)} />
+          )}
           {hintEnabled && (
             <Button
               type="button"
               variant="outline"
               size="lg"
+              className="h-auto min-h-12 w-full gap-2 px-3 py-3 whitespace-normal aria-expanded:bg-card"
               aria-expanded={hintOpen}
               aria-controls={hintOpen ? panelId : undefined}
               onClick={() => onHintOpen?.()}
@@ -168,7 +216,6 @@ export function QuestionCard({
               {card.hint}
             </Button>
           )}
-          {actions && <div className="ml-auto flex gap-2">{actions}</div>}
         </div>
       )}
 
