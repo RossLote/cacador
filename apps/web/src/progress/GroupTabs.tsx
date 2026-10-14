@@ -1,44 +1,54 @@
-import { ChevronRight } from 'lucide-react';
 import { useMemo } from 'react';
 import { Link, useSearchParams } from 'react-router';
-import { Card } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useI18n } from '@/i18n/useI18n';
 import { isOneOf } from '@/lib/isOneOf';
-import { GROUP_KINDS, type GroupKind, type StateMap } from '@/model';
+import { cn } from '@/lib/utils';
+import { GROUP_KINDS, READINESS_TARGET_PERCENT, type GroupKind, type StateMap } from '@/model';
 import { groupRows, type GroupRow } from './groups';
 
 function GroupList({ rows }: { rows: readonly GroupRow[] }) {
   const { t } = useI18n();
   return (
-    <Card className="gap-0 py-0">
-      <ul className="divide-y divide-border">
-        {rows.map(({ slug, name, to, accuracy: { percent, seen, total } }) => (
+    <ul className="flex flex-col gap-1.5">
+      {rows.map(({ slug, name, to, accuracy: { percent, seen, total } }) => {
+        const tone = percent !== undefined && percent < READINESS_TARGET_PERCENT ? 'rust' : 'forest';
+        return (
           <li key={slug}>
             <Link
               to={to}
               aria-label={
                 percent === undefined ? t.progress.notStartedRow(name, total) : t.progress.startedRow(name, percent, seen, total)
               }
-              className="flex items-center gap-3 px-4 py-3 outline-none transition-colors hover:bg-muted focus-visible:bg-muted focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:ring-inset"
+              className="flex min-h-11 items-center gap-3 rounded-md border border-line bg-card px-3.5 py-3 text-ink outline-none transition-colors hover:bg-track focus-visible:ring-3 focus-visible:ring-ring/50"
             >
               <span className="flex min-w-0 flex-1 flex-col gap-0.5">
-                <span className="text-base font-medium">{name}</span>
-                <span className="text-sm text-muted-foreground tabular-nums">
-                  {percent === undefined ? t.progress.questions(total) : t.progress.seen(seen, total)}
+                <span className="text-base font-semibold">{name}</span>
+                <span className="text-[13px] text-muted-foreground tabular-nums">
+                  {percent === undefined ? t.progress.notStartedLine(total) : t.progress.seen(seen, total)}
                 </span>
               </span>
-              {percent === undefined ? (
-                <span className="shrink-0 text-sm text-muted-foreground">{t.progress.notStarted}</span>
-              ) : (
-                <span className="shrink-0 text-lg font-semibold tabular-nums">{t.progress.percent(percent)}</span>
-              )}
-              <ChevronRight aria-hidden="true" className="size-4 shrink-0 text-muted-foreground" />
+              <span aria-hidden="true" className="h-1.5 w-16 shrink-0 overflow-hidden rounded-[3px] bg-track">
+                <span
+                  data-slot="mini-bar-fill"
+                  className={cn('block h-full', tone === 'rust' ? 'bg-rust' : 'bg-forest')}
+                  style={{ width: `${percent ?? 0}%` }}
+                />
+              </span>
+              <span
+                data-slot="row-percent"
+                className={cn(
+                  'w-13 shrink-0 text-right font-heading text-xl leading-none font-semibold tabular-nums',
+                  percent === undefined ? 'text-muted-foreground' : tone === 'rust' ? 'text-rust' : 'text-forest',
+                )}
+              >
+                {percent === undefined ? t.progress.noPercent : t.progress.percent(percent)}
+              </span>
             </Link>
           </li>
-        ))}
-      </ul>
-    </Card>
+        );
+      })}
+    </ul>
   );
 }
 
@@ -82,14 +92,14 @@ export function GroupTabs({ states }: { states: StateMap }) {
   };
 
   return (
-    <section aria-labelledby="progress-groups" className="flex flex-col gap-3">
-      <div className="flex flex-col gap-1">
-        <h2 id="progress-groups" className="text-sm font-medium text-muted-foreground">
+    <section aria-labelledby="progress-groups" className="flex flex-col gap-2.5">
+      <div className="flex items-baseline justify-between gap-3">
+        <h2 id="progress-groups" className="eyebrow">
           {t.progress.groups}
         </h2>
-        <p className="text-sm text-muted-foreground">{t.progress.groupsHint}</p>
+        <p className="text-right text-[13px] text-muted-foreground">{t.progress.groupsHint}</p>
       </div>
-      <Tabs value={open} onValueChange={choose} className="gap-3">
+      <Tabs value={open} onValueChange={choose} className="gap-2.5">
         <TabsList className="w-full">
           {lists.map(({ kind }) => (
             <TabsTrigger key={kind} value={kind}>
