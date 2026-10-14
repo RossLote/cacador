@@ -62,6 +62,28 @@ describe('Flagged page', () => {
     expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(en.title);
   });
 
+  it('draws each row as a card with the number in Fraunces, the kind as a chip and a Clear button', async () => {
+    await setFlag(12, 'translation', 'wrong species name', T0);
+    renderPage();
+    const [row] = await screen.findAllByRole('listitem');
+    if (!row) throw new Error('no row');
+    expect(within(row).getByText(en.questionNumber(12))).toHaveClass('font-heading');
+    expect(within(row).getByText(en.kindEnglish)).toHaveAttribute('data-slot', 'badge');
+    expect(within(row).getByText(stem(12))).toHaveClass('text-muted-foreground');
+    expect(within(row).getByRole('button', { name: en.clearLabel(12, en.kindEnglish) })).toHaveTextContent(en.clear);
+    expect(row.firstElementChild).toHaveClass('bg-card', 'border-line');
+  });
+
+  it('draws Copy as the rust fill with Share beside it as the ink hairline', async () => {
+    vi.stubGlobal('navigator', Object.assign(Object.create(navigator), { share: vi.fn() }));
+    await setFlag(12, 'translation', 'x', T0);
+    renderPage();
+    await screen.findAllByRole('listitem');
+    expect(screen.getByRole('button', { name: en.copy })).toHaveClass('bg-primary');
+    expect(screen.getByRole('button', { name: en.share })).toHaveClass('border-ink');
+    vi.unstubAllGlobals();
+  });
+
   it('shows the row labels in Portuguese when the UI language is Portuguese', async () => {
     const pt = MESSAGES.pt.flagged;
     act(() => setLocale('pt'));
