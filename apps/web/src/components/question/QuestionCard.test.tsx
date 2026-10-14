@@ -105,6 +105,8 @@ describe('QuestionCard', () => {
       expect(right).toHaveClass('bg-moss', 'border-forest');
       expect(letterOf(Q1.answer)).toHaveClass('bg-forest', 'text-on-fill');
       expect(right.querySelector('svg.lucide-check')).toBeInTheDocument();
+      // Both marks at the one icon stroke (DESIGN.md § 8.5).
+      expect([wrong, right].map((row) => row.querySelector('svg')?.getAttribute('stroke-width'))).toEqual(['1.75', '1.75']);
       // On screen the correct row reads Right; its accessible text stays "Correct answer".
       expect(within(right).getByText(card.right)).toHaveAttribute('aria-hidden', 'true');
       expect(within(right).getByText(card.correctAnswer)).toHaveClass('sr-only');

@@ -3,6 +3,7 @@ import userEvent from '@testing-library/user-event';
 import { IDBFactory } from 'fake-indexeddb';
 import { MemoryRouter, Route, Routes } from 'react-router';
 import { describe, expect, it, vi } from 'vitest';
+import { RUST_HOVER } from '@/components/styles';
 import { setLocale } from '@/i18n/locale';
 import type { Locale } from '@/i18n/locales';
 import { MESSAGES } from '@/i18n/messages';
@@ -94,7 +95,9 @@ describe('Home', () => {
     expect(await screen.findByText('33 %')).toBeInTheDocument();
     expect(screen.getByText('506 unseen')).toBeInTheDocument();
     expect(screen.getByText('Pass line 75 %')).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: 'Practice Weak ones first' })).toHaveClass('bg-rust');
+    const practice = screen.getByRole('link', { name: 'Practice Weak ones first' });
+    expect(practice).toHaveClass('bg-rust', RUST_HOVER);
+    expect(practice).not.toHaveClass('hover:bg-rust/90');
     expect(screen.getByRole('link', { name: 'Exam 20 questions · 30 min' })).toHaveClass('border-ink');
   });
 
@@ -186,6 +189,10 @@ describe('Home', () => {
       expect(card).toHaveTextContent('30 minutes left · 0 of 20 answered');
       expect(card).toHaveClass('bg-clay', 'border-rust', 'text-ink');
       expect(card).toHaveAttribute('href', '/exam');
+      // The timer and the chevron, at the one icon stroke (DESIGN.md § 8.5).
+      const icons = card.querySelectorAll('svg');
+      expect(icons).toHaveLength(2);
+      for (const icon of icons) expect(icon).toHaveAttribute('stroke-width', '1.75');
 
       await user.click(card);
       expect(screen.getByText('exam screen')).toBeInTheDocument();

@@ -6,11 +6,13 @@ import { currentTab, TABS } from './tabs';
 
 /**
  * The menu (DESIGN.md § 6.3, D5): four tabs fixed to the bottom of the
- * viewport inside the app's column, above the home indicator. Each link is
- * named by its navigation word alone (the icon is hidden). The current tab is
- * forest with its label bold and its icon filled with the moss tint at a
- * heavier stroke, as the artboard draws it, and carries aria-current="page";
- * on a screen that is not a tab none does.
+ * viewport inside the app's column. Each link is named by its navigation word
+ * alone (the icon is hidden). The current tab is forest with its label bold
+ * and its icon filled with the moss tint, at the one icon stroke of 1.75
+ * (DESIGN.md § 8.5), and carries aria-current="page"; on a screen that is not
+ * a tab none does. A tapped link lets go of the focus, the current tab's too,
+ * so it falls back to the body and the screen's own keys (Practice's laptop
+ * keys) act at once.
  */
 export function TabBar() {
   const { t } = useI18n();
@@ -18,7 +20,7 @@ export function TabBar() {
   return (
     <nav
       aria-label={t.common.mainNav}
-      className="fixed inset-x-0 bottom-0 z-10 mx-auto grid w-full max-w-2xl grid-cols-4 gap-1 border-t border-line bg-card px-2 pt-2.5 pb-[calc(0.625rem+env(safe-area-inset-bottom))]"
+      className="fixed inset-x-0 bottom-0 z-10 mx-auto grid w-full max-w-2xl grid-cols-4 gap-1 border-t border-line bg-card px-2 py-2.5"
     >
       {TABS.map((tab) => {
         const active = tab === current;
@@ -27,17 +29,14 @@ export function TabBar() {
             key={tab.to}
             to={tab.to}
             aria-current={active ? 'page' : undefined}
+            onClick={(event) => event.currentTarget.blur()}
             className={cn(
               'flex min-h-11 flex-col items-center justify-center gap-1 rounded-md px-1 py-1.5 text-[11px] leading-none',
               FOCUS_RING,
               active ? 'font-bold text-forest' : 'font-semibold text-muted-foreground hover:text-ink',
             )}
           >
-            <tab.Icon
-              aria-hidden="true"
-              className={cn('size-6', active && 'fill-moss')}
-              strokeWidth={active ? 2 : 1.75}
-            />
+            <tab.Icon aria-hidden="true" className={cn('size-6', active && 'fill-moss')} strokeWidth={1.75} />
             {t.common.nav[tab.label]}
           </Link>
         );

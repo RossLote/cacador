@@ -92,12 +92,12 @@ function MarkWord({ mark }: { mark: Mark }) {
     <span className="flex shrink-0 items-center gap-1 self-center text-[13px] font-bold">
       {mark === 'wrong' ? (
         <>
-          <X aria-hidden="true" className="size-5 text-rust" />
+          <X aria-hidden="true" className="size-5 text-rust" strokeWidth={1.75} />
           <span className="text-ink">{card.wrong}</span>
         </>
       ) : (
         <span className="flex items-center gap-1 text-forest">
-          <Check aria-hidden="true" className="size-5" />
+          <Check aria-hidden="true" className="size-5" strokeWidth={1.75} />
           {mark === 'right' ? (
             card.right
           ) : (

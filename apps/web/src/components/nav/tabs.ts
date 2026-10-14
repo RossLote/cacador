@@ -15,9 +15,12 @@ export const TABS: readonly Tab[] = [
   { to: '/progress', label: 'progress', Icon: ChartNoAxesColumn },
 ];
 
-/** The pathname without its trailing slashes, so /practice/ is /practice and the root stays /. */
+/**
+ * The pathname without its trailing slashes and in lower case, so /practice/ and /Practice are /practice and the
+ * root stays /: the router matches its paths regardless of case, so /Exam is the running exam too (cac-8cn.12).
+ */
 function normalise(pathname: string): string {
-  return pathname.replace(/\/+$/, '') || '/';
+  return pathname.replace(/\/+$/, '').toLowerCase() || '/';
 }
 
 /** The bar shows everywhere but the /exam route itself, the start screen and the running exam (D5); its results and an unknown address under /exam/ show it. */

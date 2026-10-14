@@ -8,7 +8,8 @@ const badgeVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground [a]:hover:bg-primary/90",
+        // The rust fill's hover keeps the on-fill text at 4.5:1 (RUST_HOVER in components/styles.ts).
+        default: "bg-primary text-primary-foreground [a]:hover:bg-[color-mix(in_srgb,var(--color-primary)_90%,var(--color-ink))]",
         secondary:
           "border-border bg-secondary text-secondary-foreground [a]:hover:bg-muted",
         // Text on clay is ink, never rust (DESIGN.md § 8.5): the rust is the hairline only.

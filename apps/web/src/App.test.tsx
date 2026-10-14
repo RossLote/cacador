@@ -103,7 +103,9 @@ const TAB_BAR_ROUTES: readonly (readonly [string, keyof Messages['common']['nav'
   ['/', 'home'],
   ['/practice', 'practice'],
   ['/practice?topic=patos', 'practice'],
+  ['/Practice', 'practice'],
   ['/progress', 'progress'],
+  ['/PROGRESS/', 'progress'],
   ['/settings', undefined],
   ['/flagged', undefined],
   ['/exam/results/1', undefined],
@@ -124,6 +126,7 @@ const HEADER_ROUTES: readonly (readonly [string, (t: Messages) => string])[] = [
 ];
 
 const TABS = ['home', 'practice', 'exam', 'progress'] as const;
+const en = MESSAGES.en;
 
 const tabBar = (t: Messages) => screen.queryByRole('navigation', { name: t.common.mainNav });
 const tabLinks = (t: Messages) => within(screen.getByRole('navigation', { name: t.common.mainNav })).getAllByRole('link');
@@ -146,7 +149,8 @@ describe('the shell (DESIGN.md § 6.3, § 8.2, epic cac-8cn D5, D6)', () => {
     });
   }
 
-  for (const path of ['/exam', '/exam/']) {
+  // The router matches paths regardless of case, so /Exam is the running exam as well (cac-8cn.12).
+  for (const path of ['/exam', '/exam/', '/Exam', '/EXAM/']) {
     it(`shows no tab bar at ${path}, only the back control`, () => {
       renderAt(path);
       expect(tabBar(MESSAGES.en)).not.toBeInTheDocument();
@@ -198,5 +202,54 @@ describe('the shell (DESIGN.md § 6.3, § 8.2, epic cac-8cn D5, D6)', () => {
     ]);
     await userEvent.click(within(tabBar(t) as HTMLElement).getByRole('link', { name: t.common.nav.exam }));
     expect(tabBar(t)).not.toBeInTheDocument();
+  });
+
+  it('draws the tab icons, the current one too, and the Flagged row at the one stroke of 1.75 (DESIGN.md § 8.5)', () => {
+    renderAt('/settings');
+    const icons = [...(tabBar(en) as HTMLElement).querySelectorAll('svg'), ...screen.getByRole('link', { name: en.settings.flaggedLink }).querySelectorAll('svg')];
+    expect(icons).toHaveLength(6);
+    for (const icon of icons) expect(icon).toHaveAttribute('stroke-width', '1.75');
+  });
+
+  it('gives the language chips the 6 px chip corners (D4)', () => {
+    renderAt('/settings');
+    const chips = within(screen.getByRole('group', { name: en.settings.language })).getAllByRole('button');
+    expect(chips).toHaveLength(2);
+    for (const chip of chips) {
+      expect(chip).toHaveClass('rounded-sm');
+      expect(chip).not.toHaveClass('rounded-md');
+    }
+  });
+
+  it('pads the bar and the column by fixed amounts, with no safe-area term the viewport never sets', () => {
+    renderAt('/');
+    expect(tabBar(en)).toHaveClass('py-2.5');
+    expect(screen.getByRole('main')).toHaveClass('pb-26');
+  });
+
+  /** Option `index` (0 is A) of the question on screen, once one is. */
+  const option = async (index: number) =>
+    within(await screen.findByRole('group', { name: en.practice.card.options })).getAllByRole('button')[index] as HTMLElement;
+  const practiceTab = () => within(tabBar(en) as HTMLElement).getByRole('link', { name: en.common.nav.practice });
+
+  it('lets go of the focus when a tab is tapped, so the laptop keys answer on Practice at once', async () => {
+    const user = userEvent.setup();
+    renderAt('/');
+    await user.click(practiceTab());
+    expect(document.activeElement).toBe(document.body);
+    expect(await option(0)).toHaveAttribute('aria-pressed', 'false');
+    await user.keyboard('1');
+    expect(await option(0)).toHaveAttribute('aria-pressed', 'true');
+  });
+
+  it('lets go of the focus when the current tab is tapped again, so the keys still answer', async () => {
+    const user = userEvent.setup();
+    renderAt('/practice');
+    expect(await option(0)).toHaveAttribute('aria-pressed', 'false');
+    await user.click(practiceTab());
+    expect(practiceTab()).toHaveAttribute('aria-current', 'page');
+    expect(document.activeElement).toBe(document.body);
+    await user.keyboard('a');
+    expect(await option(0)).toHaveAttribute('aria-pressed', 'true');
   });
 });
