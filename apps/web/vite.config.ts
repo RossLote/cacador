@@ -68,5 +68,7 @@ export default defineConfig({
     environment: 'jsdom',
     include: ['src/**/*.test.{ts,tsx}'],
     setupFiles: ['./test/setup.ts'],
+    // The multi-draw page tests take 1 to 2 s alone and pass vitest's 5 s default when the machine is loaded.
+    testTimeout: 20000,
   },
 });
