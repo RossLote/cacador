@@ -1,16 +1,26 @@
-import { ArrowRight } from 'lucide-react';
+import { ChevronRight, SlidersHorizontal, Target, Timer, type LucideIcon } from 'lucide-react';
 import { Link } from 'react-router';
-import { LinkButton } from '@/components/LinkButton';
-import { Card } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { useExamClock } from '@/exam/useExamClock';
 import { useI18n } from '@/i18n/useI18n';
 import { useLoaded } from '@/lib/useLoaded';
-import { MINUTE_MS, READINESS_TARGET_PERCENT, readiness, type Readiness } from '@/model';
+import { cn } from '@/lib/utils';
+import {
+  EXAM_DURATION_MS,
+  EXAM_SIZE,
+  MINUTE_MS,
+  READINESS_TARGET_PERCENT,
+  readiness,
+  type Readiness,
+  type StateMap,
+} from '@/model';
 import { getStates, getUnfinishedExam, type Exam } from '@/storage';
+import { WeakestTopics } from './WeakestTopics';
 
 interface HomeData {
   readiness: Readiness;
+  /** Every question's state, for the weakest topics. */
+  states: StateMap;
   /** The exam in progress, if any; the storage module never returns one past its deadline (D3). */
   exam: Exam | undefined;
 }
@@ -18,37 +28,71 @@ interface HomeData {
 /** Everything Home shows. Each read settles an exam past its deadline first, so its answers are in the states (D3). */
 async function loadHome(): Promise<HomeData> {
   const [exam, states] = await Promise.all([getUnfinishedExam(), getStates()]);
-  return { exam, readiness: readiness(states) };
+  return { exam, states, readiness: readiness(states) };
+}
+
+const focusRing = 'outline-none focus-visible:ring-3 focus-visible:ring-ring/50';
+
+/** Home's header (D6): the app name in Fraunces 34 px, and at its right the control to Settings. */
+function HomeHeader() {
+  const { t } = useI18n();
+  return (
+    <div className="flex items-center justify-between gap-3 pt-1.5">
+      <h1 className="font-heading text-[34px] leading-none font-semibold">{t.home.title}</h1>
+      <Link
+        to="/settings"
+        aria-label={t.common.nav.settings}
+        className={cn(
+          'inline-flex size-11 shrink-0 items-center justify-center rounded-md border border-line text-ink transition-colors hover:bg-card',
+          focusRing,
+        )}
+      >
+        <SlidersHorizontal aria-hidden="true" className="size-[22px]" strokeWidth={1.75} />
+      </Link>
+    </div>
+  );
 }
 
 /**
- * The exam in progress with its whole minutes left, rounded up so 29:30 shows
- * 30 and the last seconds show 1. The clock wakes when the shown minute
- * changes, and calls `onDeadline` once none is left (0 is never shown).
+ * The exam in progress (D7): clay with a rust hairline, the timer and the
+ * chevron in rust, the text in ink (DESIGN.md § 8.5). Its line is the whole
+ * minutes left, rounded up so 29:30 shows 30 and the last seconds show 1, and
+ * the questions answered. The clock wakes when the shown minute changes, and
+ * calls `onDeadline` once none is left (0 is never shown).
  */
-function ExamCard({ exam, onDeadline }: { exam: Exam; onDeadline: () => void }) {
+function ExamInProgressCard({ exam, onDeadline }: { exam: Exam; onDeadline: () => void }) {
   const { t } = useI18n();
   const minutes = Math.ceil(useExamClock(exam, onDeadline, MINUTE_MS) / MINUTE_MS);
   if (minutes <= 0) return null;
+  const answered = Object.keys(exam.answers).length;
   return (
-    <Link to="/exam" className="rounded-xl outline-none focus-visible:ring-3 focus-visible:ring-ring/50">
-      <Card className="flex-row items-center justify-between gap-4 px-(--card-spacing) transition-colors hover:bg-muted">
-        <div className="flex flex-col gap-1">
-          <span className="text-base font-medium">{t.home.examInProgress}</span>
-          <span className="text-muted-foreground tabular-nums">{t.home.minutesLeft(minutes)}</span>
-        </div>
-        <ArrowRight aria-hidden="true" className="size-5 shrink-0" />
-      </Card>
+    <Link
+      to="/exam"
+      className={cn('flex items-center gap-3.5 rounded-lg border border-rust bg-clay px-4 py-3.5 text-ink', focusRing)}
+    >
+      <Timer aria-hidden="true" className="size-[26px] shrink-0 text-rust" strokeWidth={1.75} />
+      <span className="flex min-w-0 flex-1 flex-col gap-0.5">
+        <span className="font-heading text-lg leading-snug font-semibold">{t.home.examInProgress}</span>{' '}
+        <span className="text-sm tabular-nums">{t.home.examStatus(minutes, answered, EXAM_SIZE)}</span>
+      </span>
+      <ChevronRight aria-hidden="true" className="size-5 shrink-0 text-rust" strokeWidth={2} />
     </Link>
   );
 }
 
-/** Readiness as one large number with the unseen count beside it, over a plain bar marked at the pass line; or why it is missing. */
-function ReadinessPanel({ value, failed }: { value: Readiness | undefined; failed: boolean }) {
+/**
+ * The readiness plate (D7): the percentage in Fraunces 64 px with the unseen
+ * count beside it, a forest bar on the track with a rust tick at the pass
+ * line and the pass line's words in rust under it; or why it is missing.
+ */
+function ReadinessPlate({ value, failed }: { value: Readiness | undefined; failed: boolean }) {
   const { t } = useI18n();
   return (
-    <section aria-labelledby="home-readiness" className="flex min-h-36 flex-col gap-3">
-      <h2 id="home-readiness" className="text-sm font-medium text-muted-foreground">
+    <section
+      aria-labelledby="home-readiness"
+      className="flex min-h-36 flex-col gap-2.5 rounded-lg border border-line bg-card px-5 pt-4.5 pb-5"
+    >
+      <h2 id="home-readiness" className="eyebrow">
         {t.home.readiness}
       </h2>
       {failed ? (
@@ -61,49 +105,86 @@ function ReadinessPanel({ value, failed }: { value: Readiness | undefined; faile
         </p>
       ) : (
         <>
-          <p className="flex flex-wrap items-baseline gap-x-4 gap-y-1">
-            <span className="text-6xl font-semibold tracking-tight tabular-nums">{t.home.percent(value.percent)}</span>
-            <span className="text-lg text-muted-foreground tabular-nums">{t.home.unseen(value.unseen)}</span>
+          <p className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+            <span className="font-heading text-[64px] leading-none font-semibold tabular-nums">
+              {t.home.percent(value.percent)}
+            </span>
+            <span className="text-[15px] text-muted-foreground tabular-nums">{t.home.unseen(value.unseen)}</span>
           </p>
-          <div className="relative">
-            <Progress value={value.percent} aria-label={t.home.readiness} className="*:data-[slot=progress-track]:h-2" />
+          <div className="relative mt-1.5">
+            <Progress value={value.percent} aria-label={t.home.readiness} />
             <span
               aria-hidden="true"
-              className="absolute top-1/2 h-4 w-0.5 -translate-x-1/2 -translate-y-1/2 bg-foreground"
+              data-slot="pass-tick"
+              className="absolute top-1/2 h-5 w-0.5 -translate-x-1/2 -translate-y-1/2 bg-rust"
               style={{ left: `${READINESS_TARGET_PERCENT}%` }}
             />
           </div>
-          <p className="text-sm text-muted-foreground">{t.home.passLine(READINESS_TARGET_PERCENT)}</p>
+          <p className="text-right text-[13px] font-semibold text-rust">{t.home.passLine(READINESS_TARGET_PERCENT)}</p>
         </>
       )}
     </section>
   );
 }
 
-/** Home (DESIGN.md § 6.3, D11): the hub. Readiness, the exam in progress when there is one, and the four buttons. */
+interface StartCardProps {
+  to: string;
+  Icon: LucideIcon;
+  title: string;
+  line: string;
+  /** Practice is the one thing to do next, filled rust; Exam is a card with the ink hairline. */
+  primary: boolean;
+}
+
+/**
+ * One of the two cards side by side (D7). Its accessible name is the title, a
+ * space, then the line, so a link named exactly "Practice" or "Exam" is the
+ * tab, never the card (D5).
+ */
+function StartCard({ to, Icon, title, line, primary }: StartCardProps) {
+  return (
+    <Link
+      to={to}
+      data-slot="start-card"
+      className={cn(
+        'flex min-h-[110px] flex-col gap-2.5 rounded-lg px-4 py-4.5 transition-colors',
+        primary ? 'bg-rust text-on-fill hover:bg-rust/90' : 'border border-ink bg-card text-ink hover:bg-track',
+        focusRing,
+      )}
+    >
+      <Icon aria-hidden="true" className="size-[26px]" strokeWidth={1.75} />
+      <span className="mt-auto font-heading text-[22px] leading-tight font-semibold">{title}</span>{' '}
+      <span className={cn('text-[13px]', !primary && 'text-muted-foreground')}>{line}</span>
+    </Link>
+  );
+}
+
+/**
+ * Home (DESIGN.md § 6.3, D7): the hub. The header, the readiness plate, the
+ * exam in progress when there is one, the Practice and Exam cards, and the
+ * weakest topics once a topic is started.
+ */
 export function HomePage() {
   const { t } = useI18n();
   // Reloaded when the exam in progress reaches its deadline while Home is open.
   const { data, failed, reload } = useLoaded(loadHome);
-  const buttons = [
-    { to: '/practice', label: t.common.nav.practice, variant: 'default' },
-    { to: '/exam', label: t.common.nav.exam, variant: 'outline' },
-    { to: '/progress', label: t.common.nav.progress, variant: 'outline' },
-    { to: '/settings', label: t.common.nav.settings, variant: 'outline' },
-  ] as const;
 
   return (
-    <section className="flex flex-col gap-8 pt-4">
-      <h1 className="text-3xl font-semibold tracking-tight">{t.home.title}</h1>
-      {data?.exam && <ExamCard key={data.exam.id} exam={data.exam} onDeadline={reload} />}
-      <ReadinessPanel value={data?.readiness} failed={failed} />
-      <nav className="grid grid-cols-2 gap-3">
-        {buttons.map(({ to, label, variant }) => (
-          <LinkButton key={to} to={to} variant={variant} size="lg" className="h-12 text-base">
-            {label}
-          </LinkButton>
-        ))}
-      </nav>
+    <section className="flex flex-col gap-3.5">
+      <HomeHeader />
+      <ReadinessPlate value={data?.readiness} failed={failed} />
+      {data?.exam && <ExamInProgressCard key={data.exam.id} exam={data.exam} onDeadline={reload} />}
+      <div className="grid grid-cols-2 gap-2.5">
+        <StartCard to="/practice" Icon={Target} title={t.common.nav.practice} line={t.home.practiceLine} primary />
+        <StartCard
+          to="/exam"
+          Icon={Timer}
+          title={t.common.nav.exam}
+          line={t.home.examLine(EXAM_SIZE, EXAM_DURATION_MS / MINUTE_MS)}
+          primary={false}
+        />
+      </div>
+      {data && <WeakestTopics states={data.states} />}
     </section>
   );
 }

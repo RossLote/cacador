@@ -23,8 +23,18 @@ const SCREENS = [
   ['/flagged', 'flagged'],
 ] as const;
 
-/** Home's four buttons (D11); Flagged is reached from Settings and Progress. */
-const HOME_BUTTONS = SCREENS.filter(([path]) => path !== '/flagged');
+/**
+ * Home's links inside main (epic cac-8cn D5, D7): the header's Settings control, named
+ * exactly the nav word, and the two cards, named by their title and line, so an exact
+ * Practice or Exam query finds the tab only. Progress is the tab's; Flagged is reached
+ * from Settings and Progress.
+ */
+const HOME_BUTTONS = (t: Messages) =>
+  [
+    ['/settings', t.common.nav.settings],
+    ['/practice', `${t.common.nav.practice} ${t.home.practiceLine}`],
+    ['/exam', `${t.common.nav.exam} ${t.home.examLine(20, 30)}`],
+  ] as const;
 
 describe('routes', () => {
   for (const locale of ['en', 'pt'] satisfies Locale[]) {
@@ -36,9 +46,11 @@ describe('routes', () => {
       expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(t.home.title);
       expect(screen.queryByRole('link', { name: t.common.backToHome })).not.toBeInTheDocument();
       const main = screen.getByRole('main');
-      for (const [path, screenKey] of HOME_BUTTONS) {
-        expect(within(main).getByRole('link', { name: t.common.nav[screenKey] })).toHaveAttribute('href', path);
+      for (const [path, name] of HOME_BUTTONS(t)) {
+        expect(within(main).getByRole('link', { name })).toHaveAttribute('href', path);
       }
+      expect(within(main).queryByRole('link', { name: t.common.nav.practice })).not.toBeInTheDocument();
+      expect(within(main).queryByRole('link', { name: t.common.nav.exam })).not.toBeInTheDocument();
       expect(screen.queryByRole('link', { name: t.common.nav.flagged })).not.toBeInTheDocument();
     });
 
