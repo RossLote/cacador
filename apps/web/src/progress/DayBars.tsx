@@ -39,17 +39,19 @@ export function DayBars({ days }: { days: readonly DayAccuracy[] }) {
                 role="img"
                 aria-label={label}
                 title={label}
-                className="flex w-full flex-col justify-end"
+                // A day with answers stays at least 4 px tall beside a much fuller one; its two blocks share
+                // whatever height it has by their counts.
+                className={cn('flex w-full flex-col justify-end', day.total > 0 && 'min-h-1')}
                 style={{ height: `${(day.total / most) * 100}%` }}
               >
                 {day.total > day.correct && (
-                  <div className="bg-track" style={{ height: `${((day.total - day.correct) / day.total) * 100}%` }} />
+                  <div className="basis-0 bg-track" style={{ flexGrow: day.total - day.correct }} />
                 )}
                 {day.correct > 0 && (
                   <div
                     data-slot="day-right"
-                    className={isToday ? 'bg-rust' : 'bg-forest'}
-                    style={{ height: `${(day.correct / day.total) * 100}%` }}
+                    className={cn('basis-0', isToday ? 'bg-rust' : 'bg-forest')}
+                    style={{ flexGrow: day.correct }}
                   />
                 )}
               </div>

@@ -3,8 +3,8 @@ import { Link } from 'react-router';
 import { FOCUS_RING, ROW_LINK } from '@/components/styles';
 import { useI18n } from '@/i18n/useI18n';
 import { cn } from '@/lib/utils';
-import { READINESS_TARGET_PERCENT, type StateMap } from '@/model';
-import { groupRows } from '@/progress/groups';
+import type { StateMap } from '@/model';
+import { groupRows, percentTone } from '@/progress/groups';
 
 /** How many of the weakest started topics Home lists (D7). */
 const WEAKEST_COUNT = 2;
@@ -59,7 +59,7 @@ export function WeakestTopics({ states }: { states: StateMap }) {
               <span
                 className={cn(
                   'shrink-0 font-heading text-[22px] leading-none font-semibold tabular-nums',
-                  percent < READINESS_TARGET_PERCENT ? 'text-rust' : 'text-forest',
+                  percentTone(percent) === 'rust' ? 'text-rust' : 'text-forest',
                 )}
               >
                 {t.home.percent(percent)}

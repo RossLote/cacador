@@ -97,6 +97,15 @@ export function PracticeSession({
 
   const question = shown && questionById(shown.id);
   const answered = shown?.selected !== undefined;
+  const drawn = question !== undefined;
+
+  // A tapped tab-bar link keeps the focus, and the keys never act from a control outside the region: once a
+  // question is on screen for this pool, a focus held by such a control moves to the region, as Next's does.
+  useEffect(() => {
+    const active = document.activeElement;
+    if (!drawn || active === null || active === document.body || top.current?.contains(active)) return;
+    top.current?.focus({ preventScroll: true });
+  }, [drawn, pool]);
 
   const answer = useCallback(
     (option: OptionKey) => {

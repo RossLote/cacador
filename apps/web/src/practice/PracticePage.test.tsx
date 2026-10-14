@@ -391,6 +391,21 @@ describe('PracticePage', () => {
       back.remove();
     });
 
+    it('answers from the keys after a tab-bar link opened the page: the focus it kept moves to the page', async () => {
+      const user = userEvent.setup();
+      const tabLink = document.createElement('a');
+      tabLink.href = '#practice';
+      tabLink.textContent = 'Practice';
+      document.body.append(tabLink);
+      tabLink.focus();
+      renderPractice();
+      expect(await shownId()).toBe(1);
+      await vi.waitFor(() => expect(tabLink).not.toHaveFocus());
+      await user.keyboard('b');
+      expect(optionFor('B')).toHaveAttribute('aria-pressed', 'true');
+      tabLink.remove();
+    });
+
     it('opens Hint from the keyboard after answering: Enter on the focused Hint button does not advance', async () => {
       const user = userEvent.setup();
       renderPractice();

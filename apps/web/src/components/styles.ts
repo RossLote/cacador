@@ -20,7 +20,8 @@ export const CHIP =
 
 /**
  * A card row that links somewhere (DESIGN.md § 8.5): card with the hairline,
- * 8 px corners, at least 44 px tall, the track colour on hover. The weakest
+ * 8 px corners, at least 44 px tall, the paper colour on hover (on the track
+ * the rust percentage would fall to 4.1:1, under the 4.5:1 rule). The weakest
  * topics on Home, and the group and past-exam rows on Progress.
  */
-export const ROW_LINK = `flex min-h-11 items-center gap-3 rounded-md border border-line bg-card px-3.5 py-3 text-ink transition-colors hover:bg-track ${FOCUS_RING}`;
+export const ROW_LINK = `flex min-h-11 items-center gap-3 rounded-md border border-line bg-card px-3.5 py-3 text-ink transition-colors hover:bg-paper ${FOCUS_RING}`;

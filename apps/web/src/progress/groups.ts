@@ -1,6 +1,14 @@
 import { nameIn } from '@/components/question/names';
 import type { Locale } from '@/i18n/locales';
-import { groupAccuracy, groupPath, GROUPS, type GroupAccuracy, type GroupKind, type StateMap } from '@/model';
+import {
+  groupAccuracy,
+  groupPath,
+  GROUPS,
+  READINESS_TARGET_PERCENT,
+  type GroupAccuracy,
+  type GroupKind,
+  type StateMap,
+} from '@/model';
 
 export interface GroupRow {
   slug: string;
@@ -31,4 +39,9 @@ export function groupRows(kind: GroupKind, states: StateMap, locale: Locale): Gr
       accuracy: groupAccuracy(group.pool, states),
     }))
     .sort(worstFirst);
+}
+
+/** A started group's colour (epic cac-8cn D7, D10): rust under the 75 % line, forest at it or above. */
+export function percentTone(percent: number): 'rust' | 'forest' {
+  return percent < READINESS_TARGET_PERCENT ? 'rust' : 'forest';
 }

@@ -72,7 +72,7 @@ function ExamInProgressCard({ exam, onDeadline }: { exam: Exam; onDeadline: () =
       <Timer aria-hidden="true" className="size-[26px] shrink-0 text-rust" strokeWidth={1.75} />
       <span className="flex min-w-0 flex-1 flex-col gap-0.5">
         <span className="font-heading text-lg leading-snug font-semibold">{t.home.examInProgress}</span>{' '}
-        <span className="text-sm tabular-nums">{t.home.examStatus(minutes, answered, EXAM_SIZE)}</span>
+        <span className="text-sm tabular-nums">{t.home.examStatus(minutes, answered, exam.questionIds.length)}</span>
       </span>
       <ChevronRight aria-hidden="true" className="size-5 shrink-0 text-rust" strokeWidth={2} />
     </Link>

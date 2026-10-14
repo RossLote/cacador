@@ -5,15 +5,15 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useI18n } from '@/i18n/useI18n';
 import { isOneOf } from '@/lib/isOneOf';
 import { cn } from '@/lib/utils';
-import { GROUP_KINDS, READINESS_TARGET_PERCENT, type GroupKind, type StateMap } from '@/model';
-import { groupRows, type GroupRow } from './groups';
+import { GROUP_KINDS, type GroupKind, type StateMap } from '@/model';
+import { groupRows, percentTone, type GroupRow } from './groups';
 
 function GroupList({ rows }: { rows: readonly GroupRow[] }) {
   const { t } = useI18n();
   return (
     <ul className="flex flex-col gap-1.5">
       {rows.map(({ slug, name, to, accuracy: { percent, seen, total } }) => {
-        const tone = percent !== undefined && percent < READINESS_TARGET_PERCENT ? 'rust' : 'forest';
+        const tone = percent === undefined ? 'forest' : percentTone(percent);
         return (
           <li key={slug}>
             <Link
