@@ -4,11 +4,14 @@ import { expect, test, type Locator, type Page } from '@playwright/test';
 // Dependency-free leaves of the app's model: seededRandom is serialised into the page.
 import { localDateKey } from '../apps/web/src/model/dates';
 import { seededRandom } from '../apps/web/src/model/random';
+import { background, contrastRatio, DARK, expectFraunces, LIGHT, TEXT_CONTRAST, textColour } from './look';
 
 /**
- * ACCEPTANCE BAR steps 2 to 11 (epic cac-eil), in order, in one fresh browser context: the counts build on each other
- * (5 answers, then 6, then 26; the flag of step 4 is cleared in step 9; the export of step 10 holds what 2 to 9 made).
- * Step 12, offline with the service worker, is offline.spec.ts.
+ * ACCEPTANCE BAR steps 2 to 9 (epic cac-8cn, Campo), in order, in one fresh browser context at 390 px wide
+ * (playwright.config.ts): the counts build on each other (5 answers, then 6, then the exam's 20). Step 10, offline
+ * with the service worker, is offline.spec.ts; step 11, the built dist, is build-output.spec.ts. After step 9 the
+ * phase 4 behaviours the Campo bar does not walk run on the same state: an exam surviving a closed tab, Flagged and
+ * its copy, and export, clear and import.
  *
  * Practice and the exam draw with Math.random; every page load replaces it with the app's own seeded source, so every
  * run draws the same questions. SEED is one whose Ducks draw in step 6 is a question not answered before.
@@ -16,10 +19,12 @@ import { seededRandom } from '../apps/web/src/model/random';
 const SEED = 1;
 
 const OPTION_KEYS: readonly OptionKey[] = ['A', 'B', 'C'];
+const TABS = ['Home', 'Practice', 'Exam', 'Progress'];
+const TABS_PT = ['Início', 'Praticar', 'Exame', 'Progresso'];
 const NOTE = 'nudge gives the answer away';
 const EXAM_SIZE = 20;
 const EXAM_SECONDS = 30 * 60;
-/** How long step 8 keeps the app closed, on the pages' clock. */
+/** How long the closed-tab check keeps the app closed, on the pages' clock. */
 const CLOSED_MS = 3 * 60 * 1000;
 
 function questionFor(id: number): Question {
@@ -37,34 +42,59 @@ function seconds(clock: string): number {
   return Number(match[1]) * 60 + Number(match[2]);
 }
 
+/** The row every screen but Home opens with: the back control, the eyebrow over the line, the right-hand slot. */
+const screenHeader = (page: Page): Locator => page.getByRole('main').locator('header').first();
+const tabBar = (page: Page): Locator => page.getByRole('navigation', { name: 'Main' });
+const tab = (page: Page, name: string): Locator => tabBar(page).getByRole('link', { name, exact: true });
+
+/** The tab bar holds the four tabs by these names, `current` alone marked as the page (none when undefined). */
+async function expectTabBar(page: Page, names: readonly string[], current?: string) {
+  const links = tabBar(page).getByRole('link');
+  await expect(links).toHaveText([...names]);
+  for (const name of names) {
+    const link = tab(page, name);
+    if (name === current) await expect(link).toHaveAttribute('aria-current', 'page');
+    else await expect(link).not.toHaveAttribute('aria-current');
+  }
+}
+
 /** The question card on screen and the parts of it the bar talks about. */
-function cardOf(page: Page) {
-  const card = page.getByRole('article');
+function cardOf(scope: Page | Locator) {
+  const card = scope.getByRole('article').first();
+  const options = card.getByRole('group', { name: 'Options' }).getByRole('button');
   return {
     card,
-    number: card.getByText(/^Question \d+$/),
     stem: card.locator(':scope > p[lang]'),
-    options: card.getByRole('group', { name: 'Options' }).getByRole('button'),
-    option: (key: OptionKey) => card.getByRole('group', { name: 'Options' }).getByRole('button').nth(OPTION_KEYS.indexOf(key)),
+    options,
+    option: (key: OptionKey) => options.nth(OPTION_KEYS.indexOf(key)),
     peek: card.getByRole('button', { name: 'Hold for English', exact: true }),
     hint: card.getByRole('button', { name: 'Hint', exact: true }),
     hintPanel: card.getByRole('region', { name: 'Hint' }),
   };
 }
 
-/** The id in the card's "Question <id>" header, once a question is on screen. */
+/** The id in Practice's screen header, "Question <id>", once a question is on screen. */
 async function shownId(page: Page): Promise<number> {
-  const number = cardOf(page).number;
+  const number = screenHeader(page).getByText(/^Question \d+$/);
   await expect(number).toBeVisible();
   return Number((await number.textContent())?.replace('Question ', ''));
 }
 
-async function goHome(page: Page) {
-  await page.getByRole('link', { name: 'Back to Home' }).click();
-  await expect(page.getByRole('heading', { level: 1, name: 'Caçador' })).toBeVisible();
+/** The bank id of the running exam's question, from the wrapper around its card. */
+async function examShownId(page: Page): Promise<number> {
+  const wrapper = page.locator('[data-question-id]');
+  await expect(wrapper).toHaveCount(1);
+  return Number(await wrapper.getAttribute('data-question-id'));
 }
 
-/** Home's readiness line once loaded: the percentage and the unseen count as shown. */
+const homeHeading = (page: Page): Locator => page.getByRole('heading', { level: 1, name: 'Caçador' });
+
+async function goHome(page: Page) {
+  await page.getByRole('link', { name: 'Back to Home' }).click();
+  await expect(homeHeading(page)).toBeVisible();
+}
+
+/** Home's readiness plate once loaded: the percentage and the unseen count as shown. */
 async function homeReadiness(page: Page): Promise<{ percent: string; unseen: string }> {
   const panel = page.getByRole('region', { name: 'Readiness' });
   const unseen = panel.getByText(/^\d+ unseen$/);
@@ -87,40 +117,67 @@ async function answerPractice(page: Page, key: OptionKey): Promise<number> {
 
 async function nextPractice(page: Page, previous: number): Promise<number> {
   await page.getByRole('button', { name: 'Next', exact: true }).click();
-  await expect(cardOf(page).number).not.toHaveText(`Question ${previous}`);
+  await expect(screenHeader(page).getByText(/^Question \d+$/)).not.toHaveText(`Question ${previous}`);
   return shownId(page);
 }
 
 test.use({ permissions: ['clipboard-read', 'clipboard-write'] });
 
-test('acceptance bar steps 2 to 11, in order, in one browser context', async ({ context, page }) => {
+test('acceptance bar steps 2 to 9, in order, in one browser context', async ({ context, page }) => {
   test.setTimeout(300_000);
   await context.addInitScript({ content: `Math.random = (${seededRandom.toString()})(${SEED});` });
-  // The pages' clock runs with real time until step 8 moves it on.
+  // The pages' clock runs with real time until a step moves it on.
   await context.clock.install();
 
   /** Every practice question answered so far, in order. */
   const answered: number[] = [];
+  /** The first exam's questions, in exam order. */
+  const examIds: number[] = [];
 
-  await test.step('step 2: Home shows 33 % against 75 %, 506 unseen, the four buttons and no exam card', async () => {
+  await test.step('step 2: Home: the paper ground, "Caçador" in Fraunces, 33 % with "506 unseen", the rust tick at 75 % and "Pass line 75 %"; no exam card; main holds the two cards, Practice and Exam; no "Weakest topics"; the tab bar holds the four tabs with Home current; the Settings control in the header', async () => {
     await page.goto('./');
     expect(await page.evaluate(() => Math.random.toString()), 'Math.random is the seeded source').not.toContain('[native code]');
+    await expect(page.locator('body')).toHaveCSS('background-color', LIGHT.paper);
     await expect(page.getByRole('heading', { level: 1 })).toHaveText('Caçador');
+    await expectFraunces(page, homeHeading(page));
+
     expect(await homeReadiness(page)).toEqual({ percent: '33 %', unseen: '506 unseen' });
-    await expect(page.getByText('Pass line 75 %')).toBeVisible();
-    await expect(page.getByRole('main').getByRole('link')).toHaveText(['Practice', 'Exam', 'Progress', 'Settings']);
+    const plate = page.getByRole('region', { name: 'Readiness' });
+    const passLine = plate.getByText('Pass line 75 %', { exact: true });
+    await expect(passLine).toBeVisible();
+    await expect(passLine).toHaveCSS('color', LIGHT.rust);
+    const tick = plate.locator('[data-slot="pass-tick"]');
+    await expect(tick).toHaveCSS('background-color', LIGHT.rust);
+    const tickBox = await tick.boundingBox();
+    const barBox = await plate.getByRole('progressbar', { name: 'Readiness' }).boundingBox();
+    expect(tickBox && barBox, 'the tick and the bar are drawn').toBeTruthy();
+    if (tickBox && barBox) {
+      expect(Math.abs(tickBox.x + tickBox.width / 2 - (barBox.x + 0.75 * barBox.width)), 'the tick sits at 75 %').toBeLessThanOrEqual(1.5);
+    }
+
     await expect(examCard(page)).toHaveCount(0);
+    const main = page.getByRole('main');
+    // The two cards and the Settings control are main's only links; the tabs sit outside it.
+    await expect(main.getByRole('link')).toHaveCount(3);
+    await expect(main.getByRole('link', { name: 'Practice Weak ones first', exact: true })).toBeVisible();
+    await expect(main.getByRole('link', { name: 'Exam 20 questions · 30 min', exact: true })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Weakest topics' })).toHaveCount(0);
+    await expectTabBar(page, TABS, 'Home');
+    // The header is the row the app name opens.
+    await expect(homeHeading(page).locator('xpath=..').getByRole('link', { name: 'Settings', exact: true })).toBeVisible();
   });
 
-  await test.step('step 3: Practice shows a question; holding the peek shows English; Hint shows the language notes, no nudge', async () => {
-    await page.getByRole('link', { name: 'Practice', exact: true }).click();
+  await test.step('step 3: the Practice tab: the header shows the back control, the section · topic eyebrow and "Question N"; holding "Hold for English" turns the stem English and the button ink; releasing brings the Portuguese back; Hint opens the moss panel with "Language notes" and no "Nudge"', async () => {
+    await tab(page, 'Practice').click();
     await expect(page.getByRole('heading', { level: 1 })).toHaveText('Practice');
+    const header = screenHeader(page);
+    await expect(header.getByRole('link', { name: 'Back to Home' })).toBeVisible();
     const id = await shownId(page);
     const question = questionFor(id);
     const english = translationFor(id);
-    const { card, stem, options, peek, hint, hintPanel } = cardOf(page);
+    await expect(header.getByText(`${sectionOf(question)?.en} · ${topicOf(question)?.en}`, { exact: true })).toBeVisible();
 
-    await expect(card.locator('header')).toContainText(`${sectionOf(question)?.en} · ${topicOf(question)?.en}`);
+    const { card, stem, options, peek, hint, hintPanel } = cardOf(page);
     await expect(card.getByRole('img', { name: `The picture for question ${id}` })).toHaveCount(question.image ? 1 : 0);
     await expect(options).toHaveCount(3);
     await expect(stem).toHaveText(question.question);
@@ -131,12 +188,15 @@ test('acceptance bar steps 2 to 11, in order, in one browser context', async ({ 
     await expect(stem).toHaveAttribute('lang', 'en');
     await expect(stem).toHaveText(english?.question ?? '');
     await expect(options.first()).toContainText(english?.options.A ?? '');
+    await expect(peek).toHaveCSS('background-color', LIGHT.ink);
     await page.mouse.up();
     await expect(stem).toHaveAttribute('lang', 'pt-PT');
     await expect(stem).toHaveText(question.question);
     await expect(options.first()).toContainText(question.options.A);
+    await expect(peek).not.toHaveCSS('background-color', LIGHT.ink);
 
     await hint.click();
+    await expect(hintPanel).toHaveCSS('background-color', LIGHT.moss);
     await expect(hintPanel.getByRole('heading', { name: 'Language notes' })).toBeVisible();
     const notes = hintFor(id)?.language ?? [];
     if (notes.length === 0) await expect(hintPanel.getByText('No language notes for this question.')).toBeVisible();
@@ -144,28 +204,39 @@ test('acceptance bar steps 2 to 11, in order, in one browser context', async ({ 
     await expect(hintPanel.getByRole('heading', { name: 'Nudge' })).toHaveCount(0);
   });
 
-  await test.step('step 4: an option marks the chosen and the correct one, shows the nudge and the flags row; flag the hint; Next', async () => {
+  await test.step('step 4: a wrong option (from the bank\'s key): that row clay with "Wrong", the correct row moss with "Right"; the panel gains "Nudge"; the flags row shows "Report:" and the two chips; "Hint is off" sets the chip and opens the note field; Next draws a different question with the panel closed', async () => {
     const id = await shownId(page);
     const question = questionFor(id);
-    answered.push(await answerPractice(page, wrongOf(question)));
+    const wrong = wrongOf(question);
+    answered.push(await answerPractice(page, wrong));
 
-    const { hintPanel } = cardOf(page);
+    const { option, hintPanel } = cardOf(page);
+    await expect(option(wrong)).toHaveCSS('background-color', LIGHT.clay);
+    await expect(option(wrong)).toContainText('Wrong');
+    await expect(option(question.answer)).toHaveCSS('background-color', LIGHT.moss);
+    await expect(option(question.answer)).toContainText('Right');
+
     await expect(hintPanel.getByRole('heading', { name: 'Nudge' })).toBeVisible();
     await expect(hintPanel).toContainText(hintFor(id)?.nudge ?? '');
+
     const flags = page.getByRole('group', { name: 'Report a problem with this question' });
-    await expect(flags.getByRole('button', { name: 'English is off' })).toBeVisible();
+    await expect(flags.getByText('Report:', { exact: true })).toBeVisible();
+    await expect(flags.getByRole('button')).toHaveText(['English is off', 'Hint is off']);
     await expect(page.getByRole('button', { name: 'Next', exact: true })).toBeVisible();
 
     await flags.getByRole('button', { name: 'Hint is off' }).click();
     await expect(flags.getByRole('button', { name: 'Hint is off' })).toHaveAttribute('aria-pressed', 'true');
-    await flags.getByLabel('What is off with the hint').fill(NOTE);
+    const note = flags.getByRole('textbox', { name: 'What is off with the hint' });
+    await expect(note).toBeVisible();
+    await note.fill(NOTE);
     await flags.getByRole('button', { name: 'Save' }).click();
     await expect(flags.getByRole('status')).toHaveText('Saved');
 
     await nextPractice(page, id);
+    await expect(cardOf(page).hintPanel).toHaveCount(0);
   });
 
-  await test.step('step 5: four more answers, five different ids; Progress and Home show 501 unseen', async () => {
+  await test.step('step 5: four more answers, then the Progress tab: the header reads "Progress" with "N % · 501 unseen"; the 30-day plate shows one bar, today\'s, in rust, and "Today: 5 answers, M right"; Topics is underlined; the started rows first with a percentage and "Seen x of y", the "Not started" rows last, 29 rows in all; Progress current in the tab bar; the "Flagged (1)" row at the bottom', async () => {
     for (let n = 0; n < 4; n++) {
       const id = await shownId(page);
       answered.push(await answerPractice(page, questionFor(id).answer));
@@ -173,128 +244,263 @@ test('acceptance bar steps 2 to 11, in order, in one browser context', async ({ 
     }
     expect(new Set(answered).size).toBe(5);
 
-    await goHome(page);
-    expect((await homeReadiness(page)).unseen).toBe('501 unseen');
-    await page.getByRole('link', { name: 'Progress', exact: true }).click();
-    await expect(page.getByRole('region', { name: 'Readiness' })).toContainText('501 unseen');
+    await tab(page, 'Progress').click();
+    const header = screenHeader(page);
+    await expect(header.getByRole('heading', { level: 1 })).toHaveText('Progress');
+    await expect(header.getByRole('region', { name: 'Readiness' })).toContainText(/^\d+ %\s*·\s*501 unseen/);
+
+    const bars = page.getByRole('list', { name: 'Answers per day, oldest first' }).getByRole('img');
+    await expect(bars).toHaveCount(30);
+    await expect(bars.filter({ visible: true })).toHaveCount(1);
+    await expect(bars.last()).toHaveAccessibleName(/^Today, .+: 5 answers, 4 right$/);
+    await expect(bars.last().locator('[data-slot="day-right"]')).toHaveCSS('background-color', LIGHT.rust);
     await expect(page.getByText(/^Today: /)).toHaveText('Today: 5 answers, 4 right');
+
+    const underline = (name: string) =>
+      page.getByRole('tab', { name }).evaluate((element) => {
+        const after = getComputedStyle(element, '::after');
+        return { opacity: after.opacity, height: after.height, colour: after.backgroundColor };
+      });
+    await expect(page.getByRole('tab', { name: 'Topics' })).toHaveAttribute('aria-selected', 'true');
+    await expect.poll(() => underline('Topics')).toEqual({ opacity: '1', height: '2px', colour: LIGHT.forest });
+    for (const name of ['Sections', 'Patterns']) await expect.poll(() => underline(name).then((u) => u.opacity)).toBe('0');
+
+    const started = new Set(answered.map((id) => topicOf(questionFor(id))?.slug)).size;
+    const rows = page.getByRole('tabpanel').getByRole('link');
+    expect(topics).toHaveLength(29);
+    await expect(rows).toHaveCount(29);
+    for (let i = 0; i < 29; i++) {
+      const row = rows.nth(i);
+      if (i < started) {
+        await expect(row).toHaveAccessibleName(/: \d+ %, seen \d+ of \d+$/);
+        await expect(row.getByText(/^Seen \d+ of \d+$/)).toBeVisible();
+        await expect(row.getByText(/^\d+ %$/)).toBeVisible();
+      } else {
+        await expect(row).toHaveAccessibleName(/: not started, \d+ questions?$/);
+        await expect(row.getByText(/^Not started · \d+ questions?$/)).toBeVisible();
+      }
+    }
+
+    await expectTabBar(page, TABS, 'Progress');
+    await expect(page.getByRole('main').getByRole('link').last()).toHaveText('Flagged (1)');
   });
 
-  await test.step('step 6: the Ducks row opens Practice on Ducks; one answer makes 6 today and 500 unseen', async () => {
+  await test.step('step 6: the Ducks row opens Practice with the chip "Practising Ducks"; one answer; the Home tab: "Weakest topics" with at least one row and the "All topics" link; the answered topic\'s row names it with its percentage', async () => {
     const ducks = topics.find((topic) => topic.slug === 'patos');
     const [from, to] = ducks?.ranges[0] ?? [0, 0];
-    await page.getByRole('link', { name: /^Ducks:/ }).click();
+    const inDucks = (id: number) => id >= from && id <= to;
+    await page.getByRole('tabpanel').getByRole('link', { name: /^Ducks:/ }).click();
     await expect(page).toHaveURL(/\/cacador\/practice\?topic=patos$/);
-    await expect(page.getByText('Practising')).toContainText('Ducks');
+    const focus = page.getByText('Practising');
+    await expect(focus).toBeVisible();
+    await expect(focus.getByText('Ducks', { exact: true })).toBeVisible();
 
     const id = await shownId(page);
-    await expect(cardOf(page).card.locator('header')).toContainText('· Ducks');
-    expect(id).toBeGreaterThanOrEqual(from);
-    expect(id).toBeLessThanOrEqual(to);
-    // 500 unseen needs a question not answered before; a change to the seed or the draw that breaks this fails here.
+    await expect(screenHeader(page)).toContainText('· Ducks');
+    expect(inDucks(id)).toBe(true);
+    // A question not answered before, so the Ducks row reads "seen 1"; a change to the seed or the draw that breaks this fails here.
     expect(answered).not.toContain(id);
-    answered.push(await answerPractice(page, questionFor(id).answer));
+    // Wrong, so Ducks is at 0 % and certainly one of Home's two weakest topics.
+    answered.push(await answerPractice(page, wrongOf(questionFor(id))));
+    const seenInDucks = new Set(answered.filter(inDucks)).size;
 
     const next = await nextPractice(page, id);
-    expect(next).toBeGreaterThanOrEqual(from);
-    expect(next).toBeLessThanOrEqual(to);
-    await expect(cardOf(page).card.locator('header')).toContainText('· Ducks');
+    expect(inDucks(next)).toBe(true);
+    await expect(screenHeader(page)).toContainText('· Ducks');
 
-    await goHome(page);
-    await page.getByRole('link', { name: 'Progress', exact: true }).click();
-    await expect(page.getByRole('region', { name: 'Readiness' })).toContainText('500 unseen');
-    await expect(page.getByText(/^Today: /)).toHaveText('Today: 6 answers, 5 right');
+    await tab(page, 'Home').click();
+    const weakest = page.getByRole('region', { name: 'Weakest topics' });
+    await expect(weakest.getByRole('heading', { name: 'Weakest topics' })).toBeVisible();
+    await expect(weakest.getByRole('link', { name: 'All topics', exact: true })).toBeVisible();
+    const weakestRows = weakest.getByRole('listitem');
+    expect(await weakestRows.count()).toBeGreaterThanOrEqual(1);
+    const ducksRow = weakest.getByRole('link', { name: new RegExp(`^Ducks: \\d+ %, seen ${seenInDucks} of \\d+$`) });
+    await expect(ducksRow).toBeVisible();
+    await expect(ducksRow.getByText('Ducks', { exact: true })).toBeVisible();
+    await expect(ducksRow.getByText(/^\d+ %$/)).toBeVisible();
     test.info().annotations.push({ type: 'practice answers', description: answered.join(', ') });
   });
 
-  await test.step('step 7: an exam of 20 answered moving freely, one answer changed, submitted; Progress lists it and 26 answers', async () => {
-    await goHome(page);
-    await page.getByRole('link', { name: 'Exam', exact: true }).click();
+  await test.step('step 7: the Exam tab: Start; no tab bar, the back control, "1 of 20", the "Time left" chip counting from 30:00, 20 markers with marker 1 rust; an option fills ink; Next makes marker 1 forest and marker 2 rust; Submit reads "Submit · 19 unanswered"; confirming shows the score in Fraunces, "Pass mark 15", the "Not passed" chip in clay, the wrong answers, and the tab bar back with no tab current', async () => {
+    await tab(page, 'Exam').click();
     await page.getByRole('button', { name: 'Start' }).click();
-    await expect(page.getByText('1 of 20')).toBeVisible();
-    const clock = page.getByRole('timer', { name: 'Time left' });
+    const header = screenHeader(page);
+    await expect(header.getByText('1 of 20', { exact: true })).toBeVisible();
+    await expect(tabBar(page)).toHaveCount(0);
+    await expect(header.getByRole('link', { name: 'Back to Home' })).toBeVisible();
+
+    const clock = header.getByRole('timer', { name: 'Time left' });
     await expect(clock).toHaveText(/^(30:00|29:\d\d)$/);
+    const clockSeconds = async () => seconds((await clock.textContent()) ?? '');
+    const shown = await clockSeconds();
+    await context.clock.fastForward(2_000);
+    await expect.poll(clockSeconds).toBeLessThan(shown);
+
     const markers = page.getByRole('navigation', { name: 'Questions' }).getByRole('button');
     await expect(markers).toHaveCount(EXAM_SIZE);
     const marker = (n: number) => page.getByRole('button', { name: `Question ${n}`, exact: true });
+    await expect(marker(1)).toHaveAttribute('aria-current', 'step');
+    await expect(marker(1)).toHaveCSS('background-color', LIGHT.rust);
     const { option, peek, hint } = cardOf(page);
     await expect(peek).toHaveCount(0);
     await expect(hint).toHaveCount(0);
 
-    // Four wrong (positions 3, 8, 12 and 17), the rest right: 16 out of 20.
-    const wrongAt = new Set([3, 8, 12, 17]);
-    const ids: number[] = [];
-    const choose = async (n: number, key?: OptionKey) => {
-      await expect(page.getByText(`${n} of 20`)).toBeVisible();
-      const question = questionFor(await shownId(page));
-      ids[n - 1] = question.id;
-      const picked = key ?? (wrongAt.has(n) ? wrongOf(question) : question.answer);
-      await option(picked).click();
-      await expect(option(picked)).toHaveAttribute('aria-pressed', 'true');
-      await expect(marker(n)).toHaveAttribute('data-answered', 'true');
-    };
+    const first = questionFor(await examShownId(page));
+    examIds[0] = first.id;
+    await option(first.answer).click();
+    await expect(option(first.answer)).toHaveAttribute('aria-pressed', 'true');
+    await expect(option(first.answer)).toHaveCSS('background-color', LIGHT.ink);
+    await expect(marker(1)).toHaveAttribute('data-answered', 'true');
+
     const next = page.getByRole('button', { name: 'Next', exact: true });
     const previous = page.getByRole('button', { name: 'Previous', exact: true });
+    await next.click();
+    await expect(header.getByText('2 of 20', { exact: true })).toBeVisible();
+    await expect(marker(1)).toHaveCSS('background-color', LIGHT.forest);
+    await expect(marker(2)).toHaveAttribute('aria-current', 'step');
+    await expect(marker(2)).toHaveCSS('background-color', LIGHT.rust);
+    const submit = page.getByRole('button', { name: 'Submit · 19 unanswered', exact: true });
+    await expect(submit).toBeVisible();
 
-    // 1 to 10 with Next, question 3 answered right at first.
-    for (let n = 1; n <= 10; n++) {
-      await choose(n, n === 3 ? questionFor(await shownId(page)).answer : undefined);
-      if (n < 10) await next.click();
-    }
-    // Jump to 20 and walk back to 11 with Previous.
+    // Moving freely: jump to 20, back one with Previous, then to 1 by its marker, whose answer is kept and changed to a wrong one.
+    examIds[1] = await examShownId(page);
     await marker(20).click();
-    for (let n = 20; n >= 11; n--) {
-      await choose(n);
-      if (n > 11) await previous.click();
-    }
-    // Back to 3 by its marker and change its answer to a wrong one.
-    await marker(3).click();
-    await choose(3);
-    await expect(page.locator('[data-answered="true"]')).toHaveCount(EXAM_SIZE);
-    expect(new Set(ids).size).toBe(EXAM_SIZE);
+    await expect(header.getByText('20 of 20', { exact: true })).toBeVisible();
+    examIds[19] = await examShownId(page);
+    await previous.click();
+    await expect(header.getByText('19 of 20', { exact: true })).toBeVisible();
+    await marker(1).click();
+    await expect(header.getByText('1 of 20', { exact: true })).toBeVisible();
+    expect(await examShownId(page)).toBe(first.id);
+    await expect(option(first.answer)).toHaveAttribute('aria-pressed', 'true');
+    await option(wrongOf(first)).click();
+    await expect(option(wrongOf(first))).toHaveAttribute('aria-pressed', 'true');
+    await expect(option(first.answer)).toHaveAttribute('aria-pressed', 'false');
+    await expect(page.locator('[data-answered="true"]')).toHaveCount(1);
+    expect(new Set(examIds.filter(Boolean)).size).toBe(3);
 
-    await page.getByRole('button', { name: 'Submit' }).click();
+    await submit.click();
+    const confirm = page.getByRole('alertdialog', { name: '19 unanswered — submit anyway?' });
+    await confirm.getByRole('button', { name: 'Submit', exact: true }).click();
+
     await expect(page.getByRole('heading', { level: 1 })).toHaveText('Exam results');
     const score = page.getByRole('region', { name: 'Score' });
-    await expect(score).toContainText('16 out of 20');
-    await expect(score).toContainText('Passed');
-    await expect(score).toContainText('Pass mark 15');
-    const wrong = page.getByRole('list', { name: 'Wrong answers' }).locator(':scope > li');
-    await expect(wrong).toHaveCount(wrongAt.size);
-    for (const [i, n] of [...wrongAt].entries()) {
-      const item = wrong.nth(i);
-      const question = questionFor(ids[n - 1] ?? 0);
-      await expect(item.getByText(`Question ${question.id}`, { exact: true })).toBeVisible();
-      const options = item.getByRole('group', { name: 'Options' }).getByRole('button');
-      await expect(options.nth(OPTION_KEYS.indexOf(question.answer))).toHaveAttribute('data-mark', 'correct');
-      await expect(options.nth(OPTION_KEYS.indexOf(wrongOf(question)))).toHaveAttribute('data-mark', 'wrong');
-      await expect(item.getByRole('button', { name: 'Hint', exact: true })).toBeVisible();
-    }
-    await wrong.first().getByRole('button', { name: 'Hint', exact: true }).click();
-    await expect(wrong.first().getByRole('region', { name: 'Hint' })).toBeVisible();
+    const points = score.getByText(/^\d+ out of 20$/);
+    await expect(points).toHaveText('0 out of 20');
+    await expectFraunces(page, points);
+    await expect(score.getByText('Pass mark 15', { exact: true })).toBeVisible();
+    const notPassed = score.getByText('Not passed', { exact: true });
+    await expect(notPassed).toHaveCSS('background-color', LIGHT.clay);
+    await expect(notPassed).toHaveCSS('color', LIGHT.ink);
 
-    await goHome(page);
-    await page.getByRole('link', { name: 'Progress', exact: true }).click();
-    const past = page.getByRole('region', { name: 'Past exams' }).getByRole('link');
-    await expect(past).toHaveCount(1);
-    await expect(past).toHaveAccessibleName(/: 16 of 20, Passed$/);
-    await expect(page.getByText(/^Today: /)).toHaveText('Today: 26 answers, 21 right');
+    // Every question is wrong: the first answered wrong, the other 19 unanswered.
+    const wrong = page.getByRole('list', { name: 'Wrong answers' }).locator(':scope > li');
+    await expect(wrong).toHaveCount(EXAM_SIZE);
+    const answeredItem = wrong.first();
+    await expect(answeredItem.getByText(`Question ${first.id}`, { exact: true })).toBeVisible();
+    const marks = cardOf(answeredItem).options;
+    await expect(marks.nth(OPTION_KEYS.indexOf(first.answer))).toHaveAttribute('data-mark', 'correct');
+    await expect(marks.nth(OPTION_KEYS.indexOf(wrongOf(first)))).toHaveAttribute('data-mark', 'wrong');
+    await expect(answeredItem.getByText('Not answered', { exact: true })).toHaveCount(0);
+    for (const [n, item] of [[2, wrong.nth(1)], [20, wrong.last()]] as const) {
+      const question = questionFor(examIds[n - 1] ?? 0);
+      await expect(item.getByText(`Question ${question.id}`, { exact: true })).toBeVisible();
+      await expect(item.getByText('Not answered', { exact: true })).toBeVisible();
+      await expect(item.locator('[data-mark]')).toHaveCount(1);
+      await expect(cardOf(item).option(question.answer)).toHaveAttribute('data-mark', 'correct');
+    }
+    await expect(cardOf(answeredItem).hint).toBeVisible();
+    await cardOf(answeredItem).hint.click();
+    await expect(cardOf(answeredItem).hintPanel).toBeVisible();
+
+    await expectTabBar(page, TABS);
   });
 
-  await test.step('step 8: a second exam with 3 answers survives closing the tab, its clock still running', async () => {
+  await test.step('step 8: dark: with prefers-color-scheme dark emulated, Home\'s body is #151A17, the heading #EDE8DB, and the heading, the muted unseen count and the rust pass line each pass 4.5:1 against the body', async () => {
+    await tab(page, 'Home').click();
+    await expect(homeHeading(page)).toBeVisible();
+    await page.emulateMedia({ colorScheme: 'dark' });
+    const body = page.locator('body');
+    await expect(body).toHaveCSS('background-color', DARK.paper);
+    await expect(homeHeading(page)).toHaveCSS('color', DARK.ink);
+    const plate = page.getByRole('region', { name: 'Readiness' });
+    const unseen = plate.getByText(/^\d+ unseen$/);
+    const passLine = plate.getByText('Pass line 75 %', { exact: true });
+    await expect(unseen).toHaveCSS('color', DARK.muted);
+    await expect(passLine).toHaveCSS('color', DARK.rust);
+
+    const ground = await background(body);
+    for (const [what, text] of [
+      ['the heading', homeHeading(page)],
+      ['the unseen count', unseen],
+      ['the pass line', passLine],
+    ] as const) {
+      const ratio = contrastRatio(await textColour(text), ground);
+      test.info().annotations.push({ type: 'dark contrast', description: `${what}: ${ratio.toFixed(2)}:1` });
+      expect(ratio, `${what} against the body`).toBeGreaterThanOrEqual(TEXT_CONTRAST);
+    }
+    await page.emulateMedia({ colorScheme: 'light' });
+    await expect(body).toHaveCSS('background-color', LIGHT.paper);
+  });
+
+  await test.step('step 9: Settings from Home\'s control: the eyebrows "Language" and "Progress"; Português turns the tab bar into Início, Praticar, Exame, Progresso and the back control into "Voltar ao início"; English brings them back', async () => {
+    await homeHeading(page).locator('xpath=..').getByRole('link', { name: 'Settings', exact: true }).click();
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Settings');
+    await expect(page.getByRole('heading', { level: 2, name: 'Language', exact: true })).toBeVisible();
+    await expect(page.getByRole('heading', { level: 2, name: 'Progress', exact: true })).toBeVisible();
+    await expectTabBar(page, TABS);
+
+    await page.getByRole('button', { name: 'Português' }).click();
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Definições');
+    await expect(page.locator('html')).toHaveAttribute('lang', 'pt-PT');
+    await expect(page.getByRole('navigation', { name: 'Principal' }).getByRole('link')).toHaveText(TABS_PT);
+    await expect(screenHeader(page).getByRole('link', { name: 'Voltar ao início', exact: true })).toBeVisible();
+    await expect(page.getByRole('group', { name: 'Idioma' })).toBeVisible();
+    for (const name of ['Exportar', 'Importar', 'Limpar o progresso']) {
+      await expect(page.getByRole('button', { name, exact: true })).toBeVisible();
+    }
+
+    // The choice survives a reload, and Home and Practice follow it.
+    await page.reload();
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Definições');
+    await expect(page.locator('html')).toHaveAttribute('lang', 'pt-PT');
+    await page.getByRole('link', { name: 'Voltar ao início' }).click();
+    await expect(page.getByText(/^\d+ por ver$/)).toBeVisible();
+    await page.getByRole('navigation', { name: 'Principal' }).getByRole('link', { name: 'Praticar', exact: true }).click();
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Praticar');
+    const number = screenHeader(page).getByText(/^Pergunta \d+$/);
+    await expect(number).toBeVisible();
+    const question = questionFor(Number((await number.textContent())?.replace('Pergunta ', '')));
+    await expect(screenHeader(page).getByText(`${sectionOf(question)?.pt} · ${topicOf(question)?.pt}`, { exact: true })).toBeVisible();
+    const card = page.getByRole('article');
+    await expect(card.getByRole('group', { name: 'Opções' }).getByRole('button')).toHaveCount(3);
+    await expect(card.getByRole('button', { name: 'Manter premido para ver em inglês' })).toBeVisible();
+    await expect(card.getByRole('button', { name: 'Dica', exact: true })).toBeVisible();
+
+    await page.getByRole('link', { name: 'Voltar ao início' }).click();
+    await page.getByRole('link', { name: 'Definições', exact: true }).click();
+    await page.getByRole('button', { name: 'English', exact: true }).click();
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Settings');
+    await expect(page.locator('html')).toHaveAttribute('lang', 'en-GB');
+    await expectTabBar(page, TABS);
+    await expect(screenHeader(page).getByRole('link', { name: 'Back to Home', exact: true })).toBeVisible();
+  });
+
+  await test.step('after the bar: a second exam with 3 answers survives closing the tab, its clock still running, and Home\'s card counts them', async () => {
     await goHome(page);
-    await page.getByRole('link', { name: 'Exam', exact: true }).click();
+    await tab(page, 'Exam').click();
     const startClicked = Date.now();
     await page.getByRole('button', { name: 'Start' }).click();
-    await expect(page.getByText('1 of 20')).toBeVisible();
+    await expect(page.getByText('1 of 20', { exact: true })).toBeVisible();
     const startShown = Date.now();
     const chosen: OptionKey[] = ['A', 'B', 'C'];
     for (const [i, key] of chosen.entries()) {
-      await expect(page.getByText(`${i + 1} of 20`)).toBeVisible();
+      await expect(page.getByText(`${i + 1} of 20`, { exact: true })).toBeVisible();
       await cardOf(page).option(key).click();
       await expect(page.getByRole('button', { name: `Question ${i + 1}`, exact: true })).toHaveAttribute('data-answered', 'true');
       await page.getByRole('button', { name: 'Next', exact: true }).click();
     }
+    await expect(page.getByRole('button', { name: 'Submit · 17 unanswered', exact: true })).toBeVisible();
     await page.close();
 
     // The app stays closed for three minutes, which the clock must have counted when it is opened again.
@@ -302,14 +508,14 @@ test('acceptance bar steps 2 to 11, in order, in one browser context', async ({ 
     await context.clock.fastForward(CLOSED_MS);
     const reopened = Date.now() + CLOSED_MS;
     await page.goto('./');
-    await expect(examCard(page)).toContainText(/^Exam in progress27 minutes left$/);
+    await expect(examCard(page)).toHaveText('Exam in progress 27 minutes left · 3 of 20 answered');
     await examCard(page).click();
 
     const markers = page.getByRole('navigation', { name: 'Questions' });
     await expect(markers.locator('[data-answered="true"]')).toHaveCount(3);
     for (const [i, key] of chosen.entries()) {
       await page.getByRole('button', { name: `Question ${i + 1}`, exact: true }).click();
-      await expect(page.getByText(`${i + 1} of 20`)).toBeVisible();
+      await expect(page.getByText(`${i + 1} of 20`, { exact: true })).toBeVisible();
       await expect(cardOf(page).option(key)).toHaveAttribute('aria-pressed', 'true');
     }
 
@@ -324,9 +530,14 @@ test('acceptance bar steps 2 to 11, in order, in one browser context', async ({ 
     await expect.poll(clockSeconds).toBeLessThan(first);
   });
 
-  await test.step('step 9: Flagged holds the one hint flag; Copy puts the header and its line; clearing it leaves none', async () => {
+  await test.step('after the bar: Progress lists the first exam and 26 answers; Flagged holds the one hint flag; Copy puts the header and its line; clearing it leaves none', async () => {
     await goHome(page);
-    await page.getByRole('link', { name: 'Progress', exact: true }).click();
+    await tab(page, 'Progress').click();
+    const past = page.getByRole('region', { name: 'Past exams' }).getByRole('link');
+    await expect(past).toHaveCount(1);
+    await expect(past).toHaveAccessibleName(/: 0 of 20, Not passed$/);
+    await expect(page.getByText(/^Today: /)).toHaveText('Today: 26 answers, 4 right');
+
     await page.getByRole('link', { name: 'Flagged (1)' }).click();
     await expect(page.getByRole('heading', { level: 1 })).toHaveText('Flagged');
     const id = answered[0] ?? 0;
@@ -346,7 +557,7 @@ test('acceptance bar steps 2 to 11, in order, in one browser context', async ({ 
     await expect(rows).toHaveCount(0);
   });
 
-  await test.step('step 10: Export, clear, import: the same readiness, exam card, 26 answers and 1 past exam come back', async () => {
+  await test.step('after the bar: Export, clear, import: the same readiness, exam card, 26 answers and 1 past exam come back', async () => {
     await goHome(page);
     const before = await homeReadiness(page);
     await expect(examCard(page)).toBeVisible();
@@ -386,46 +597,8 @@ test('acceptance bar steps 2 to 11, in order, in one browser context', async ({ 
     await goHome(page);
     expect(await homeReadiness(page)).toEqual(before);
     await expect(examCard(page)).toBeVisible();
-    await page.getByRole('link', { name: 'Progress', exact: true }).click();
-    await expect(page.getByText(/^Today: /)).toHaveText('Today: 26 answers, 21 right');
+    await tab(page, 'Progress').click();
+    await expect(page.getByText(/^Today: /)).toHaveText('Today: 26 answers, 4 right');
     await expect(page.getByRole('region', { name: 'Past exams' }).getByRole('link')).toHaveCount(1);
-  });
-
-  await test.step('step 11: Português turns Home, Practice and Settings Portuguese, survives a reload, and English comes back', async () => {
-    await goHome(page);
-    await page.getByRole('link', { name: 'Settings', exact: true }).click();
-    await page.getByRole('button', { name: 'Português' }).click();
-    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Definições');
-    await expect(page.locator('html')).toHaveAttribute('lang', 'pt-PT');
-    await expect(page.getByRole('group', { name: 'Idioma' })).toBeVisible();
-    for (const name of ['Exportar', 'Importar', 'Limpar o progresso']) {
-      await expect(page.getByRole('button', { name, exact: true })).toBeVisible();
-    }
-
-    await page.reload();
-    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Definições');
-    await expect(page.locator('html')).toHaveAttribute('lang', 'pt-PT');
-
-    await page.getByRole('link', { name: 'Voltar ao início' }).click();
-    await expect(page.getByRole('main').getByRole('link')).toContainText(['Praticar', 'Exame', 'Progresso', 'Definições']);
-    await expect(page.getByText(/^\d+ por ver$/)).toBeVisible();
-
-    await page.getByRole('link', { name: 'Praticar', exact: true }).click();
-    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Praticar');
-    const id = Number((await page.getByRole('article').getByText(/^Pergunta \d+$/).textContent())?.replace('Pergunta ', ''));
-    const question = questionFor(id);
-    const card = page.getByRole('article');
-    await expect(card.locator('header')).toContainText(`${sectionOf(question)?.pt} · ${topicOf(question)?.pt}`);
-    await expect(card.getByRole('group', { name: 'Opções' }).getByRole('button')).toHaveCount(3);
-    await expect(card.getByRole('button', { name: 'Manter premido para ver em inglês' })).toBeVisible();
-    await expect(card.getByRole('button', { name: 'Dica', exact: true })).toBeVisible();
-
-    await page.getByRole('link', { name: 'Voltar ao início' }).click();
-    await page.getByRole('link', { name: 'Definições', exact: true }).click();
-    await page.getByRole('button', { name: 'English', exact: true }).click();
-    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Settings');
-    await expect(page.locator('html')).toHaveAttribute('lang', 'en-GB');
-    await goHome(page);
-    await expect(page.getByRole('main').getByRole('link')).toContainText(['Practice', 'Exam', 'Progress', 'Settings']);
   });
 });
