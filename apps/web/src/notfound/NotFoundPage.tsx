@@ -10,8 +10,7 @@ export function NotFoundPage() {
   const { t } = useI18n();
   return (
     <section className="flex flex-col gap-4">
-      <ScreenHeader eyebrow={t.common.notFound.title} />
-      <h1 className="text-2xl font-semibold tracking-tight">{t.common.notFound.title}</h1>
+      <ScreenHeader title={t.common.notFound.title} />
       <p className="text-muted-foreground">{t.common.notFound.body}</p>
     </section>
   );

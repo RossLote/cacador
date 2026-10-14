@@ -1,5 +1,6 @@
+import { ChevronRight, Flag } from 'lucide-react';
 import { useId, useRef, useState, type ChangeEvent, type MouseEvent } from 'react';
-import { LinkButton } from '@/components/LinkButton';
+import { Link } from 'react-router';
 import { ScreenHeader } from '@/components/nav/ScreenHeader';
 import {
   AlertDialog,
@@ -13,12 +14,21 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
-import { Separator } from '@/components/ui/separator';
 import { LOCALE_NAMES, LOCALE_TAGS, LOCALES } from '@/i18n/locales';
 import { useI18n } from '@/i18n/useI18n';
 import { useLoaded } from '@/lib/useLoaded';
 import { clearProgress, importProgress, storageMode, type ImportCounts } from '@/storage';
 import { canShareProgressFile, downloadFile, makeProgressFile } from './progressFile';
+
+/** A plate (the style tile, as on Home): a card with the line hairline under an eyebrow. */
+const PLATE = 'flex flex-col gap-2.5 rounded-lg border border-line bg-card px-5 pt-4.5 pb-5';
+
+/**
+ * A language chip, as the flag chips on Practice (DESIGN.md § 8.6): 36 px tall
+ * with the touch target stretched to 44 px; the current language is filled forest.
+ */
+const CHIP =
+  "relative h-9 gap-1.5 px-3 text-[13px] after:absolute after:inset-x-0 after:-inset-y-1 after:content-[''] aria-pressed:border-forest aria-pressed:bg-forest aria-pressed:text-on-fill aria-pressed:hover:bg-forest/90";
 
 /** What the progress line says after the last action. */
 type Outcome =
@@ -152,17 +162,16 @@ export function SettingsPage() {
 
   return (
     <section className="flex flex-col gap-6">
-      <ScreenHeader eyebrow={t.common.nav.settings} />
-      <h1 className="text-2xl font-semibold tracking-tight">{t.settings.title}</h1>
+      <ScreenHeader title={t.settings.title} />
 
       {inMemory && (
-        <p className="rounded-lg border border-destructive/30 bg-destructive/10 p-3 text-sm text-foreground">
+        <p className="rounded-lg border border-rust bg-clay px-4 py-3 text-sm text-ink">
           {t.settings.notSaving}
         </p>
       )}
 
-      <section aria-labelledby={languageId} className="flex flex-col gap-3">
-        <h2 id={languageId} className="text-lg font-medium">
+      <section aria-labelledby={languageId} className={PLATE}>
+        <h2 id={languageId} className="eyebrow">
           {t.settings.language}
         </h2>
         <div role="group" aria-labelledby={languageId} className="grid grid-cols-2 gap-2">
@@ -170,8 +179,8 @@ export function SettingsPage() {
             <Button
               key={code}
               lang={LOCALE_TAGS[code]}
-              size="lg"
-              variant={code === locale ? 'default' : 'outline'}
+              variant="outline"
+              className={CHIP}
               aria-pressed={code === locale}
               onClick={() => setLocale(code)}
             >
@@ -181,20 +190,18 @@ export function SettingsPage() {
         </div>
       </section>
 
-      <Separator />
-
-      <section aria-labelledby={progressId} className="flex flex-col gap-3">
-        <h2 id={progressId} className="text-lg font-medium">
+      <section aria-labelledby={progressId} className={PLATE}>
+        <h2 id={progressId} className="eyebrow">
           {t.settings.progress}
         </h2>
         <p className="text-sm text-muted-foreground">{t.settings.progressHelp}</p>
         <div className="flex flex-wrap gap-2">
-          <Button variant="outline" size="lg" className="flex-1" onClick={() => void exportFile()}>
+          <Button variant="secondary" size="lg" className="flex-1" onClick={() => void exportFile()}>
             {t.settings.export}
           </Button>
           {canShare && (
             <Button
-              variant="outline"
+              variant="secondary"
               size="lg"
               className="flex-1"
               onPointerDown={prepareShare}
@@ -205,7 +212,7 @@ export function SettingsPage() {
             </Button>
           )}
           <Button
-            variant="outline"
+            variant="secondary"
             size="lg"
             className="flex-1"
             disabled={outcome?.kind === 'importing'}
@@ -243,11 +250,14 @@ export function SettingsPage() {
         </AlertDialog>
       </section>
 
-      <Separator />
-
-      <LinkButton to="/flagged" variant="outline" size="lg">
-        {t.settings.flaggedLink}
-      </LinkButton>
+      <Link
+        to="/flagged"
+        className="flex min-h-12 items-center gap-2.5 rounded-md border border-ink px-3.5 py-3 text-base font-semibold text-ink outline-none transition-colors hover:bg-card focus-visible:ring-3 focus-visible:ring-ring/50"
+      >
+        <Flag aria-hidden="true" className="size-5 shrink-0" strokeWidth={2} />
+        <span className="flex-1">{t.settings.flaggedLink}</span>
+        <ChevronRight aria-hidden="true" className="size-5 shrink-0" strokeWidth={2} />
+      </Link>
     </section>
   );
 }
