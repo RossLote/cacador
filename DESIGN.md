@@ -1008,11 +1008,14 @@ e2e/
   package.json             @cacador/e2e, scripts e2e, browsers and typecheck
   playwright.config.ts     the production build under vite preview, locale en-GB
   tsconfig.json
-  acceptance.spec.ts       steps 2 to 11 of the phase 4 acceptance bar, in order
-  offline.spec.ts          step 12: Home, Practice and the 15 images from the cache, offline
+  look.ts                  the Campo colour values, the contrast helper, the Fraunces check
+  acceptance.spec.ts       steps 2 to 9 of the Campo acceptance bar, in order, then three
+                           steps after the bar
+  offline.spec.ts          step 10: Home, Practice, Fraunces and the 15 images from the
+                           cache, offline
   installable.spec.ts      the manifest and icons under /cacador/, Chrome's installability check
   build-output.spec.ts     the built dist: the 404.html copy, the waiting worker, the
-                           /cacador/ precache and URLs
+                           /cacador/ precache and URLs, and step 11 (four woff2, 15 jpg)
 ```
 
 The study model holds the formulas of § 6.2 and the exam draw, deadline and score, as
@@ -1255,23 +1258,35 @@ browser locale `en-GB`. `pnpm e2e` at the root runs it; it is not part of `pnpm 
 `pnpm test`, so the gates stay fast. `pnpm e2e:browsers` installs Chromium for it, once
 before the first run and again after each Playwright bump. The `e2e` script stays plain
 `playwright test`, never `--pass-with-no-tests`. The specs import the bank from
-`@cacador/data`. Four spec files:
+`@cacador/data`. The viewport is 390 x 844 in `playwright.config.ts`, because epic
+cac-8cn's Campo acceptance bar is performed at a phone's width. `look.ts` holds the
+Campo colour values the colour checks read (light and dark, § 8.5), the WCAG contrast
+helper and the check that an element is set in Fraunces and the face has loaded. Four
+spec files:
 
-- `acceptance.spec.ts` performs steps 2 to 11 of the phase 4 acceptance bar, in order,
-  in one fresh browser context, with the page's random draws seeded so every run draws
-  the same questions;
-- `offline.spec.ts` is step 12: after one online load and a reload, Home and Practice
-  open offline and all 15 images answer from the cache;
+- `acceptance.spec.ts` performs steps 2 to 9 of the Campo acceptance bar, in order,
+  one named step each, in one fresh browser context, with the page's random draws seeded
+  so every run draws the same questions: Home, the Practice tab, a wrong answer, the
+  Progress tab, the Ducks row and Home's weakest topics, the exam through its results,
+  the dark colours with their 4.5:1 contrast, and the language switch in Settings. Three
+  steps after the bar run on the same state: an exam with answers that survives a
+  closed tab with its clock running, the past exam on Progress with Flagged and its
+  copy, and export, clear and import;
+- `offline.spec.ts` is step 10: after one online load and a reload, Home and Practice
+  open offline with Fraunces available, and all 15 images answer from the cache;
 - `installable.spec.ts`: the manifest and icons served under `/cacador/`, and Chrome's
   own installability check reporting no errors;
 - `build-output.spec.ts` reads the built `dist` rather than the served pages, because
   `vite preview` answers any sub-route itself: `404.html` is a byte-for-byte copy of
   `index.html`, the service worker waits (nothing claims clients or skips waiting, and
   the app never asks it to), the precache holds every built file under `/cacador/`, and
-  every URL in `index.html` starts with `/cacador/`.
+  every URL in `index.html` starts with `/cacador/`. It also carries step 11: the
+  precache holds exactly four woff2 URLs (Fraunces and Source Sans 3, latin and
+  latin-ext) and the 15 jpg URLs, every URL under `/cacador/`, and no file served
+  points at a font host.
 
 Step 1 of the bar, a fresh clone through install, lint, test and `pnpm e2e`, is run by
-hand, and step 13 is Ross's, on the phone after the first push.
+hand, and step 12, the deploy run for the push and the live site, after the first push.
 
 ### 8.11 Agents
 

@@ -172,11 +172,16 @@ pnpm workspace of three packages: `packages/data`, `apps/web` and `e2e`
   by `scripts/render-icons.sh`. `DESIGN.md` § 6 to § 8.
 - `e2e` (`@cacador/e2e`): the Playwright suite in Chromium, run by `pnpm e2e` against
   the production build served by `vite preview` under `/cacador/`, with `@cacador/data`
-  for the bank. `acceptance.spec.ts` performs steps 2 to 11 of phase 4's acceptance bar
-  and `offline.spec.ts` is step 12 (Home, Practice and the 15 images from the cache);
-  `installable.spec.ts` runs Chrome's installability check, and `build-output.spec.ts`
-  reads the built `dist` (the `404.html` copy, the waiting service worker, the
-  `/cacador/` precache and URLs). `pnpm e2e:browsers` installs the browser.
+  for the bank, at a 390 x 844 viewport (the Campo bar is performed at a phone's width).
+  `acceptance.spec.ts` performs steps 2 to 9 of the Campo acceptance bar (epic cac-8cn)
+  in order and then three steps after the bar (the closed-tab exam, the past exam and
+  Flagged, export, clear and import); `offline.spec.ts` is step 10 (Home, Practice,
+  Fraunces from the cache and the 15 images); `build-output.spec.ts` reads the built
+  `dist` (the `404.html` copy, the waiting service worker, the `/cacador/` precache and
+  URLs) and carries step 11 (exactly four woff2 and the 15 jpg precache URLs, no font
+  host); `e2e/look.ts` holds the Campo colour values, the contrast helper and the
+  Fraunces check; `installable.spec.ts` runs Chrome's installability check.
+  `pnpm e2e:browsers` installs the browser.
   `DESIGN.md` § 8.10.
 
 Outside the workspace, `design/campo/` holds the design reference: the Campo style tile
