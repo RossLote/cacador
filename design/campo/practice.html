@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Campo practice</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&amp;family=Source+Sans+3:wght@400;600;700&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#2E5A3A;text-decoration:none}a:hover{color:#1C2620}
+</style>
+</helmet>
+<div style="width: 390px; min-height: 1120px; box-sizing: border-box; background: #F4F0E6; color: #1C2620; font-family: 'Source Sans 3', system-ui, sans-serif; display: flex; flex-direction: column;">
+
+  <header style="display: flex; align-items: center; gap: 10px; padding: 16px 12px 8px 12px;">
+    <a href="A-Home.dc.html" aria-label="Back to Home" style="width: 44px; height: 44px; display: inline-flex; align-items: center; justify-content: center; color: #1C2620;">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+    </a>
+    <div style="flex: 1; display: flex; flex-direction: column; gap: 2px;">
+      <div style="font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: #4F6650; font-weight: 600;">{{ section }} · {{ topic }}</div>
+      <div style="font-family: 'Fraunces', Georgia, serif; font-size: 16px; color: #5A6256;">Question {{ number }}</div>
+    </div>
+  </header>
+
+  <main style="flex: 1; display: flex; flex-direction: column; gap: 14px; padding: 4px 20px 20px;">
+
+    <sc-if value="{{ hasImage }}" hint-placeholder-val="{{ true }}">
+      <figure style="margin: 0; padding: 8px; background: #FBF8F1; border: 1px solid #D9D2C2; border-radius: 10px;">
+        <img src="../../packages/data/images/q168.jpg" alt="The picture for question 168" style="display: block; width: 100%; height: 230px; object-fit: cover; border-radius: 4px;">
+      </figure>
+    </sc-if>
+
+    <h1 style="margin: 0; font-family: 'Fraunces', Georgia, serif; font-size: 24px; line-height: 1.25; font-weight: 600;">{{ stem }}</h1>
+
+    <div role="group" aria-label="Options" style="display: flex; flex-direction: column; gap: 8px;">
+      <sc-for list="{{ options }}" as="item" hint-placeholder-count="3">
+        <button type="button" onClick="{{ item.pick }}" style="display: flex; align-items: center; gap: 12px; width: 100%; padding: 12px 14px; text-align: left; border-radius: 8px; cursor: pointer; font: 400 17px/1.35 'Source Sans 3', system-ui, sans-serif; color: #1C2620; border: 1px solid {{ item.line }}; background: {{ item.bg }};">
+          <span style="flex: none; width: 28px; height: 28px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-family: 'Fraunces', Georgia, serif; font-size: 15px; border: 1px solid {{ item.badgeLine }}; background: {{ item.badgeBg }}; color: {{ item.badgeInk }};">{{ item.letter }}</span>
+          <span style="flex: 1;">{{ item.text }}</span>
+          <sc-if value="{{ item.isRight }}" hint-placeholder-val="{{ false }}">
+            <span style="display: inline-flex; align-items: center; gap: 4px; color: #2E5A3A; font-size: 13px; font-weight: 700;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg>Right</span>
+          </sc-if>
+          <sc-if value="{{ item.isWrong }}" hint-placeholder-val="{{ false }}">
+            <span style="display: inline-flex; align-items: center; gap: 4px; color: #B5461C; font-size: 13px; font-weight: 700;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12"/><path d="M18 6L6 18"/></svg>Wrong</span>
+          </sc-if>
+        </button>
+      </sc-for>
+    </div>
+
+    <div style="display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); gap: 10px;">
+      <button type="button" onPointerDown="{{ peekDown }}" onPointerUp="{{ peekUp }}" onPointerLeave="{{ peekUp }}" onPointerCancel="{{ peekUp }}" style="display: flex; align-items: center; justify-content: center; gap: 10px; padding: 13px 12px; border-radius: 8px; cursor: pointer; user-select: none; -webkit-user-select: none; touch-action: none; font: 600 16px 'Source Sans 3', system-ui, sans-serif; border: 1px solid #1C2620; background: {{ peekBg }}; color: {{ peekInk }};">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h10"/><path d="M9 3v2"/><path d="M12 5c-1 4-4 8-8 10"/><path d="M6 9c1.5 3 4 5 7 6"/><path d="M13 21l4-10 4 10"/><path d="M14.5 17h5"/></svg>
+        {{ holdLabel }}
+      </button>
+      <button type="button" onClick="{{ openHint }}" style="display: flex; align-items: center; justify-content: center; gap: 8px; padding: 13px 12px; border-radius: 8px; cursor: pointer; font: 600 16px 'Source Sans 3', system-ui, sans-serif; border: 1px solid #D9D2C2; background: #FBF8F1; color: #1C2620;">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6"/><path d="M10 21h4"/><path d="M8.5 14.5A6 6 0 1115.5 14.5c-.6.6-1 1.5-1 2.5h-5c0-1-.4-1.9-1-2.5z"/></svg>
+        Hint
+      </button>
+    </div>
+
+    <sc-if value="{{ hintOpen }}" hint-placeholder-val="{{ true }}">
+      <section aria-label="Hint" style="background: #DDE8DA; border-radius: 10px; padding: 16px 18px; display: flex; flex-direction: column; gap: 12px;">
+        <div style="font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: #2E5A3A; font-weight: 700;">Language notes</div>
+        <sc-if value="{{ noNotes }}" hint-placeholder-val="{{ true }}">
+          <div style="font-size: 15px; color: #4F6650;">No language notes for this question.</div>
+        </sc-if>
+        <sc-for list="{{ notes }}" as="note" hint-placeholder-count="1">
+          <div style="display: flex; flex-direction: column; gap: 2px; font-size: 15px; line-height: 1.4;">
+            <div><span style="font-family: 'Fraunces', Georgia, serif; font-weight: 600;">{{ note.pt }}</span> <span style="color: #4F6650;">· {{ note.en }}</span></div>
+            <div style="color: #1C2620;">{{ note.note }}</div>
+          </div>
+        </sc-for>
+        <sc-if value="{{ revealed }}" hint-placeholder-val="{{ true }}">
+          <div style="border-top: 1px solid #B9C9B6; padding-top: 12px; display: flex; flex-direction: column; gap: 6px;">
+            <div style="font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: #2E5A3A; font-weight: 700;">Nudge</div>
+            <div style="font-size: 15px; line-height: 1.45;">{{ nudge }}</div>
+          </div>
+        </sc-if>
+      </section>
+    </sc-if>
+
+    <sc-if value="{{ revealed }}" hint-placeholder-val="{{ true }}">
+      <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 4px;">
+        <div role="group" aria-label="Report a problem with this question" style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+          <span style="font-size: 13px; color: #5A6256;">Report:</span>
+          <button type="button" style="padding: 8px 12px; min-height: 36px; border: 1px solid #D9D2C2; border-radius: 8px; background: #FBF8F1; color: #1C2620; font: 600 13px 'Source Sans 3', system-ui, sans-serif; cursor: pointer; display: inline-flex; align-items: center; gap: 6px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 21V4"/><path d="M5 4h12l-2 4 2 4H5"/></svg>English is off</button>
+          <button type="button" style="padding: 8px 12px; min-height: 36px; border: 1px solid #D9D2C2; border-radius: 8px; background: #FBF8F1; color: #1C2620; font: 600 13px 'Source Sans 3', system-ui, sans-serif; cursor: pointer; display: inline-flex; align-items: center; gap: 6px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 21V4"/><path d="M5 4h12l-2 4 2 4H5"/></svg>Hint is off</button>
+        </div>
+        <button type="button" onClick="{{ next }}" style="display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; padding: 15px 16px; border-radius: 8px; cursor: pointer; font: 600 17px 'Source Sans 3', system-ui, sans-serif; border: 1px solid #B5461C; background: #B5461C; color: #FBF8F1;">
+          Next
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+    </sc-if>
+  </main>
+
+  <nav aria-label="Main" style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 4px; padding: 10px 8px 22px; background: #FBF8F1; border-top: 1px solid #D9D2C2;">
+    <a href="A-Home.dc.html" style="display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 6px 4px; color: #5A6256; font-size: 11px; font-weight: 600;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>Home</a>
+    <a href="A-Practice.dc.html" aria-current="page" style="display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 6px 4px; color: #2E5A3A; font-size: 11px; font-weight: 700;"><svg width="24" height="24" viewBox="0 0 24 24" fill="#DDE8DA" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="1" fill="currentColor"/></svg>Practice</a>
+    <a href="A-Exam.dc.html" style="display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 6px 4px; color: #5A6256; font-size: 11px; font-weight: 600;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l3 2"/><path d="M9 2h6"/></svg>Exam</a>
+    <a href="A-Progress.dc.html" style="display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 6px 4px; color: #5A6256; font-size: 11px; font-weight: 600;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V10"/><path d="M10 20V4"/><path d="M16 20v-7"/><path d="M22 20H2"/></svg>Progress</a>
+  </nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1120}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { q: 0, chosen: 'B', peek: false, hint: true };
+  }
+  questions() {
+    return [
+      {
+        id: 168, section: 'Biologia', topic: 'Perdiz-vermelha', hasImage: true, answer: 'A',
+        pt: 'A seguinte figura representa:', en: 'The picture shows a:',
+        options: [['A', 'Perdiz-vermelha', 'Red-legged partridge'], ['B', 'Faisão', 'Common pheasant'], ['C', 'Rola-comum', 'European turtle dove']],
+        notes: [],
+        nudge: 'The red-legged partridge has bico e patas vermelhas, a red bill and red legs (question 170), a white throat edged in black and flanks barred black, white and chestnut. The common pheasant is far bigger with a long pointed tail, and the European turtle dove is a slim dove with no barred flanks.'
+      },
+      {
+        id: 362, section: 'Condicionamentos', topic: 'Condicionamentos venatórios gerais', hasImage: false, answer: 'B',
+        pt: 'Em que locais é proibido caçar, bem como numa faixa de proteção de 500 metros?',
+        en: 'In which places is it prohibited to hunt, as well as in a protection strip of 500 metres?',
+        options: [['A', 'Nos povoados', 'In settlements'], ['B', 'Nos terrenos adjacentes a estabelecimentos hospitalares', 'On land adjacent to hospital establishments'], ['C', 'Nos terrenos ocupados com culturas frutícolas', 'On land occupied with fruit crops']],
+        notes: [{ pt: 'bem como numa faixa de proteção de 500 metros', en: 'as well as in a protection strip of 500 metres', note: 'bem como = as well as: the ban covers the place itself and the strip around it too; it is never a contrast.' }],
+        nudge: "Land 'adjacentes a estabelecimentos hospitalares' carries the 500-metre strip, like schools and bathing beaches (questions 366 and 379). Settlements carry a narrower one, 250 metros (question 365), and the bank gives fruit crops no strip at all."
+      }
+    ];
+  }
+  renderVals() {
+    const qs = this.questions();
+    const q = qs[this.state.q];
+    const chosen = this.state.chosen;
+    const revealed = chosen !== null;
+    const peek = this.state.peek;
+    const options = q.options.map(([letter, pt, en]) => {
+      const isCorrect = letter === q.answer;
+      const isRight = revealed && isCorrect;
+      const isWrong = revealed && chosen === letter && !isCorrect;
+      const tone = isRight ? 'right' : isWrong ? 'wrong' : 'base';
+      const palette = {
+        base: { bg: '#FBF8F1', line: '#D9D2C2', badgeBg: 'transparent', badgeLine: '#1C2620', badgeInk: '#1C2620' },
+        right: { bg: '#DDE8DA', line: '#2E5A3A', badgeBg: '#2E5A3A', badgeLine: '#2E5A3A', badgeInk: '#FBF8F1' },
+        wrong: { bg: '#F3DED2', line: '#B5461C', badgeBg: '#B5461C', badgeLine: '#B5461C', badgeInk: '#FBF8F1' }
+      }[tone];
+      return {
+        letter, text: peek ? en : pt, isRight, isWrong,
+        bg: palette.bg, line: palette.line, badgeBg: palette.badgeBg, badgeLine: palette.badgeLine, badgeInk: palette.badgeInk,
+        pick: () => { if (!revealed) this.setState({ chosen: letter }); }
+      };
+    });
+    return {
+      section: q.section, topic: q.topic, number: q.id, hasImage: q.hasImage,
+      stem: peek ? q.en : q.pt,
+      options, revealed, peek,
+      notes: q.notes, noNotes: q.notes.length === 0, nudge: q.nudge,
+      hintOpen: this.state.hint,
+      holdLabel: peek ? 'English' : 'Hold for English',
+      peekBg: peek ? '#1C2620' : '#FBF8F1',
+      peekInk: peek ? '#FBF8F1' : '#1C2620',
+      openHint: () => this.setState({ hint: true }),
+      peekDown: () => this.setState({ peek: true }),
+      peekUp: () => this.setState({ peek: false }),
+      next: () => this.setState({ q: (this.state.q + 1) % qs.length, chosen: null, peek: false, hint: false })
+    };
+  }
+}
+</script>
+</body>
+</html>

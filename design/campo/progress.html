@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Campo progress</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&amp;family=Source+Sans+3:wght@400;600;700&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#2E5A3A;text-decoration:none}a:hover{color:#1C2620}
+</style>
+</helmet>
+<div style="width: 390px; min-height: 1180px; box-sizing: border-box; background: #F4F0E6; color: #1C2620; font-family: 'Source Sans 3', system-ui, sans-serif; display: flex; flex-direction: column;">
+
+  <header style="display: flex; align-items: center; gap: 10px; padding: 16px 20px 8px 12px;">
+    <a href="A-Home.dc.html" aria-label="Back to Home" style="width: 44px; height: 44px; display: inline-flex; align-items: center; justify-content: center; color: #1C2620;">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+    </a>
+    <h1 style="margin: 0; flex: 1; font-family: 'Fraunces', Georgia, serif; font-size: 28px; line-height: 1; font-weight: 600;">Progress</h1>
+    <div style="display: flex; align-items: baseline; gap: 6px;"><span style="font-family: 'Fraunces', Georgia, serif; font-size: 26px; font-weight: 600;">58 %</span><span style="font-size: 13px; color: #5A6256;">· 211 unseen</span></div>
+  </header>
+
+  <main style="flex: 1; display: flex; flex-direction: column; gap: 18px; padding: 8px 20px 24px;">
+
+    <section aria-label="Last 30 days" style="background: #FBF8F1; border: 1px solid #D9D2C2; border-radius: 10px; padding: 16px 18px; display: flex; flex-direction: column; gap: 12px;">
+      <div style="display: flex; justify-content: space-between; align-items: baseline;">
+        <div style="font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: #4F6650; font-weight: 600;">Last 30 days</div>
+        <div style="font-size: 13px; color: #5A6256;">Today: 24 answers, 18 right</div>
+      </div>
+      <div role="list" aria-label="Answers per day, oldest first" style="display: flex; align-items: flex-end; gap: 3px; height: 84px; border-bottom: 1px solid #1C2620; padding-bottom: 1px;">
+        <sc-for list="{{ days }}" as="d" hint-placeholder-count="30">
+          <div role="listitem" aria-label="{{ d.label }}" style="flex: 1; display: flex; flex-direction: column; justify-content: flex-end; height: 100%; min-width: 0;">
+            <div style="background: #E6E0D2; height: {{ d.wrongH }}px;"></div>
+            <div style="background: {{ d.fill }}; height: {{ d.rightH }}px;"></div>
+          </div>
+        </sc-for>
+      </div>
+      <div style="display: flex; justify-content: space-between; font-size: 12px; color: #5A6256;"><span>15 Sep</span><span style="color: #B5461C; font-weight: 700;">Today</span></div>
+    </section>
+
+    <section aria-label="Accuracy" style="display: flex; flex-direction: column; gap: 10px;">
+      <div style="display: flex; align-items: baseline; justify-content: space-between;">
+        <div style="font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: #4F6650; font-weight: 600;">Accuracy</div>
+        <div style="font-size: 13px; color: #5A6256;">Weakest first. Tap one to practise it.</div>
+      </div>
+      <div role="tablist" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-bottom: 1px solid #D9D2C2;">
+        <button type="button" role="tab" aria-selected="true" style="padding: 10px 4px 8px; background: transparent; border: none; border-bottom: 2px solid #2E5A3A; margin-bottom: -1px; color: #2E5A3A; font: 700 15px 'Source Sans 3', system-ui, sans-serif; cursor: pointer;">Topics</button>
+        <button type="button" role="tab" style="padding: 10px 4px 8px; background: transparent; border: none; color: #5A6256; font: 600 15px 'Source Sans 3', system-ui, sans-serif; cursor: pointer;">Sections</button>
+        <button type="button" role="tab" style="padding: 10px 4px 8px; background: transparent; border: none; color: #5A6256; font: 600 15px 'Source Sans 3', system-ui, sans-serif; cursor: pointer;">Patterns</button>
+      </div>
+      <div role="list" style="display: flex; flex-direction: column; gap: 6px;">
+        <sc-for list="{{ topics }}" as="t" hint-placeholder-count="6">
+          <a role="listitem" href="A-Practice.dc.html" style="display: flex; align-items: center; gap: 12px; padding: 11px 14px; background: #FBF8F1; border: 1px solid #D9D2C2; border-radius: 8px; color: #1C2620;">
+            <span style="flex: 1; display: flex; flex-direction: column; gap: 2px; min-width: 0;"><span style="font-size: 16px; font-weight: 600;">{{ t.name }}</span><span style="font-size: 13px; color: #5A6256;">{{ t.seen }}</span></span>
+            <span style="width: 64px; height: 6px; background: #E6E0D2; border-radius: 3px; overflow: hidden;"><span style="display: block; height: 100%; width: {{ t.width }}; background: {{ t.fill }};"></span></span>
+            <span style="width: 52px; text-align: right; font-family: 'Fraunces', Georgia, serif; font-size: 20px; color: {{ t.fill }};">{{ t.pct }}</span>
+          </a>
+        </sc-for>
+      </div>
+    </section>
+
+    <section aria-label="Past exams" style="display: flex; flex-direction: column; gap: 8px;">
+      <div style="font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: #4F6650; font-weight: 600;">Past exams</div>
+      <a href="A-Exam.dc.html" style="display: flex; align-items: center; gap: 12px; padding: 11px 14px; background: #FBF8F1; border: 1px solid #D9D2C2; border-radius: 8px; color: #1C2620;">
+        <span style="flex: 1; font-size: 16px; font-weight: 600;">12 Oct 2026</span>
+        <span style="font-family: 'Fraunces', Georgia, serif; font-size: 20px;">13 / 20</span>
+        <span style="padding: 3px 8px; border-radius: 4px; background: #F3DED2; color: #B5461C; font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;">Not passed</span>
+      </a>
+      <a href="A-Exam.dc.html" style="display: flex; align-items: center; gap: 12px; padding: 11px 14px; background: #FBF8F1; border: 1px solid #D9D2C2; border-radius: 8px; color: #1C2620;">
+        <span style="flex: 1; font-size: 16px; font-weight: 600;">9 Oct 2026</span>
+        <span style="font-family: 'Fraunces', Georgia, serif; font-size: 20px;">16 / 20</span>
+        <span style="padding: 3px 8px; border-radius: 4px; background: #DDE8DA; color: #2E5A3A; font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;">Passed</span>
+      </a>
+    </section>
+
+    <a href="A-Practice.dc.html" style="display: flex; align-items: center; gap: 10px; padding: 12px 14px; border: 1px solid #1C2620; border-radius: 8px; color: #1C2620; font-size: 16px; font-weight: 600;">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 21V4"/><path d="M5 4h12l-2 4 2 4H5"/></svg>
+      <span style="flex: 1;">Flagged (3)</span>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+    </a>
+  </main>
+
+  <nav aria-label="Main" style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 4px; padding: 10px 8px 22px; background: #FBF8F1; border-top: 1px solid #D9D2C2;">
+    <a href="A-Home.dc.html" style="display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 6px 4px; color: #5A6256; font-size: 11px; font-weight: 600;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>Home</a>
+    <a href="A-Practice.dc.html" style="display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 6px 4px; color: #5A6256; font-size: 11px; font-weight: 600;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="1" fill="currentColor"/></svg>Practice</a>
+    <a href="A-Exam.dc.html" style="display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 6px 4px; color: #5A6256; font-size: 11px; font-weight: 600;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l3 2"/><path d="M9 2h6"/></svg>Exam</a>
+    <a href="A-Progress.dc.html" aria-current="page" style="display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 6px 4px; color: #2E5A3A; font-size: 11px; font-weight: 700;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V10"/><path d="M10 20V4"/><path d="M16 20v-7"/><path d="M22 20H2"/></svg>Progress</a>
+  </nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1180}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const totals = [0, 12, 8, 0, 0, 20, 15, 10, 0, 6, 24, 18, 0, 0, 30, 22, 12, 0, 9, 16, 0, 0, 28, 20, 14, 10, 0, 18, 26, 24];
+    const rights = [0, 7, 5, 0, 0, 12, 10, 6, 0, 4, 16, 12, 0, 0, 21, 15, 9, 0, 6, 12, 0, 0, 20, 15, 11, 8, 0, 14, 20, 18];
+    const scale = 80 / 30;
+    const days = totals.map((total, i) => {
+      const right = rights[i];
+      const last = i === totals.length - 1;
+      return {
+        label: (last ? 'Today: ' : '') + total + ' answers, ' + right + ' right',
+        rightH: Math.round(right * scale),
+        wrongH: Math.round((total - right) * scale),
+        fill: last ? '#B5461C' : '#2E5A3A'
+      };
+    });
+    const rows = [
+      ['Ducks', 40, 12, 28], ['Hunting dogs', 50, 6, 19], ['General hunting restrictions', 57, 31, 51],
+      ['Red-legged partridge', 72, 18, 30], ['Wild rabbit', 81, 29, 29], ['Falconry', null, 0, 8]
+    ];
+    const topics = rows.map(([name, pct, seen, total]) => ({
+      name,
+      pct: pct === null ? '—' : pct + ' %',
+      seen: pct === null ? 'Not started · ' + total + ' questions' : 'Seen ' + seen + ' of ' + total,
+      width: (pct === null ? 0 : pct) + '%',
+      fill: pct === null ? '#5A6256' : pct < 75 ? '#B5461C' : '#2E5A3A'
+    }));
+    return { days, topics };
+  }
+}
+</script>
+</body>
+</html>
