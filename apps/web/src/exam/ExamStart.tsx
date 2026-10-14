@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import { FailureLine } from '@/components/FailureLine';
 import { ScreenHeader } from '@/components/nav/ScreenHeader';
+import { PLATE } from '@/components/styles';
 import { Button } from '@/components/ui/button';
 import { useI18n } from '@/i18n/useI18n';
 import { useLoaded } from '@/lib/useLoaded';
+import { cn } from '@/lib/utils';
 import { drawExam, EXAM_DURATION_MS, EXAM_PASS_MARK, EXAM_SIZE, MINUTE_MS } from '@/model';
 import { createExam, getUnfinishedExam, type Exam } from '@/storage';
 import { RunningExam } from './RunningExam';
@@ -39,10 +41,9 @@ export function ExamStart() {
 
   return (
     <section className="flex flex-col gap-4">
-      <ScreenHeader eyebrow={t.common.nav.exam} />
-      <h1 className="sr-only">{t.exam.title}</h1>
+      <ScreenHeader eyebrow={t.common.nav.exam} heading={t.exam.title} />
       {/* The plate (D9): the intro and the rules over Start in rust; the shell shows no tab bar on /exam (D5). */}
-      <div className="flex flex-col gap-2.5 rounded-lg border border-line bg-card px-5 pt-4.5 pb-5">
+      <div className={cn('flex flex-col gap-2.5', PLATE)}>
         {failed ? (
           <p role="status" className="text-muted-foreground">
             {t.exam.loadFailed}

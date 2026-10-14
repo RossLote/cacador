@@ -1,4 +1,5 @@
 import { Link, useLocation } from 'react-router';
+import { FOCUS_RING } from '@/components/styles';
 import { useI18n } from '@/i18n/useI18n';
 import { cn } from '@/lib/utils';
 import { currentTab, TABS } from './tabs';
@@ -27,7 +28,8 @@ export function TabBar() {
             to={tab.to}
             aria-current={active ? 'page' : undefined}
             className={cn(
-              'flex min-h-11 flex-col items-center justify-center gap-1 rounded-md px-1 py-1.5 text-[11px] leading-none outline-none focus-visible:ring-3 focus-visible:ring-ring/50',
+              'flex min-h-11 flex-col items-center justify-center gap-1 rounded-md px-1 py-1.5 text-[11px] leading-none',
+              FOCUS_RING,
               active ? 'font-bold text-forest' : 'font-semibold text-muted-foreground hover:text-ink',
             )}
           >

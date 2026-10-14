@@ -30,8 +30,8 @@ const markAt = (key: OptionKey, mark: string) =>
   (['A', 'B', 'C'] as const).map((k) => (k === key ? mark : null));
 
 describe('QuestionCard', () => {
-  it('shows the section, topic and number, the Portuguese stem, three options, Hold for English and Hint', () => {
-    renderCard();
+  it('shows the section, topic and number with showPlace, the Portuguese stem, three options, Hold for English and Hint', () => {
+    renderCard({ showPlace: true });
     expect(screen.getByText(`${sectionOf(Q1)!.en} · ${topicOf(Q1)!.en}`)).toBeInTheDocument();
     expect(screen.getByText(card.questionNumber(1))).toBeInTheDocument();
     expect(screen.getByText(Q1.question)).toHaveAttribute('lang', 'pt-PT');
@@ -44,7 +44,7 @@ describe('QuestionCard', () => {
 
   it('names the section and topic in Portuguese when the interface is', () => {
     act(() => setLocale('pt'));
-    renderCard();
+    renderCard({ showPlace: true });
     expect(screen.getByText(`${sectionOf(Q1)!.pt} · ${topicOf(Q1)!.pt}`)).toBeInTheDocument();
     expect(screen.getByText(MESSAGES.pt.practice.card.questionNumber(1))).toBeInTheDocument();
   });
@@ -169,8 +169,8 @@ describe('QuestionCard', () => {
       expect(within(panel).getByText(hintFor(1)!.language[0]!.pt)).toHaveClass('font-heading');
     });
 
-    it('leaves the section, topic and number to the page when showPlace is false', () => {
-      renderCard({ showPlace: false });
+    it('leaves the section, topic and number to the page by default', () => {
+      renderCard();
       expect(screen.queryByText(card.questionNumber(1))).not.toBeInTheDocument();
       expect(screen.queryByText(`${sectionOf(Q1)!.en} · ${topicOf(Q1)!.en}`)).not.toBeInTheDocument();
       expect(screen.getByText(Q1.question)).toBeInTheDocument();
@@ -301,10 +301,5 @@ describe('QuestionCard', () => {
     expect(onSelect).not.toHaveBeenCalled();
     expect(onPeekChange).not.toHaveBeenCalled();
     expect(onHintOpen).not.toHaveBeenCalled();
-  });
-
-  it('renders the actions at the foot of the card', () => {
-    renderCard({ actions: <button type="button">go</button> });
-    expect(screen.getByRole('button', { name: 'go' })).toBeInTheDocument();
   });
 });

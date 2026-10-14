@@ -20,7 +20,6 @@ export const home = {
   passLine: (percent: number) => `Pass line ${percent} %`,
   unseen: (count: number) => `${count} unseen`,
   examInProgress: 'Exam in progress',
-  minutesLeft,
   /** The exam card's line: the whole minutes left, then how many of its questions hold an answer. */
   examStatus: (minutes: number, answered: number, size: number) => `${minutesLeft(minutes)} · ${answered} of ${size} answered`,
   /** The line on the Practice card. */

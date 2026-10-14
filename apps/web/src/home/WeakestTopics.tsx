@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import { Link } from 'react-router';
+import { FOCUS_RING, ROW_LINK } from '@/components/styles';
 import { useI18n } from '@/i18n/useI18n';
 import { cn } from '@/lib/utils';
 import { READINESS_TARGET_PERCENT, type StateMap } from '@/model';
@@ -35,7 +36,10 @@ export function WeakestTopics({ states }: { states: StateMap }) {
         </h2>
         <Link
           to="/progress"
-          className="-mr-1 inline-flex min-h-11 items-center rounded-md px-1 text-sm font-semibold text-forest outline-none hover:text-ink focus-visible:ring-3 focus-visible:ring-ring/50"
+          className={cn(
+            '-mr-1 inline-flex min-h-11 items-center rounded-md px-1 text-sm font-semibold text-forest hover:text-ink',
+            FOCUS_RING,
+          )}
         >
           {t.home.allTopics}
         </Link>
@@ -46,7 +50,7 @@ export function WeakestTopics({ states }: { states: StateMap }) {
             <Link
               to={to}
               aria-label={t.home.topicRow(name, percent, seen, total)}
-              className="flex min-h-11 items-center gap-3 rounded-md border border-line bg-card px-3.5 py-3 text-ink outline-none transition-colors hover:bg-track focus-visible:ring-3 focus-visible:ring-ring/50"
+              className={ROW_LINK}
             >
               <span className="flex min-w-0 flex-1 flex-col gap-0.5">
                 <span className="text-base font-semibold">{name}</span>

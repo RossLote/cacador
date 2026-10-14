@@ -12,7 +12,6 @@ export const home: Messages['home'] = {
   passLine: (percent) => `Linha de aprovação ${percent} %`,
   unseen: (count) => `${count} por ver`,
   examInProgress: 'Exame em curso',
-  minutesLeft,
   examStatus: (minutes, answered, size) => `${minutesLeft(minutes)} · ${answered} de ${size} respondidas`,
   practiceLine: 'As mais fracas primeiro',
   examLine: (size, minutes) => `${size} perguntas · ${minutes} min`,

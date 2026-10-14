@@ -1,5 +1,6 @@
 import { ChevronRight, SlidersHorizontal, Target, Timer, type LucideIcon } from 'lucide-react';
 import { Link } from 'react-router';
+import { FOCUS_RING, PLATE } from '@/components/styles';
 import { Progress } from '@/components/ui/progress';
 import { useExamClock } from '@/exam/useExamClock';
 import { useI18n } from '@/i18n/useI18n';
@@ -31,8 +32,6 @@ async function loadHome(): Promise<HomeData> {
   return { exam, states, readiness: readiness(states) };
 }
 
-const focusRing = 'outline-none focus-visible:ring-3 focus-visible:ring-ring/50';
-
 /** Home's header (D6): the app name in Fraunces 34 px, and at its right the control to Settings. */
 function HomeHeader() {
   const { t } = useI18n();
@@ -44,7 +43,7 @@ function HomeHeader() {
         aria-label={t.common.nav.settings}
         className={cn(
           'inline-flex size-11 shrink-0 items-center justify-center rounded-md border border-line text-ink transition-colors hover:bg-card',
-          focusRing,
+          FOCUS_RING,
         )}
       >
         <SlidersHorizontal aria-hidden="true" className="size-[22px]" strokeWidth={1.75} />
@@ -68,7 +67,7 @@ function ExamInProgressCard({ exam, onDeadline }: { exam: Exam; onDeadline: () =
   return (
     <Link
       to="/exam"
-      className={cn('flex items-center gap-3.5 rounded-lg border border-rust bg-clay px-4 py-3.5 text-ink', focusRing)}
+      className={cn('flex items-center gap-3.5 rounded-lg border border-rust bg-clay px-4 py-3.5 text-ink', FOCUS_RING)}
     >
       <Timer aria-hidden="true" className="size-[26px] shrink-0 text-rust" strokeWidth={1.75} />
       <span className="flex min-w-0 flex-1 flex-col gap-0.5">
@@ -88,10 +87,7 @@ function ExamInProgressCard({ exam, onDeadline }: { exam: Exam; onDeadline: () =
 function ReadinessPlate({ value, failed }: { value: Readiness | undefined; failed: boolean }) {
   const { t } = useI18n();
   return (
-    <section
-      aria-labelledby="home-readiness"
-      className="flex min-h-36 flex-col gap-2.5 rounded-lg border border-line bg-card px-5 pt-4.5 pb-5"
-    >
+    <section aria-labelledby="home-readiness" className={cn('flex min-h-36 flex-col gap-2.5', PLATE)}>
       <h2 id="home-readiness" className="eyebrow">
         {t.home.readiness}
       </h2>
@@ -149,7 +145,7 @@ function StartCard({ to, Icon, title, line, primary }: StartCardProps) {
       className={cn(
         'flex min-h-[110px] flex-col gap-2.5 rounded-lg px-4 py-4.5 transition-colors',
         primary ? 'bg-rust text-on-fill hover:bg-rust/90' : 'border border-ink bg-card text-ink hover:bg-track',
-        focusRing,
+        FOCUS_RING,
       )}
     >
       <Icon aria-hidden="true" className="size-[26px]" strokeWidth={1.75} />

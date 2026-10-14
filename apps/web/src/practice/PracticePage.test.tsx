@@ -1,4 +1,4 @@
-import { hintFor, sectionOf, topicOf, translationFor, type OptionKey } from '@cacador/data';
+import { hintFor, sectionOf, topicOf, translationFor, type OptionKey, type Question } from '@cacador/data';
 import { act, fireEvent, render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router';
@@ -27,6 +27,9 @@ function renderPractice() {
     </MemoryRouter>,
   );
 }
+
+/** A bare header for PracticeSession on its own: the question's number, which shownId reads. */
+const numberHeader = (q: Question | undefined) => q && <p>{card.questionNumber(q.id)}</p>;
 
 /** The number of the question on screen, once one is. */
 async function shownId(): Promise<number> {
@@ -210,10 +213,10 @@ describe('PracticePage', () => {
 
     it('draws nothing from the old pool once the pool has changed', async () => {
       vi.spyOn(Math, 'random').mockReturnValue(0);
-      const view = render(<PracticeSession pool={bankPool} />);
+      const view = render(<PracticeSession pool={bankPool} header={numberHeader} />);
       expect(await shownId()).toBe(1);
       await answerThenTapNext();
-      view.rerender(<PracticeSession pool={[413, 414, 415]} />);
+      view.rerender(<PracticeSession pool={[413, 414, 415]} header={numberHeader} />);
       expect(await waitForChange(1)).toBe(413);
       await settle();
       expect(await shownId()).toBe(413);

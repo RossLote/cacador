@@ -23,8 +23,8 @@ export function PracticePage() {
       <ScreenHeader
         eyebrow={question ? placeOf(question, locale) : t.common.nav.practice}
         line={question && t.practice.card.questionNumber(question.id)}
+        heading={t.practice.title}
       />
-      <h1 className="sr-only">{t.practice.title}</h1>
       {group !== undefined && (
         <p className="flex items-center gap-2 text-sm text-muted-foreground">
           {t.practice.focusedOn}

@@ -1,20 +1,13 @@
 import { Flag as FlagIcon } from 'lucide-react';
 import { useCallback, useId, useRef, useState } from 'react';
 import { FailureLine } from '@/components/FailureLine';
+import { CHIP } from '@/components/styles';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useI18n } from '@/i18n/useI18n';
 import { useLoaded } from '@/lib/useLoaded';
 import { FLAG_KINDS, getFlags, removeFlag, setFlag, type Flag, type FlagKind } from '@/storage';
 import { OWN_KEYS_ATTRIBUTE } from './usePracticeKeys';
-
-/**
- * A flag chip (DESIGN.md § 8.6): card with the hairline, 8 px corners, 36 px
- * tall with the flag icon, its touch target stretched to 44 px; a set flag is
- * filled forest with its icon filled.
- */
-const CHIP =
-  "relative h-9 gap-1.5 px-3 text-[13px] after:absolute after:inset-x-0 after:-inset-y-1 after:content-[''] aria-pressed:border-forest aria-pressed:bg-forest aria-pressed:text-on-fill aria-pressed:hover:bg-forest/90";
 
 /** One kind's flag on this question: the draft in the note field, and whether the field is open. */
 interface KindState {

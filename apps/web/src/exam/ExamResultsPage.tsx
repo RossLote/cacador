@@ -4,9 +4,11 @@ import { useParams } from 'react-router';
 import { LinkButton } from '@/components/LinkButton';
 import { ScreenHeader } from '@/components/nav/ScreenHeader';
 import { QuestionCard } from '@/components/question/QuestionCard';
+import { PLATE } from '@/components/styles';
 import { Badge } from '@/components/ui/badge';
 import { useI18n } from '@/i18n/useI18n';
 import { useLoaded } from '@/lib/useLoaded';
+import { cn } from '@/lib/utils';
 import { EXAM_PASS_MARK, examPassed, examResults, isFinished, scoreExam, type FinishedExam } from '@/model';
 import { getExam } from '@/storage';
 
@@ -46,6 +48,7 @@ function ReviewCard({ question, chosen }: WrongAnswer) {
         hintEnabled
         hintOpen={hintOpen}
         onHintOpen={() => setHintOpen(true)}
+        showPlace
       />
     </li>
   );
@@ -61,10 +64,7 @@ function ScorePanel({ exam }: { exam: FinishedExam }) {
   const score = scoreExam(exam);
   const passed = examPassed(score);
   return (
-    <section
-      aria-label={t.exam.scoreLabel}
-      className="flex flex-col gap-3 rounded-lg border border-line bg-card px-5 pt-4.5 pb-5"
-    >
+    <section aria-label={t.exam.scoreLabel} className={cn('flex flex-col gap-3', PLATE)}>
       {/* 64 px (D9), narrowed on a phone so "20 out of 20" stays on one line inside the plate. */}
       <p className="font-heading text-[min(4rem,13vw)] leading-none font-semibold tabular-nums">
         {t.exam.score(score, exam.questionIds.length)}
@@ -118,9 +118,8 @@ export function ExamResultsPage() {
   if (!exam) {
     return (
       <section className="flex flex-col gap-4">
-        <ScreenHeader eyebrow={t.common.nav.exam} />
-        <h1 className="sr-only">{t.exam.title}</h1>
-        <div className="flex flex-col gap-2.5 rounded-lg border border-line bg-card px-5 pt-4.5 pb-5">
+        <ScreenHeader eyebrow={t.common.nav.exam} heading={t.exam.title} />
+        <div className={cn('flex flex-col gap-2.5', PLATE)}>
           {failed ? (
             <p role="status" className="text-muted-foreground">
               {t.exam.loadFailed}

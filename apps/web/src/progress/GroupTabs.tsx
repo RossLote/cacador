@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import { Link, useSearchParams } from 'react-router';
+import { ROW_LINK } from '@/components/styles';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useI18n } from '@/i18n/useI18n';
 import { isOneOf } from '@/lib/isOneOf';
@@ -20,7 +21,7 @@ function GroupList({ rows }: { rows: readonly GroupRow[] }) {
               aria-label={
                 percent === undefined ? t.progress.notStartedRow(name, total) : t.progress.startedRow(name, percent, seen, total)
               }
-              className="flex min-h-11 items-center gap-3 rounded-md border border-line bg-card px-3.5 py-3 text-ink outline-none transition-colors hover:bg-track focus-visible:ring-3 focus-visible:ring-ring/50"
+              className={ROW_LINK}
             >
               <span className="flex min-w-0 flex-1 flex-col gap-0.5">
                 <span className="text-base font-semibold">{name}</span>

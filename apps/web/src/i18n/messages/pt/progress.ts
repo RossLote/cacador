@@ -27,7 +27,6 @@ export const progress: Messages['progress'] = {
   sections: 'Secções',
   patterns: 'Padrões',
   seen: (seen, total) => `Vistas ${seen} de ${total}`,
-  questions,
   notStartedLine: (total) => `Por começar · ${questions(total)}`,
   noPercent: '—',
   startedRow: (name, percent, seen, total) => `${name}: ${percent} %, vistas ${seen} de ${total}`,

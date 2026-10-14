@@ -108,7 +108,7 @@ describe('the running exam', () => {
     // The screen header: the eyebrow over "1 of 20", the clock chip at its right.
     const header = screen.getByText('1 of 20').closest('header')!;
     expect(header).toContainElement(clock());
-    expect(within(header).getByText(MESSAGES.en.common.nav.exam)).toBeInTheDocument();
+    expect(within(header).getByText(MESSAGES.en.common.nav.exam, { selector: 'p.eyebrow' })).toBeInTheDocument();
 
     const strip = screen.getByRole('navigation', { name: t.markers });
     const markers = within(strip).getAllByRole('button');

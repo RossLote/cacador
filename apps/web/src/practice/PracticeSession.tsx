@@ -37,14 +37,14 @@ function staysCurrent(generation: { readonly current: number }): () => boolean {
  * `header` draws what sits above the card for the question on screen
  * (undefined while none is): the page's screen header, with the section ·
  * topic and the number (D6). It stays outside the keys' region, so the back
- * control keeps its own keys. Without one the card shows them itself.
+ * control keeps its own keys.
  */
 export function PracticeSession({
   pool,
   header,
 }: {
   pool: readonly number[];
-  header?: (question: Question | undefined) => ReactNode;
+  header: (question: Question | undefined) => ReactNode;
 }) {
   const { t } = useI18n();
   const [shown, setShown] = useState<Shown>();
@@ -139,7 +139,7 @@ export function PracticeSession({
   if (failed || question === undefined) {
     return (
       <>
-        {header?.(undefined)}
+        {header(undefined)}
         <p role="status" className="text-muted-foreground">
           {failed ? t.practice.loadFailed : t.practice.loading}
         </p>
@@ -149,7 +149,7 @@ export function PracticeSession({
 
   return (
     <>
-      {header?.(question)}
+      {header(question)}
       <div ref={top} tabIndex={-1} className="flex flex-col gap-3.5 outline-none">
         <QuestionCard
           question={question}
@@ -163,7 +163,6 @@ export function PracticeSession({
           hintEnabled
           hintOpen={hintOpen}
           onHintOpen={() => setHintOpen(true)}
-          showPlace={header === undefined}
         />
         {answerNotSaved && <FailureLine>{t.practice.answerNotSaved}</FailureLine>}
         {answered && (

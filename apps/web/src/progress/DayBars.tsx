@@ -1,3 +1,4 @@
+import { PLATE } from '@/components/styles';
 import { useI18n } from '@/i18n/useI18n';
 import { LOCALE_TAGS } from '@/i18n/locales';
 import { cn } from '@/lib/utils';
@@ -19,10 +20,7 @@ export function DayBars({ days }: { days: readonly DayAccuracy[] }) {
   const today = days.at(-1);
 
   return (
-    <section
-      aria-labelledby="progress-days"
-      className="flex flex-col gap-2.5 rounded-lg border border-line bg-card px-5 pt-4.5 pb-5"
-    >
+    <section aria-labelledby="progress-days" className={cn('flex flex-col gap-2.5', PLATE)}>
       <div className="flex items-baseline justify-between gap-3">
         <h2 id="progress-days" className="eyebrow">
           {t.progress.days(ACCURACY_DAYS)}
@@ -50,7 +48,7 @@ export function DayBars({ days }: { days: readonly DayAccuracy[] }) {
                 {day.correct > 0 && (
                   <div
                     data-slot="day-right"
-                    className={cn(isToday ? 'bg-rust' : 'bg-forest')}
+                    className={isToday ? 'bg-rust' : 'bg-forest'}
                     style={{ height: `${(day.correct / day.total) * 100}%` }}
                   />
                 )}

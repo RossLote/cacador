@@ -34,7 +34,6 @@ export const progress = {
   sections: 'Sections',
   patterns: 'Patterns',
   seen: (seen: number, total: number) => `Seen ${seen} of ${total}`,
-  questions,
   /** A row's second line while the group is untouched. */
   notStartedLine: (total: number) => `Not started · ${questions(total)}`,
   /** In place of the percentage on such a row. */

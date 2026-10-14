@@ -250,7 +250,7 @@ describe('Home', () => {
       await act(() => vi.advanceTimersByTimeAsync(MINUTE));
       expect(await screen.findByText('486 unseen')).toBeInTheDocument();
       await waitFor(() => expect(screen.queryByText(en.home.examInProgress)).not.toBeInTheDocument());
-      expect(screen.queryByText(en.home.minutesLeft(0))).not.toBeInTheDocument();
+      expect(screen.queryByText(/\b0 minutes left/)).not.toBeInTheDocument();
     });
   });
 });

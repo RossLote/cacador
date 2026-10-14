@@ -1,6 +1,5 @@
-import { ChevronRight, Flag } from 'lucide-react';
-import { Link } from 'react-router';
 import { ScreenHeader } from '@/components/nav/ScreenHeader';
+import { FlaggedLink } from '@/flagged/FlaggedLink';
 import { useI18n } from '@/i18n/useI18n';
 import { useLoaded } from '@/lib/useLoaded';
 import {
@@ -99,14 +98,7 @@ export function ProgressPage() {
           <DayBars days={data.days} />
           <GroupTabs states={data.states} />
           <PastExams exams={data.exams} />
-          <Link
-            to="/flagged"
-            className="flex min-h-12 items-center gap-2.5 rounded-md border border-ink px-3.5 py-3 text-base font-semibold text-ink outline-none transition-colors hover:bg-card focus-visible:ring-3 focus-visible:ring-ring/50"
-          >
-            <Flag aria-hidden="true" className="size-5 shrink-0" strokeWidth={2} />
-            <span className="flex-1">{t.progress.flagged(data.flagCount)}</span>
-            <ChevronRight aria-hidden="true" className="size-5 shrink-0" strokeWidth={2} />
-          </Link>
+          <FlaggedLink>{t.progress.flagged(data.flagCount)}</FlaggedLink>
         </>
       )}
     </section>

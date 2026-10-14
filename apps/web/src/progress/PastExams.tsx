@@ -1,4 +1,5 @@
 import { Link } from 'react-router';
+import { ROW_LINK } from '@/components/styles';
 import { Badge } from '@/components/ui/badge';
 import { LOCALE_TAGS } from '@/i18n/locales';
 import { useI18n } from '@/i18n/useI18n';
@@ -35,7 +36,7 @@ export function PastExams({ exams }: { exams: readonly FinishedExam[] }) {
                 <Link
                   to={examResultsPath(exam.id)}
                   aria-label={t.progress.examRow(date, score, EXAM_SIZE, outcome)}
-                  className="flex min-h-11 items-center gap-3 rounded-md border border-line bg-card px-3.5 py-3 text-ink outline-none transition-colors hover:bg-track focus-visible:ring-3 focus-visible:ring-ring/50"
+                  className={ROW_LINK}
                 >
                   <span className="min-w-0 flex-1 text-base font-semibold">{date}</span>
                   <span className="font-heading text-xl leading-none font-semibold tabular-nums">

@@ -1,6 +1,6 @@
 import { hintFor, translationFor, type OptionKey, type Question } from '@cacador/data';
 import { Check, Lightbulb, X } from 'lucide-react';
-import { useId, type ReactNode } from 'react';
+import { useId } from 'react';
 import { Button } from '@/components/ui/button';
 import { useI18n } from '@/i18n/useI18n';
 import { cn } from '@/lib/utils';
@@ -41,11 +41,10 @@ export interface QuestionCardProps {
   hintOpen?: boolean;
   /** The Hint button was tapped. The panel never closes from the card, only when the page says so. */
   onHintOpen?: () => void;
-  /** Controls placed at the foot of the card, under the hint panel. */
-  actions?: ReactNode;
   /**
-   * Show the section · topic and "Question N" over the picture (the default).
-   * Practice passes false and shows them in its screen header instead (D6).
+   * Show the section · topic and "Question N" over the picture. The exam review
+   * passes it; Practice and the running exam leave it off and show the place in
+   * their screen header instead (D6).
    */
   showPlace?: boolean;
 }
@@ -125,8 +124,7 @@ export function QuestionCard({
   hintEnabled,
   hintOpen = false,
   onHintOpen,
-  actions,
-  showPlace = true,
+  showPlace = false,
 }: QuestionCardProps) {
   const { t, locale } = useI18n();
   const card = t.practice.card;
@@ -222,8 +220,6 @@ export function QuestionCard({
       )}
 
       {hintEnabled && hintOpen && <HintPanel id={panelId} hint={hintFor(question.id)} showNudge={revealed} />}
-
-      {actions}
     </article>
   );
 }

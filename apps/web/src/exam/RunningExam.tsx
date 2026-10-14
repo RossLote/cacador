@@ -172,8 +172,8 @@ export function RunningExam({ exam }: { exam: Exam }) {
         eyebrow={t.common.nav.exam}
         line={t.exam.position(current + 1, total)}
         aside={<ExamClock exam={exam} onExpire={end} />}
+        heading={t.exam.title}
       />
-      <h1 className="sr-only">{t.exam.title}</h1>
 
       <ExamMarkers
         answered={exam.questionIds.map((id) => answers[id] !== undefined)}
@@ -192,7 +192,6 @@ export function RunningExam({ exam }: { exam: Exam }) {
             onSelect={select}
             peekEnabled={false}
             hintEnabled={false}
-            showPlace={false}
           />
         </div>
       )}

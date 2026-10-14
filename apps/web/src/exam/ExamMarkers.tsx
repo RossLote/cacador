@@ -1,4 +1,5 @@
 import { useId } from 'react';
+import { FOCUS_RING } from '@/components/styles';
 import { useI18n } from '@/i18n/useI18n';
 import { cn } from '@/lib/utils';
 
@@ -11,7 +12,7 @@ interface ExamMarkersProps {
 }
 
 /** What a marker shows: the current question over its answer, then answered or not. */
-export type MarkerState = 'current' | 'answered' | 'unanswered';
+type MarkerState = 'current' | 'answered' | 'unanswered';
 
 /** The fill of each state (D9): current rust, answered forest, both with card text; unanswered card with the hairline. */
 const LOOK: Record<MarkerState, string> = {
@@ -50,7 +51,8 @@ export function ExamMarkers({ answered, current, onJump }: ExamMarkersProps) {
                 data-state={state}
                 onClick={() => onJump(index)}
                 className={cn(
-                  'flex h-7 w-full min-w-0 items-center justify-center rounded-sm border p-0 text-xs font-semibold tabular-nums transition-colors outline-none focus-visible:ring-3 focus-visible:ring-ring/50',
+                  'flex h-7 w-full min-w-0 items-center justify-center rounded-sm border p-0 text-xs font-semibold tabular-nums transition-colors',
+                  FOCUS_RING,
                   LOOK[state],
                 )}
               >
