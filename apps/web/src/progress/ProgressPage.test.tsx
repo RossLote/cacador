@@ -289,7 +289,7 @@ describe('Progress restyle (D10)', () => {
     expect(dayBars()[10]?.querySelector('div')).toBeNull();
   });
 
-  it('colours a row rust under 75, forest from 75, and shows a dash in muted when not started', async () => {
+  it('colours a 50 % row rust and a 100 % row forest, and shows a dash in muted when not started (the 75 % edge is in groups.test.ts)', async () => {
     const ducks = [firstIn('patos', 0), firstIn('patos', 1)];
     await answer(ducks[0] as number, true);
     await answer(ducks[1] as number, false);
@@ -336,14 +336,21 @@ describe('Progress restyle (D10)', () => {
     await finishExam(passed.id, NOW - 60 * MINUTE);
     renderProgress();
 
-    expect(await screen.findByRole('tab', { name: 'Topics' })).toHaveAttribute('data-active');
-    expect(screen.getByRole('tab', { name: 'Sections' })).not.toHaveAttribute('data-active');
+    // The open tab: forest text, bold and the 2 px forest line shown (opacity 100); the others draw neither.
+    const open = await screen.findByRole('tab', { name: 'Topics' });
+    const shut = screen.getByRole('tab', { name: 'Sections' });
+    expect(open).toHaveAttribute('data-active');
+    expect(open).toHaveClass('data-active:text-forest', 'data-active:font-bold', 'after:bg-forest', 'group-data-horizontal/tabs:after:h-0.5', 'data-active:after:opacity-100');
+    expect(shut).not.toHaveAttribute('data-active');
+    expect(shut).toHaveClass('after:opacity-0');
 
     const section = await screen.findByRole('region', { name: en.progress.exams });
     const [passedRow, failedRow] = within(section).getAllByRole('link');
     const passedChip = within(passedRow as HTMLElement).getByText('Passed');
     const failedChip = within(failedRow as HTMLElement).getByText('Not passed');
     expect(passedChip).toHaveAttribute('data-variant', 'success');
+    expect(passedChip).toHaveClass('bg-accent', 'text-success');
+    expect(failedChip).toHaveClass('border-destructive');
     expect(failedChip).toHaveAttribute('data-variant', 'destructive');
     expect(failedChip).toHaveClass('bg-clay', 'text-ink');
     expect(within(passedRow as HTMLElement).getByText('15 / 20')).toHaveClass('font-heading');
