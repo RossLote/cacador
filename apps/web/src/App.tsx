@@ -1,44 +1,35 @@
-import { ArrowLeft } from 'lucide-react';
-import { Link, Outlet, Route, Routes, useLocation } from 'react-router';
-import { buttonVariants } from '@/components/ui/button';
+import { Outlet, Route, Routes, useLocation } from 'react-router';
+import { TabBar } from '@/components/nav/TabBar';
+import { showsTabBar } from '@/components/nav/tabs';
 import { ExamPage } from '@/exam/ExamPage';
 import { FlaggedPage } from '@/flagged/FlaggedPage';
 import { HomePage } from '@/home/HomePage';
-import { useI18n } from '@/i18n/useI18n';
+import { cn } from '@/lib/utils';
 import { NotFoundPage } from '@/notfound/NotFoundPage';
 import { PracticePage } from '@/practice/PracticePage';
 import { ProgressPage } from '@/progress/ProgressPage';
 import { SettingsPage } from '@/settings/SettingsPage';
 
 /**
- * The shared frame (phase 4 D19): one phone-first column, and on every screen
- * but Home a back control to Home. Home is the hub; there is no bottom bar.
+ * The shared frame (DESIGN.md § 8.2, epic cac-8cn D5): one phone-first column
+ * with the 20 px gutter, and the tab bar fixed along the bottom on every route
+ * but /exam itself, with room left under the content so nothing hides behind
+ * it. The back control to Home is no longer here: every page but Home opens
+ * with its own ScreenHeader, which carries it.
  */
 function Layout() {
-  const { t } = useI18n();
-  const { pathname } = useLocation();
+  const tabBar = showsTabBar(useLocation().pathname);
   return (
-    <div className="mx-auto flex min-h-dvh w-full max-w-2xl flex-col gap-4 px-4 py-4">
-      {pathname !== '/' && (
-        <nav>
-          <Link
-            to="/"
-            aria-label={t.common.backToHome}
-            className={buttonVariants({ variant: 'ghost', size: 'sm' })}
-          >
-            <ArrowLeft aria-hidden="true" />
-            {t.common.nav.home}
-          </Link>
-        </nav>
-      )}
-      <main className="flex-1">
+    <div className="mx-auto flex min-h-dvh w-full max-w-2xl flex-col px-5 pt-4">
+      <main className={cn('flex-1', tabBar ? 'pb-[calc(6.5rem+env(safe-area-inset-bottom))]' : 'pb-8')}>
         <Outlet />
       </main>
+      {tabBar && <TabBar />}
     </div>
   );
 }
 
-/** The routes under the /cacador/ basename (D19). Each screen's page lives in its own folder; any other address gets the not-found page, inside the layout so it keeps the back control. */
+/** The routes under the /cacador/ basename (D19). Each screen's page lives in its own folder; any other address gets the not-found page, inside the layout so it shows the tab bar, under its own header with the back control. */
 export default function App() {
   return (
     <Routes>

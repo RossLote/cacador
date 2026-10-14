@@ -3,6 +3,7 @@ import { Check, X } from 'lucide-react';
 import { useCallback, useId, useState } from 'react';
 import { useParams } from 'react-router';
 import { LinkButton } from '@/components/LinkButton';
+import { ScreenHeader } from '@/components/nav/ScreenHeader';
 import { QuestionCard } from '@/components/question/QuestionCard';
 import { useI18n } from '@/i18n/useI18n';
 import { useLoaded } from '@/lib/useLoaded';
@@ -114,6 +115,7 @@ export function ExamResultsPage() {
   if (!exam) {
     return (
       <section className="flex flex-col gap-4">
+        <ScreenHeader eyebrow={t.common.nav.exam} />
         <h1 className="text-xl font-semibold tracking-tight">{t.exam.title}</h1>
         {failed ? (
           <p role="status" className="text-muted-foreground">
@@ -138,6 +140,7 @@ export function ExamResultsPage() {
   return (
     <div className="flex flex-col gap-8">
       <div className="flex flex-col gap-4">
+        <ScreenHeader eyebrow={t.common.nav.exam} />
         <h1 className="text-xl font-semibold tracking-tight">{t.exam.resultsTitle}</h1>
         <ScorePanel exam={exam} />
       </div>

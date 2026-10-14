@@ -1,5 +1,6 @@
 import { questionById } from '@cacador/data';
 import { useCallback, useEffect, useState } from 'react';
+import { ScreenHeader } from '@/components/nav/ScreenHeader';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { useI18n } from '@/i18n/useI18n';
@@ -62,6 +63,7 @@ export function FlaggedPage() {
 
   return (
     <section className="flex flex-col gap-4">
+      <ScreenHeader eyebrow={t.common.nav.flagged} />
       <h1 className="text-2xl font-semibold tracking-tight">{t.flagged.title}</h1>
 
       <div className="flex gap-2">

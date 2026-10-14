@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { FailureLine } from '@/components/FailureLine';
+import { ScreenHeader } from '@/components/nav/ScreenHeader';
 import { Button } from '@/components/ui/button';
 import { useI18n } from '@/i18n/useI18n';
 import { useLoaded } from '@/lib/useLoaded';
@@ -38,6 +39,7 @@ export function ExamStart() {
 
   return (
     <section className="flex flex-col gap-4">
+      <ScreenHeader eyebrow={t.common.nav.exam} />
       <h1 className="text-xl font-semibold tracking-tight">{t.exam.title}</h1>
       {failed ? (
         <p role="status" className="text-muted-foreground">

@@ -1,5 +1,6 @@
 import { ArrowRight } from 'lucide-react';
 import { LinkButton } from '@/components/LinkButton';
+import { ScreenHeader } from '@/components/nav/ScreenHeader';
 import { useI18n } from '@/i18n/useI18n';
 import { useLoaded } from '@/lib/useLoaded';
 import {
@@ -78,6 +79,7 @@ export function ProgressPage() {
 
   return (
     <section className="flex flex-col gap-8">
+      <ScreenHeader eyebrow={t.common.nav.progress} />
       <h1 className="text-2xl font-semibold tracking-tight">{t.progress.title}</h1>
       {failed ? (
         <p role="status" className="text-muted-foreground">

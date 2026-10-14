@@ -1,4 +1,5 @@
 import { Badge } from '@/components/ui/badge';
+import { ScreenHeader } from '@/components/nav/ScreenHeader';
 import { nameIn } from '@/components/question/names';
 import { useI18n } from '@/i18n/useI18n';
 import { PracticeSession } from './PracticeSession';
@@ -15,6 +16,7 @@ export function PracticePage() {
   const { pool, group } = usePracticePool();
   return (
     <div className="flex flex-col gap-4">
+      <ScreenHeader eyebrow={t.common.nav.practice} />
       <h1 className="text-xl font-semibold tracking-tight">{t.practice.title}</h1>
       {group !== undefined && (
         <p className="flex items-center gap-2 text-sm text-muted-foreground">

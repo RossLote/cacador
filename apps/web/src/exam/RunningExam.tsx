@@ -3,6 +3,7 @@ import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { useCallback, useRef, useState } from 'react';
 import { Navigate } from 'react-router';
 import { FailureLine } from '@/components/FailureLine';
+import { ScreenHeader } from '@/components/nav/ScreenHeader';
 import { QuestionCard } from '@/components/question/QuestionCard';
 import {
   AlertDialog,
@@ -160,6 +161,7 @@ export function RunningExam({ exam }: { exam: Exam }) {
   return (
     <div className="flex flex-col gap-4">
       {done && <Navigate to={examResultsPath(exam.id)} replace />}
+      <ScreenHeader eyebrow={t.common.nav.exam} />
       <div className="flex items-baseline justify-between gap-4">
         <h1 className="text-xl font-semibold tracking-tight">{t.exam.title}</h1>
         <p className="text-muted-foreground tabular-nums">{t.exam.position(current + 1, total)}</p>

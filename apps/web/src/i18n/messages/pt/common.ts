@@ -3,6 +3,7 @@ import type { Messages } from '../en';
 export const common: Messages['common'] = {
   appName: 'Caçador',
   backToHome: 'Voltar ao início',
+  mainNav: 'Principal',
   nav: {
     home: 'Início',
     practice: 'Praticar',

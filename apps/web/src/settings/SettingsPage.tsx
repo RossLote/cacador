@@ -1,5 +1,6 @@
 import { useId, useRef, useState, type ChangeEvent, type MouseEvent } from 'react';
 import { LinkButton } from '@/components/LinkButton';
+import { ScreenHeader } from '@/components/nav/ScreenHeader';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -151,6 +152,7 @@ export function SettingsPage() {
 
   return (
     <section className="flex flex-col gap-6">
+      <ScreenHeader eyebrow={t.common.nav.settings} />
       <h1 className="text-2xl font-semibold tracking-tight">{t.settings.title}</h1>
 
       {inMemory && (
