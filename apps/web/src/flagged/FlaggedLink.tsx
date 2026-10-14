@@ -14,9 +14,9 @@ export function FlaggedLink({ children }: { children: ReactNode }) {
         FOCUS_RING,
       )}
     >
-      <Flag aria-hidden="true" className="size-5 shrink-0" strokeWidth={2} />
+      <Flag aria-hidden="true" className="size-5 shrink-0" strokeWidth={1.75} />
       <span className="flex-1">{children}</span>
-      <ChevronRight aria-hidden="true" className="size-5 shrink-0" strokeWidth={2} />
+      <ChevronRight aria-hidden="true" className="size-5 shrink-0" strokeWidth={1.75} />
     </Link>
   );
 }

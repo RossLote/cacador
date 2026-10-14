@@ -1,6 +1,6 @@
 import { ChevronRight, SlidersHorizontal, Target, Timer, type LucideIcon } from 'lucide-react';
 import { Link } from 'react-router';
-import { FOCUS_RING, PLATE } from '@/components/styles';
+import { FOCUS_RING, PLATE, RUST_HOVER } from '@/components/styles';
 import { Progress } from '@/components/ui/progress';
 import { useExamClock } from '@/exam/useExamClock';
 import { useI18n } from '@/i18n/useI18n';
@@ -74,7 +74,7 @@ function ExamInProgressCard({ exam, onDeadline }: { exam: Exam; onDeadline: () =
         <span className="font-heading text-lg leading-snug font-semibold">{t.home.examInProgress}</span>{' '}
         <span className="text-sm tabular-nums">{t.home.examStatus(minutes, answered, exam.questionIds.length)}</span>
       </span>
-      <ChevronRight aria-hidden="true" className="size-5 shrink-0 text-rust" strokeWidth={2} />
+      <ChevronRight aria-hidden="true" className="size-5 shrink-0 text-rust" strokeWidth={1.75} />
     </Link>
   );
 }
@@ -144,7 +144,7 @@ function StartCard({ to, Icon, title, line, primary }: StartCardProps) {
       data-slot="start-card"
       className={cn(
         'flex min-h-[110px] flex-col gap-2.5 rounded-lg px-4 py-4.5 transition-colors',
-        primary ? 'bg-rust text-on-fill hover:bg-rust/90' : 'border border-ink bg-card text-ink hover:bg-track',
+        primary ? cn('bg-rust text-on-fill', RUST_HOVER) : 'border border-ink bg-card text-ink hover:bg-track',
         FOCUS_RING,
       )}
     >

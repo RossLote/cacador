@@ -4,13 +4,15 @@ import { cn } from "cn"
 
 // Campo (DESIGN.md § 8.5): default is the rust fill, secondary a card with the ink hairline, outline a card with
 // the line hairline, destructive a rust outline, ghost plain; 8 px corners, no shadows, every size at least 44 px.
+// The rust fill darkens on hover, a tenth of ink mixed in, opaque, so the on-fill text keeps 4.5:1 (RUST_HOVER in
+// components/styles.ts).
 const buttonVariants = cva(
   "group/button inline-flex shrink-0 items-center justify-center rounded-md border border-transparent bg-clip-padding text-base font-semibold whitespace-nowrap transition-colors outline-none select-none focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg]:stroke-[1.75] [&_svg:not([class*='size-'])]:size-4",
   {
     variants: {
       variant: {
         default:
-          "border-primary bg-primary text-primary-foreground hover:border-primary/90 hover:bg-primary/90",
+          "border-primary bg-primary text-primary-foreground hover:border-[color-mix(in_srgb,var(--color-primary)_90%,var(--color-ink))] hover:bg-[color-mix(in_srgb,var(--color-primary)_90%,var(--color-ink))]",
         outline:
           "border-border bg-card text-foreground hover:bg-muted aria-expanded:bg-muted",
         secondary:

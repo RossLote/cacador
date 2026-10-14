@@ -5,18 +5,28 @@
 export const FOCUS_RING = 'outline-none focus-visible:ring-3 focus-visible:ring-ring/50';
 
 /**
+ * The hover of a rust fill (DESIGN.md § 8.5): the rust with a tenth of ink
+ * mixed in, opaque, so it never shows the ground through. The on-fill text
+ * measures 5.77:1 on it in light and 6.40:1 in dark; rust at 90 % over paper
+ * fell to 4.37:1 in light, under the 4.5:1 rule. The default Button and Badge
+ * write the same mix with the primary token, which is the rust.
+ */
+export const RUST_HOVER = 'hover:bg-[color-mix(in_srgb,var(--color-rust)_90%,var(--color-ink))]';
+
+/**
  * A plate's box (DESIGN.md § 8.5): card with the hairline, 10 px corners and
  * the plate's padding. Each plate adds its own layout through cn().
  */
 export const PLATE = 'rounded-lg border border-line bg-card px-5 pt-4.5 pb-5';
 
 /**
- * A chip (DESIGN.md § 8.5): 36 px tall with the touch target stretched to
- * 44 px; a pressed chip is filled forest. Used on a Button with the outline
- * variant: the flag chips on Practice and the language chips on Settings.
+ * A chip (DESIGN.md § 8.5, D4): 36 px tall with the touch target stretched to
+ * 44 px, and the 6 px chip corners a Badge chip has too; a pressed chip is
+ * filled forest. Used on a Button with the outline variant: the flag chips on
+ * Practice and the language chips on Settings.
  */
 export const CHIP =
-  "relative h-9 gap-1.5 px-3 text-[13px] after:absolute after:inset-x-0 after:-inset-y-1 after:content-[''] aria-pressed:border-forest aria-pressed:bg-forest aria-pressed:text-on-fill aria-pressed:hover:bg-forest/90";
+  "relative h-9 gap-1.5 rounded-sm px-3 text-[13px] after:absolute after:inset-x-0 after:-inset-y-1 after:content-[''] aria-pressed:border-forest aria-pressed:bg-forest aria-pressed:text-on-fill aria-pressed:hover:bg-forest/90";
 
 /**
  * A card row that links somewhere (DESIGN.md § 8.5): card with the hairline,

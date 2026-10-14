@@ -21,7 +21,7 @@ function Layout() {
   const tabBar = showsTabBar(useLocation().pathname);
   return (
     <div className="mx-auto flex min-h-dvh w-full max-w-2xl flex-col px-5 pt-4">
-      <main className={cn('flex-1', tabBar ? 'pb-[calc(6.5rem+env(safe-area-inset-bottom))]' : 'pb-8')}>
+      <main className={cn('flex-1', tabBar ? 'pb-26' : 'pb-8')}>
         <Outlet />
       </main>
       {tabBar && <TabBar />}
