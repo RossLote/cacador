@@ -4,6 +4,7 @@ import userEvent from '@testing-library/user-event';
 import { Link, MemoryRouter, Route, Routes, useLocation } from 'react-router';
 import { describe, expect, it, vi } from 'vitest';
 import type { Locale } from '@/i18n/locales';
+import { PLATE } from '@/components/styles';
 import { MESSAGES } from '@/i18n/messages';
 import { drawExam, examDeadline, scoreExam, seededRandom } from '@/model';
 import { closeStorage, createExam, finishExam, getExam, listAnswers, listExams, saveExamAnswer, type Exam } from '@/storage';
@@ -87,6 +88,19 @@ describe('the exam start screen', () => {
     expect(await startButton()).toBeInTheDocument();
     expect(await listAnswers()).toHaveLength(20);
     expect(await getExam(exam.id)).toEqual(settled);
+  });
+
+  it('says in the plate, under the header with the back control, when storage cannot be read (DESIGN.md § 6.9)', async () => {
+    failStore('getAll', { store: 'exams' });
+    renderExam();
+    const status = await screen.findByText(t.loadFailed);
+    expect(status).toHaveAttribute('role', 'status');
+    expect(status.parentElement).toHaveClass(...PLATE.split(' '));
+    expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(t.title);
+    const back = screen.getByRole('link', { name: MESSAGES.en.common.backToHome });
+    expect(back.compareDocumentPosition(status) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    expect(screen.queryByText(t.loading)).not.toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: t.start })).not.toBeInTheDocument();
   });
 });
 

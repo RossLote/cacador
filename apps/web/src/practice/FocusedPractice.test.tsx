@@ -78,6 +78,9 @@ describe('focused practice (D4)', () => {
     expect(chip).toHaveAttribute('data-slot', 'badge');
     expect(chip.className).not.toContain('rounded-full');
     expect(chip.className).not.toContain('rounded-4xl');
+    // The Badge's own 6 px corners (DESIGN.md § 8.5), as every other chip draws them.
+    expect(chip).toHaveClass('rounded-sm');
+    expect(chip.className).not.toContain('rounded-md');
   });
 
   it('names the topic in Portuguese when the interface is Portuguese', async () => {
