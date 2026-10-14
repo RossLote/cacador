@@ -88,6 +88,49 @@ describe('PracticePage', () => {
     expect(JSON.parse(sessionStorage.getItem(RECENT_KEY)!)).toEqual([1]);
   });
 
+  it('names the question in the screen header: the section · topic eyebrow over "Question N", outside the card', async () => {
+    renderPractice();
+    expect(await shownId()).toBe(1);
+    const q = question(1);
+    const article = screen.getByRole('article');
+    const place = screen.getByText(`${sectionOf(q)!.en} · ${topicOf(q)!.en}`);
+    const number = screen.getByText(card.questionNumber(1));
+    expect(place).toHaveClass('eyebrow');
+    expect(number).toHaveClass('font-heading');
+    expect(article).not.toContainElement(place);
+    expect(article).not.toContainElement(number);
+    expect(screen.getByRole('link', { name: MESSAGES.en.common.backToHome })).toBeInTheDocument();
+  });
+
+  it('shows the header with the screen name before a question is drawn', async () => {
+    renderPractice();
+    expect(screen.getByRole('status')).toHaveTextContent(t.loading);
+    expect(screen.getByText(MESSAGES.en.common.nav.practice, { selector: 'p.eyebrow' })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: MESSAGES.en.common.backToHome })).toBeInTheDocument();
+    await shownId();
+  });
+
+  it('reads Report: before the two flag chips, and puts the rust Next under them', async () => {
+    const user = userEvent.setup();
+    renderPractice();
+    await user.click(optionFor(wrongOf(await shownId())));
+    const flags = screen.getByRole('group', { name: t.flags.group });
+    const report = within(flags).getByText(t.flags.report);
+    const chips = [t.flags.englishOff, t.flags.hintOff].map((name) => within(flags).getByRole('button', { name }));
+    for (const chip of chips) {
+      expect(report.compareDocumentPosition(chip) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+      expect(chip).toHaveClass('h-9');
+      expect(chip.querySelector('svg.lucide-flag')).toBeInTheDocument();
+    }
+    const next = nextButton()!;
+    expect(next).toHaveClass('bg-primary');
+    expect(flags.compareDocumentPosition(next) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+  });
+
+  it('has the Report: word in Portuguese too', () => {
+    expect(MESSAGES.pt.practice.flags.report).toBe('Assinalar:');
+  });
+
   it('shows the English while the hold button is held and the Portuguese on release or when the pointer leaves', async () => {
     const user = userEvent.setup();
     renderPractice();

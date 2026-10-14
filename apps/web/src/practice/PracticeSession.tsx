@@ -1,6 +1,6 @@
-import { questionById, type OptionKey } from '@cacador/data';
-import { ArrowRight } from 'lucide-react';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { questionById, type OptionKey, type Question } from '@cacador/data';
+import { ChevronRight } from 'lucide-react';
+import { useCallback, useEffect, useRef, useState, type ReactNode } from 'react';
 import { FailureLine } from '@/components/FailureLine';
 import { QuestionCard } from '@/components/question/QuestionCard';
 import { Button } from '@/components/ui/button';
@@ -33,8 +33,19 @@ function staysCurrent(generation: { readonly current: number }): () => boolean {
  * the old pool, or for a page that has gone, draws nothing. An answer that
  * cannot be written keeps its result on screen, says in one line that it was
  * not saved (DESIGN.md § 6.9), and Next still draws.
+ *
+ * `header` draws what sits above the card for the question on screen
+ * (undefined while none is): the page's screen header, with the section ·
+ * topic and the number (D6). It stays outside the keys' region, so the back
+ * control keeps its own keys. Without one the card shows them itself.
  */
-export function PracticeSession({ pool }: { pool: readonly number[] }) {
+export function PracticeSession({
+  pool,
+  header,
+}: {
+  pool: readonly number[];
+  header?: (question: Question | undefined) => ReactNode;
+}) {
   const { t } = useI18n();
   const [shown, setShown] = useState<Shown>();
   const [peeking, setPeeking] = useState(false);
@@ -127,37 +138,44 @@ export function PracticeSession({ pool }: { pool: readonly number[] }) {
 
   if (failed || question === undefined) {
     return (
-      <p role="status" className="text-muted-foreground">
-        {failed ? t.practice.loadFailed : t.practice.loading}
-      </p>
+      <>
+        {header?.(undefined)}
+        <p role="status" className="text-muted-foreground">
+          {failed ? t.practice.loadFailed : t.practice.loading}
+        </p>
+      </>
     );
   }
 
   return (
-    <div ref={top} tabIndex={-1} className="flex flex-col gap-4 outline-none">
-      <QuestionCard
-        question={question}
-        selected={shown?.selected}
-        revealed={answered}
-        locked={answered}
-        onSelect={answer}
-        peekEnabled
-        peeking={peeking}
-        onPeekChange={setPeeking}
-        hintEnabled
-        hintOpen={hintOpen}
-        onHintOpen={() => setHintOpen(true)}
-        actions={
-          answered && (
-            <Button type="button" size="lg" className="min-w-28" onClick={next}>
+    <>
+      {header?.(question)}
+      <div ref={top} tabIndex={-1} className="flex flex-col gap-3.5 outline-none">
+        <QuestionCard
+          question={question}
+          selected={shown?.selected}
+          revealed={answered}
+          locked={answered}
+          onSelect={answer}
+          peekEnabled
+          peeking={peeking}
+          onPeekChange={setPeeking}
+          hintEnabled
+          hintOpen={hintOpen}
+          onHintOpen={() => setHintOpen(true)}
+          showPlace={header === undefined}
+        />
+        {answerNotSaved && <FailureLine>{t.practice.answerNotSaved}</FailureLine>}
+        {answered && (
+          <div className="mt-1 flex flex-col gap-2.5">
+            <FlagsRow key={question.id} questionId={question.id} />
+            <Button type="button" size="lg" className="h-13 w-full text-[17px]" onClick={next}>
               {t.practice.next}
-              <ArrowRight aria-hidden="true" />
+              <ChevronRight aria-hidden="true" />
             </Button>
-          )
-        }
-      />
-      {answerNotSaved && <FailureLine>{t.practice.answerNotSaved}</FailureLine>}
-      {answered && <FlagsRow key={question.id} questionId={question.id} />}
-    </div>
+          </div>
+        )}
+      </div>
+    </>
   );
 }
