@@ -57,9 +57,11 @@ describe('the results of a finished exam', () => {
 
     const items = within(await wrongList()).getAllByRole('listitem');
     expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(t.resultsTitle);
-    expect(screen.getByText('14 out of 20')).toBeInTheDocument();
+    expect(screen.getByText('14 out of 20')).toHaveClass('font-heading');
     expect(screen.getByText('Pass mark 15')).toBeInTheDocument();
-    expect(screen.getByText('Not passed')).toBeInTheDocument();
+    // The Not passed chip: the destructive badge, clay with ink text and a rust hairline (DESIGN.md § 8.5).
+    expect(screen.getByText('Not passed')).toHaveAttribute('data-slot', 'badge');
+    expect(screen.getByText('Not passed')).toHaveClass('bg-clay', 'text-ink', 'border-destructive');
     expect(screen.queryByText('Passed')).not.toBeInTheDocument();
     expect(screen.getByRole('heading', { level: 2, name: t.wrongAnswers })).toBeInTheDocument();
 
@@ -98,7 +100,9 @@ describe('the results of a finished exam', () => {
     renderResults(id);
     const items = within(await wrongList()).getAllByRole('listitem');
     expect(screen.getByText('15 out of 20')).toBeInTheDocument();
-    expect(screen.getByText('Passed')).toBeInTheDocument();
+    // The Passed chip: the success badge, moss with forest text.
+    expect(screen.getByText('Passed')).toHaveAttribute('data-slot', 'badge');
+    expect(screen.getByText('Passed')).toHaveClass('bg-accent', 'text-success');
     expect(screen.queryByText('Not passed')).not.toBeInTheDocument();
     expect(items.map(idIn)).toEqual(examIds.slice(15));
   });

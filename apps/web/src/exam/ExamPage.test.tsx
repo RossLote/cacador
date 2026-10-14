@@ -43,8 +43,11 @@ const clock = () => screen.getByRole('timer', { name: t.timeLeft });
 const marker = (n: number) => screen.getByRole('button', { name: t.marker(n) });
 const optionFor = (key: OptionKey) =>
   within(screen.getByRole('group', { name: card.options })).getAllByRole('button')[['A', 'B', 'C'].indexOf(key)]!;
-/** The bank id of the question on screen, from the card's "Question <id>". */
-const shownId = () => Number(screen.getByText(/^Question \d+$/, { selector: 'p' }).textContent?.replace(/\D/g, ''));
+/** The bank id of the question on screen, from the card's wrapper (the running exam's card draws no "Question <id>"). */
+const shownId = () => Number(document.querySelector('[data-question-id]')?.getAttribute('data-question-id'));
+/** Submit, named by its label: "Submit · N unanswered" while `unanswered` is above 0, "Submit" at 0. */
+const submitButton = (unanswered: number) =>
+  screen.getByRole('button', { name: unanswered > 0 ? t.submitUnanswered(unanswered) : t.submit });
 
 /** Starts an exam and waits for its first question. */
 async function start(user: ReturnType<typeof userEvent.setup>) {
@@ -102,6 +105,10 @@ describe('the running exam', () => {
     expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(t.title);
     expect(screen.getByText('1 of 20')).toBeInTheDocument();
     expect(clock()).toHaveTextContent('30:00');
+    // The screen header: the eyebrow over "1 of 20", the clock chip at its right.
+    const header = screen.getByText('1 of 20').closest('header')!;
+    expect(header).toContainElement(clock());
+    expect(within(header).getByText(MESSAGES.en.common.nav.exam)).toBeInTheDocument();
 
     const strip = screen.getByRole('navigation', { name: t.markers });
     const markers = within(strip).getAllByRole('button');
@@ -116,7 +123,30 @@ describe('the running exam', () => {
     expect(screen.getAllByRole('button')).toHaveLength(26);
     expect(screen.getByRole('button', { name: t.previous })).toBeDisabled();
     expect(screen.getByRole('button', { name: t.next })).toBeEnabled();
-    expect(screen.getByRole('button', { name: t.submit })).toBeEnabled();
+    expect(submitButton(20)).toBeEnabled();
+    expect(screen.getByText(t.notMarked)).toBeInTheDocument();
+    // The screen header holds the place, so the card draws no "Question <id>" of its own.
+    expect(screen.queryByText(/^Question \d+$/)).not.toBeInTheDocument();
+  });
+
+  it('draws the current marker rust, the answered ones forest and the rest card, and counts the unanswered on Submit', async () => {
+    const user = userEvent.setup();
+    await start(user);
+    expect(marker(1)).toHaveAttribute('data-state', 'current');
+    expect(marker(1)).toHaveClass('bg-rust');
+    expect(marker(2)).toHaveAttribute('data-state', 'unanswered');
+    expect(marker(2)).toHaveClass('bg-card');
+
+    await user.click(optionFor('A'));
+    // Still current: the current look wins over answered.
+    expect(marker(1)).toHaveAttribute('data-state', 'current');
+    expect(submitButton(19)).toHaveTextContent('Submit · 19 unanswered');
+    await user.click(screen.getByRole('button', { name: t.next }));
+    expect(marker(1)).toHaveAttribute('data-state', 'answered');
+    expect(marker(1)).toHaveClass('bg-forest');
+    expect(marker(2)).toHaveAttribute('data-state', 'current');
+    expect(marker(3)).toHaveAttribute('data-state', 'unanswered');
+    expect(screen.getByRole('navigation', { name: t.markers }).querySelectorAll('[data-state="answered"]')).toHaveLength(1);
   });
 
   it('leaves Space unbound: no English, nothing selected', async () => {
@@ -289,7 +319,9 @@ describe('submitting', () => {
     const fifth = question(examIds[4]!);
     await user.click(optionFor(fifth.answer));
 
-    await user.click(screen.getByRole('button', { name: t.submit }));
+    expect(submitButton(0)).toHaveTextContent(/^Submit$/);
+    expect(screen.queryByRole('button', { name: /unanswered/ })).not.toBeInTheDocument();
+    await user.click(submitButton(0));
     expect(screen.queryByRole('alertdialog')).not.toBeInTheDocument();
     await waitFor(() => expect(where()).toMatch(/^\/exam\/results\//));
     const exam = await stored();
@@ -316,7 +348,7 @@ describe('submitting', () => {
     await user.click(marker(7));
     await user.click(optionFor('B'));
 
-    await user.click(screen.getByRole('button', { name: t.submit }));
+    await user.click(submitButton(18));
     const dialog = await screen.findByRole('alertdialog');
     expect(dialog).toHaveTextContent('18 unanswered — submit anyway?');
     await user.click(within(dialog).getByRole('button', { name: t.keepGoing }));
@@ -324,7 +356,7 @@ describe('submitting', () => {
     expect(where()).toBe('/exam');
     expect((await stored()).finishedAt).toBeUndefined();
 
-    await user.click(screen.getByRole('button', { name: t.submit }));
+    await user.click(submitButton(18));
     await user.click(within(await screen.findByRole('alertdialog')).getByRole('button', { name: t.confirmSubmit }));
     await waitFor(() => expect(where()).toMatch(/^\/exam\/results\//));
 
@@ -347,7 +379,7 @@ describe('submitting', () => {
     expect(await finishExam(exam.id)).toBe(true);
     const finished = await getExam(exam.id);
 
-    await user.click(screen.getByRole('button', { name: t.submit }));
+    await user.click(submitButton(19));
     await user.click(within(await screen.findByRole('alertdialog')).getByRole('button', { name: t.confirmSubmit }));
     await waitFor(() => expect(where()).toBe(`/exam/results/${exam.id}`));
     expect(await getExam(exam.id)).toEqual(finished);
@@ -382,16 +414,16 @@ describe('submitting', () => {
     await waitFor(async () => expect(Object.keys((await stored()).answers)).toHaveLength(1));
 
     failStore('put', { store: 'exams', times: 1 });
-    await user.click(screen.getByRole('button', { name: t.submit }));
+    await user.click(submitButton(19));
     await user.click(within(await screen.findByRole('alertdialog')).getByRole('button', { name: t.confirmSubmit }));
     expect(await screen.findByText(t.submitFailed)).toBeInTheDocument();
     expect(where()).toBe('/exam');
     expect((await stored()).finishedAt).toBeUndefined();
     expect(await listAnswers()).toEqual([]);
-    expect(screen.getByRole('button', { name: t.submit })).toBeEnabled();
+    expect(submitButton(19)).toBeEnabled();
     expect(optionFor('A')).toBeEnabled();
 
-    await user.click(screen.getByRole('button', { name: t.submit }));
+    await user.click(submitButton(19));
     await user.click(within(await screen.findByRole('alertdialog')).getByRole('button', { name: t.confirmSubmit }));
     const exam = await stored();
     await waitFor(() => expect(where()).toBe(`/exam/results/${exam.id}`));
@@ -414,7 +446,7 @@ describe('submitting', () => {
     );
     await user.click(await startButton());
     await screen.findByText(t.position(1, 20));
-    await user.click(screen.getByRole('button', { name: t.submit }));
+    await user.click(submitButton(20));
     const confirm = within(await screen.findByRole('alertdialog')).getByRole('button', { name: t.confirmSubmit });
 
     // Submit, then Home before the finish has reached storage.
@@ -469,14 +501,32 @@ describe('exam messages', () => {
   });
 
   it('words the strings the e2e suite reads', () => {
-    expect([t.start, t.previous, t.next, t.submit, t.position(1, 20), t.marker(1), t.timeLeft]).toEqual([
+    expect([
+      t.start,
+      t.previous,
+      t.next,
+      t.submit,
+      t.submitUnanswered(19),
+      t.position(1, 20),
+      t.marker(1),
+      t.timeLeft,
+      t.notMarked,
+    ]).toEqual([
       'Start',
       'Previous',
       'Next',
       'Submit',
+      'Submit · 19 unanswered',
       '1 of 20',
       'Question 1',
       'Time left',
+      'Answers are not marked until you submit. No English and no hints during the exam.',
     ]);
+  });
+
+  it('words the new Portuguese strings with the file\'s own verb and word for hints', () => {
+    const pt = MESSAGES.pt.exam;
+    expect(pt.submitUnanswered(19)).toBe('Entregar · 19 por responder');
+    expect(pt.notMarked).toBe('As respostas só são corrigidas quando entregar. Sem inglês nem dicas durante o exame.');
   });
 });
