@@ -145,13 +145,14 @@ pnpm workspace of three packages: `packages/data`, `apps/web` and `e2e`
     draw over the no-repeat window), `exam` (`ExamPage` owns the sub-routes:
     `/exam` starts or resumes the running exam, `/exam/results/<id>` the results and
     review), `progress` (the day bars, the topic, section and pattern lists, past
-    exams), `settings` (language, export and share, import, clear), `flagged` (the list
-    and `copyFormat.ts`, the fixed copy text) and `notfound` (the page for an address
-    that names no screen);
+    exams), `settings` (language, export and share, import, clear), `flagged` (the list,
+    `FlaggedLink`, the row to it on Progress and Settings, and `copyFormat.ts`, the fixed
+    copy text) and `notfound` (the page for an address that names no screen);
   - `components/nav/`: the tab bar and the screen header with the back control;
     `components/question/`: the question card, a controlled component with the peek
-    button and the hint panel, shared by practice and the exam; `components/ui/`: the
-    generated shadcn components;
+    button and the hint panel, shared by practice and the exam; `components/styles.ts`:
+    the shared class strings (`FOCUS_RING`, `PLATE`, `CHIP`, `ROW_LINK`);
+    `components/ui/`: the generated shadcn components;
   - `model/`: the study model, pure functions for the draw weights and the no-repeat
     window, readiness, group accuracy, the day bars, the pools and the exam draw,
     deadline and score;
@@ -174,8 +175,8 @@ pnpm workspace of three packages: `packages/data`, `apps/web` and `e2e`
   the production build served by `vite preview` under `/cacador/`, with `@cacador/data`
   for the bank, at a 390 x 844 viewport (the Campo bar is performed at a phone's width).
   `acceptance.spec.ts` performs steps 2 to 9 of the Campo acceptance bar (epic cac-8cn)
-  in order and then three steps after the bar (the closed-tab exam, the past exam and
-  Flagged, export, clear and import); `offline.spec.ts` is step 10 (Home, Practice,
+  in order and then four steps after the bar (an exam passed from the bank's key, the
+  closed-tab exam, the past exams and Flagged, export, clear and import); `offline.spec.ts` is step 10 (Home, Practice,
   Fraunces from the cache and the 15 images); `build-output.spec.ts` reads the built
   `dist` (the `404.html` copy, the waiting service worker, the `/cacador/` precache and
   URLs) and carries step 11 (exactly four woff2 and the 15 jpg precache URLs, no font

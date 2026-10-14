@@ -977,14 +977,19 @@ apps/web/
                            rows), PastExams, useDayRefresh (the read again at midnight and
                            when shown)
     settings/              SettingsPage, progressFile.ts (the download and the share sheet)
-    flagged/               FlaggedPage, copyFormat.ts (the fixed copy text, § 6.7)
+    flagged/               FlaggedPage, FlaggedLink (the row linking to Flagged at the foot
+                           of Progress and Settings), copyFormat.ts (the fixed copy text,
+                           § 6.7)
     notfound/              NotFoundPage, for any address that names no screen
-    components/nav/        the tab bar and the screen header with the back control, shared
-                           pieces every screen uses (§ 8.2)
+    components/nav/        the tab bar, on every screen but the /exam route, and the screen
+                           header with the back control, on every screen but Home (§ 8.2)
     components/question/   QuestionCard with PeekButton and HintPanel, names.ts (a name in
                            the interface language)
     components/LinkButton.tsx  a router link drawn as a button
     components/FailureLine.tsx the one line a screen uses to say something did not work
+    components/styles.ts   the shared class strings (§ 8.5): FOCUS_RING (the keyboard focus
+                           ring), PLATE (a plate's box), CHIP (the flag and language chips)
+                           and ROW_LINK (a card row that links somewhere)
     components/ui/         the 11 generated shadcn components
     model/                 the study model: draw.ts (weights, window, recent list), states.ts,
                            progress.ts (readiness, group accuracy, day bars), pools.ts,
@@ -1008,8 +1013,9 @@ e2e/
   package.json             @cacador/e2e, scripts e2e, browsers and typecheck
   playwright.config.ts     the production build under vite preview, locale en-GB
   tsconfig.json
-  look.ts                  the Campo colour values, the contrast helper, the Fraunces check
-  acceptance.spec.ts       steps 2 to 9 of the Campo acceptance bar, in order, then three
+  look.ts                  the Campo colour values, the contrast helper, the colour a text
+                           sits on, the Fraunces check
+  acceptance.spec.ts       steps 2 to 9 of the Campo acceptance bar, in order, then four
                            steps after the bar
   offline.spec.ts          step 10: Home, Practice, Fraunces and the 15 images from the
                            cache, offline
@@ -1038,12 +1044,23 @@ icon and `aria-current="page"`. It shows on every route except `/exam` itself, t
 start screen and the running exam; the results route, `/settings`, `/flagged` and the
 not-found page show it with no tab current. Every screen but Home
 opens with one screen header row: the back control to Home (a left arrow, accessible
-name "Back to Home"), then an eyebrow (the section · topic on Practice, the screen name
-elsewhere) over a muted line in Fraunces (the question number on Practice, "n of 20" on
-the exam, "N % · M unseen" on Progress), and a slot at the right (the clock on the
-exam). Home's header is the app name with the Settings control at its right. The tab
-bar and the screen header are shared pieces in `apps/web/src/components/nav/`; each
-page renders its own header, so its own data can sit in it.
+name "Back to Home"), then the caption, and a slot at the right. The caption takes one
+of two forms:
+
+- **Eyebrow**, on Practice and the exam's screens: an eyebrow (the section · topic on
+  Practice, "Exam" on the exam) over a muted line in Fraunces 16 px (the question number
+  on Practice, "n of 20" on the running exam; none on the start screen and the
+  results), with the page's h1 ("Practice", "Exam") for screen readers only. The clock
+  sits in the slot on the running exam. The results page sets its visible h1, "Exam
+  results", in Fraunces 28 px under the row.
+- **Title**, on Progress, Settings, Flagged and the not-found page: the screen's name
+  as the visible h1 in Fraunces 28 px, with no eyebrow and no line. Progress puts
+  "N % · M unseen" in the slot at the right, the percentage in Fraunces 26 px and the
+  unseen count in muted 13 px.
+
+Home's header is the app name with the Settings control at its right. The tab bar and
+the screen header are shared pieces in `apps/web/src/components/nav/`; each page
+renders its own header, so its own data can sit in it.
 
 ### 8.3 Messages
 
@@ -1131,8 +1148,9 @@ by Ross's choice (2026-10-14).
 
 **Type.** Two fonts. Fraunces, variable on the opsz and wght axes, at weight 600, for
 the app name, the screen titles, the question stem, every number that is the point of
-its screen (readiness, the clock, percentages, scores, the day counts) and the option
-letters. Source Sans 3, variable on wght, for everything else: body 16 to 17 px,
+its screen (readiness, the clock, percentages, scores) and the option letters. Progress's
+"Today: N answers, M right" is a secondary line in Source Sans, beside its plate's
+eyebrow. Source Sans 3, variable on wght, for everything else: body 16 to 17 px,
 secondary 13 to 14 px, eyebrows 12 px uppercase with 0.14em tracking at 600, the way a
 plate is captioned. Both are self-hosted from `@fontsource-variable/fraunces` and
 `@fontsource-variable/source-sans-3`, upright only, the latin and latin-ext subsets
@@ -1193,7 +1211,7 @@ Its look (§ 8.5):
   under a moss-line rule.
 
 Outside the card, Practice's flags row reads "Report:" in muted before two chips (card,
-hairline, 8 px corners, 36 px tall, flag icon), and Next is a rust button with a
+hairline, 6 px corners, 36 px tall, flag icon), and Next is a rust button with a
 chevron.
 
 ### 8.7 Data and images
@@ -1267,11 +1285,14 @@ spec files:
 - `acceptance.spec.ts` performs steps 2 to 9 of the Campo acceptance bar, in order,
   one named step each, in one fresh browser context, with the page's random draws seeded
   so every run draws the same questions: Home, the Practice tab, a wrong answer, the
-  Progress tab, the Ducks row and Home's weakest topics, the exam through its results,
-  the dark colours with their 4.5:1 contrast, and the language switch in Settings. Three
-  steps after the bar run on the same state: an exam with answers that survives a
-  closed tab with its clock running, the past exam on Progress with Flagged and its
-  copy, and export, clear and import;
+  Progress tab, the Ducks row and Home's weakest topics with the unseen count, the exam
+  through its results, the dark colours with their 4.5:1 contrast (the heading against
+  the body, the unseen count and the pass line against the plate they sit on), and the
+  language switch in Settings. Four steps after the bar run on the same state: an exam
+  answered in full from the bank's key, 16 right, which shows Passed with only the wrong
+  ones listed and is listed as Passed on Progress; an exam with answers that survives a
+  closed tab with its clock running; the past exams on Progress with Flagged and its
+  copy; and export, clear and import;
 - `offline.spec.ts` is step 10: after one online load and a reload, Home and Practice
   open offline with Fraunces available, and all 15 images answer from the cache;
 - `installable.spec.ts`: the manifest and icons served under `/cacador/`, and Chrome's
@@ -1285,8 +1306,10 @@ spec files:
   latin-ext) and the 15 jpg URLs, every URL under `/cacador/`, and no file served
   points at a font host.
 
-Step 1 of the bar, a fresh clone through install, lint, test and `pnpm e2e`, is run by
-hand, and step 12, the deploy run for the push and the live site, after the first push.
+The orchestrator performs the other two steps of the bar by hand: step 1, a fresh clone
+on Node 26 with `pnpm install`, `pnpm lint` and `pnpm test` green, and step 12, after
+the epic's merge into `main` and its push: the deploy workflow run for that push green,
+and the live site serving Home with the paper ground, the tab bar and the two fonts.
 
 ### 8.11 Agents
 
@@ -1721,3 +1744,7 @@ merge, or makes a screen judgement call.
   (not text, 3:1) (§ 8.5, § 8.6), over the artboards' rust text on clay. Reason: rust
   `#B5461C` on clay `#F3DED2` is 4.20:1, under the 4.5:1 rule, and the tokens are not
   widened to fix it (orchestrator's choice during epic cac-8cn, reversible).
+- **2026-10-14, Chips have 6 px corners.** The flag chips on Practice and the language
+  chips on Settings take the chip corner of 6 px (§ 8.5 Shape, § 8.6), over the 8 px
+  epic cac-8cn D8 gave the flags-row chips. Reason: every chip draws the same shape
+  (orchestrator's choice during epic cac-8cn, reversible).
