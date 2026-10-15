@@ -3,6 +3,7 @@ import { act, fireEvent, render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { useState } from 'react';
 import { describe, expect, it, vi } from 'vitest';
+import { DockContext } from '@/components/nav/dock';
 import { setLocale } from '@/i18n/locale';
 import { MESSAGES } from '@/i18n/messages';
 import { imageUrl } from '@/pwa/images';
@@ -289,6 +290,77 @@ describe('QuestionCard', () => {
     it('adds the nudge once revealed', () => {
       renderCard({ hintOpen: true, revealed: true, locked: true });
       expect(within(panel()!).getByText(hintFor(1)!.nudge)).toBeInTheDocument();
+    });
+
+    it('brings the panel into view as it opens, after the options (cac-2tb)', () => {
+      const scroll = vi.spyOn(Element.prototype, 'scrollIntoView');
+      const { rerender } = renderCard();
+      expect(scroll).not.toHaveBeenCalled();
+      rerender(<QuestionCard question={Q1} revealed={false} locked={false} peekEnabled hintEnabled hintOpen />);
+      expect(scroll).toHaveBeenCalledExactlyOnceWith({ block: 'nearest' });
+      expect(scroll.mock.contexts[0]).toBe(panel());
+      expect(screen.getByRole('group', { name: card.options }).nextElementSibling).toBe(panel());
+    });
+  });
+
+  describe('where Hold for English and Hint sit, never under the text a peek changes (cac-2tb)', () => {
+    const hold = () => screen.getByRole('button', { name: card.holdForEnglish });
+    const hint = () => screen.getByRole('button', { name: card.hint });
+
+    /** The card docked in a dock of its own, as the layout gives Practice. */
+    function renderDocked(props: Partial<QuestionCardProps> = {}) {
+      const dock = document.createElement('div');
+      document.body.append(dock);
+      render(
+        <DockContext value={dock}>
+          <QuestionCard question={Q1} revealed={false} locked={false} peekEnabled hintEnabled docked {...props} />
+        </DockContext>,
+      );
+      return dock;
+    }
+
+    it('opens the card with them when not docked: under the place line, over the picture and the stem', () => {
+      renderCard({ question: Q119, showPlace: true });
+      const parts = [...screen.getByRole('article').children];
+      const row = hold().parentElement!;
+      expect(row).toContainElement(hint());
+      expect(parts[0]?.tagName).toBe('HEADER');
+      expect(parts[1]).toBe(row);
+      expect(parts[2]).toContainElement(screen.getByRole('img'));
+      expect(parts[3]).toHaveTextContent(Q119.question);
+    });
+
+    it('puts them in the dock when docked, on a strip with the hairline over it, and leaves the card to the question', () => {
+      const onPeekChange = vi.fn();
+      const dock = renderDocked({ onPeekChange });
+      const article = screen.getByRole('article');
+      expect(within(dock).getByRole('button', { name: card.holdForEnglish })).toBe(hold());
+      expect(within(dock).getByRole('button', { name: card.hint })).toBe(hint());
+      expect(article).not.toContainElement(hold());
+      expect(article).not.toContainElement(hint());
+      expect(dock.firstElementChild).toHaveClass('border-t', 'border-line', 'bg-paper', 'px-5');
+      fireEvent.pointerDown(hold(), { pointerType: 'touch' });
+      expect(onPeekChange).toHaveBeenLastCalledWith(true);
+      dock.remove();
+    });
+
+    it('links the docked Hint to the panel in the card', () => {
+      const dock = renderDocked({ hintOpen: true });
+      const panel = screen.getByRole('region', { name: card.hint });
+      expect(screen.getByRole('article')).toContainElement(panel);
+      expect(hint()).toHaveAttribute('aria-controls', panel.id);
+      dock.remove();
+    });
+
+    it('puts nothing in the dock when peek and hint are off', () => {
+      const dock = renderDocked({ peekEnabled: false, hintEnabled: false });
+      expect(dock).toBeEmptyDOMElement();
+      dock.remove();
+    });
+
+    it('keeps them in the card when docked with no dock to go to', () => {
+      renderCard({ docked: true });
+      expect(screen.getByRole('article').firstElementChild).toBe(hold().parentElement);
     });
   });
 

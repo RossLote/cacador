@@ -71,7 +71,10 @@ async function expectTabBar(page: Page, names: readonly string[], current?: stri
   }
 }
 
-/** The question card on screen and the parts of it the bar talks about. */
+/**
+ * The question card on screen and the parts of it the bar talks about. Hold for English and Hint are looked up in
+ * `scope`, not the card: Practice docks them over the tab bar, outside the card; a review card holds its own (cac-2tb).
+ */
 function cardOf(scope: Page | Locator) {
   const card = scope.getByRole('article').first();
   const options = card.getByRole('group', { name: 'Options' }).getByRole('button');
@@ -80,10 +83,17 @@ function cardOf(scope: Page | Locator) {
     stem: card.locator(':scope > p[lang]'),
     options,
     option: (key: OptionKey) => options.nth(OPTION_KEYS.indexOf(key)),
-    peek: card.getByRole('button', { name: 'Hold for English', exact: true }),
-    hint: card.getByRole('button', { name: 'Hint', exact: true }),
+    peek: scope.getByRole('button', { name: 'Hold for English', exact: true }),
+    hint: scope.getByRole('button', { name: 'Hint', exact: true }),
     hintPanel: card.getByRole('region', { name: 'Hint' }),
   };
+}
+
+/** Where a locator is drawn; it must be. */
+async function boxOf(locator: Locator) {
+  const box = await locator.boundingBox();
+  if (box === null) throw new Error(`not drawn: ${locator.toString()}`);
+  return box;
 }
 
 /** The id in Practice's screen header, "Question <id>", once a question is on screen. */
@@ -180,7 +190,7 @@ test('acceptance bar steps 2 to 9, in order, in one browser context', async ({ c
     await expect(homeHeading(page).locator('xpath=..').getByRole('link', { name: 'Settings', exact: true })).toBeVisible();
   });
 
-  await test.step('step 3: the Practice tab: the header shows the back control, the section · topic eyebrow and "Question N"; holding "Hold for English" turns the stem English and the button ink; releasing brings the Portuguese back; Hint opens the moss panel with "Language notes" and no "Nudge"', async () => {
+  await test.step('step 3: the Practice tab: the header shows the back control, the section · topic eyebrow and "Question N"; Hold for English and Hint sit in the dock directly over the tab bar, outside the card; holding "Hold for English" turns the stem English and the button ink and the button does not move; releasing brings the Portuguese back; Hint opens the moss panel with "Language notes" and no "Nudge" after the options, in view over the dock', async () => {
     await tab(page, 'Practice').click();
     await expect(page.getByRole('heading', { level: 1 })).toHaveText('Practice');
     const header = screenHeader(page);
@@ -196,12 +206,28 @@ test('acceptance bar steps 2 to 9, in order, in one browser context', async ({ c
     await expect(stem).toHaveText(question.question);
     await expect(stem).toHaveAttribute('lang', 'pt-PT');
 
+    // Docked (cac-2tb): outside the card, on the paper strip sitting on the tab bar at the foot of the viewport.
+    await expect(card.getByRole('button', { name: 'Hold for English', exact: true })).toHaveCount(0);
+    await expect(card.getByRole('button', { name: 'Hint', exact: true })).toHaveCount(0);
+    const strip = peek.locator('xpath=../..');
+    await expect(strip).toHaveCSS('background-color', LIGHT.paper);
+    const stripBox = await boxOf(strip);
+    const barBox = await boxOf(tabBar(page));
+    expect(Math.abs(stripBox.y + stripBox.height - barBox.y), 'the strip sits on the tab bar').toBeLessThanOrEqual(0.5);
+    const foot = page.viewportSize()?.height ?? 0;
+    expect(Math.abs(barBox.y + barBox.height - foot), 'the tab bar sits at the foot of the viewport').toBeLessThanOrEqual(0.5);
+    const held = await boxOf(peek);
+    expect((await boxOf(hint)).y).toBe(held.y);
+
     await peek.hover();
     await page.mouse.down();
     await expect(stem).toHaveAttribute('lang', 'en');
     await expect(stem).toHaveText(english?.question ?? '');
     await expect(options.first()).toContainText(english?.options.A ?? '');
     await expect(peek).toHaveCSS('background-color', LIGHT.ink);
+    // The English reflows the card; the button stays under the thumb (a pressed button sinks 1 px).
+    expect(Math.abs((await boxOf(peek)).y - held.y), 'the button stays under the thumb').toBeLessThanOrEqual(1);
+    expect((await boxOf(strip)).y, 'the dock stays put').toBe(stripBox.y);
     await page.mouse.up();
     await expect(stem).toHaveAttribute('lang', 'pt-PT');
     await expect(stem).toHaveText(question.question);
@@ -210,6 +236,9 @@ test('acceptance bar steps 2 to 9, in order, in one browser context', async ({ c
 
     await hint.click();
     await expect(hintPanel).toHaveCSS('background-color', LIGHT.moss);
+    await expect(options.last().locator('xpath=../following-sibling::*[1]')).toHaveAttribute('aria-label', 'Hint');
+    const panelBox = await boxOf(hintPanel);
+    expect(panelBox.y + panelBox.height, 'the panel is brought into view over the dock').toBeLessThanOrEqual(stripBox.y + 0.5);
     await expect(hintPanel.getByRole('heading', { name: 'Language notes' })).toBeVisible();
     const notes = hintFor(id)?.language ?? [];
     if (notes.length === 0) await expect(hintPanel.getByText('No language notes for this question.')).toBeVisible();
@@ -424,9 +453,21 @@ test('acceptance bar steps 2 to 9, in order, in one browser context', async ({ c
       await expect(item.locator('[data-mark]')).toHaveCount(1);
       await expect(cardOf(item).option(question.answer)).toHaveAttribute('data-mark', 'correct');
     }
-    await expect(cardOf(answeredItem).hint).toBeVisible();
-    await cardOf(answeredItem).hint.click();
-    await expect(cardOf(answeredItem).hintPanel).toBeVisible();
+    // A review card keeps its own Hold for English and Hint, at its top over the stem, so a peek moves neither (cac-2tb).
+    const review = cardOf(answeredItem);
+    await expect(review.card.getByRole('button', { name: 'Hold for English', exact: true })).toBeVisible();
+    await review.peek.scrollIntoViewIfNeeded();
+    const reviewHeld = await boxOf(review.peek);
+    expect((await boxOf(review.stem)).y, 'the stem is under the row').toBeGreaterThan(reviewHeld.y);
+    await review.peek.hover();
+    await page.mouse.down();
+    await expect(review.stem).toHaveAttribute('lang', 'en');
+    expect(Math.abs((await boxOf(review.peek)).y - reviewHeld.y), 'the button stays under the thumb').toBeLessThanOrEqual(1);
+    await page.mouse.up();
+    await expect(review.stem).toHaveAttribute('lang', 'pt-PT');
+    await expect(review.hint).toBeVisible();
+    await review.hint.click();
+    await expect(review.hintPanel).toBeVisible();
 
     await expectTabBar(page, TABS);
   });
@@ -490,8 +531,9 @@ test('acceptance bar steps 2 to 9, in order, in one browser context', async ({ c
     await expect(screenHeader(page).getByText(`${sectionOf(question)?.pt} · ${topicOf(question)?.pt}`, { exact: true })).toBeVisible();
     const card = page.getByRole('article');
     await expect(card.getByRole('group', { name: 'Opções' }).getByRole('button')).toHaveCount(3);
-    await expect(card.getByRole('button', { name: 'Manter premido para ver em inglês' })).toBeVisible();
-    await expect(card.getByRole('button', { name: 'Dica', exact: true })).toBeVisible();
+    // Docked over the tab bar, outside the card (cac-2tb).
+    await expect(page.getByRole('button', { name: 'Manter premido para ver em inglês' })).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Dica', exact: true })).toBeVisible();
 
     await page.getByRole('link', { name: 'Voltar ao início' }).click();
     await page.getByRole('link', { name: 'Definições', exact: true }).click();

@@ -620,11 +620,14 @@ start of its screen header (§ 8.2).
 - **Peek**: press and hold a button to see the English question and options; release
   and the Portuguese returns. It is never a toggle, on any input, and cannot be left on.
   A press on the button never takes the focus from where it was, so Enter still
-  advances afterwards.
+  advances afterwards. The button and Hint are pinned in the dock directly over the tab
+  bar (§ 8.2), so the English reflowing the question never moves the button from under
+  a held thumb.
 - **Hint**: a Hint button opens a panel with the `language` notes, or a line saying
   there are none when the list is empty, before or after answering. The panel opens
   only when tapped. After answering it adds the `nudge`, so a panel open at the moment
-  of answering stays open and gains the nudge. Once open it stays open for the rest of
+  of answering stays open and gains the nudge. The panel sits after the options and is
+  brought into view above the dock as it opens. Once open it stays open for the rest of
   that question and closes on Next, so every question starts with the panel closed.
   The nudge is never shown before answering.
 - **Answering**: tap an option. At once the chosen option is marked right or wrong, the
@@ -683,7 +686,7 @@ start of its screen header (§ 8.2).
   (15 or more) or Not passed,
   and the wrong ones, unanswered included, each on the question card revealed: the
   chosen option and the correct one marked (only the correct one for an unanswered
-  question), with Hint and peek available and no flags row.
+  question), with Hint and peek available at the top of each card and no flags row.
 
 ### 6.6 Progress
 
@@ -981,8 +984,10 @@ apps/web/
                            of Progress and Settings), copyFormat.ts (the fixed copy text,
                            § 6.7)
     notfound/              NotFoundPage, for any address that names no screen
-    components/nav/        the tab bar, on every screen but the /exam route, and the screen
-                           header with the back control, on every screen but Home (§ 8.2)
+    components/nav/        the tab bar, on every screen but the /exam route, the screen
+                           header with the back control, on every screen but Home, and
+                           dock.ts (the dock over the tab bar and the footer's scroll
+                           padding, § 8.2)
     components/question/   QuestionCard with PeekButton and HintPanel, names.ts (a name in
                            the interface language)
     components/LinkButton.tsx  a router link drawn as a button
@@ -1042,7 +1047,12 @@ The menu is the tab bar along the bottom (§ 6.3): Home, Practice, Exam and Prog
 the labels the navigation words of `common`, the current tab in forest with a filled
 icon and `aria-current="page"`. It shows on every route except `/exam` itself, the
 start screen and the running exam; the results route, `/settings`, `/flagged` and the
-not-found page show it with no tab current. Every screen but Home
+not-found page show it with no tab current. The bar sits in the layout's footer, sticky
+at the foot of the viewport at the end of the column, so it takes its own room under
+the content: first the dock, a slot a screen portals into for the controls that must
+not move (Practice's Hold for English and Hint, § 8.6), empty elsewhere, then the tab
+bar. The root's bottom scroll padding follows the footer's height, so a scroll into view
+stops above it. Every screen but Home
 opens with one screen header row: the back control to Home (a left arrow, accessible
 name "Back to Home"), then the caption, and a slot at the right. The caption takes one
 of two forms:
@@ -1202,10 +1212,15 @@ Its look (§ 8.5):
   question carries "Not answered" above it and only its correct row marked.
 - **Unrevealed**: an untouched row is the plain row; the exam's chosen row is filled ink
   with card-coloured text and a card-outlined letter.
-- **Peek and Hint** sit in one row under the options: "Hold for English" (three fifths,
-  card with an ink hairline, languages icon, inverted to ink with card text while held)
-  and "Hint" (two fifths, card, hairline, lightbulb icon).
-- **The hint panel** is a moss-tint block with no border and 10 px corners: the eyebrows
+- **Peek and Hint** sit in one row, "Hold for English" (three fifths, card with an ink
+  hairline, languages icon, inverted to ink with card text while held) and "Hint" (two
+  fifths, card, hairline, lightbulb icon), never under the text a peek changes. In
+  Practice the card docks them: the row sits in the layout's dock on a paper strip under
+  a hairline, at the 20 px gutter, directly over the tab bar (§ 8.2). In the exam review
+  each card opens with its own row, under the place line and over the picture and the
+  stem.
+- **The hint panel** follows the options and is scrolled into view as it opens. It is a
+  moss-tint block with no border and 10 px corners: the eyebrows
   "Language notes" and "Nudge" in forest, each note's Portuguese phrase in Fraunces 600,
   a middle dot and its English in the eyebrow colour, then the note; the nudge sits
   under a moss-line rule.
@@ -1748,3 +1763,12 @@ merge, or makes a screen judgement call.
   chips on Settings take the chip corner of 6 px (§ 8.5 Shape, § 8.6), over the 8 px
   epic cac-8cn D8 gave the flags-row chips. Reason: every chip draws the same shape
   (orchestrator's choice during epic cac-8cn, reversible).
+- **2026-10-15, Hold for English and Hint never sit under the text a peek changes.**
+  In Practice they are pinned in a dock directly over the tab bar; the layout's footer,
+  the dock over the tab bar, is sticky at the foot of the viewport; the hint panel stays
+  after the options and is scrolled into view above the dock as it opens; the dock counts
+  as the page for the laptop keys. The exam review lists many cards, so one pinned pair
+  could not say which card it peeks: each review card opens with its own row instead,
+  over the stem (§ 6.4, § 8.2, § 8.6). Replaces the row under the options. Reason:
+  Ross, 2026-10-15: the English and the Portuguese take different room, so the button
+  jumped from under the thumb mid-hold and the peek ended (bead cac-2tb).

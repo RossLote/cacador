@@ -148,7 +148,8 @@ pnpm workspace of three packages: `packages/data`, `apps/web` and `e2e`
     exams), `settings` (language, export and share, import, clear), `flagged` (the list,
     `FlaggedLink`, the row to it on Progress and Settings, and `copyFormat.ts`, the fixed
     copy text) and `notfound` (the page for an address that names no screen);
-  - `components/nav/`: the tab bar and the screen header with the back control;
+  - `components/nav/`: the tab bar, the screen header with the back control, and
+    `dock.ts`, the dock over the tab bar where Practice pins Hold for English and Hint;
     `components/question/`: the question card, a controlled component with the peek
     button and the hint panel, shared by practice and the exam; `components/styles.ts`:
     the shared class strings (`FOCUS_RING`, `PLATE`, `CHIP`, `ROW_LINK`);

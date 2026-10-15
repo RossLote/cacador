@@ -17,6 +17,8 @@ interface PracticeKeys {
   onPeekChange: (peeking: boolean) => void;
   /** The practice page's own region: keys from a control outside it (the layout's back link) are left alone. */
   region: RefObject<HTMLElement | null>;
+  /** The layout's dock, which holds the page's hold button and Hint (cac-2tb): part of the page for its keys. */
+  dock: HTMLElement | null;
 }
 
 /** Marks a region whose controls keep their own keys (the flags row): Enter and Space reach its buttons. */
@@ -47,18 +49,19 @@ function isControl(target: EventTarget | null): boolean {
  * 1, 2, 3 answer while unanswered; Enter advances once answered; Space peeks
  * from keydown to keyup (repeats ignored, never a toggle, the page does not
  * scroll). Losing the window or the tab also ends a peek, so the English is
- * never left on. The keys act from the page itself (focus on the body or
- * inside `region`), never from the layout's back link; Enter on a focused
- * button or link activates that control instead, so Hint stays reachable
- * after answering and Enter on Next advances once.
+ * never left on. The keys act from the page itself (focus on the body, inside
+ * `region` or inside the dock), never from the back link or the tab bar;
+ * Enter on a focused button or link activates that control instead, so Hint
+ * stays reachable after answering and Enter on Next advances once.
  */
-export function usePracticeKeys({ answered, onAnswer, onNext, onPeekChange, region }: PracticeKeys): void {
+export function usePracticeKeys({ answered, onAnswer, onNext, onPeekChange, region, dock }: PracticeKeys): void {
   useEffect(() => {
     const onPage = (target: EventTarget | null): boolean =>
       !(target instanceof Node) ||
       target === document.body ||
       target === document.documentElement ||
-      region.current?.contains(target) === true;
+      region.current?.contains(target) === true ||
+      dock?.contains(target) === true;
     const keydown = (event: KeyboardEvent) => {
       if (event.ctrlKey || event.metaKey || event.altKey || isTextEntry(event.target) || !onPage(event.target)) return;
       if (event.key === ' ') {
@@ -97,5 +100,5 @@ export function usePracticeKeys({ answered, onAnswer, onNext, onPeekChange, regi
       window.removeEventListener('blur', stopPeek);
       document.removeEventListener('visibilitychange', hidden);
     };
-  }, [answered, onAnswer, onNext, onPeekChange, region]);
+  }, [answered, onAnswer, onNext, onPeekChange, region, dock]);
 }

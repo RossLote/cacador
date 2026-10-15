@@ -224,7 +224,25 @@ describe('the shell (DESIGN.md § 6.3, § 8.2, epic cac-8cn D5, D6)', () => {
   it('pads the bar and the column by fixed amounts, with no safe-area term the viewport never sets', () => {
     renderAt('/');
     expect(tabBar(en)).toHaveClass('py-2.5');
-    expect(screen.getByRole('main')).toHaveClass('pb-26');
+    expect(screen.getByRole('main')).toHaveClass('pb-8');
+  });
+
+  /** The footer: after main, sticky to the bottom of the viewport, the dock over the tab bar (cac-2tb). */
+  const footer = () => screen.getByRole('main').nextElementSibling as HTMLElement;
+  const dock = () => footer().firstElementChild as HTMLElement;
+
+  it('pins the footer under main: the dock, empty on Home, over the tab bar', () => {
+    renderAt('/');
+    expect(footer()).toHaveClass('sticky', 'bottom-0');
+    expect(footer().children).toHaveLength(2);
+    expect(footer().lastElementChild).toBe(tabBar(en));
+    expect(dock()).toBeEmptyDOMElement();
+  });
+
+  it('keeps the footer on /exam with an empty dock and no tab bar', () => {
+    renderAt('/exam');
+    expect(footer().children).toHaveLength(1);
+    expect(dock()).toBeEmptyDOMElement();
   });
 
   /** Option `index` (0 is A) of the question on screen, once one is. */
@@ -239,6 +257,39 @@ describe('the shell (DESIGN.md § 6.3, § 8.2, epic cac-8cn D5, D6)', () => {
     expect(document.activeElement).toBe(document.body);
     expect(await option(0)).toHaveAttribute('aria-pressed', 'false');
     await user.keyboard('1');
+    expect(await option(0)).toHaveAttribute('aria-pressed', 'true');
+  });
+
+  it('pins Hold for English and Hint in the dock over the tab bar on Practice, outside main (cac-2tb)', async () => {
+    const user = userEvent.setup();
+    renderAt('/practice');
+    await option(0);
+    const card = en.practice.card;
+    const hold = within(dock()).getByRole('button', { name: card.holdForEnglish });
+    const hint = within(dock()).getByRole('button', { name: card.hint });
+    expect(screen.getByRole('main')).not.toContainElement(hold);
+    expect(screen.getByRole('main')).not.toContainElement(hint);
+    const stem = screen.getByRole('article').querySelector(':scope > p[lang]') as HTMLElement;
+    expect(stem).toHaveAttribute('lang', 'pt-PT');
+    await user.pointer({ keys: '[TouchA>]', target: hold });
+    expect(stem).toHaveAttribute('lang', 'en');
+    await user.pointer({ keys: '[/TouchA]', target: hold });
+    expect(stem).toHaveAttribute('lang', 'pt-PT');
+    await user.click(hint);
+    expect(within(screen.getByRole('main')).getByRole('region', { name: card.hint })).toBeInTheDocument();
+  });
+
+  it('keeps the laptop keys on Practice after the docked Hint is tapped: the dock is part of the page', async () => {
+    const user = userEvent.setup();
+    renderAt('/practice');
+    await option(0);
+    const hint = within(dock()).getByRole('button', { name: en.practice.card.hint });
+    await user.click(hint);
+    expect(hint).toHaveFocus();
+    await user.keyboard('[Space>]');
+    expect(screen.getByRole('article').querySelector(':scope > p[lang]')).toHaveAttribute('lang', 'en');
+    await user.keyboard('[/Space]');
+    await user.keyboard('a');
     expect(await option(0)).toHaveAttribute('aria-pressed', 'true');
   });
 

@@ -2,6 +2,7 @@ import { questionById, type OptionKey, type Question } from '@cacador/data';
 import { ChevronRight } from 'lucide-react';
 import { useCallback, useEffect, useRef, useState, type ReactNode } from 'react';
 import { FailureLine } from '@/components/FailureLine';
+import { useDock } from '@/components/nav/dock';
 import { QuestionCard } from '@/components/question/QuestionCard';
 import { Button } from '@/components/ui/button';
 import { useI18n } from '@/i18n/useI18n';
@@ -27,7 +28,9 @@ function staysCurrent(generation: { readonly current: number }): () => boolean {
  * pool outside the recent window; tapping an option (or A, B, C, 1, 2, 3)
  * records it and reveals the result at once; Next (or Enter) draws the next.
  * The hint panel opens only when asked and closes on Next (D23); the peek is
- * shared by the card's hold button and Space (D9). Once answered, the flags
+ * shared by the card's hold button and Space (D9). The hold button and Hint
+ * sit in the layout's dock above the tab bar, so a peek that reflows the
+ * question never moves them (cac-2tb). Once answered, the flags
  * row (D2) shows under the result. `pool` is the ids to draw from
  * (usePracticePool); a new array starts a new draw, and a draw under way for
  * the old pool, or for a page that has gone, draws nothing. An answer that
@@ -138,7 +141,8 @@ export function PracticeSession({
       });
   }, [drawNext, show]);
 
-  usePracticeKeys({ answered, onAnswer: answer, onNext: next, onPeekChange: setPeeking, region: top });
+  const dock = useDock();
+  usePracticeKeys({ answered, onAnswer: answer, onNext: next, onPeekChange: setPeeking, region: top, dock });
 
   if (failed || question === undefined) {
     return (
@@ -167,6 +171,7 @@ export function PracticeSession({
           hintEnabled
           hintOpen={hintOpen}
           onHintOpen={() => setHintOpen(true)}
+          docked
         />
         {answerNotSaved && <FailureLine>{t.practice.answerNotSaved}</FailureLine>}
         {answered && (

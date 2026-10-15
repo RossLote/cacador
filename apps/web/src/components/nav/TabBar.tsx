@@ -5,8 +5,9 @@ import { cn } from '@/lib/utils';
 import { currentTab, TABS } from './tabs';
 
 /**
- * The menu (DESIGN.md § 6.3, D5): four tabs fixed to the bottom of the
- * viewport inside the app's column. Each link is named by its navigation word
+ * The menu (DESIGN.md § 6.3, D5): four tabs along the bottom of the
+ * viewport inside the app's column, where the layout's footer pins them,
+ * under the dock. Each link is named by its navigation word
  * alone (the icon is hidden). The current tab is forest with its label bold
  * and its icon filled with the moss tint, at the one icon stroke of 1.75
  * (DESIGN.md § 8.5), and carries aria-current="page"; on a screen that is not
@@ -20,7 +21,7 @@ export function TabBar() {
   return (
     <nav
       aria-label={t.common.mainNav}
-      className="fixed inset-x-0 bottom-0 z-10 mx-auto grid w-full max-w-2xl grid-cols-4 gap-1 border-t border-line bg-card px-2 py-2.5"
+      className="grid grid-cols-4 gap-1 border-t border-line bg-card px-2 py-2.5"
     >
       {TABS.map((tab) => {
         const active = tab === current;

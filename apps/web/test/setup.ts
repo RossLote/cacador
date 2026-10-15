@@ -15,6 +15,9 @@ import { closeStorage } from '@/storage';
  */
 const hasDom = typeof window !== 'undefined';
 
+// jsdom lays nothing out and has no scrollIntoView, which the question card calls when its hint panel opens.
+if (hasDom) Element.prototype.scrollIntoView = () => undefined;
+
 // The locale store reads localStorage as it loads, so it is loaded only where there is a DOM.
 const locale = hasDom ? await import('@/i18n/locale') : undefined;
 

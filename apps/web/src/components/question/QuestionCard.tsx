@@ -1,6 +1,8 @@
 import { hintFor, translationFor, type OptionKey, type Question } from '@cacador/data';
 import { Check, Lightbulb, X } from 'lucide-react';
-import { useId } from 'react';
+import { useEffect, useId, useRef } from 'react';
+import { createPortal } from 'react-dom';
+import { useDock } from '@/components/nav/dock';
 import { Button } from '@/components/ui/button';
 import { useI18n } from '@/i18n/useI18n';
 import { cn } from '@/lib/utils';
@@ -15,9 +17,14 @@ import { PeekButton } from './PeekButton';
  * the page decides every state and the card only draws it. It records
  * nothing and handles no keys (D9).
  *
- * - Practice: `revealed` and `locked` once an option is tapped, peek and hint on.
+ * - Practice: `revealed` and `locked` once an option is tapped, peek and hint on, docked.
  * - Running exam: `selected` shown, `revealed` and `locked` false, peek and hint off.
  * - Exam review: `revealed` and `locked`, peek and hint on.
+ *
+ * Hold for English and Hint never sit below the text a peek changes, which
+ * would move them from under a held thumb (cac-2tb): docked, they are pinned
+ * in the layout's dock above the tab bar; otherwise they open the card, under
+ * the place line and above the picture and the stem.
  */
 export interface QuestionCardProps {
   question: Question;
@@ -47,6 +54,12 @@ export interface QuestionCardProps {
    * their screen header instead (D6).
    */
   showPlace?: boolean;
+  /**
+   * Put Hold for English and Hint in the layout's dock, pinned above the tab
+   * bar (Practice, where one card fills the screen). Outside the layout they
+   * open the card as they do when not docked.
+   */
+  docked?: boolean;
 }
 
 type Mark = 'right' | 'wrong' | 'correct';
@@ -125,15 +138,50 @@ export function QuestionCard({
   hintOpen = false,
   onHintOpen,
   showPlace = false,
+  docked = false,
 }: QuestionCardProps) {
   const { t, locale } = useI18n();
   const card = t.practice.card;
   const panelId = useId();
+  const panel = useRef<HTMLElement>(null);
+  const dock = useDock();
   const translation = translationFor(question.id);
   const english = peekEnabled && peeking && translation !== undefined ? translation : undefined;
   const shown = english ?? question;
   const textLang = english ? 'en' : 'pt-PT';
   const picture = question.image === undefined ? undefined : imageUrl(question.image);
+
+  // The panel opens after the options, which may be below the fold or behind the dock: bring it into view.
+  useEffect(() => {
+    if (hintOpen) panel.current?.scrollIntoView({ block: 'nearest' });
+  }, [hintOpen]);
+
+  const controls = (peekEnabled || hintEnabled) && (
+    <div className={cn('grid gap-2.5', peekEnabled && hintEnabled && 'grid-cols-[minmax(0,3fr)_minmax(0,2fr)]')}>
+      {peekEnabled && (
+        <PeekButton label={card.holdForEnglish} peeking={peeking} onPeekChange={(next) => onPeekChange?.(next)} />
+      )}
+      {hintEnabled && (
+        <Button
+          type="button"
+          variant="outline"
+          size="lg"
+          className="h-auto min-h-12 w-full gap-2 px-3 py-3 whitespace-normal aria-expanded:bg-card"
+          aria-expanded={hintOpen}
+          aria-controls={hintOpen ? panelId : undefined}
+          onClick={() => onHintOpen?.()}
+        >
+          <Lightbulb aria-hidden="true" />
+          {card.hint}
+        </Button>
+      )}
+    </div>
+  );
+  // Docked, the row is a strip in the dock: the paper ground under a hairline, at the column's gutter, over the tab bar.
+  const inDock =
+    docked && dock !== null && controls
+      ? createPortal(<div className="border-t border-line bg-paper px-5 py-2.5">{controls}</div>, dock)
+      : undefined;
 
   return (
     <article className="flex flex-col gap-3.5">
@@ -143,6 +191,8 @@ export function QuestionCard({
           <p className="font-heading text-base text-muted-foreground">{card.questionNumber(question.id)}</p>
         </header>
       )}
+
+      {inDock ?? controls}
 
       {picture && (
         // The plate: whole and centred, never cropped, the plate at most 240 px tall (8 px padding and the hairline included).
@@ -197,29 +247,7 @@ export function QuestionCard({
         })}
       </div>
 
-      {(peekEnabled || hintEnabled) && (
-        <div className={cn('grid gap-2.5', peekEnabled && hintEnabled && 'grid-cols-[minmax(0,3fr)_minmax(0,2fr)]')}>
-          {peekEnabled && (
-            <PeekButton label={card.holdForEnglish} peeking={peeking} onPeekChange={(next) => onPeekChange?.(next)} />
-          )}
-          {hintEnabled && (
-            <Button
-              type="button"
-              variant="outline"
-              size="lg"
-              className="h-auto min-h-12 w-full gap-2 px-3 py-3 whitespace-normal aria-expanded:bg-card"
-              aria-expanded={hintOpen}
-              aria-controls={hintOpen ? panelId : undefined}
-              onClick={() => onHintOpen?.()}
-            >
-              <Lightbulb aria-hidden="true" />
-              {card.hint}
-            </Button>
-          )}
-        </div>
-      )}
-
-      {hintEnabled && hintOpen && <HintPanel id={panelId} hint={hintFor(question.id)} showNudge={revealed} />}
+      {hintEnabled && hintOpen && <HintPanel ref={panel} id={panelId} hint={hintFor(question.id)} showNudge={revealed} />}
     </article>
   );
 }
