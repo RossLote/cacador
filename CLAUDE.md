@@ -163,9 +163,11 @@ pnpm workspace of three packages: `packages/data`, `apps/web` and `e2e`
     the two browser key names (`keys.ts`), the exam finish (`finish.ts`), the import
     merge (`merge.ts`), the export file (`exportFile.ts`) and the no-repeat window in
     sessionStorage, kept in memory when that is blocked (`recent.ts`);
-  - `pwa/`: the image map that puts the 15 pictures in `dist` and the precache, and
+  - `pwa/`: the image map that puts the 15 pictures in `dist` and the precache,
     `registerServiceWorker.ts`, which registers vite-plugin-pwa's service worker by
-    hand;
+    hand, asks for an update when the app returns to the foreground and notes when a
+    new worker takes over, and `ReloadOnUpdate.tsx`, which then reloads the page at the
+    next change of screen;
   - `i18n/`: the language store (`locale.ts`, `useI18n.ts`) and `messages/en/` and
     `messages/pt/`, one file per screen plus `common`;
   - `lib/utils.ts`: the `cn` helper the shadcn components use.
@@ -179,9 +181,10 @@ pnpm workspace of three packages: `packages/data`, `apps/web` and `e2e`
   in order and then four steps after the bar (an exam passed from the bank's key, the
   closed-tab exam, the past exams and Flagged, export, clear and import); `offline.spec.ts` is step 10 (Home, Practice,
   Fraunces from the cache and the 15 images); `build-output.spec.ts` reads the built
-  `dist` (the `404.html` copy, the waiting service worker, the `/cacador/` precache and
-  URLs) and carries step 11 (exactly four woff2 and the 15 jpg precache URLs, no font
-  host); `e2e/look.ts` holds the Campo colour values, the contrast helper and the
+  `dist` (the `404.html` copy, the worker that skips waiting, the `/cacador/` precache
+  and URLs) and carries step 11 (exactly four woff2 and the 15 jpg precache URLs, no font
+  host); `update.spec.ts` rewrites `dist/sw.js` under an open page and checks the update
+  arrives at the next change of screen, never on the screen in use; `e2e/look.ts` holds the Campo colour values, the contrast helper and the
   Fraunces check; `installable.spec.ts` runs Chrome's installability check.
   `pnpm e2e:browsers` installs the browser.
   `DESIGN.md` § 8.10.

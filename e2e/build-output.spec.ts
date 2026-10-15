@@ -15,10 +15,6 @@ function distFiles(): string[] {
 }
 const isWorkbox = (file: string) => /^workbox-[\w-]+\.js$/.test(file);
 
-// The one listener generateSW always writes: it calls skipWaiting only when a page posts SKIP_WAITING.
-const skipWaitingListener =
-  /self\.addEventListener\("message",(\w+)=>\{\1\.data&&"SKIP_WAITING"===\1\.data\.type&&self\.skipWaiting\(\)\}\)/g;
-
 function precacheUrls(): string[] {
   const list = /\.precacheAndRoute\((\[[^\]]*\])/.exec(read('sw.js'))?.[1];
   expect(list, 'the precacheAndRoute list in sw.js').toBeDefined();
@@ -32,23 +28,12 @@ test('D1: 404.html is byte-identical to index.html, so GitHub Pages boots the ap
   expect(notFound.equals(index), '404.html differs from index.html').toBe(true);
 });
 
-test('D12: a new service worker waits; nothing claims clients, skips waiting unasked or asks it to', () => {
-  const files = distFiles();
-  const workboxFiles = files.filter(isWorkbox);
-  expect(workboxFiles).toHaveLength(1);
+// cac-eno, amending D12: a new worker takes over as soon as it has installed, so a deploy never waits on every window of
+// the installed app closing; with skipWaiting on, generateSW writes no SKIP_WAITING listener for a page to call.
+test('D12: a new service worker skips waiting and claims the open pages unasked', () => {
   const sw = read('sw.js');
-  for (const [file, text] of [
-    ['sw.js', sw.replace(skipWaitingListener, '')],
-    [workboxFiles[0]!, read(workboxFiles[0]!)],
-  ] as const) {
-    expect(text.match(/.{0,40}(?:clientsClaim|skipWaiting).{0,40}/g), file).toBeNull();
-  }
-  expect(sw.match(skipWaitingListener)?.length, 'the SKIP_WAITING message listener').toBe(1);
-
-  // The app's own JS never posts SKIP_WAITING, so the waiting worker takes over only on the next cold open.
-  const appScripts = files.filter((file) => /^assets\/.+\.js$/.test(file));
-  expect(appScripts.length).toBeGreaterThan(0);
-  for (const file of appScripts) expect(read(file).match(/.{0,60}SKIP_WAITING.{0,20}/g), file).toBeNull();
+  expect(sw.match(/.{0,40}self\.skipWaiting\(\),\w+\.clientsClaim\(\).{0,40}/g), 'sw.js').toHaveLength(1);
+  expect(sw.match(/.{0,60}SKIP_WAITING.{0,20}/g), 'sw.js').toBeNull();
 });
 
 test('D12: the precache holds every built file, the manifest and index.html among them, all under /cacador/', () => {

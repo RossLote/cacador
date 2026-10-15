@@ -1005,7 +1005,8 @@ apps/web/
                            finish.ts (the exam finish), merge.ts (the import merge),
                            exportFile.ts, keys.ts, types.ts, recent.ts (the no-repeat
                            window in sessionStorage, kept in memory when that is blocked)
-    pwa/                   images.ts (the image map), registerServiceWorker.ts
+    pwa/                   images.ts (the image map), registerServiceWorker.ts,
+                           ReloadOnUpdate.tsx (the reload at the next change of screen)
     i18n/                  locales.ts, locale.ts (the store), useI18n.ts, messages/en/ and pt/
     lib/                   utils.ts (the cn helper the shadcn components use), useLoaded.ts
                            (a screen's read of storage), isOneOf.ts (the closed-set type
@@ -1025,8 +1026,11 @@ e2e/
   offline.spec.ts          step 10: Home, Practice, Fraunces and the 15 images from the
                            cache, offline
   installable.spec.ts      the manifest and icons under /cacador/, Chrome's installability check
-  build-output.spec.ts     the built dist: the 404.html copy, the waiting worker, the
-                           /cacador/ precache and URLs, and step 11 (four woff2, 15 jpg)
+  build-output.spec.ts     the built dist: the 404.html copy, the worker that skips
+                           waiting, the /cacador/ precache and URLs, and step 11 (four
+                           woff2, 15 jpg)
+  update.spec.ts           a deploy under an open page reaches it at the next change of
+                           screen, never on the screen in use
 ```
 
 The study model holds the formulas of § 6.2 and the exam draw, deadline and score, as
@@ -1243,19 +1247,27 @@ do; nothing copies them into `public/`.
 
 vite-plugin-pwa 2.0.0 in `generateSW` mode precaches everything in `dist`, the jpg
 assets, the four font files (§ 8.5) and the manifest included, with scope `/cacador/`.
-A new service worker installs in the background and waits; it takes over on the next
-cold open of the app, never reloading a screen in use and never showing a prompt, so
-there is no `skipWaiting`, no `clientsClaim` and no update prompt (the plugin's
-`registerType: 'prompt'` is the mode that leaves both off; no prompt is built on it).
+A new service worker installs in the background and takes over the open pages as soon
+as it has installed (`skipWaiting` and `clientsClaim`, set in the workbox options because
+the plugin's `registerType: 'autoUpdate'` sets them only when it injects the
+registration). The page then reloads itself at the learner's next change of screen (a
+tab, a card, the back control: a change of the router's pathname), never on the screen
+in use, and no prompt is shown. The first worker claiming a page that loaded without one
+is not an update and reloads nothing. The browser checks for a new worker when the app
+is opened; the page also asks for one each time the app comes back to the foreground,
+because an installed app resumed from the background loads nothing.
 
 The worker is registered by hand: `main.tsx` calls `registerServiceWorker()` from
 `apps/web/src/pwa/registerServiceWorker.ts`, which, in a production build and in a
 browser with service workers, calls `navigator.serviceWorker.register` for `sw.js`
 under the base with scope `/cacador/` after the page's `load` event, so the first
-visit's precache downloads do not compete with the page's own requests. It listens for
-no update and never reloads. The plugin injects no registration (`injectRegister:
-false`), and neither workbox-window nor `virtual:pwa-register` is used, because both
-carry an update-and-reload path that the silent update rules out. The manifest: id,
+visit's precache downloads do not compete with the page's own requests. It notes when a
+worker takes over a page another worker controlled, and calls the registration's
+`update()` on each `visibilitychange` to visible (a failure offline is ignored);
+`ReloadOnUpdate`, mounted beside the routes in `main.tsx`, reloads the page on the next
+pathname change once that has happened. The plugin injects no registration
+(`injectRegister: false`), and neither workbox-window nor `virtual:pwa-register` is
+used: the update path is these few lines. The manifest: id,
 `start_url` and scope `/cacador/`, name and short_name Caçador, display standalone,
 lang en, background and theme colour `#14301f`. The icons are rendered from one
 committed SVG, a flat mark of the letter Ç in off-white `#f2efe6` on dark green
@@ -1294,7 +1306,7 @@ before the first run and again after each Playwright bump. The `e2e` script stay
 `@cacador/data`. The viewport is 390 x 844 in `playwright.config.ts`, because epic
 cac-8cn's Campo acceptance bar is performed at a phone's width. `look.ts` holds the
 Campo colour values the colour checks read (light and dark, § 8.5), the WCAG contrast
-helper and the check that an element is set in Fraunces and the face has loaded. Four
+helper and the check that an element is set in Fraunces and the face has loaded. Five
 spec files:
 
 - `acceptance.spec.ts` performs steps 2 to 9 of the Campo acceptance bar, in order,
@@ -1314,12 +1326,17 @@ spec files:
   own installability check reporting no errors;
 - `build-output.spec.ts` reads the built `dist` rather than the served pages, because
   `vite preview` answers any sub-route itself: `404.html` is a byte-for-byte copy of
-  `index.html`, the service worker waits (nothing claims clients or skips waiting, and
-  the app never asks it to), the precache holds every built file under `/cacador/`, and
+  `index.html`, the service worker skips waiting and claims clients with no
+  `SKIP_WAITING` listener, the precache holds every built file under `/cacador/`, and
   every URL in `index.html` starts with `/cacador/`. It also carries step 11: the
   precache holds exactly four woff2 URLs (Fraunces and Source Sans 3, latin and
   latin-ext) and the 15 jpg URLs, every URL under `/cacador/`, and no file served
-  points at a font host.
+  points at a font host;
+- `update.spec.ts` deploys under an open page by rewriting `dist/sw.js` (vite preview
+  reads `dist` from disk on each request) and restores it after: a change of screen
+  before the update stays in the page, the new worker takes over after the app's
+  foreground check without reloading Practice's question, the next change of screen
+  loads the page again, and the one after that stays in it.
 
 The orchestrator performs the other two steps of the bar by hand: step 1, a fresh clone
 on Node 26 with `pnpm install`, `pnpm lint` and `pnpm test` green, and step 12, after
@@ -1613,7 +1630,8 @@ merge, or makes a screen judgement call.
   in `#f2efe6` on `#14301f`; persistent storage requested once (§ 8.8). Reason: the
   phone opens it full screen and offline, a deploy never leaves a stale shell, and
   taking over mid-question would lose the screen (epic cac-eil D12; brief cac-aqy D12;
-  Sumit's 2026-10-08 Installable entry).
+  Sumit's 2026-10-08 Installable entry). Amended 2026-10-15 by bead cac-eno: the new
+  worker takes over at once and the page reloads at the next change of screen (below).
 - **2026-10-13, e2e outside the gates.** A Playwright workspace runs against the
   production build under `vite preview` on port 4173 with the base path and locale
   `en-GB`, by `pnpm e2e` only, never `--pass-with-no-tests` (§ 8.10). Reason: § 8 names
@@ -1687,7 +1705,9 @@ merge, or makes a screen judgement call.
   workbox-window, which the scaffold installed for D12, is not a dependency of
   `apps/web` (§ 8.8). Reason: the hand
   registration leaves no reload path in the bundle, and the silent update wants none
-  (orchestrator's choice during epic cac-eil, reversible; landed in cac-eil.5).
+  (orchestrator's choice during epic cac-eil, reversible; landed in cac-eil.5). Amended
+  2026-10-15 by bead cac-eno: the hand registration keeps its own short update path, the
+  foreground check and the reload at the next change of screen (below).
 - **2026-10-13, An imported exam brings its own answers.** When an import keeps the
   file's copy of an exam over the device's (finished over unfinished, or the earlier
   `finishedAt`), the device's logged answers for that exam id are replaced by the
@@ -1772,3 +1792,13 @@ merge, or makes a screen judgement call.
   over the stem (§ 6.4, § 8.2, § 8.6). Replaces the row under the options. Reason:
   Ross, 2026-10-15: the English and the Portuguese take different room, so the button
   jumped from under the thumb mid-hold and the peek ended (bead cac-2tb).
+- **2026-10-15, A deploy reaches the open app at the next change of screen.** The
+  service worker skips waiting and claims clients, so a new one takes over as soon as
+  it has installed; the page asks for an update each time the app comes back to the
+  foreground; once a newer worker has taken over a page another one controlled, the
+  page reloads at the next change of the router's pathname, never on the screen in use
+  and with no prompt (§ 8.8). Amends the 2026-10-13 Installable entry, whose worker
+  waited for the next cold open. Reason: Ross, 2026-10-15: the installed app on his
+  phone never picked up the cac-2tb deploy, and a learner should not have to close the
+  app or clear its cache; Android keeps an installed app alive in the background, so
+  every window rarely closes and the waiting worker rarely took over (bead cac-eno).

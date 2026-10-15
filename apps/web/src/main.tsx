@@ -5,6 +5,7 @@ import App from './App';
 import './index.css';
 // The image map, imported here so all 15 pictures are in dist and the precache before any screen shows one (D14).
 import './pwa/images';
+import { ReloadOnUpdate } from './pwa/ReloadOnUpdate';
 import { registerServiceWorker } from './pwa/registerServiceWorker';
 
 const root = document.getElementById('root');
@@ -15,6 +16,7 @@ createRoot(root).render(
   <StrictMode>
     <BrowserRouter basename={import.meta.env.BASE_URL}>
       <App />
+      <ReloadOnUpdate />
     </BrowserRouter>
   </StrictMode>,
 );

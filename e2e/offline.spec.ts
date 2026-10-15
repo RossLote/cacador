@@ -3,8 +3,8 @@ import { manifest } from '@cacador/data';
 import { expectFraunces } from './look';
 
 // Phase 4 D12, ACCEPTANCE BAR step 10 (epic cac-8cn): after one online load and a reload, the app opens with its fonts
-// and shows every picture with no network. The first load installs the service worker; it has no clientsClaim, so
-// only the reload is controlled by it.
+// and shows every picture with no network. The first load installs the service worker, which claims that page; the
+// reload is then a load served by it.
 const imageStems = manifest.images.map((image) => image.file.replace(/\.jpg$/, '')).sort();
 
 test('step 10: offline, after one online visit, Home and Practice render from the cache with Fraunces available and the 15 pictures still load', async ({

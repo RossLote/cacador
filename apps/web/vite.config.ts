@@ -34,9 +34,9 @@ export default defineConfig({
       strategies: 'generateSW',
       // src/pwa/registerServiceWorker.ts registers the worker from main.tsx; the plugin injects nothing.
       injectRegister: false,
-      // 'prompt' is the mode that leaves skipWaiting and clientsClaim off ('autoUpdate' forces both on). No prompt is
-      // shown: nothing listens for the waiting worker, which takes over on the next cold open of the app.
-      registerType: 'prompt',
+      // A new worker takes over as soon as it has installed (skipWaiting and clientsClaim below, which 'autoUpdate'
+      // sets only when the plugin injects the registration), and the page reloads at the next screen change (cac-eno).
+      registerType: 'autoUpdate',
       manifest: false,
       scope: '/cacador/',
       // Say so in the build output if a file is ever left out of the precache for its size.
@@ -53,8 +53,8 @@ export default defineConfig({
         modifyURLPrefix: { '': '/cacador/' },
         dontCacheBustURLsMatching: /^\/cacador\/assets\//,
         navigateFallback: '/cacador/index.html',
-        skipWaiting: false,
-        clientsClaim: false,
+        skipWaiting: true,
+        clientsClaim: true,
         cleanupOutdatedCaches: true,
       },
     }),
