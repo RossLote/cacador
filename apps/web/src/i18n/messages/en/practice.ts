@@ -12,6 +12,19 @@ export const practice = {
   /** The answer was marked but could not be written, so it does not count yet. */
   answerNotSaved: 'This answer could not be saved on this device, so it does not count towards your progress.',
   focusedOn: 'Practising',
+  /** A round (DESIGN.md § 6.4): so many questions, then the score. */
+  round: {
+    /** In the screen header's right-hand slot: the question on screen's place in the round, as "3 of 10". */
+    position: (n: number, size: number) => `${n} of ${size}`,
+    /** The button under the round's last answer, in place of Next. */
+    finish: 'Finish',
+    /** The caption of the score plate. */
+    done: 'Round done',
+    /** Beside the count right on the score plate. */
+    ofRight: (size: number) => `of ${size} right`,
+    /** The button on the score plate that starts another round of the same size. */
+    another: (size: number) => `Another ${size}`,
+  },
   flags: {
     group: 'Report a problem with this question',
     /** Read before the two chips. */

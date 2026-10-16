@@ -22,6 +22,10 @@ export const home = {
   examInProgress: 'Exam in progress',
   /** The exam card's line: the whole minutes left, then how many of its questions hold an answer. */
   examStatus: (minutes: number, answered: number, size: number) => `${minutesLeft(minutes)} · ${answered} of ${size} answered`,
+  /** The title of the round card: the round's size (DESIGN.md § 6.4). */
+  roundTitle: (size: number) => `Quick ${size}`,
+  /** The line on the round card: the same draw as Practice, with an end. */
+  roundLine: 'Weak ones first, then your score',
   /** The line on the Practice card. */
   practiceLine: 'Weak ones first',
   /** The line on the Exam card: the exam's size and its minutes. */

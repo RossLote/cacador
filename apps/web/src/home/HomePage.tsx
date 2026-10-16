@@ -1,4 +1,4 @@
-import { ChevronRight, SlidersHorizontal, Target, Timer, type LucideIcon } from 'lucide-react';
+import { ChevronRight, SlidersHorizontal, Target, Timer, Zap, type LucideIcon } from 'lucide-react';
 import { Link } from 'react-router';
 import { FOCUS_RING, PLATE, RUST_HOVER } from '@/components/styles';
 import { Progress } from '@/components/ui/progress';
@@ -12,6 +12,8 @@ import {
   MINUTE_MS,
   READINESS_TARGET_PERCENT,
   readiness,
+  ROUND_SIZE,
+  roundPath,
   type Readiness,
   type StateMap,
 } from '@/model';
@@ -128,16 +130,18 @@ interface StartCardProps {
   Icon: LucideIcon;
   title: string;
   line: string;
-  /** Practice is the one thing to do next, filled rust; Exam is a card with the ink hairline. */
+  /** The round is the one thing to do next, filled rust; Practice and Exam are cards with the ink hairline. */
   primary: boolean;
+  /** The round's card takes the whole row; Practice and Exam sit side by side under it. */
+  wide?: boolean;
 }
 
 /**
- * One of the two cards side by side (D7). Its accessible name is the title, a
- * space, then the line, so a link named exactly "Practice" or "Exam" is the
- * tab, never the card (D5).
+ * One of the three start cards (D7, cac-zdk). Its accessible name is the
+ * title, a space, then the line, so a link named exactly "Practice" or "Exam"
+ * is the tab, never the card (D5).
  */
-function StartCard({ to, Icon, title, line, primary }: StartCardProps) {
+function StartCard({ to, Icon, title, line, primary, wide = false }: StartCardProps) {
   return (
     <Link
       to={to}
@@ -145,6 +149,7 @@ function StartCard({ to, Icon, title, line, primary }: StartCardProps) {
       className={cn(
         'flex min-h-[110px] flex-col gap-2.5 rounded-lg px-4 py-4.5 transition-colors',
         primary ? cn('bg-rust text-on-fill', RUST_HOVER) : 'border border-ink bg-card text-ink hover:bg-track',
+        wide && 'col-span-2',
         FOCUS_RING,
       )}
     >
@@ -157,8 +162,8 @@ function StartCard({ to, Icon, title, line, primary }: StartCardProps) {
 
 /**
  * Home (DESIGN.md § 6.3, D7): the hub. The header, the readiness plate, the
- * exam in progress when there is one, the Practice and Exam cards, and the
- * weakest topics once a topic is started.
+ * exam in progress when there is one, the round card over the Practice and
+ * Exam cards, and the weakest topics once a topic is started.
  */
 export function HomePage() {
   const { t } = useI18n();
@@ -171,7 +176,8 @@ export function HomePage() {
       <ReadinessPlate value={data?.readiness} failed={failed} />
       {data?.exam && <ExamInProgressCard key={data.exam.id} exam={data.exam} onDeadline={reload} />}
       <div className="grid grid-cols-2 gap-2.5">
-        <StartCard to="/practice" Icon={Target} title={t.common.nav.practice} line={t.home.practiceLine} primary />
+        <StartCard to={roundPath()} Icon={Zap} title={t.home.roundTitle(ROUND_SIZE)} line={t.home.roundLine} primary wide />
+        <StartCard to="/practice" Icon={Target} title={t.common.nav.practice} line={t.home.practiceLine} primary={false} />
         <StartCard
           to="/exam"
           Icon={Timer}

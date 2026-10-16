@@ -1,19 +1,10 @@
 import { readFileSync } from 'node:fs';
-import {
-  hintFor,
-  questionById,
-  questions,
-  sectionOf,
-  topicOf,
-  topics,
-  translationFor,
-  type OptionKey,
-  type Question,
-} from '@cacador/data';
+import { hintFor, questions, sectionOf, topicOf, topics, translationFor, type OptionKey } from '@cacador/data';
 import { expect, test, type Locator, type Page } from '@playwright/test';
 // Dependency-free leaves of the app's model: seededRandom is serialised into the page.
 import { localDateKey } from '../apps/web/src/model/dates';
 import { seededRandom } from '../apps/web/src/model/random';
+import { answerPractice, cardOf, nextPractice, OPTION_KEYS, questionFor, screenHeader, shownId, tab, tabBar, wrongOf } from './app';
 import { background, contrastRatio, DARK, expectFraunces, ground, LIGHT, TEXT_CONTRAST, textColour } from './look';
 
 /**
@@ -28,7 +19,6 @@ import { background, contrastRatio, DARK, expectFraunces, ground, LIGHT, TEXT_CO
  */
 const SEED = 1;
 
-const OPTION_KEYS: readonly OptionKey[] = ['A', 'B', 'C'];
 const TABS = ['Home', 'Practice', 'Exam', 'Progress'];
 const TABS_PT = ['Início', 'Praticar', 'Exame', 'Progresso'];
 const NOTE = 'nudge gives the answer away';
@@ -37,28 +27,12 @@ const EXAM_SECONDS = 30 * 60;
 /** How long the closed-tab check keeps the app closed, on the pages' clock. */
 const CLOSED_MS = 3 * 60 * 1000;
 
-function questionFor(id: number): Question {
-  const question = questionById(id);
-  if (question === undefined) throw new Error(`no question ${id} in the bank`);
-  return question;
-}
-
-const wrongOf = (question: Question): OptionKey => OPTION_KEYS.find((key) => key !== question.answer) ?? 'A';
-
 /** mm:ss as seconds. */
 function seconds(clock: string): number {
   const match = /^(\d{2}):(\d{2})$/.exec(clock);
   if (!match) throw new Error(`not a clock: ${clock}`);
   return Number(match[1]) * 60 + Number(match[2]);
 }
-
-/**
- * The row every screen but Home opens with (DESIGN.md § 8.2): the back control, then the eyebrow over its line or, on
- * Progress, Settings, Flagged and not-found, the screen's title, then the right-hand slot.
- */
-const screenHeader = (page: Page): Locator => page.getByRole('main').locator('header').first();
-const tabBar = (page: Page): Locator => page.getByRole('navigation', { name: 'Main' });
-const tab = (page: Page, name: string): Locator => tabBar(page).getByRole('link', { name, exact: true });
 
 /** The tab bar holds the four tabs by these names, `current` alone marked as the page (none when undefined). */
 async function expectTabBar(page: Page, names: readonly string[], current?: string) {
@@ -71,36 +45,11 @@ async function expectTabBar(page: Page, names: readonly string[], current?: stri
   }
 }
 
-/**
- * The question card on screen and the parts of it the bar talks about. Hold for English and Hint are looked up in
- * `scope`, not the card: Practice docks them over the tab bar, outside the card; a review card holds its own (cac-2tb).
- */
-function cardOf(scope: Page | Locator) {
-  const card = scope.getByRole('article').first();
-  const options = card.getByRole('group', { name: 'Options' }).getByRole('button');
-  return {
-    card,
-    stem: card.locator(':scope > p[lang]'),
-    options,
-    option: (key: OptionKey) => options.nth(OPTION_KEYS.indexOf(key)),
-    peek: scope.getByRole('button', { name: 'Hold for English', exact: true }),
-    hint: scope.getByRole('button', { name: 'Hint', exact: true }),
-    hintPanel: card.getByRole('region', { name: 'Hint' }),
-  };
-}
-
 /** Where a locator is drawn; it must be. */
 async function boxOf(locator: Locator) {
   const box = await locator.boundingBox();
   if (box === null) throw new Error(`not drawn: ${locator.toString()}`);
   return box;
-}
-
-/** The id in Practice's screen header, "Question <id>", once a question is on screen. */
-async function shownId(page: Page): Promise<number> {
-  const number = screenHeader(page).getByText(/^Question \d+$/);
-  await expect(number).toBeVisible();
-  return Number((await number.textContent())?.replace('Question ', ''));
 }
 
 /** The bank id of the running exam's question, from the wrapper around its card. */
@@ -127,23 +76,6 @@ async function homeReadiness(page: Page): Promise<{ percent: string; unseen: str
 
 const examCard = (page: Page): Locator => page.getByRole('link', { name: /^Exam in progress/ });
 
-/** Answers the practice question on screen with `key` and checks the result is revealed at once. */
-async function answerPractice(page: Page, key: OptionKey): Promise<number> {
-  const id = await shownId(page);
-  const question = questionFor(id);
-  const { option } = cardOf(page);
-  await option(key).click();
-  await expect(option(key)).toHaveAttribute('data-mark', key === question.answer ? 'right' : 'wrong');
-  await expect(option(question.answer)).toHaveAttribute('data-mark', key === question.answer ? 'right' : 'correct');
-  return id;
-}
-
-async function nextPractice(page: Page, previous: number): Promise<number> {
-  await page.getByRole('button', { name: 'Next', exact: true }).click();
-  await expect(screenHeader(page).getByText(/^Question \d+$/)).not.toHaveText(`Question ${previous}`);
-  return shownId(page);
-}
-
 test.use({ permissions: ['clipboard-read', 'clipboard-write'] });
 
 test('acceptance bar steps 2 to 9, in order, in one browser context', async ({ context, page }) => {
@@ -157,7 +89,7 @@ test('acceptance bar steps 2 to 9, in order, in one browser context', async ({ c
   /** The first exam's questions, in exam order. */
   const examIds: number[] = [];
 
-  await test.step('step 2: Home: the paper ground, "Caçador" in Fraunces, 33 % with "506 unseen", the rust tick at 75 % and "Pass line 75 %"; no exam card; main holds the two cards, Practice and Exam; no "Weakest topics"; the tab bar holds the four tabs with Home current; the Settings control in the header', async () => {
+  await test.step('step 2: Home: the paper ground, "Caçador" in Fraunces, 33 % with "506 unseen", the rust tick at 75 % and "Pass line 75 %"; no exam card; main holds the three cards, Quick 10 over Practice and Exam; no "Weakest topics"; the tab bar holds the four tabs with Home current; the Settings control in the header', async () => {
     await page.goto('./');
     expect(await page.evaluate(() => Math.random.toString()), 'Math.random is the seeded source').not.toContain('[native code]');
     await expect(page.locator('body')).toHaveCSS('background-color', LIGHT.paper);
@@ -180,8 +112,9 @@ test('acceptance bar steps 2 to 9, in order, in one browser context', async ({ c
 
     await expect(examCard(page)).toHaveCount(0);
     const main = page.getByRole('main');
-    // The two cards and the Settings control are main's only links; the tabs sit outside it.
-    await expect(main.getByRole('link')).toHaveCount(3);
+    // The three cards and the Settings control are main's only links; the tabs sit outside it.
+    await expect(main.getByRole('link')).toHaveCount(4);
+    await expect(main.getByRole('link', { name: 'Quick 10 Weak ones first, then your score', exact: true })).toHaveAttribute('href', '/cacador/practice?round=10');
     await expect(main.getByRole('link', { name: 'Practice Weak ones first', exact: true })).toBeVisible();
     await expect(main.getByRole('link', { name: 'Exam 20 questions · 30 min', exact: true })).toBeVisible();
     await expect(page.getByRole('heading', { name: 'Weakest topics' })).toHaveCount(0);

@@ -63,7 +63,8 @@ Caçador: a personal practice app for the Portuguese hunting licence theory exam
 (carta de caçador, run by ICNF). One learner, who reads English and is learning
 Portuguese. The official bank of 506 questions is answered in Portuguese; the app
 shows the English only while a button is held, keeps a per-question history on the
-device, weights what was recently wrong toward the front of the next practice, and
+device, weights what was recently wrong toward the front of the next practice, offers
+a round of ten with the score at the end, and
 runs 20-question, 30-minute mock exams with a pass line at 75 %. It is a static,
 installable, offline web app in `apps/web` with no backend, served by GitHub Pages at
 https://rosslote.github.io/cacador/; progress stays on the device in IndexedDB.
@@ -139,10 +140,11 @@ pnpm workspace of three packages: `packages/data`, `apps/web` and `e2e`
   Progress) on every screen but the `/exam` route; every screen but Home opens with a
   screen header holding the back control to Home. Under `src/`:
   - one folder per screen, each with its page and its tests: `home` (the header with
-    the Settings control, readiness, the exam-in-progress card, the Practice and Exam
-    cards, Weakest topics), `practice` (the session, the flags row,
+    the Settings control, readiness, the exam-in-progress card, the Quick 10, Practice
+    and Exam cards, Weakest topics), `practice` (the session, the flags row,
     the laptop keys, the focused-practice pool from the query and `recent.ts`, the
-    draw over the no-repeat window), `exam` (`ExamPage` owns the sub-routes:
+    draw over the no-repeat window, and the round from `?round=`: the counter in the
+    header and `RoundSummary`, the score plate), `exam` (`ExamPage` owns the sub-routes:
     `/exam` starts or resumes the running exam, `/exam/results/<id>` the results and
     review), `progress` (the day bars, the topic, section and pattern lists, past
     exams), `settings` (language, export and share, import, clear), `flagged` (the list,
@@ -177,6 +179,9 @@ pnpm workspace of three packages: `packages/data`, `apps/web` and `e2e`
 - `e2e` (`@cacador/e2e`): the Playwright suite in Chromium, run by `pnpm e2e` against
   the production build served by `vite preview` under `/cacador/`, with `@cacador/data`
   for the bank, at a 390 x 844 viewport (the Campo bar is performed at a phone's width).
+  `app.ts` holds the pieces the specs find by their words (the screen header, the tabs,
+  the question card, Practice's answer and Next); `round.spec.ts` walks a round of ten
+  from Home's card to the score and Another 10, then the Practice tab with no counter;
   `acceptance.spec.ts` performs steps 2 to 9 of the Campo acceptance bar (epic cac-8cn)
   in order and then four steps after the bar (an exam passed from the bank's key, the
   closed-tab exam, the past exams and Flagged, export, clear and import); `offline.spec.ts` is step 10 (Home, Practice,

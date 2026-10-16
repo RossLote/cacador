@@ -7,6 +7,13 @@ export const practice: Messages['practice'] = {
   loadFailed: 'Não foi possível ler o progresso neste dispositivo, por isso não foi escolhida nenhuma pergunta. Recarregue a página para tentar de novo.',
   answerNotSaved: 'Não foi possível guardar esta resposta neste dispositivo, por isso não conta para o seu progresso.',
   focusedOn: 'A praticar',
+  round: {
+    position: (n, size) => `${n} de ${size}`,
+    finish: 'Terminar',
+    done: 'Ronda terminada',
+    ofRight: (size) => `de ${size} certas`,
+    another: (size) => `Mais ${size}`,
+  },
   flags: {
     group: 'Assinalar um problema nesta pergunta',
     report: 'Assinalar:',

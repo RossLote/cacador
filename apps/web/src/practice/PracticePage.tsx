@@ -1,10 +1,22 @@
 import type { Question } from '@cacador/data';
+import { useSearchParams } from 'react-router';
 import { Badge } from '@/components/ui/badge';
 import { ScreenHeader } from '@/components/nav/ScreenHeader';
 import { nameIn, placeOf } from '@/components/question/names';
 import { useI18n } from '@/i18n/useI18n';
+import { parseRoundSize } from '@/model';
 import { PracticeSession } from './PracticeSession';
 import { usePracticePool } from './usePracticePool';
+
+/** A round's counter in the header's right-hand slot: the question on screen's place, as "3 of 10", in Fraunces 26 px. */
+function RoundCounter({ position, size }: { position: number; size: number }) {
+  const { t } = useI18n();
+  return (
+    <p className="shrink-0 pr-0.5 font-heading text-[26px] leading-none font-semibold tabular-nums">
+      {t.practice.round.position(position, size)}
+    </p>
+  );
+}
 
 /**
  * The Practice screen (DESIGN.md § 6.4) at /practice. The screen header names
@@ -13,16 +25,21 @@ import { usePracticePool } from './usePracticePool';
  * only. The pool comes from usePracticePool (the whole bank, or the group
  * named by ?topic=, ?section= or ?pattern=, which a chip under the header
  * names); once a question is answered the flags row (D2) shows under its
- * result.
+ * result. With ?round=<n> the session is a round of n questions (cac-zdk):
+ * the header's right-hand slot counts them, and a change of the query starts
+ * the session afresh, so the Practice tab ends a round.
  */
 export function PracticePage() {
   const { t, locale } = useI18n();
   const { pool, group } = usePracticePool();
-  const header = (question: Question | undefined) => (
+  const [params] = useSearchParams();
+  const round = parseRoundSize(params.get('round'));
+  const header = (question: Question | undefined, position: number) => (
     <>
       <ScreenHeader
         eyebrow={question ? placeOf(question, locale) : t.common.nav.practice}
         line={question && t.practice.card.questionNumber(question.id)}
+        aside={round === undefined ? undefined : <RoundCounter position={position} size={round} />}
         heading={t.practice.title}
       />
       {group !== undefined && (
@@ -37,7 +54,7 @@ export function PracticePage() {
   );
   return (
     <div className="flex flex-col gap-3.5">
-      <PracticeSession pool={pool} header={header} />
+      <PracticeSession key={round ?? 0} pool={pool} round={round} header={header} />
     </div>
   );
 }

@@ -13,6 +13,8 @@ export const home: Messages['home'] = {
   unseen: (count) => `${count} por ver`,
   examInProgress: 'Exame em curso',
   examStatus: (minutes, answered, size) => `${minutesLeft(minutes)} · ${answered} de ${size} respondidas`,
+  roundTitle: (size) => `Ronda de ${size}`,
+  roundLine: 'As mais fracas primeiro e depois a pontuação',
   practiceLine: 'As mais fracas primeiro',
   examLine: (size, minutes) => `${size} perguntas · ${minutes} min`,
   weakestTopics: 'Temas mais fracos',

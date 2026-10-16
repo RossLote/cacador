@@ -6,9 +6,11 @@ import { useDock } from '@/components/nav/dock';
 import { QuestionCard } from '@/components/question/QuestionCard';
 import { Button } from '@/components/ui/button';
 import { useI18n } from '@/i18n/useI18n';
+import { isCorrectOption } from '@/model';
 import { getStates, recordAnswer } from '@/storage';
 import { FlagsRow } from './FlagsRow';
 import { drawPracticeQuestion } from './recent';
+import { RoundSummary } from './RoundSummary';
 import { usePracticeKeys } from './usePracticeKeys';
 
 /** The question on screen and, once answered, the option picked. A new object per draw. */
@@ -16,6 +18,14 @@ interface Shown {
   id: number;
   selected?: OptionKey;
 }
+
+/** How this session has gone: the answers given and how many were right. */
+interface Tally {
+  answered: number;
+  right: number;
+}
+
+const NOTHING_YET: Tally = { answered: 0, right: 0 };
 
 /** A check that stays true until `generation` moves on (a new pool, or the page gone). */
 function staysCurrent(generation: { readonly current: number }): () => boolean {
@@ -37,22 +47,34 @@ function staysCurrent(generation: { readonly current: number }): () => boolean {
  * cannot be written keeps its result on screen, says in one line that it was
  * not saved (DESIGN.md § 6.9), and Next still draws.
  *
+ * With `round`, the session ends after that many answers (cac-zdk): the last
+ * answer's button reads Finish instead of Next, and shows the score in place
+ * of the card, where Another starts a new round of the same size. The tally
+ * lives here, so leaving the page ends the round.
+ *
  * `header` draws what sits above the card for the question on screen
- * (undefined while none is): the page's screen header, with the section ·
- * topic and the number (D6). It stays outside the keys' region, so the back
- * control keeps its own keys.
+ * (undefined while none is, and on the score): the page's screen header, with
+ * the section · topic and the number (D6), and `position`, the question on
+ * screen's place in the session counting from 1, for a round's counter. It
+ * stays outside the keys' region, so the back control keeps its own keys.
  */
 export function PracticeSession({
   pool,
+  round,
   header,
 }: {
   pool: readonly number[];
-  header: (question: Question | undefined) => ReactNode;
+  /** How many questions this session holds; undefined for endless practice. */
+  round?: number;
+  header: (question: Question | undefined, position: number) => ReactNode;
 }) {
   const { t } = useI18n();
   const [shown, setShown] = useState<Shown>();
   const [peeking, setPeeking] = useState(false);
   const [hintOpen, setHintOpen] = useState(false);
+  const [tally, setTally] = useState(NOTHING_YET);
+  /** The round is over and its score is on screen in place of a question. */
+  const [scored, setScored] = useState(false);
   /** Storage could not be read, so no question could be drawn (DESIGN.md § 6.9). */
   const [failed, setFailed] = useState(false);
   /** The answer on screen could not be written (DESIGN.md § 6.9). */
@@ -104,12 +126,15 @@ export function PracticeSession({
 
   const question = shown && questionById(shown.id);
   const answered = shown?.selected !== undefined;
+  /** The round holds no more questions after the one on screen. */
+  const roundOver = round !== undefined && tally.answered >= round;
 
   const answer = useCallback(
     (option: OptionKey) => {
       if (shown === undefined || question === undefined || answeredDraw.current === shown) return;
       answeredDraw.current = shown;
       setShown({ id: shown.id, selected: option });
+      setTally((was) => ({ answered: was.answered + 1, right: was.right + (isCorrectOption(shown.id, option) ? 1 : 0) }));
       // The next draw waits for this write and then shows the next question, so a failure always lands first.
       recording.current = recordAnswer({
         questionId: shown.id,
@@ -141,13 +166,38 @@ export function PracticeSession({
       });
   }, [drawNext, show]);
 
+  /** The round's last answer is on screen: puts the score in its place. */
+  const finish = useCallback(() => {
+    setShown(undefined);
+    setScored(true);
+    if (document.scrollingElement) document.scrollingElement.scrollTop = 0;
+  }, []);
+
+  /** Another round of the same size: the tally starts again and the next question is drawn. */
+  const another = useCallback(() => {
+    setTally(NOTHING_YET);
+    setScored(false);
+    next();
+  }, [next]);
+
   const dock = useDock();
-  usePracticeKeys({ answered, onAnswer: answer, onNext: next, onPeekChange: setPeeking, region: top, dock });
+  usePracticeKeys({ answered, onAnswer: answer, onNext: roundOver ? finish : next, onPeekChange: setPeeking, region: top, dock });
+
+  if (scored) {
+    return (
+      <>
+        {header(undefined, tally.answered)}
+        <RoundSummary right={tally.right} size={tally.answered} onAnother={another} />
+      </>
+    );
+  }
+
+  const position = answered ? tally.answered : tally.answered + 1;
 
   if (failed || question === undefined) {
     return (
       <>
-        {header(undefined)}
+        {header(undefined, position)}
         <p role="status" className="text-muted-foreground">
           {failed ? t.practice.loadFailed : t.practice.loading}
         </p>
@@ -157,7 +207,7 @@ export function PracticeSession({
 
   return (
     <>
-      {header(question)}
+      {header(question, position)}
       <div ref={top} tabIndex={-1} className="flex flex-col gap-3.5 outline-none">
         <QuestionCard
           question={question}
@@ -177,8 +227,8 @@ export function PracticeSession({
         {answered && (
           <div className="mt-1 flex flex-col gap-2.5">
             <FlagsRow key={question.id} questionId={question.id} />
-            <Button type="button" size="lg" className="h-13 w-full text-[17px]" onClick={next}>
-              {t.practice.next}
+            <Button type="button" size="lg" className="h-13 w-full text-[17px]" onClick={roundOver ? finish : next}>
+              {roundOver ? t.practice.round.finish : t.practice.next}
               <ChevronRight aria-hidden="true" />
             </Button>
           </div>

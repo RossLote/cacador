@@ -17,6 +17,7 @@ export {
   type Readiness,
 } from './progress';
 export { bankPool, patternPool } from './pools';
+export { parseRoundSize, ROUND_SIZE, roundPath } from './round';
 export { findGroup, GROUP_KINDS, groupPath, GROUPS, type BilingualName, type Group, type GroupKind } from './groups';
 export {
   drawExam,

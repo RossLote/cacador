@@ -1,14 +1,14 @@
 import { hintFor, sectionOf, topicOf, translationFor, type OptionKey, type Question } from '@cacador/data';
 import { act, fireEvent, render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { MemoryRouter } from 'react-router';
+import { Link, MemoryRouter, Route, Routes } from 'react-router';
 import { describe, expect, it, vi } from 'vitest';
 import { MESSAGES } from '@/i18n/messages';
 import { bankPool, RECENT_LIMIT } from '@/model';
 import { closeStorage, getStates, listAnswers, RECENT_KEY } from '@/storage';
 import { PracticePage } from './PracticePage';
 import { PracticeSession } from './PracticeSession';
-import { question, wrongOf } from '../../test/fixtures';
+import { correctOf, question, wrongOf } from '../../test/fixtures';
 import { failStore } from '../../test/storage';
 
 const t = MESSAGES.en.practice;
@@ -448,6 +448,134 @@ describe('PracticePage', () => {
       expect(screen.getByText(question(1).question)).toBeInTheDocument();
       expect(nextButton()).not.toBeInTheDocument();
       field.remove();
+    });
+  });
+
+  describe('a round (cac-zdk)', () => {
+    const ROUND = 3;
+    /** The counter in the screen header's right-hand slot, or null without a round. */
+    const counter = () => within(document.querySelector('header')!).queryByText(/^\d+ of \d+$/);
+    const finishButton = () => screen.queryByRole('button', { name: t.round.finish });
+    const scorePlate = () => screen.queryByRole('region', { name: t.round.done });
+
+    /** Practice at `?round=3`, beside a link to plain /practice standing in for the Practice tab. */
+    function renderRound() {
+      vi.spyOn(Math, 'random').mockReturnValue(0);
+      return render(
+        <MemoryRouter initialEntries={[`/practice?round=${ROUND}`]}>
+          <Routes>
+            <Route path="practice" element={<PracticePage />} />
+          </Routes>
+          <Link to="/practice">tab</Link>
+        </MemoryRouter>,
+      );
+    }
+
+    it('counts the question on screen in the header, in Fraunces, and the counter stays on the answer', async () => {
+      const user = userEvent.setup();
+      renderRound();
+      expect(await shownId()).toBe(1);
+      expect(counter()).toHaveTextContent(t.round.position(1, ROUND));
+      expect(counter()).toHaveClass('font-heading');
+      await user.click(optionFor(wrongOf(1)));
+      expect(counter()).toHaveTextContent(t.round.position(1, ROUND));
+      expect(nextButton()).toBeInTheDocument();
+      expect(finishButton()).not.toBeInTheDocument();
+      await user.click(nextButton()!);
+      expect(await waitForChange(1)).toBe(2);
+      expect(counter()).toHaveTextContent(t.round.position(2, ROUND));
+    });
+
+    it('shows no counter and no Finish without the query', async () => {
+      const user = userEvent.setup();
+      renderPractice();
+      await shownId();
+      expect(counter()).toBeNull();
+      await user.click(optionFor(wrongOf(1)));
+      expect(nextButton()).toBeInTheDocument();
+      expect(finishButton()).not.toBeInTheDocument();
+    });
+
+    it('ends on the last answer: Finish in place of Next, the count right on the plate, no card, and Another starts a new round', async () => {
+      const user = userEvent.setup();
+      renderRound();
+      expect(await shownId()).toBe(1);
+      await user.click(optionFor(wrongOf(1)));
+      await user.click(nextButton()!);
+      expect(await waitForChange(1)).toBe(2);
+      await user.click(optionFor(correctOf(2)));
+      await user.click(nextButton()!);
+      expect(await waitForChange(2)).toBe(3);
+      await user.click(optionFor(correctOf(3)));
+      expect(counter()).toHaveTextContent(t.round.position(3, ROUND));
+      expect(nextButton()).not.toBeInTheDocument();
+      const finish = finishButton()!;
+      expect(finish).toHaveClass('bg-primary');
+      // The flags row still sits under the last answer.
+      expect(screen.getByRole('group', { name: t.flags.group })).toBeInTheDocument();
+
+      await user.click(finish);
+      const plate = scorePlate()!;
+      expect(plate).toHaveClass('bg-card');
+      expect(within(plate).getByText('2')).toHaveClass('font-heading');
+      expect(within(plate).getByText(t.round.ofRight(ROUND))).toBeInTheDocument();
+      expect(counter()).toHaveTextContent(t.round.position(ROUND, ROUND));
+      expect(screen.getByText(MESSAGES.en.common.nav.practice, { selector: 'p.eyebrow' })).toBeInTheDocument();
+      expect(screen.queryByRole('article')).not.toBeInTheDocument();
+      expect(screen.queryByRole('button', { name: card.holdForEnglish })).not.toBeInTheDocument();
+      expect(screen.queryByRole('status')).not.toBeInTheDocument();
+      // The option keys answer nothing on the score.
+      await user.keyboard('a');
+      expect(await listAnswers()).toHaveLength(3);
+
+      const another = within(plate).getByRole('button', { name: t.round.another(ROUND) });
+      expect(another).toHaveClass('bg-primary');
+      await user.click(another);
+      expect(await shownId()).toBe(4);
+      expect(scorePlate()).not.toBeInTheDocument();
+      expect(counter()).toHaveTextContent(t.round.position(1, ROUND));
+      await user.click(optionFor(wrongOf(4)));
+      expect(nextButton()).toBeInTheDocument();
+      expect(finishButton()).not.toBeInTheDocument();
+    });
+
+    it('finishes with Enter on the last answer, as Next does before it', async () => {
+      const user = userEvent.setup();
+      renderRound();
+      expect(await shownId()).toBe(1);
+      for (let n = 1; n < ROUND; n++) {
+        await user.keyboard('1');
+        await user.keyboard('{Enter}');
+        expect(await waitForChange(n)).toBe(n + 1);
+      }
+      await user.keyboard('1');
+      expect(finishButton()).toBeInTheDocument();
+      await user.keyboard('{Enter}');
+      expect(scorePlate()).toBeInTheDocument();
+    });
+
+    it('ends the round when the query goes: the Practice tab shows endless practice afresh', async () => {
+      const user = userEvent.setup();
+      renderRound();
+      expect(await shownId()).toBe(1);
+      await user.click(optionFor(wrongOf(1)));
+      await user.click(screen.getByRole('link', { name: 'tab' }));
+      expect(await waitForChange(1)).toBe(2);
+      expect(counter()).toBeNull();
+      expect(nextButton()).not.toBeInTheDocument();
+      await user.click(optionFor(wrongOf(2)));
+      expect(nextButton()).toBeInTheDocument();
+      expect(finishButton()).not.toBeInTheDocument();
+    });
+
+    it('has the round words in Portuguese too', () => {
+      const pt = MESSAGES.pt.practice.round;
+      expect(pt.position(3, 10)).toBe('3 de 10');
+      expect(pt.finish).toBe('Terminar');
+      expect(pt.done).toBe('Ronda terminada');
+      expect(pt.ofRight(10)).toBe('de 10 certas');
+      expect(pt.another(10)).toBe('Mais 10');
+      expect(MESSAGES.pt.home.roundTitle(10)).toBe('Ronda de 10');
     });
   });
 });

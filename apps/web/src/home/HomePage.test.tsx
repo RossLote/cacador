@@ -56,7 +56,7 @@ describe('Home', () => {
   for (const locale of ['en', 'pt'] satisfies Locale[]) {
     const t = MESSAGES[locale];
 
-    it(`shows the header, the readiness plate, the two cards and nothing else on a fresh device (${locale})`, async () => {
+    it(`shows the header, the readiness plate, the three cards and nothing else on a fresh device (${locale})`, async () => {
       act(() => setLocale(locale));
       renderHome();
 
@@ -74,10 +74,17 @@ describe('Home', () => {
       expect(tick).toHaveClass('bg-rust');
       expect(tick).toHaveStyle({ left: '75%' });
 
+      const round = `${t.home.roundTitle(10)} ${t.home.roundLine}`;
       const practice = `${t.common.nav.practice} ${t.home.practiceLine}`;
       const exam = `${t.common.nav.exam} ${t.home.examLine(20, 30)}`;
-      expect(screen.getAllByRole('link').map((link) => link.getAttribute('href'))).toEqual(['/settings', '/practice', '/exam']);
-      expect(document.querySelectorAll('[data-slot="start-card"]')).toHaveLength(2);
+      expect(screen.getAllByRole('link').map((link) => link.getAttribute('href'))).toEqual([
+        '/settings',
+        '/practice?round=10',
+        '/practice',
+        '/exam',
+      ]);
+      expect(document.querySelectorAll('[data-slot="start-card"]')).toHaveLength(3);
+      expect(screen.getByRole('link', { name: round })).toHaveAttribute('href', '/practice?round=10');
       expect(screen.getByRole('link', { name: practice })).toHaveAttribute('href', '/practice');
       expect(screen.getByRole('link', { name: exam })).toHaveAttribute('href', '/exam');
       // An exact query for the nav words finds no card: on the whole app it finds the tab only.
@@ -95,9 +102,14 @@ describe('Home', () => {
     expect(await screen.findByText('33 %')).toBeInTheDocument();
     expect(screen.getByText('506 unseen')).toBeInTheDocument();
     expect(screen.getByText('Pass line 75 %')).toBeInTheDocument();
+    // The round is the one thing to do next, filled rust and the width of the row; Practice and Exam carry the ink hairline.
+    const round = screen.getByRole('link', { name: 'Quick 10 Weak ones first, then your score' });
+    expect(round).toHaveClass('bg-rust', RUST_HOVER, 'col-span-2');
+    expect(round).not.toHaveClass('hover:bg-rust/90');
+    expect(round.querySelector('svg.lucide-zap')).toBeInTheDocument();
     const practice = screen.getByRole('link', { name: 'Practice Weak ones first' });
-    expect(practice).toHaveClass('bg-rust', RUST_HOVER);
-    expect(practice).not.toHaveClass('hover:bg-rust/90');
+    expect(practice).toHaveClass('border-ink');
+    expect(practice).not.toHaveClass('bg-rust', 'col-span-2');
     expect(screen.getByRole('link', { name: 'Exam 20 questions · 30 min' })).toHaveClass('border-ink');
   });
 
@@ -108,12 +120,12 @@ describe('Home', () => {
     expect(screen.queryByText(en.home.loading)).not.toBeInTheDocument();
   });
 
-  it('says so when storage cannot be read, and still offers the two cards', async () => {
+  it('says so when storage cannot be read, and still offers the three cards', async () => {
     failStore('getAll');
     renderHome();
     expect(await screen.findByText(en.home.loadFailed)).toBeInTheDocument();
     expect(screen.getByRole('status')).toHaveTextContent(en.home.loadFailed);
-    expect(document.querySelectorAll('[data-slot="start-card"]')).toHaveLength(2);
+    expect(document.querySelectorAll('[data-slot="start-card"]')).toHaveLength(3);
     expect(weakest()).not.toBeInTheDocument();
   });
 

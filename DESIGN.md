@@ -592,10 +592,13 @@ The hub, at `/`, top to bottom:
 - When the storage module returns an unfinished exam, a card for the exam in progress,
   which opens it: "N minutes left · A of 20 answered", A the answers the exam holds
   (the module never returns an exam past its deadline, § 6.5).
-- Two cards side by side: Practice ("Weak ones first"), which opens practice over the
-  whole bank, and Exam ("20 questions · 30 min", the numbers from the study model),
-  which opens `/exam`. Each card's accessible name is its title and its line, so a
-  link named exactly "Practice" or "Exam" is the tab, never the card.
+- Three cards: Quick 10 ("Weak ones first, then your score"), the one thing to do
+  next, filled rust and the width of the column, which opens a round of ten
+  (`/practice?round=10`, § 6.4); under it, side by side with the ink hairline, Practice
+  ("Weak ones first"), which opens practice over the whole bank with no end, and Exam
+  ("20 questions · 30 min", the numbers from the study model), which opens `/exam`.
+  Each card's accessible name is its title and its line, so a link named exactly
+  "Practice" or "Exam" is the tab, never the card.
 - Weakest topics: the two lowest started topics by group accuracy, in the Progress
   topic list's worst-first order (§ 6.6), each a row with the name, "Seen x of y" and
   the percentage, linking to focused practice on that topic (§ 6.4), under an "All
@@ -614,9 +617,9 @@ start of its screen header (§ 8.2).
 ### 6.4 Practice
 
 - One question at a time, in Portuguese, drawn by weight from the pool (§ 6.2), until
-  the learner stops: no end, no session target. Each question shows its section, topic
-  and number, so a nudge's cross-reference ("question 10 asks the same") can be found,
-  and its picture when it has one.
+  the learner stops: no end, no session target, unless the session is a round (below).
+  Each question shows its section, topic and number, so a nudge's cross-reference
+  ("question 10 asks the same") can be found, and its picture when it has one.
 - **Peek**: press and hold a button to see the English question and options; release
   and the Portuguese returns. It is never a toggle, on any input, and cannot be left on.
   A press on the button never takes the focus from where it was, so Enter still
@@ -649,6 +652,18 @@ start of its screen header (§ 8.2).
   question whose hint carries the tag. A chip names the group in the interface
   language. An unknown slug means the whole bank and no chip. Every row of the Progress
   lists links here, so a weak topic is one tap from practice.
+- **A round**: `/practice?round=<n>`, n a whole number of at least 1 (anything else is
+  endless practice), is the same draw with an end after n answers; Home's Quick 10
+  card asks for ten. The screen header's right-hand slot counts the question on
+  screen, "3 of 10", in Fraunces 26 px, and reads "10 of 10" on the score. The round's
+  last answer puts Finish in place of Next (Enter finishes too); Finish shows the score
+  in place of the card, a plate captioned "Round done" with the count right in Fraunces
+  64 px and "of 10 right" beside it, no card, no peek and no Hint, and a rust "Another
+  10" button that starts a new round of the same size on the same screen. The count
+  lives on the screen, not in storage: a change of the query, the Practice tab
+  included, or leaving the page ends the round, and every answer counts for progress
+  as any practice answer does. A round combines with a focused pool
+  (`?topic=<slug>&round=10`).
 
 ### 6.5 Mock exam
 
@@ -1040,7 +1055,7 @@ plain functions; the storage module holds § 7. Screens import both and never In
 
 Under the basename `/cacador/`, taken from Vite's `base` through
 `import.meta.env.BASE_URL`: `/` Home, `/practice` (query `topic`, `section` or
-`pattern`, § 6.4), `/exam/*` registered as a splat so the exam folder owns its
+`pattern`, and `round` for a round of n questions, § 6.4), `/exam/*` registered as a splat so the exam folder owns its
 sub-routes (`/exam`, which offers Start or resumes the unfinished exam and runs it in
 place, and `/exam/results/<id>`, the results and review), `/progress` (query `tab`,
 `section` or `pattern`, the open list, § 6.6), `/settings` and `/flagged`. Any other
@@ -1306,9 +1321,15 @@ before the first run and again after each Playwright bump. The `e2e` script stay
 `@cacador/data`. The viewport is 390 x 844 in `playwright.config.ts`, because epic
 cac-8cn's Campo acceptance bar is performed at a phone's width. `look.ts` holds the
 Campo colour values the colour checks read (light and dark, § 8.5), the WCAG contrast
-helper and the check that an element is set in Fraunces and the face has loaded. Five
-spec files:
+helper and the check that an element is set in Fraunces and the face has loaded;
+`app.ts` holds the pieces the specs find by their words (the screen header, the tab
+bar, the question card, Practice's answer and Next). Six spec files:
 
+- `round.spec.ts` walks a round of ten (§ 6.4): Home's rust Quick 10 card the width of
+  the column over the hairline Practice card, the counter in the header from "1 of 10"
+  through every answer, Finish in place of the last Next, the score plate with the
+  count right in Fraunces and Another 10, then the Practice tab with no counter and
+  Next again;
 - `acceptance.spec.ts` performs steps 2 to 9 of the Campo acceptance bar, in order,
   one named step each, in one fresh browser context, with the page's random draws seeded
   so every run draws the same questions: Home, the Practice tab, a wrong answer, the
@@ -1802,3 +1823,12 @@ merge, or makes a screen judgement call.
   phone never picked up the cac-2tb deploy, and a learner should not have to close the
   app or clear its cache; Android keeps an installed app alive in the background, so
   every window rarely closes and the waiting worker rarely took over (bead cac-eno).
+- **2026-10-15, A round of ten.** Practice gains an end: `/practice?round=<n>` is the
+  same weighted draw over the same pool, counted in the screen header's right-hand slot
+  and ended after n answers by Finish and a score plate with Another 10; Home's Quick 10
+  card, the one filled rust and the width of the column, opens a round of ten over
+  the whole bank, and Practice drops to the ink hairline beside Exam (§ 6.3, § 6.4,
+  § 8.2). The count is on the screen, never in storage: a change of the query or of
+  screen ends the round. Endless practice stays behind the Practice tab and card.
+  Reason: Ross, 2026-10-15: with no end goal he started practice and stopped after a
+  few questions; knowing three are left is what gets them done (bead cac-zdk).
