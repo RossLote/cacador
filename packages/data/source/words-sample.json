@@ -1,0 +1,19 @@
+[
+  { "pt": "láparo", "phrase": "Os láparos nascem", "en": "rabbit kit", "kind": "life", "ids": [75, 83, 97], "note": "" },
+  { "pt": "toca", "phrase": "Tocas de habitação individuais", "en": "burrow", "kind": "habitat", "ids": [64, 65, 66, 67, 68, 69, 77, 87], "note": "" },
+  { "pt": "galeria", "phrase": "galerias extensas e muito ramificadas", "en": "tunnel", "kind": "habitat", "ids": [64, 66, 94], "note": "Not a gallery: the tunnels of a burrow." },
+  { "pt": "levantar", "phrase": "procurar, perseguir e levantar espécies de caça maior", "en": "flush", "kind": "method", "ids": [19, 40, 55], "note": "Of game made to break cover. A bird that levanta voo takes off." },
+  { "pt": "levantar voo", "phrase": "patinharem na água antes de levantar voo", "en": "take off", "kind": "life", "ids": [237, 243, 254], "note": "Of a bird taking off. Levantar alone, of game, is flush." },
+  { "pt": "pata", "phrase": "Bico e patas vermelhas", "en": "leg", "kind": "anatomy", "ids": [170, 231, 241, 295], "note": "A bird's or animal's leg or foot. Also a female duck." },
+  { "pt": "espelho alar", "phrase": "espelho alar geralmente com brilho metálico", "en": "speculum", "kind": "anatomy", "ids": [232, 234, 235, 239, 248, 253, 255], "note": "The glossy patch on a duck's wing; also plain espelho." },
+  { "pt": "cio", "phrase": "O cio da raposa", "en": "heat, rut", "kind": "life", "ids": [109, 112, 133, 142, 150, 154, 159, 163], "note": "Heat for the fox, rut for deer, boar and mouflon." },
+  { "pt": "seixa", "phrase": "também se dá o nome de seixa", "en": "stock dove", "kind": "species", "ids": [278], "note": "Another name for pombo-bravo." },
+  { "pt": "alagadiço", "phrase": "locais húmidos e alagadiços", "en": "waterlogged", "kind": "habitat", "ids": [118, 141], "note": "" },
+  { "pt": "batida", "phrase": "por processo diferente do de batida", "en": "driven hunt", "kind": "method", "ids": [30, 38, 39, 40, 49, 51, 56, 388], "note": "Hunters wait at fixed posts while beaters drive the game to them." },
+  { "pt": "zagalotes", "phrase": "cartuchos carregados com zagalotes", "en": "buckshot", "kind": "weapon", "ids": [388, 389], "note": "" },
+  { "pt": "cobrar", "phrase": "O setter irlandês cobra bem na água e em terra", "en": "retrieve", "kind": "dog", "ids": [488, 489, 490, 496], "note": "Of a dog bringing back shot game. Not the snake, not charging money." },
+  { "pt": "fiscalização", "phrase": "competência na fiscalização da caça", "en": "enforcement", "kind": "law", "ids": [1], "note": "Policing the rules; nothing to do with tax." },
+  { "pt": "caducidade", "phrase": "o final da sua caducidade", "en": "expiry", "kind": "law", "ids": [3], "note": "From caducar, to lapse. Folha caduca is a deciduous leaf." },
+  { "pt": "prejuízo", "phrase": "que cause prejuízos na agricultura", "en": "damage", "kind": "general", "ids": [53, 335, 348, 350, 361], "note": "Not prejudice." },
+  { "pt": "vulgarmente", "phrase": "dá-se, vulgarmente, o nome de", "en": "commonly", "kind": "general", "ids": [83, 97, 389, 480, 483], "note": "Not vulgarly." }
+]
