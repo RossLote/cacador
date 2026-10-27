@@ -1,1 +1,13 @@
-[]
+[
+  { "pt": "adestrado", "phrase": "ave de presa adestrada", "en": "trained", "kind": "falconry", "ids": [51], "note": "" },
+  { "pt": "alto-voo", "phrase": "a ave clássica da caça em alto-voo", "en": "high flight, with long-winged falcons", "kind": "falconry", "ids": [502], "note": "" },
+  { "pt": "amansamento", "phrase": "o amansamento deve preferencialmente ser realizado", "en": "manning", "kind": "falconry", "ids": [506], "note": "Getting a new bird used to people and handling; manso is tame." },
+  { "pt": "ave de presa", "phrase": "A condição física de uma ave de presa", "en": "bird of prey", "kind": "falconry", "ids": [51, 475, 476, 479, 500, 501, 503, 504, 505, 506], "note": "The falconer's word for a hunting raptor; in the wild it is an ave de rapina." },
+  { "pt": "baixo-voo", "phrase": "a ave clássica da caça em baixo-voo", "en": "low flight, with short-winged hawks", "kind": "falconry", "ids": [501, 502], "note": "" },
+  { "pt": "cetraria", "phrase": "O que é o processo de cetraria", "en": "falconry", "kind": "falconry", "ids": [47, 51, 337, 343, 345, 418, 420, 424, 431, 432, 433, 453, 455, 456, 503, 505], "note": "" },
+  { "pt": "cetreiro", "phrase": "carta de cetreiro", "en": "falconer", "kind": "falconry", "ids": [337, 345], "note": "" },
+  { "pt": "iniciação", "phrase": "Na iniciação das aves de presa", "en": "initiation", "kind": "falconry", "ids": [506], "note": "The first stage of a newly taken bird's training." },
+  { "pt": "peso", "phrase": "Pelo peso", "en": "weight", "kind": "falconry", "ids": [504], "note": "" },
+  { "pt": "ração", "phrase": "constituída essencialmente por rações", "en": "compound feed", "kind": "falconry", "ids": [500], "note": "Not rations: prepared feed for animals." },
+  { "pt": "terçó", "phrase": "designadas em cetraria por “terçó”", "en": "tiercel, the male bird of prey", "kind": "falconry", "ids": [503], "note": "The male is about a third smaller than the female, hence the name." }
+]
