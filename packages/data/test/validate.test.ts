@@ -1,3 +1,4 @@
+import { execFileSync } from 'node:child_process';
 import { cpSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
@@ -94,9 +95,19 @@ describe('validate on the real data', () => {
     expect(glossaries.terms).toBeGreaterThan(0);
     expect(patterns).toBeGreaterThan(0);
     expect(patterns).toBeLessThanOrEqual(25);
-    // Phase 5 starts from the 17 precedent words in the twelve kind files and grows to about 720.
+    // Phase 5 fills the twelve kind files with at least 700 words (epic cac-zqe, DONE MEANS).
     expect(words.files).toBe(12);
-    expect(words.entries).toBeGreaterThanOrEqual(17);
+    expect(words.entries).toBeGreaterThanOrEqual(700);
+  });
+});
+
+describe('the validate script on the real data', () => {
+  it('prints a words line naming the twelve files and at least 700 words', () => {
+    const script = fileURLToPath(new URL('../scripts/validate.mjs', import.meta.url));
+    const output = execFileSync(process.execPath, [script], { encoding: 'utf8' });
+    const match = /^validate: words (\d+) entries in (\d+) files$/m.exec(output);
+    expect(match?.[2]).toBe('12');
+    expect(Number(match?.[1])).toBeGreaterThanOrEqual(700);
   });
 });
 
@@ -426,6 +437,17 @@ describe('rule 5: translations and hints', () => {
       (dir) => editRows(dir, 'hints/en/02-beta.json', (h) => ((h[1].language as [{ pt: string }, { pt: string }])[0].pt = 'quintas-feiras?\nSim')),
       /hints\/en\/02-beta\.json: id 4: language text "quintas-feiras\?\nSim" does not occur/,
     );
+  });
+
+  it.each([
+    ['curly in the bank, straight in the hint', 'Uma galinha-d\u2019água', "galinha-d'água"],
+    ['straight in the bank, curly in the hint', "Uma galinha-d'água", 'galinha-d\u2019água'],
+    ['curly double quotes in the bank', 'Uma \u201cgalinha\u201d', '"galinha"'],
+  ])('reads curly quotes as straight in language text: %s', (_name, option, pt) => {
+    const dir = copyBase();
+    editRows(dir, 'questions/02-beta.json', (q) => (q[1].options.B = option));
+    editRows(dir, 'hints/en/02-beta.json', (h) => ((h[1].language as [{ pt: string }, { pt: string }])[1].pt = pt));
+    expect(() => validate(dir)).not.toThrow();
   });
 
   it('fails on empty language text', () => {
@@ -815,6 +837,27 @@ describe('rule 9: words', () => {
     expect(() => validate(dir)).toThrow(/words\/method\.json: word Furão en "ferrets" differs from "ferret"/);
   });
 
+  // The glossary's pt and the word's pt are each straightened before the lookup, so each spelling finds the other.
+  it.each([
+    ['curly in the glossary, straight in the word', 'galinha-d\u2019água', "galinha-d'água"],
+    ['straight in the glossary, curly in the word', "galinha-d'água", 'galinha-d\u2019água'],
+  ])('finds the glossary entry reading curly quotes in the pt as straight: %s', (_name, glossaryPt, pt) => {
+    expectFailure((dir) => {
+      editJson<TermEntry[]>(dir, 'glossary/terms.json', (t) => t.push({ pt: glossaryPt, en: 'moorhen', note: '' }));
+      addWord(dir, { pt, en: 'cat' });
+    }, /words\/general\.json: word galinha-d.água en "cat" differs from "moorhen", the en of glossary\/terms\.json/);
+  });
+
+  it.each([
+    ['curly in the glossary, straight in the word', 'tom\u2019s cat', "tom's cat"],
+    ['straight in the glossary, curly in the word', "tom's cat", 'tom\u2019s cat'],
+  ])('compares the en with the glossary reading curly quotes as straight: %s', (_name, glossaryEn, en) => {
+    const dir = copyBase();
+    editJson<TermEntry[]>(dir, 'glossary/terms.json', (t) => t.push({ pt: 'gato', en: glossaryEn, note: '' }));
+    addWord(dir, { en });
+    expect(() => validate(dir)).not.toThrow();
+  });
+
   describe('a glossary en that is the pt followed by a gloss in parentheses', () => {
     /** The base with the term montaria glossed, as the real terms.json writes it, and question 4 using it. */
     const withMontaria = (en: string) => {
@@ -842,6 +885,13 @@ describe('rule 9: words', () => {
     // A letter or a hyphen next to it makes it part of a longer word.
     addWord(dir, { en: 'gatos, gato-bravo' });
     expect(() => validate(dir)).not.toThrow();
+  });
+
+  it.each([
+    ['curly in the pt, straight in the en', 'd\u2019água', "water, d'água"],
+    ['straight in the pt, curly in the en', "d'água", 'water, d\u2019água'],
+  ])('fails on an en containing its own pt, reading curly quotes as straight: %s', (_name, pt, en) => {
+    expectFailure((dir) => addWord(dir, { pt, en }), /words\/general\.json: word d.água en "water, d.água" contains the word's pt/);
   });
 
   it("fails on a kind that is not its file's", () => {

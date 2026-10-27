@@ -412,7 +412,8 @@ the file and id. Rules:
    `questions/` file, the same ids once each, the same option keys, and a `status` from
    the three allowed values; each entry carries the other fields of § 3.3 with their
    types (strings non-empty except `notes`, `note` and `nudge`). A `language` entry's
-   `pt` text occurs in the question or its options. A hint entry at `checked` or
+   `pt` text occurs in the question or its options, ignoring case and reading curly
+   quotes as straight ones. A hint entry at `checked` or
    `reviewed` has a non-empty `nudge`.
 6. Once `glossary/species.json` exists: for every Portuguese species name in a
    question, the matching English name is present in its translation (case-insensitive).

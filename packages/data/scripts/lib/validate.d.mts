@@ -5,6 +5,9 @@ export class ValidationError extends Error {
 /** A plain object: not null, not an array. */
 export function isObject(value: unknown): value is Record<string, unknown>;
 
+/** The names in `dir` that do not start with '.', sorted; none when `dir` does not exist. */
+export function visibleFiles(dir: string): string[];
+
 /** The translations/en/ or hints/en/ files: how many entries, in how many files, and how many at each status. */
 export interface EntryCounts {
   entries: number;

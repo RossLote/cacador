@@ -29,7 +29,7 @@ function failAt(file, id, message) {
 
 export const isObject = (value) => typeof value === 'object' && value !== null && !Array.isArray(value);
 const sameList = (a, b) => a.length === b.length && a.every((value, i) => value === b[i]);
-const visibleFiles = (dir) => (existsSync(dir) ? readdirSync(dir).filter((name) => !name.startsWith('.')).sort() : []);
+export const visibleFiles = (dir) => (existsSync(dir) ? readdirSync(dir).filter((name) => !name.startsWith('.')).sort() : []);
 const textOf = (entry) => [entry.question, ...Object.values(entry.options)].join('\n');
 
 /** Field types a shape check can ask for: the name used in messages and the test. */
@@ -258,15 +258,16 @@ function checkTranslation(rel, e, pt) {
  */
 function checkHint(rel, e, pt) {
   expectType(rel, e.id, 'language', e.language, 'list');
-  // Each field on its own, so a phrase cannot match across the join of the stem and an option.
-  const fields = [pt.question, ...Object.values(pt.options)].map((field) => field.toLowerCase());
+  // Each field on its own, so a phrase cannot match across the join of the stem and an option; curly quotes
+  // read as straight ones, as rules 6 and 9 read them.
+  const fields = [pt.question, ...Object.values(pt.options)].map((field) => straighten(field).toLowerCase());
   e.language.forEach((item, i) => {
     const field = `language entry ${i + 1}`;
     if (!isObject(item)) failAt(rel, e.id, `${field} is not an object`);
     expectType(rel, e.id, `${field} pt`, item.pt, 'string');
     expectType(rel, e.id, `${field} en`, item.en, 'string');
     expectType(rel, e.id, `${field} note`, item.note, 'text');
-    const phrase = item.pt.toLowerCase();
+    const phrase = straighten(item.pt).toLowerCase();
     if (!fields.some((field) => field.includes(phrase))) {
       failAt(rel, e.id, `language text "${item.pt}" does not occur in the question or its options`);
     }
