@@ -16,6 +16,7 @@ import {
   topics,
   translationFor,
   wordKinds,
+  wordSite,
   words,
   type Word,
 } from '../src/index';
@@ -119,5 +120,30 @@ describe('loader', () => {
     expect(findPhrase("Uma galinha-d'água", 'galinha-d\u2019água')).toBe(4);
     expect(findPhrase('O \u201cpombo\u201d', '"pombo"')).toBe(2);
     expect(findPhrase('Um gato', 'um cão')).toBe(-1);
+  });
+
+  it('matches a phrase only as whole words: a letter, accented or not, a digit or a hyphen next to it is no boundary', () => {
+    expect(findPhrase('Listados', 'Listado')).toBe(-1);
+    expect(findPhrase('na área da região cinegética', 'a região')).toBe(-1);
+    expect(findPhrase('A caçada', 'ada')).toBe(-1);
+    expect(findPhrase('Um pato-real', 'pato')).toBe(-1);
+    expect(findPhrase('Há 12 meses', '2 meses')).toBe(-1);
+    // The first place cut inside a word is passed over for a later whole one.
+    expect(findPhrase('da região e a região', 'a região')).toBe(12);
+    expect(findPhrase('Listado', 'listado')).toBe(0);
+    expect(findPhrase('(Listado)', 'Listado')).toBe(1);
+    expect(findPhrase('cinegética a que respeita', 'a que respeita')).toBe(11);
+  });
+
+  it("cuts every word's phrase out of its question at word boundaries, never inside a word", () => {
+    const inWord = /[\p{L}\p{N}-]/u;
+    for (const word of words) {
+      const site = wordSite(word);
+      if (!site) throw new Error(`no site for ${word.pt}`);
+      const text = site.field === 'question' ? site.question.question : site.question.options[site.field];
+      const end = site.start + word.phrase.length;
+      expect(inWord.test(text.charAt(site.start - 1)), `${word.pt} starts inside a word`).toBe(false);
+      expect(inWord.test(text.charAt(end)), `${word.pt} ends inside a word`).toBe(false);
+    }
   });
 });

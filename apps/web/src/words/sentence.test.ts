@@ -33,6 +33,19 @@ describe('sentenceFor', () => {
     expect(phraseIn('toca')).toBe('Tocas de habitação individuais');
   });
 
+  it('never starts or ends the highlight inside a word, passing over a question that holds the phrase only inside a longer word', () => {
+    // Question 83's option C is "Listados": the phrase is cut inside it there, so the sentence is question 131's.
+    expect(question(83).options.C).toBe('Listados');
+    const listado = { ...testWord('láparo'), pt: 'listado', phrase: 'Listado', ids: [83, 131] };
+    const sentence = sentenceFor(listado)!;
+    expect(sentence.id).toBe(131);
+    expect(sentence.text).toBe(`${question(131).question} ${question(131).options.A}`);
+    expect(sentence.text.slice(sentence.start, sentence.end)).toBe('Listado');
+    expect(sentence.end).toBe(sentence.text.length);
+    // A phrase cut out of the middle of a word holds no sentence at all.
+    expect(sentenceFor({ ...testWord('cio'), phrase: 'O cio da rapos' })).toBeUndefined();
+  });
+
   it('is undefined for a word none of whose questions holds its phrase', () => {
     expect(sentenceFor({ ...testWord('cio'), ids: [1, 2] })).toBeUndefined();
   });

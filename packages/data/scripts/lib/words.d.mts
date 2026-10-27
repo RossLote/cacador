@@ -7,7 +7,10 @@ export const WORD_KINDS: readonly [
 /** Curly apostrophes and quotes become straight ones, so a glossary name matches the bank's typography. */
 export function straighten(text: string): string;
 
-/** Where `phrase` starts in `text`, ignoring case and reading curly quotes as straight ones, or -1; the index cuts the phrase out of `text`. */
+/** The whole-word match for `name` (already straightened), case-insensitive: a letter, digit or hyphen on either side is no boundary. */
+export function wholeWord(name: string): RegExp;
+
+/** Where `phrase` first starts in `text` as whole words, ignoring case and reading curly quotes as straight ones, or -1; the index cuts the phrase out of `text`. */
 export function findPhrase(text: string, phrase: string): number;
 
 /** Where a question holds a phrase: the field, its stem or an option's letter, and the phrase's start in it. */

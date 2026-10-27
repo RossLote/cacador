@@ -102,7 +102,7 @@
   { "pt": "rebento", "phrase": "Rebentos de árvores e arbustos", "en": "shoot", "kind": "general", "ids": [121, 184, 206], "note": "A plant's young growth, nothing to do with shooting." },
   { "pt": "recolha", "phrase": "a recolha de cartuchos vazios", "en": "collection", "kind": "general", "ids": [477], "note": "" },
   { "pt": "requisito", "phrase": "além de outros requisitos", "en": "requirement", "kind": "general", "ids": [2], "note": "" },
-  { "pt": "respeitar a", "phrase": "a região cinegética a que respeita", "en": "relate to", "kind": "general", "ids": [5], "note": "Not respect: a que respeita, to which it relates." },
+  { "pt": "respeitar a", "phrase": "região cinegética a que respeita", "en": "relate to", "kind": "general", "ids": [5], "note": "Not respect: a que respeita, to which it relates." },
   { "pt": "restante", "phrase": "dos restantes pombos", "en": "remaining", "kind": "general", "ids": [246, 271], "note": "" },
   { "pt": "retilíneo", "phrase": "Rápido e retilíneo", "en": "straight", "kind": "general", "ids": [60, 285], "note": "" },
   { "pt": "sanidade", "phrase": "contribuindo para a sanidade das populações", "en": "health", "kind": "general", "ids": [338, 353], "note": "Not sanity." },

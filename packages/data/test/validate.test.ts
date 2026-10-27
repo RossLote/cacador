@@ -755,11 +755,31 @@ describe('rule 9: words', () => {
   });
 
   it('fails on a phrase in none of its questions, naming the file and the word', () => {
-    expectFailure((dir) => editWords(dir, 'species', (w) => (w[0]!.phrase = 'uma perdiz')), /words\/species\.json: word perdiz-vermelha phrase "uma perdiz" occurs in none of its questions \(4\)/);
+    expectFailure((dir) => editWords(dir, 'species', (w) => (w[0]!.phrase = 'uma perdiz')), /words\/species\.json: word perdiz-vermelha phrase "uma perdiz" occurs as whole words in none of its questions \(4\)/);
   });
 
   it('fails on a phrase that only occurs across the join of the stem and an option', () => {
-    expectFailure((dir) => editWords(dir, 'law', (w) => (w[0]!.phrase = 'mínima? Dezasseis')), /words\/law\.json: word idade mínima phrase "mínima\? Dezasseis" occurs in none of its questions \(1\)/);
+    expectFailure((dir) => editWords(dir, 'law', (w) => (w[0]!.phrase = 'mínima? Dezasseis')), /words\/law\.json: word idade mínima phrase "mínima\? Dezasseis" occurs as whole words in none of its questions \(1\)/);
+  });
+
+  it.each([
+    ['ends inside a word', 'method', (w: WordEntry[]) => (w[0]!.phrase = 'um fur'), /words\/method\.json: word furão phrase "um fur" occurs as whole words in none of its questions \(2\)/],
+    ['starts inside a word', 'method', (w: WordEntry[]) => (w[0]!.phrase = 'm furão'), /words\/method\.json: word furão phrase "m furão" occurs as whole words in none of its questions \(2\)/],
+    ['ends before an accented letter', 'law', (w: WordEntry[]) => (w[0]!.phrase = 'a idade mínim'), /words\/law\.json: word idade mínima phrase "a idade mínim" occurs as whole words in none of its questions \(1\)/],
+    ['ends at a hyphen', 'species', (w: WordEntry[]) => (w[0]!.phrase = 'A perdiz'), /words\/species\.json: word perdiz-vermelha phrase "A perdiz" occurs as whole words in none of its questions \(4\)/],
+  ])('fails on a phrase that %s, naming the file and the word', (_name, kind, change, message) => {
+    expectFailure((dir) => editWords(dir, kind, change), message);
+  });
+
+  it.each([
+    ['at the start of the stem', 'law', 'Qual é a idade'],
+    ['at the end of an option', 'method', 'furão'],
+    ['next to punctuation', 'law', 'idade mínima'],
+    ['taking in the punctuation that ends the stem', 'species', 'quintas-feiras?'],
+  ])('passes a phrase of whole words %s', (_name, kind, phrase) => {
+    const dir = copyBase();
+    editWords(dir, kind, (w) => (w[0]!.phrase = phrase));
+    expect(() => validate(dir)).not.toThrow();
   });
 
   it('passes a phrase that only a later one of its questions holds', () => {

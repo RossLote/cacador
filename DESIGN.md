@@ -438,7 +438,8 @@ the file and id. Rules:
    kind; `ids` is a non-empty ascending list of distinct bank ids. `pt` is unique across
    the twelve files in the same sense as rule 6. `phrase` occurs in at least one of the
    questions `ids` names, in its stem or an option, ignoring case and reading curly
-   quotes and apostrophes as straight ones (§ 3.3). Where `glossary/species.json` or
+   quotes and apostrophes as straight ones (§ 3.3), and as whole words, as rule 6 matches
+   a name: a letter, digit or hyphen next to either end is no boundary. Where `glossary/species.json` or
    `glossary/terms.json` has an entry whose `pt` equals the word's `pt` in rule 6's
    sense, `en` equals that entry's `en` ignoring case, or its gloss when that `en` is
    the Portuguese followed by a gloss in parentheses; and `en` never contains the

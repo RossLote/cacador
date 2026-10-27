@@ -4,7 +4,7 @@ import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { dataDir, imageByQuestion, inRanges } from './manifest.mjs';
 import { clean } from './parse.mjs';
-import { WORD_KINDS, phraseSite, straighten } from './words.mjs';
+import { WORD_KINDS, phraseSite, straighten, wholeWord } from './words.mjs';
 
 export class ValidationError extends Error {
   constructor(message) {
@@ -312,16 +312,8 @@ function checkMirrors(dir, files) {
   return byKind;
 }
 
-const escapeRegExp = (text) => text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-
 /** A glossary or word `pt` as rule 6 compares two of them: ignoring case, curly quotes read as straight ones. */
 const ptKey = (pt) => straighten(pt).toLowerCase();
-
-/**
- * Rule 6's whole-word match for `name` (already straightened), case-insensitive: a letter, digit or
- * hyphen on either side makes it part of a longer word.
- */
-const wholeWord = (name) => new RegExp(`(?<![\\p{L}\\p{N}-])${escapeRegExp(name)}(?![\\p{L}\\p{N}-])`, 'iu');
 
 /**
  * Reads the list file `rel` when it exists: a list of objects whose fields have the types `spec` names,
@@ -413,9 +405,9 @@ function glossOf(entry) {
 /**
  * Rule 9 (DESIGN.md § 4): words/ holds exactly the twelve kind files, each a list of words with exactly
  * the six fields of § 3.3, `kind` the file's, `ids` ascending distinct bank ids, `pt` unique across the
- * files as rule 6 compares it, `phrase` in a stem or option of one of the named questions, and `en` the
- * glossaries' (or their gloss) for the same pt and never holding the pt as a whole word. An empty file
- * passes. `glossaries` pairs each glossary file with its list, undefined when it does not exist.
+ * files as rule 6 compares it, `phrase` as whole words in a stem or option of one of the named questions,
+ * and `en` the glossaries' (or their gloss) for the same pt and never holding the pt as a whole word.
+ * An empty file passes. `glossaries` pairs each glossary file with its list, undefined when it does not exist.
  * Returns the counts.
  */
 function checkWords(dir, total, files, glossaries) {
@@ -452,7 +444,7 @@ function checkWords(dir, total, files, glossaries) {
       if (seen.has(key)) fail(rel, `${name} is listed twice (also in ${seen.get(key)})`);
       seen.set(key, `${rel} as ${word.pt}`);
       if (!word.ids.some((id) => phraseSite(questionById.get(id), word.phrase) !== undefined)) {
-        fail(rel, `${name} phrase "${word.phrase}" occurs in none of its questions (${word.ids.join(', ')})`);
+        fail(rel, `${name} phrase "${word.phrase}" occurs as whole words in none of its questions (${word.ids.join(', ')})`);
       }
       for (const { file, entry } of glossary.get(key) ?? []) {
         const en = glossOf(entry);

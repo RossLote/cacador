@@ -10,12 +10,20 @@ export const WORD_KINDS = [
 /** Curly apostrophes and quotes become straight ones, so a glossary name matches the bank's typography. */
 export const straighten = (text) => text.replace(/’/g, "'").replace(/[“”]/g, '"');
 
+const escapeRegExp = (text) => text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
 /**
- * Where `phrase` starts in `text`, ignoring case and reading curly quotes as straight ones, or -1.
- * Both changes keep every character in place, so the index and the phrase's length cut the phrase
- * out of `text` as the bank prints it.
+ * The whole-word match for `name` (already straightened), case-insensitive: a letter, digit or hyphen
+ * on either side makes it part of a longer word. Rule 6 and rule 9 match a name and a phrase with it.
  */
-export const findPhrase = (text, phrase) => straighten(text).toLowerCase().indexOf(straighten(phrase).toLowerCase());
+export const wholeWord = (name) => new RegExp(`(?<![\\p{L}\\p{N}-])${escapeRegExp(name)}(?![\\p{L}\\p{N}-])`, 'iu');
+
+/**
+ * Where `phrase` first starts in `text` as whole words (wholeWord), ignoring case and reading curly
+ * quotes as straight ones, or -1. Straightening keeps every character in place, so the index and the
+ * phrase's length cut the phrase out of `text` as the bank prints it.
+ */
+export const findPhrase = (text, phrase) => straighten(text).search(wholeWord(straighten(phrase)));
 
 /**
  * Where a question holds `phrase` (findPhrase), each field on its own so a phrase never matches across the join of
