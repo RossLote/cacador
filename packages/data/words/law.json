@@ -2,10 +2,10 @@
   { "pt": "acreditado", "phrase": "membro do corpo diplomático acreditado em Portugal", "en": "accredited", "kind": "law", "ids": [8, 9], "note": "Not believed: officially recognised by the host country." },
   { "pt": "agente", "phrase": "Os agentes das autoridades", "en": "officer", "kind": "law", "ids": [1], "note": "An officer of the police or another authority, not an agent." },
   { "pt": "Assembleia da República", "phrase": "os Deputados à Assembleia da República", "en": "Assembly of the Republic", "kind": "law", "ids": [1], "note": "The Portuguese parliament." },
-  { "pt": "associado", "phrase": "Só os caçadores associados e os convidados", "en": "member", "kind": "law", "ids": [388, 413, 415], "note": "A member of an association or hunting zone; sócio is the everyday word." },
+  { "pt": "associado", "phrase": "Só os caçadores associados e os convidados", "en": "member", "kind": "law", "ids": [388, 413, 415], "note": "A member of an association or of a hunting zone; sócio is the everyday word. As an adjective, associated." },
   { "pt": "ato venatório", "phrase": "exercer o ato venatório", "en": "act of hunting", "kind": "law", "ids": [8, 408, 466], "note": "The law's name for the act of hunting itself." },
   { "pt": "bilhete de identidade", "phrase": "sem ser portador de bilhete de identidade", "en": "identity card", "kind": "law", "ids": [409], "note": "The old Portuguese identity card, now the cartão de cidadão." },
-  { "pt": "caducar", "phrase": "caduca", "en": "lapse", "kind": "law", "ids": [4], "note": "Of a certificate or licence, to stop being valid by law." },
+  { "pt": "caducar", "phrase": "caduca", "en": "lapse", "kind": "law", "ids": [4], "note": "Of a certificate or licence, to stop being valid by law. Folha caduca is a deciduous leaf." },
   { "pt": "caducidade", "phrase": "o final da sua caducidade", "en": "expiry", "kind": "law", "ids": [3], "note": "From caducar, to lapse. Folha caduca is a deciduous leaf." },
   { "pt": "carta de caçador", "phrase": "A carta de caçador pode ser renovada", "en": "hunter's certificate", "kind": "law", "ids": [1, 2, 3, 4, 337, 400, 409], "note": "The qualification won by passing this exam, not the hunting licence bought for a period." },
   { "pt": "cidadão", "phrase": "Ser cidadão nacional", "en": "citizen", "kind": "law", "ids": [2], "note": "" },
@@ -63,10 +63,10 @@
   { "pt": "sinal", "phrase": "Este sinal indica", "en": "sign", "kind": "law", "ids": [373, 375, 393, 394, 397, 401], "note": "Here a sign posted on the land; also a signal or a mark." },
   { "pt": "sinal de proibição de caçar", "phrase": "sinalizados com o sinal de proibição de caçar", "en": "no-hunting sign", "kind": "law", "ids": [393, 401], "note": "" },
   { "pt": "sinalização", "phrase": "carece obrigatoriamente de sinalização", "en": "signposting", "kind": "law", "ids": [372, 380], "note": "" },
-  { "pt": "sócio", "phrase": "desde que seja sócio de um clube de caçadores", "en": "member", "kind": "law", "ids": [398, 414], "note": "A member of a club; associado is the formal word for a member of an association." },
+  { "pt": "sócio", "phrase": "desde que seja sócio de um clube de caçadores", "en": "member", "kind": "law", "ids": [398, 414], "note": "A member, as of a club or a hunting zone, and also a business partner. Associado is the law's word for a member of an association." },
   { "pt": "sorteio público", "phrase": "contemplado em sorteio público", "en": "public draw", "kind": "law", "ids": [413], "note": "The lottery that allots places to hunt in a municipal hunting zone." },
   { "pt": "taxa de álcool no sangue", "phrase": "uma taxa de álcool no sangue inferior a 1,2 g/l", "en": "blood alcohol level", "kind": "law", "ids": [385, 395, 403, 405, 411], "note": "" },
   { "pt": "titular", "phrase": "deve ser titular de", "en": "holder", "kind": "law", "ids": [4, 7, 10], "note": "Not a title: the person a certificate or licence belongs to." },
   { "pt": "validade", "phrase": "o final da sua validade", "en": "validity", "kind": "law", "ids": [3], "note": "" },
-  { "pt": "venatório", "phrase": "praticar o exercício venatório", "en": "hunting", "kind": "law", "ids": [20, 479], "note": "The law's formal word for hunting, as in ato venatório and período venatório." }
+  { "pt": "venatório", "phrase": "praticar o exercício venatório", "en": "hunting", "kind": "law", "ids": [20, 479], "note": "The law's formal adjective for hunting, as in ato venatório and período venatório. Caça is the everyday word." }
 ]
