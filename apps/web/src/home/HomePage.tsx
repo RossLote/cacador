@@ -1,4 +1,4 @@
-import { ChevronRight, SlidersHorizontal, Target, Timer, Zap, type LucideIcon } from 'lucide-react';
+import { BookOpen, ChevronRight, SlidersHorizontal, Target, Timer, Zap, type LucideIcon } from 'lucide-react';
 import { Link } from 'react-router';
 import { FOCUS_RING, PLATE, RUST_HOVER } from '@/components/styles';
 import { Progress } from '@/components/ui/progress';
@@ -14,6 +14,7 @@ import {
   readiness,
   ROUND_SIZE,
   roundPath,
+  WORD_ROUND_SIZE,
   type Readiness,
   type StateMap,
 } from '@/model';
@@ -130,16 +131,16 @@ interface StartCardProps {
   Icon: LucideIcon;
   title: string;
   line: string;
-  /** The round is the one thing to do next, filled rust; Practice and Exam are cards with the ink hairline. */
+  /** The round is the one thing to do next, filled rust; Words, Practice and Exam are cards with the ink hairline. */
   primary: boolean;
-  /** The round's card takes the whole row; Practice and Exam sit side by side under it. */
+  /** The round's card and the words card take the whole row; Practice and Exam sit side by side under them. */
   wide?: boolean;
 }
 
 /**
- * One of the three start cards (D7, cac-zdk). Its accessible name is the
- * title, a space, then the line, so a link named exactly "Practice" or "Exam"
- * is the tab, never the card (D5).
+ * One of the four start cards (D7, cac-zdk, cac-zqe D16). Its accessible
+ * name is the title, a space, then the line, so a link named exactly
+ * "Practice" or "Exam" is the tab, never the card (D5).
  */
 function StartCard({ to, Icon, title, line, primary, wide = false }: StartCardProps) {
   return (
@@ -162,8 +163,9 @@ function StartCard({ to, Icon, title, line, primary, wide = false }: StartCardPr
 
 /**
  * Home (DESIGN.md § 6.3, D7): the hub. The header, the readiness plate, the
- * exam in progress when there is one, the round card over the Practice and
- * Exam cards, and the weakest topics once a topic is started.
+ * exam in progress when there is one, the round card, the words card under
+ * it (cac-zqe D16), the Practice and Exam cards side by side under that, and
+ * the weakest topics once a topic is started.
  */
 export function HomePage() {
   const { t } = useI18n();
@@ -177,6 +179,14 @@ export function HomePage() {
       {data?.exam && <ExamInProgressCard key={data.exam.id} exam={data.exam} onDeadline={reload} />}
       <div className="grid grid-cols-2 gap-2.5">
         <StartCard to={roundPath()} Icon={Zap} title={t.home.roundTitle(ROUND_SIZE)} line={t.home.roundLine} primary wide />
+        <StartCard
+          to="/words"
+          Icon={BookOpen}
+          title={t.home.wordsTitle}
+          line={t.home.wordsLine(WORD_ROUND_SIZE)}
+          primary={false}
+          wide
+        />
         <StartCard to="/practice" Icon={Target} title={t.common.nav.practice} line={t.home.practiceLine} primary={false} />
         <StartCard
           to="/exam"

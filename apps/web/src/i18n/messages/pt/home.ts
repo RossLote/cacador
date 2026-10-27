@@ -15,6 +15,8 @@ export const home: Messages['home'] = {
   examStatus: (minutes, answered, size) => `${minutesLeft(minutes)} · ${answered} de ${size} respondidas`,
   roundTitle: (size) => `Ronda de ${size}`,
   roundLine: 'As mais fracas primeiro e depois a pontuação',
+  wordsTitle: 'Palavras',
+  wordsLine: (size) => `${size} termos do banco · do português para o inglês`,
   practiceLine: 'As mais fracas primeiro',
   examLine: (size, minutes) => `${size} perguntas · ${minutes} min`,
   weakestTopics: 'Temas mais fracos',

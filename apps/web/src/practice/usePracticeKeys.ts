@@ -14,8 +14,9 @@ interface PracticeKeys {
   answered: boolean;
   onAnswer: (option: OptionKey) => void;
   onNext: () => void;
-  onPeekChange: (peeking: boolean) => void;
-  /** The practice page's own region: keys from a control outside it (the layout's back link) are left alone. */
+  /** Space peeks while held; absent where there is no peek (the words drill, DESIGN.md § 6.11), and Space is left unbound. */
+  onPeekChange?: (peeking: boolean) => void;
+  /** The page's own region: keys from a control outside it (the layout's back link) are left alone. */
   region: RefObject<HTMLElement | null>;
   /** The layout's dock, which holds the page's hold button and Hint (cac-2tb): part of the page for its keys. */
   dock: HTMLElement | null;
@@ -53,6 +54,9 @@ function isControl(target: EventTarget | null): boolean {
  * `region` or inside the dock), never from the back link or the tab bar;
  * Enter on a focused button or link activates that control instead, so Hint
  * stays reachable after answering and Enter on Next advances once.
+ *
+ * The words drill takes the same keys without the peek (DESIGN.md § 6.11): it
+ * passes no `onPeekChange`, and Space is then left to the browser.
  */
 export function usePracticeKeys({ answered, onAnswer, onNext, onPeekChange, region, dock }: PracticeKeys): void {
   useEffect(() => {
@@ -65,6 +69,7 @@ export function usePracticeKeys({ answered, onAnswer, onNext, onPeekChange, regi
     const keydown = (event: KeyboardEvent) => {
       if (event.ctrlKey || event.metaKey || event.altKey || isTextEntry(event.target) || !onPage(event.target)) return;
       if (event.key === ' ') {
+        if (onPeekChange === undefined) return;
         event.preventDefault();
         if (!event.repeat) onPeekChange(true);
         return;
@@ -81,14 +86,14 @@ export function usePracticeKeys({ answered, onAnswer, onNext, onPeekChange, regi
       if (!event.repeat) onAnswer(option);
     };
     const keyup = (event: KeyboardEvent) => {
-      if (event.key !== ' ') return;
+      if (event.key !== ' ' || onPeekChange === undefined) return;
       // A focused button would otherwise click on Space's keyup.
       if (!isTextEntry(event.target) && onPage(event.target)) event.preventDefault();
       onPeekChange(false);
     };
-    const stopPeek = () => onPeekChange(false);
+    const stopPeek = () => onPeekChange?.(false);
     const hidden = () => {
-      if (document.visibilityState === 'hidden') onPeekChange(false);
+      if (document.visibilityState === 'hidden') onPeekChange?.(false);
     };
     window.addEventListener('keydown', keydown);
     window.addEventListener('keyup', keyup);

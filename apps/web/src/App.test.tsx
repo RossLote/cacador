@@ -21,17 +21,19 @@ const SCREENS = [
   ['/progress', 'progress'],
   ['/settings', 'settings'],
   ['/flagged', 'flagged'],
+  ['/words', 'words'],
 ] as const;
 
 /**
- * Home's links inside main (epic cac-8cn D5, D7): the header's Settings control, named
- * exactly the nav word, and the two cards, named by their title and line, so an exact
- * Practice or Exam query finds the tab only. Progress is the tab's; Flagged is reached
- * from Settings and Progress.
+ * Home's links inside main (epic cac-8cn D5, D7, cac-zqe D16): the header's Settings
+ * control, named exactly the nav word, and the Words, Practice and Exam cards, named by
+ * their title and line, so an exact Practice or Exam query finds the tab only. Progress
+ * is the tab's; Flagged is reached from Settings and Progress.
  */
 const HOME_BUTTONS = (t: Messages) =>
   [
     ['/settings', t.common.nav.settings],
+    ['/words', `${t.home.wordsTitle} ${t.home.wordsLine(10)}`],
     ['/practice', `${t.common.nav.practice} ${t.home.practiceLine}`],
     ['/exam', `${t.common.nav.exam} ${t.home.examLine(20, 30)}`],
   ] as const;
@@ -98,7 +100,7 @@ describe('routes', () => {
 
 type Messages = (typeof MESSAGES)[Locale];
 
-/** Every route the bar shows on, with the tab its screen makes current: none on results, Settings, Flagged and not-found (D5). */
+/** Every route the bar shows on, with the tab its screen makes current: none on results, Settings, Flagged, Words and not-found (D5). */
 const TAB_BAR_ROUTES: readonly (readonly [string, keyof Messages['common']['nav'] | undefined])[] = [
   ['/', 'home'],
   ['/practice', 'practice'],
@@ -108,6 +110,7 @@ const TAB_BAR_ROUTES: readonly (readonly [string, keyof Messages['common']['nav'
   ['/PROGRESS/', 'progress'],
   ['/settings', undefined],
   ['/flagged', undefined],
+  ['/words', undefined],
   ['/exam/results/1', undefined],
   ['/flags', undefined],
   ['/exam/nowhere', undefined],
@@ -121,6 +124,7 @@ const HEADER_ROUTES: readonly (readonly [string, (t: Messages) => string])[] = [
   ['/progress', (t) => t.common.nav.progress],
   ['/settings', (t) => t.common.nav.settings],
   ['/flagged', (t) => t.common.nav.flagged],
+  ['/words', (t) => t.words.title],
   ['/flags', (t) => t.common.notFound.title],
   ['/exam/nowhere', (t) => t.common.notFound.title],
 ];
@@ -302,5 +306,31 @@ describe('the shell (DESIGN.md § 6.3, § 8.2, epic cac-8cn D5, D6)', () => {
     expect(document.activeElement).toBe(document.body);
     await user.keyboard('a');
     expect(await option(0)).toHaveAttribute('aria-pressed', 'true');
+  });
+
+  /** The words drill's options, once the drill is on screen. */
+  const wordOptions = () => within(screen.getByRole('group', { name: en.words.options })).getAllByRole('button');
+
+  it('opens the words drill from Home\'s Words card, the tab bar showing with no tab current and the dock empty', async () => {
+    const user = userEvent.setup();
+    renderAt('/');
+    await user.click(screen.getByRole('link', { name: `${en.home.wordsTitle} ${en.home.wordsLine(10)}` }));
+    expect(screen.getByText(en.words.position(1, 10))).toBeInTheDocument();
+    expect(wordOptions()).toHaveLength(3);
+    expect(tabLinks(en).filter((link) => link.hasAttribute('aria-current'))).toEqual([]);
+    expect(dock()).toBeEmptyDOMElement();
+  });
+
+  it('keeps the words drill\'s keys off the tab bar and the back control, and on the page', async () => {
+    const user = userEvent.setup();
+    renderAt('/words');
+    within(tabBar(en) as HTMLElement).getByRole('link', { name: en.common.nav.home }).focus();
+    await user.keyboard('1');
+    screen.getByRole('link', { name: en.common.backToHome }).focus();
+    await user.keyboard('2');
+    expect(wordOptions().map((button) => button.getAttribute('aria-pressed'))).toEqual(['false', 'false', 'false']);
+    (document.activeElement as HTMLElement).blur();
+    await user.keyboard('3');
+    expect(wordOptions()[2]).toHaveAttribute('aria-pressed', 'true');
   });
 });

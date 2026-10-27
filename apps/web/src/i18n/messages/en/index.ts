@@ -11,7 +11,8 @@ import { home } from './home';
 import { practice } from './practice';
 import { progress } from './progress';
 import { settings } from './settings';
+import { words } from './words';
 
-export const en = { common, home, practice, exam, progress, settings, flagged };
+export const en = { common, home, practice, exam, progress, settings, flagged, words };
 
 export type Messages = typeof en;

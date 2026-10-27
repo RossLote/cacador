@@ -4,9 +4,9 @@ const minutesLeft = (minutes: number) => (minutes === 1 ? '1 minute left' : `${m
 
 /**
  * Home (DESIGN.md § 6.3, epic cac-8cn D7): readiness against the pass line, the
- * unseen count, the exam in progress, the Practice and Exam cards and the
- * weakest topics. The card titles are common.nav's words; the row words are
- * Progress's, duplicated here rather than shared (D18).
+ * unseen count, the exam in progress, the Quick 10, Words, Practice and Exam
+ * cards and the weakest topics. The Practice and Exam titles are common.nav's
+ * words; the row words are Progress's, duplicated here rather than shared (D18).
  */
 export const home = {
   /** The page heading: the app name. */
@@ -26,6 +26,10 @@ export const home = {
   roundTitle: (size: number) => `Quick ${size}`,
   /** The line on the round card: the same draw as Practice, with an end. */
   roundLine: 'Weak ones first, then your score',
+  /** The title of the words drill's card (DESIGN.md § 6.11). */
+  wordsTitle: 'Words',
+  /** The line on the words card: the round's size, and the way the drill asks. */
+  wordsLine: (size: number) => `${size} terms from the bank · Portuguese to English`,
   /** The line on the Practice card. */
   practiceLine: 'Weak ones first',
   /** The line on the Exam card: the exam's size and its minutes. */
