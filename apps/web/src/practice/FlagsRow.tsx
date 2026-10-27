@@ -1,13 +1,13 @@
 import { Flag as FlagIcon } from 'lucide-react';
 import { useCallback, useId, useRef, useState } from 'react';
 import { FailureLine } from '@/components/FailureLine';
+import { OWN_KEYS_ATTRIBUTE } from '@/components/question/useAnswerKeys';
 import { CHIP } from '@/components/styles';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useI18n } from '@/i18n/useI18n';
 import { useLoaded } from '@/lib/useLoaded';
 import { FLAG_KINDS, getFlags, removeFlag, setFlag, type Flag, type FlagKind } from '@/storage';
-import { OWN_KEYS_ATTRIBUTE } from './usePracticeKeys';
 
 /** One kind's flag on this question: the draft in the note field, and whether the field is open. */
 interface KindState {

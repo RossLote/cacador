@@ -71,6 +71,7 @@ export function WordCard({
       </div>
       <OptionList
         label={t.words.options}
+        marks={t.words}
         texts={drawn.texts}
         lang="en"
         answer={drawn.answer}

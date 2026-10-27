@@ -148,6 +148,7 @@ export function QuestionCard({
 
       <OptionList
         label={card.options}
+        marks={card}
         texts={shown.options}
         lang={textLang}
         answer={question.answer}

@@ -1,11 +1,18 @@
 import type { OptionKey } from '@cacador/data';
 import { Check, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { useI18n } from '@/i18n/useI18n';
 import { cn } from '@/lib/utils';
 import { OPTION_KEYS } from '@/storage';
 
 type Mark = 'right' | 'wrong' | 'correct';
+
+/** The mark words at the end of a revealed row, in the interface language, from the caller's own messages. */
+export interface OptionMarks {
+  right: string;
+  wrong: string;
+  /** The right row's name to a screen reader when it was not picked. */
+  correctAnswer: string;
+}
 
 /** The result mark an option carries: none until revealed, then the chosen one right or wrong and the answer correct. */
 function markOf(option: OptionKey, answer: OptionKey, selected: OptionKey | undefined, revealed: boolean): Mark | undefined {
@@ -41,25 +48,23 @@ function rowLook(mark: Mark | undefined, chosen: boolean): (typeof ROW)[keyof ty
  * The correct row the learner did not choose reads "Right" on screen and
  * "Correct answer" to a screen reader, the name it has always had (D12).
  */
-function MarkWord({ mark }: { mark: Mark }) {
-  const { t } = useI18n();
-  const card = t.practice.card;
+function MarkWord({ mark, words }: { mark: Mark; words: OptionMarks }) {
   return (
     <span className="flex shrink-0 items-center gap-1 self-center text-[13px] font-bold">
       {mark === 'wrong' ? (
         <>
           <X aria-hidden="true" className="size-5 text-rust" strokeWidth={1.75} />
-          <span className="text-ink">{card.wrong}</span>
+          <span className="text-ink">{words.wrong}</span>
         </>
       ) : (
         <span className="flex items-center gap-1 text-forest">
           <Check aria-hidden="true" className="size-5" strokeWidth={1.75} />
           {mark === 'right' ? (
-            card.right
+            words.right
           ) : (
             <>
-              <span aria-hidden="true">{card.right}</span>
-              <span className="sr-only">{card.correctAnswer}</span>
+              <span aria-hidden="true">{words.right}</span>
+              <span className="sr-only">{words.correctAnswer}</span>
             </>
           )}
         </span>
@@ -71,6 +76,8 @@ function MarkWord({ mark }: { mark: Mark }) {
 export interface OptionListProps {
   /** The group's accessible name, "Options" in the interface language. */
   label: string;
+  /** The words of the marks, Right, Wrong and Correct answer, in the interface language. */
+  marks: OptionMarks;
   /** Each row's text by its letter. */
   texts: Readonly<Record<OptionKey, string>>;
   /** The language of the texts: pt-PT for the bank, en for a peek or the words drill's English. */
@@ -93,7 +100,7 @@ export interface OptionListProps {
  * carrying `data-mark` (right, wrong or correct) once the result is revealed.
  * Controlled, like the card: it records nothing and handles no keys.
  */
-export function OptionList({ label, texts, lang, answer, selected, revealed, locked, onSelect }: OptionListProps) {
+export function OptionList({ label, marks, texts, lang, answer, selected, revealed, locked, onSelect }: OptionListProps) {
   return (
     <div role="group" aria-label={label} className="flex flex-col gap-2">
       {OPTION_KEYS.map((option) => {
@@ -127,7 +134,7 @@ export function OptionList({ label, texts, lang, answer, selected, revealed, loc
               <span className="sr-only">{option}. </span>
               <span lang={lang}>{texts[option]}</span>
             </span>
-            {mark && <MarkWord mark={mark} />}
+            {mark && <MarkWord mark={mark} words={marks} />}
           </Button>
         );
       })}

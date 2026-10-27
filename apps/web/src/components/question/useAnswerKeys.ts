@@ -9,7 +9,7 @@ const OPTION_BY_KEY: ReadonlyMap<string, OptionKey> = new Map(
   ]),
 );
 
-interface PracticeKeys {
+interface AnswerKeys {
   /** The current question is answered: option keys stop, Enter starts. */
   answered: boolean;
   onAnswer: (option: OptionKey) => void;
@@ -46,19 +46,20 @@ function isControl(target: EventTarget | null): boolean {
 }
 
 /**
- * The laptop keys of the practice page (D9), never the card's: A, B, C and
- * 1, 2, 3 answer while unanswered; Enter advances once answered; Space peeks
- * from keydown to keyup (repeats ignored, never a toggle, the page does not
- * scroll). Losing the window or the tab also ends a peek, so the English is
- * never left on. The keys act from the page itself (focus on the body, inside
- * `region` or inside the dock), never from the back link or the tab bar;
- * Enter on a focused button or link activates that control instead, so Hint
- * stays reachable after answering and Enter on Next advances once.
+ * The laptop keys of the practice page (D9) and the words drill, never the
+ * card's: A, B, C and 1, 2, 3 answer while unanswered; Enter advances once
+ * answered; Space peeks from keydown to keyup (repeats ignored, never a
+ * toggle, the page does not scroll). Losing the window or the tab also ends a
+ * peek, so the English is never left on. The keys act from the page itself
+ * (focus on the body, inside `region` or inside the dock), never from the back
+ * link or the tab bar; Enter on a focused button or link activates that
+ * control instead, so Hint stays reachable after answering and Enter on Next
+ * advances once.
  *
  * The words drill takes the same keys without the peek (DESIGN.md § 6.11): it
  * passes no `onPeekChange`, and Space is then left to the browser.
  */
-export function usePracticeKeys({ answered, onAnswer, onNext, onPeekChange, region, dock }: PracticeKeys): void {
+export function useAnswerKeys({ answered, onAnswer, onNext, onPeekChange, region, dock }: AnswerKeys): void {
   useEffect(() => {
     const onPage = (target: EventTarget | null): boolean =>
       !(target instanceof Node) ||

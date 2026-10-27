@@ -1202,9 +1202,9 @@ apps/web/
     home/                  HomePage: the header with the Settings control, the readiness
                            plate, the exam-in-progress card, the Quick 10, Words,
                            Practice and Exam cards, Weakest topics
-    practice/              PracticePage and PracticeSession, FlagsRow, usePracticeKeys (the
-                           laptop keys), usePracticePool (the query filter and its chip),
-                           recent.ts (the draw over the recent list)
+    practice/              PracticePage and PracticeSession, FlagsRow, usePracticePool (the
+                           query filter and its chip), recent.ts (the draw over the recent
+                           list)
     exam/                  ExamPage (the sub-routes), ExamStart (start or resume),
                            RunningExam with ExamMarkers and useExamClock, ExamResultsPage
                            (the score and the review)
@@ -1216,15 +1216,16 @@ apps/web/
                            of Progress and Settings), copyFormat.ts (the fixed copy text,
                            § 6.7)
     words/                 the words drill (§ 6.11): its page, the round of ten, the
-                           panel after answering, the score plate and the laptop keys
+                           panel after answering and the score plate
     notfound/              NotFoundPage, for any address that names no screen
     components/nav/        the tab bar, on every screen but the /exam route, the screen
                            header with the back control, on every screen but Home, and
                            dock.ts (the dock over the tab bar and the footer's scroll
                            padding, § 8.2)
     components/question/   QuestionCard with PeekButton and HintPanel, OptionList (the
-                           lettered option rows, shared with the words card), names.ts (a
-                           name in the interface language)
+                           lettered option rows, shared with the words card), useAnswerKeys
+                           (the laptop keys, shared by Practice and the words drill),
+                           names.ts (a name in the interface language)
     components/round/      RoundCounter (the "n of 10" in the screen header) and
                            RoundSummary (the score plate), shared by Practice's round and
                            the words drill

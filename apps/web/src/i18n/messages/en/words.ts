@@ -12,6 +12,12 @@ export const words = {
   position: (n: number, size: number) => `${n} of ${size}`,
   /** The name of the group of three option rows. */
   options: 'Options',
+  /** At the end of the picked row when it is right, and of the right row when it was not picked. */
+  right: 'Right',
+  /** At the end of the picked row when it is wrong. */
+  wrong: 'Wrong',
+  /** The right row's name to a screen reader when it was not picked, in place of "Right". */
+  correctAnswer: 'Correct answer',
   next: 'Next',
   /** The button under the round's last answer, in place of Next. */
   finish: 'Finish',
