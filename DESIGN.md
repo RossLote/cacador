@@ -1257,8 +1257,10 @@ e2e/
                            sits on, the Fraunces check
   acceptance.spec.ts       steps 2 to 9 of the Campo acceptance bar, in order, then four
                            steps after the bar
-  offline.spec.ts          step 10: Home, Practice, Fraunces and the 15 images from the
-                           cache, offline
+  words.spec.ts            steps 2 to 9 of the words bar (epic cac-zqe), in order, the
+                           words read from @cacador/data at run time
+  offline.spec.ts          step 10 of both bars: Home, Practice, Words, Fraunces and the
+                           15 images from the cache, offline
   installable.spec.ts      the manifest and icons under /cacador/, Chrome's installability check
   build-output.spec.ts     the built dist: the 404.html copy, the worker that skips
                            waiting, the /cacador/ precache and URLs, and step 11 (four
@@ -1551,7 +1553,8 @@ cac-8cn's Campo acceptance bar is performed at a phone's width. `look.ts` holds 
 Campo colour values the colour checks read (light and dark, § 8.5), the WCAG contrast
 helper and the check that an element is set in Fraunces and the face has loaded;
 `app.ts` holds the pieces the specs find by their words (the screen header, the tab
-bar, the question card, Practice's answer and Next). Six spec files:
+bar, the question card, Practice's answer and Next, the words drill's card and the word
+on it as its list entry). Seven spec files:
 
 - `round.spec.ts` walks a round of ten (§ 6.4): Home's rust Quick 10 card the width of
   the column over the hairline Practice card, the counter in the header from "1 of 10"
@@ -1569,8 +1572,19 @@ bar, the question card, Practice's answer and Next). Six spec files:
   ones listed and is listed as Passed on Progress; an exam with answers that survives a
   closed tab with its clock running; the past exams on Progress with Flagged and its
   copy; and export, clear and import;
-- `offline.spec.ts` is step 10: after one online load and a reload, Home and Practice
-  open offline with Fraunces available, and all 15 images answer from the cache;
+- `words.spec.ts` performs steps 2 to 9 of epic cac-zqe's words bar (§ 6.11), in order,
+  one named step each, in one fresh browser context with the page's random draws
+  seeded: Home's four start cards with Words under Quick 10; the drill's header, card and
+  three options of the word's kind; a wrong answer with Right, Wrong, the locked rows and
+  the panel's "Question N", sentence and note; the keys 2 and Enter; a round to Finish
+  and the score plate with its ten rows and the misses; Another 10, Home and a reload
+  never showing a word already answered; the drill in Português; and Clear progress
+  removing `cacador.words` and keeping `cacador.locale`. The list keeps growing, so the
+  spec pins nothing about it: it reads every word from `@cacador/data` at run time,
+  finds the word on screen by its Portuguese and answers right by that entry's `en`;
+- `offline.spec.ts` is step 10 of both bars: after one online load and a reload, Home,
+  Practice and Words open offline with Fraunces available, Words with a word of the list
+  and three options, and all 15 images answer from the cache;
 - `installable.spec.ts`: the manifest and icons served under `/cacador/`, and Chrome's
   own installability check reporting no errors;
 - `build-output.spec.ts` reads the built `dist` rather than the served pages, because
@@ -1591,6 +1605,9 @@ The orchestrator performs the other two steps of the bar by hand: step 1, a fres
 on Node 26 with `pnpm install`, `pnpm lint` and `pnpm test` green, and step 12, after
 the epic's merge into `main` and its push: the deploy workflow run for that push green,
 and the live site serving Home with the paper ground, the tab bar and the two fonts.
+Of the words bar, the orchestrator performs step 1 (the fresh clone, with `pnpm
+validate` printing a words line of 12 files and at least 700 words) and the Mac session
+step 11 after its push (the deploy green and the live Home showing Words under Quick 10).
 
 ### 8.11 Agents
 

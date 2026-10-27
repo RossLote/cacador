@@ -64,7 +64,8 @@ Caçador: a personal practice app for the Portuguese hunting licence theory exam
 Portuguese. The official bank of 506 questions is answered in Portuguese; the app
 shows the English only while a button is held, keeps a per-question history on the
 device, weights what was recently wrong toward the front of the next practice, offers
-a round of ten with the score at the end, and
+a round of ten with the score at the end, drills the bank's Portuguese terms in rounds
+of ten words asking their English, and
 runs 20-question, 30-minute mock exams with a pass line at 75 %. It is a static,
 installable, offline web app in `apps/web` with no backend, served by GitHub Pages at
 https://rosslote.github.io/cacador/; progress stays on the device in IndexedDB.
@@ -121,13 +122,18 @@ first push. Nothing else deploys, and e2e is not in the workflow.
 pnpm workspace of three packages: `packages/data`, `apps/web` and `e2e`
 (`pnpm-workspace.yaml` lists `packages/*`, `apps/*` and `e2e`).
 
-- `packages/data`: the question bank as data. `source/` holds the official PDF and a
-  reference parse; `questions/` holds the Portuguese questions in 18 chunk files, one
+- `packages/data`: the question bank as data. `source/` holds the official PDF, a
+  reference parse, and the words drill's two writer sources, `terms-inventory.json`
+  (the 739 terms found in the bank) and `words-sample.json` (the 17-entry precedent),
+  never imported by the app or the validator; `questions/` holds the Portuguese questions in 18 chunk files, one
   section or species group each, never more than 51 questions; `translations/en/` and
   `hints/en/` mirror those file names; `images/` holds the 14 species photos and
   `sinal.jpg`, the sign shared by four questions; `glossary/` holds species and term
-  lists; `manifest.json` lists sections, topics and chunks with their id ranges. `scripts/extract.mjs` and `scripts/validate.mjs` build
-  and check it. `src/index.ts` is the typed loader the app imports. The layout and
+  lists; `words/` holds the words drill's list, one hand-maintained file per kind of
+  term, twelve files (`species.json` to `general.json`), each entry `{ pt, phrase, en,
+  kind, ids, note }`; `manifest.json` lists sections, topics and chunks with their id
+  ranges. `scripts/extract.mjs` and `scripts/validate.mjs` build and check it (rule 9
+  checks the words). `src/index.ts` is the typed loader the app imports. The layout and
   shapes are fixed in `DESIGN.md` § 3 and § 4.
 - `apps/web` (`@cacador/web`): Vite 8 with base `/cacador/`, React 19, TypeScript,
   Tailwind v4 with the Campo light and dark tokens following `prefers-color-scheme`,
@@ -135,13 +141,13 @@ pnpm workspace of three packages: `packages/data`, `apps/web` and `e2e`
   shadcn/ui style `base-nova` on `@base-ui/react` (the generated components in
   `src/components/ui/`). `src/main.tsx` mounts `BrowserRouter` with the basename from
   `import.meta.env.BASE_URL`; `src/App.tsx` holds the routes (`/`, `/practice`,
-  `/exam/*`, `/progress`, `/settings`, `/flagged`, and a not-found page for any other
+  `/exam/*`, `/progress`, `/words`, `/settings`, `/flagged`, and a not-found page for any other
   address) and the shared layout. The menu is a bottom tab bar (Home, Practice, Exam,
   Progress) on every screen but the `/exam` route; every screen but Home opens with a
   screen header holding the back control to Home. Under `src/`:
   - one folder per screen, each with its page and its tests: `home` (the header with
-    the Settings control, readiness, the exam-in-progress card, the Quick 10, Practice
-    and Exam cards, Weakest topics), `practice` (the session, the flags row,
+    the Settings control, readiness, the exam-in-progress card, the Quick 10, Words,
+    Practice and Exam cards, Weakest topics), `practice` (the session, the flags row,
     the laptop keys, the focused-practice pool from the query and `recent.ts`, the
     draw over the no-repeat window, and the round from `?round=`: the counter in the
     header and `RoundSummary`, the score plate), `exam` (`ExamPage` owns the sub-routes:
@@ -149,7 +155,10 @@ pnpm workspace of three packages: `packages/data`, `apps/web` and `e2e`
     review), `progress` (the day bars, the topic, section and pattern lists, past
     exams), `settings` (language, export and share, import, clear), `flagged` (the list,
     `FlaggedLink`, the row to it on Progress and Settings, and `copyFormat.ts`, the fixed
-    copy text) and `notfound` (the page for an address that names no screen);
+    copy text), `words` (the words drill: `WordsPage` with the round of ten and the
+    laptop keys, `WordCard` with the panel of note and sentence after answering,
+    `sentence.ts`, and `WordsSummary`, the score plate) and `notfound` (the page for an
+    address that names no screen);
   - `components/nav/`: the tab bar, the screen header with the back control, and
     `dock.ts`, the dock over the tab bar where Practice pins Hold for English and Hint;
     `components/question/`: the question card, a controlled component with the peek
@@ -157,14 +166,15 @@ pnpm workspace of three packages: `packages/data`, `apps/web` and `e2e`
     the shared class strings (`FOCUS_RING`, `PLATE`, `CHIP`, `ROW_LINK`);
     `components/ui/`: the generated shadcn components;
   - `model/`: the study model, pure functions for the draw weights and the no-repeat
-    window, readiness, group accuracy, the day bars, the pools and the exam draw,
-    deadline and score;
+    window, readiness, group accuracy, the day bars, the pools, the exam draw,
+    deadline and score, and the words drill's options draw (`words.ts`);
   - `storage/`: the storage module, the only code that touches IndexedDB. `index.ts`
     is the API every screen uses, over an IndexedDB backend and a memory fallback
     with the same behaviour; it also holds the record and export types (`types.ts`),
-    the two browser key names (`keys.ts`), the exam finish (`finish.ts`), the import
+    the three browser key names (`keys.ts`), the exam finish (`finish.ts`), the import
     merge (`merge.ts`), the export file (`exportFile.ts`) and the no-repeat window in
-    sessionStorage, kept in memory when that is blocked (`recent.ts`);
+    sessionStorage, kept in memory when that is blocked (`recent.ts`), and the words
+    drill's shuffled pass in localStorage, kept in memory likewise (`words.ts`);
   - `pwa/`: the image map that puts the 15 pictures in `dist` and the precache,
     `registerServiceWorker.ts`, which registers vite-plugin-pwa's service worker by
     hand, asks for an update when the app returns to the foreground and notes when a
@@ -180,12 +190,16 @@ pnpm workspace of three packages: `packages/data`, `apps/web` and `e2e`
   the production build served by `vite preview` under `/cacador/`, with `@cacador/data`
   for the bank, at a 390 x 844 viewport (the Campo bar is performed at a phone's width).
   `app.ts` holds the pieces the specs find by their words (the screen header, the tabs,
-  the question card, Practice's answer and Next); `round.spec.ts` walks a round of ten
+  the question card, Practice's answer and Next, the words drill's card); `round.spec.ts` walks a round of ten
   from Home's card to the score and Another 10, then the Practice tab with no counter;
   `acceptance.spec.ts` performs steps 2 to 9 of the Campo acceptance bar (epic cac-8cn)
   in order and then four steps after the bar (an exam passed from the bank's key, the
-  closed-tab exam, the past exams and Flagged, export, clear and import); `offline.spec.ts` is step 10 (Home, Practice,
-  Fraunces from the cache and the 15 images); `build-output.spec.ts` reads the built
+  closed-tab exam, the past exams and Flagged, export, clear and import); `words.spec.ts` performs steps 2 to 9 of the words bar (epic cac-zqe) in order,
+  reading every word from `@cacador/data` at run time (Home's four cards, the drill's
+  card, a wrong answer and its panel, the keys, a round to its score plate, the pass
+  across Another 10, Home and a reload, Português, Clear progress);
+  `offline.spec.ts` is step 10 of both bars (Home, Practice and Words, Fraunces from
+  the cache and the 15 images); `build-output.spec.ts` reads the built
   `dist` (the `404.html` copy, the worker that skips waiting, the `/cacador/` precache
   and URLs) and carries step 11 (exactly four woff2 and the 15 jpg precache URLs, no font
   host); `update.spec.ts` rewrites `dist/sw.js` under an open page and checks the update
@@ -232,8 +246,9 @@ values, never built. `DESIGN.md` § 8.5 wins where they disagree.
   and `src/storage/types.ts`. A change to one of them, and a new dependency, route or
   screen, is a bead or pass of its own that names the files in its TOUCHES while no
   other worker holds them (`DESIGN.md` § 8.4).
-- Browser storage keys start with `cacador.`. There are two, `cacador.locale` in
-  localStorage and `cacador.recent` in sessionStorage; their names come from
+- Browser storage keys start with `cacador.`. There are three, `cacador.locale` and
+  `cacador.words` (the words pass, which Clear progress removes) in localStorage and
+  `cacador.recent` in sessionStorage; their names come from
   `apps/web/src/storage/keys.ts`, and nothing outside `apps/web/src/storage/` touches
   IndexedDB.
 - Species names in English follow `packages/data/glossary/species.json`, never a
