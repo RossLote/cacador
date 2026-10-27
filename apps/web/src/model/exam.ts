@@ -1,6 +1,6 @@
 import { questionById, type OptionKey } from '@cacador/data';
 import type { Exam } from '@/storage/types';
-import type { RandomSource } from './random';
+import { shuffled, type RandomSource } from './random';
 import { bankPool } from './pools';
 
 /** Questions in a mock exam (D3). */
@@ -17,15 +17,7 @@ export const EXAM_PASS_MARK = 15;
 
 /** 20 distinct question ids drawn uniformly from the bank (D3), by a partial Fisher-Yates shuffle. */
 export function drawExam(random: RandomSource = Math.random): number[] {
-  const ids = [...bankPool];
-  const size = Math.min(EXAM_SIZE, ids.length);
-  for (let i = 0; i < size; i++) {
-    const j = i + Math.floor(random() * (ids.length - i));
-    const picked = ids[j] as number;
-    ids[j] = ids[i] as number;
-    ids[i] = picked;
-  }
-  return ids.slice(0, size);
+  return shuffled(bankPool, random, EXAM_SIZE);
 }
 
 /** An exam once submitted: its finish time and score are set (D3). */

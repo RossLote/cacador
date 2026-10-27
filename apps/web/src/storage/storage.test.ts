@@ -22,6 +22,7 @@ import {
   saveExamAnswer,
   setFlag,
   storageMode,
+  WORDS_KEY,
 } from './index';
 import { correctOf, wrongOf } from '../../test/fixtures';
 import { answerExam } from '../../test/storage';
@@ -347,8 +348,9 @@ describe('memory fallback', () => {
 });
 
 describe('browser keys', () => {
-  it('names the two Web Storage keys', () => {
+  it('names the three Web Storage keys', () => {
     expect(LOCALE_KEY).toBe('cacador.locale');
     expect(RECENT_KEY).toBe('cacador.recent');
+    expect(WORDS_KEY).toBe('cacador.words');
   });
 });
