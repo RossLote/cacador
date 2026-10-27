@@ -3,6 +3,7 @@
   { "pt": "armadilha", "phrase": "utiliza armadilhas para capturar", "en": "trap", "kind": "method", "ids": [505], "note": "" },
   { "pt": "arqueiro", "phrase": "O Arqueiro ou Besteiro, ao disparar", "en": "archer", "kind": "method", "ids": [463, 464], "note": "" },
   { "pt": "auxiliar", "phrase": "auxiliares do caçador", "en": "assistant", "kind": "method", "ids": [19, 21, 36, 54, 55, 386, 405, 410], "note": "A helper the law allows a hunter, such as a batedor, matilheiro or negaceiro." },
+  { "pt": "barco", "phrase": "A utilização do barco na caça aos patos", "en": "boat", "kind": "method", "ids": [23, 24, 50], "note": "" },
   { "pt": "batedor", "phrase": "espécies levantadas por batedores", "en": "beater", "kind": "method", "ids": [21, 40], "note": "A helper who walks through cover to drive game towards the hunters." },
   { "pt": "batida", "phrase": "por processo diferente do de batida", "en": "driven hunt", "kind": "method", "ids": [30, 38, 39, 40, 49, 51, 56, 388, 416, 418, 421, 426, 429, 432, 436, 437, 440, 445, 448, 455, 456, 475, 479], "note": "Hunters wait at fixed posts while beaters drive the game to them." },
   { "pt": "besteiro", "phrase": "Besteiro deve disparar sobre o animal", "en": "crossbowman", "kind": "method", "ids": [463, 464], "note": "" },

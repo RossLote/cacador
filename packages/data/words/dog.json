@@ -2,6 +2,7 @@
   { "pt": "baixote", "phrase": "Os baixotes são cães principalmente adequados para", "en": "short-legged scent hound", "kind": "dog", "ids": [484, 492], "note": "Kept for the blood trail of wounded big game." },
   { "pt": "braco alemão", "phrase": "Braco alemão", "en": "German pointer", "kind": "dog", "ids": [486, 495], "note": "" },
   { "pt": "cachorro", "phrase": "15 cães e 2 cachorros", "en": "puppy", "kind": "dog", "ids": [30], "note": "In Portugal a puppy; in Brazil any dog." },
+  { "pt": "cão", "phrase": "Cães e cavalo", "en": "dog", "kind": "dog", "ids": [6, 19, 21, 25, 29, 30, 31, 38, 48, 50, 55, 76, 193, 481, 482, 483, 484, 485, 486, 488, 489, 490, 491, 492, 493, 494, 495, 497, 498], "note": "" },
   { "pt": "cão de busca", "phrase": "Um cão de busca e três cães galgos", "en": "search dog", "kind": "dog", "ids": [37, 38], "note": "In coursing, the dog that finds the hare for the greyhounds." },
   { "pt": "cão de caça", "phrase": "Treinar cães de caça", "en": "hunting dog", "kind": "dog", "ids": [6, 44, 390, 397, 475, 478, 480, 490, 505], "note": "" },
   { "pt": "cão de equipagem", "phrase": "Cães de equipagem", "en": "pack hound", "kind": "dog", "ids": [484, 489], "note": "Hounds that hunt together as a pack." },
