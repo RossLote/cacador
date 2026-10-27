@@ -2221,3 +2221,12 @@ merge, or makes a screen judgement call.
   `App.tsx` and the message indexes; the e2e bead owns `e2e/**` and `CLAUDE.md`; no new
   dependency (§ 8.4). Reason: hot files have one owner, so beads beside each other never
   share a file (epic cac-zqe D17, the planner's choice, reversible).
+- **2026-10-27, Runs end with a pull request.** The "No epic ceremony" entry above is
+  reversed on one point: an orchestrated run ends with a pull request against `main`,
+  which Ross merges, and that merge is the push that deploys. The rest of that entry
+  stands: no recorded walkthrough, beads carry the plan, the committed e2e suite performs
+  the acceptance bar, and lint and tests are the proof. The box never merges into `main`
+  and never pushes it. Reason: Ross, 2026-10-27, on finding that epic cac-zqe ended with
+  no pull request: "if the agent has the ability to create a pull request, then that is
+  the point where it's complete. Not before." Recorded for every repo in the orchestrate
+  skill and in the orchestrator's Caçador prompt (orchestrator PR #4).
