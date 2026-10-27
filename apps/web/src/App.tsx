@@ -10,6 +10,7 @@ import { NotFoundPage } from '@/notfound/NotFoundPage';
 import { PracticePage } from '@/practice/PracticePage';
 import { ProgressPage } from '@/progress/ProgressPage';
 import { SettingsPage } from '@/settings/SettingsPage';
+import { WordsPage } from '@/words/WordsPage';
 
 /**
  * The shared frame (DESIGN.md § 8.2, epic cac-8cn D5): one phone-first column
@@ -50,6 +51,7 @@ export default function App() {
         <Route path="practice" element={<PracticePage />} />
         <Route path="exam/*" element={<ExamPage />} />
         <Route path="progress" element={<ProgressPage />} />
+        <Route path="words" element={<WordsPage />} />
         <Route path="settings" element={<SettingsPage />} />
         <Route path="flagged" element={<FlaggedPage />} />
         <Route path="*" element={<NotFoundPage />} />

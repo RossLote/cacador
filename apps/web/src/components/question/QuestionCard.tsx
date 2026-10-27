@@ -1,5 +1,5 @@
 import { hintFor, translationFor, type OptionKey, type Question } from '@cacador/data';
-import { Check, Lightbulb, X } from 'lucide-react';
+import { Lightbulb } from 'lucide-react';
 import { useEffect, useId, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { useDock } from '@/components/nav/dock';
@@ -7,8 +7,8 @@ import { Button } from '@/components/ui/button';
 import { useI18n } from '@/i18n/useI18n';
 import { cn } from '@/lib/utils';
 import { imageUrl } from '@/pwa/images';
-import { OPTION_KEYS } from '@/storage';
 import { HintPanel } from './HintPanel';
+import { OptionList } from './OptionList';
 import { placeOf } from './names';
 import { PeekButton } from './PeekButton';
 
@@ -60,69 +60,6 @@ export interface QuestionCardProps {
    * open the card as they do when not docked.
    */
   docked?: boolean;
-}
-
-type Mark = 'right' | 'wrong' | 'correct';
-
-/** The result mark an option carries: none until revealed, then the chosen one right or wrong and the answer correct. */
-function markOf(option: OptionKey, question: Question, selected: OptionKey | undefined, revealed: boolean): Mark | undefined {
-  if (!revealed) return undefined;
-  if (option === selected) return option === question.answer ? 'right' : 'wrong';
-  return option === question.answer ? 'correct' : undefined;
-}
-
-/**
- * The look of each row state (DESIGN.md § 8.6): the row, then its letter circle.
- * Plain: card with the hairline, the letter outlined in ink. Chosen while
- * unrevealed (the running exam): filled ink, card text, the letter outlined in
- * card. Right or correct: moss with a forest hairline, the letter filled
- * forest. Wrong: clay with a rust hairline, the letter filled rust; the text
- * on clay stays ink (§ 8.5).
- */
-const ROW = {
-  plain: { row: '', letter: 'border-ink' },
-  chosen: { row: 'border-ink bg-ink text-card hover:bg-ink', letter: 'border-card' },
-  right: { row: 'border-forest bg-moss text-ink', letter: 'border-forest bg-forest text-on-fill' },
-  wrong: { row: 'border-rust bg-clay text-ink', letter: 'border-rust bg-rust text-on-fill' },
-} as const;
-
-function rowLook(mark: Mark | undefined, chosen: boolean): (typeof ROW)[keyof typeof ROW] {
-  if (mark === 'wrong') return ROW.wrong;
-  if (mark !== undefined) return ROW.right;
-  return chosen ? ROW.chosen : ROW.plain;
-}
-
-/**
- * The word and icon at the end of a revealed row: a forest tick and "Right" on
- * the correct row, a rust cross and "Wrong" (in ink) on the chosen wrong one.
- * The correct row the learner did not choose reads "Right" on screen and
- * "Correct answer" to a screen reader, the name it has always had (D12).
- */
-function MarkWord({ mark }: { mark: Mark }) {
-  const { t } = useI18n();
-  const card = t.practice.card;
-  return (
-    <span className="flex shrink-0 items-center gap-1 self-center text-[13px] font-bold">
-      {mark === 'wrong' ? (
-        <>
-          <X aria-hidden="true" className="size-5 text-rust" strokeWidth={1.75} />
-          <span className="text-ink">{card.wrong}</span>
-        </>
-      ) : (
-        <span className="flex items-center gap-1 text-forest">
-          <Check aria-hidden="true" className="size-5" strokeWidth={1.75} />
-          {mark === 'right' ? (
-            card.right
-          ) : (
-            <>
-              <span aria-hidden="true">{card.right}</span>
-              <span className="sr-only">{card.correctAnswer}</span>
-            </>
-          )}
-        </span>
-      )}
-    </span>
-  );
 }
 
 export function QuestionCard({
@@ -209,43 +146,16 @@ export function QuestionCard({
         {shown.question}
       </p>
 
-      <div role="group" aria-label={card.options} className="flex flex-col gap-2">
-        {OPTION_KEYS.map((option) => {
-          const mark = markOf(option, question, selected, revealed);
-          const isSelected = option === selected;
-          const look = rowLook(mark, isSelected && !revealed);
-          return (
-            <Button
-              key={option}
-              type="button"
-              variant="outline"
-              disabled={locked}
-              aria-pressed={isSelected}
-              data-mark={mark}
-              onClick={() => onSelect?.(option)}
-              className={cn(
-                'h-auto min-h-14 w-full justify-start gap-3 px-3.5 py-3 text-left text-[17px]/[1.35] font-normal whitespace-normal disabled:opacity-100',
-                look.row,
-              )}
-            >
-              <span
-                aria-hidden="true"
-                className={cn(
-                  'flex size-7 shrink-0 items-center justify-center rounded-full border font-heading text-[15px] font-semibold',
-                  look.letter,
-                )}
-              >
-                {option}
-              </span>
-              <span className="min-w-0 flex-1">
-                <span className="sr-only">{option}. </span>
-                <span lang={textLang}>{shown.options[option]}</span>
-              </span>
-              {mark && <MarkWord mark={mark} />}
-            </Button>
-          );
-        })}
-      </div>
+      <OptionList
+        label={card.options}
+        texts={shown.options}
+        lang={textLang}
+        answer={question.answer}
+        selected={selected}
+        revealed={revealed}
+        locked={locked}
+        onSelect={onSelect}
+      />
 
       {hintEnabled && hintOpen && <HintPanel ref={panel} id={panelId} hint={hintFor(question.id)} showNudge={revealed} />}
     </article>
