@@ -227,6 +227,8 @@ describe('WordsPage', () => {
     await user.click(screen.getByRole('button', { name: t.another(10) }));
     expect(counter(1)).toBeInTheDocument();
     expect(scorePlate()).not.toBeInTheDocument();
+    // The focus is on the new round's region, as after Next, not dropped to the body with the score plate.
+    expect(card().parentElement).toHaveFocus();
     for (let n = 1; n <= 3; n += 1) {
       expect(answered).not.toContain(shownWord().pt);
       answered.push((await answer(user, false)).pt);

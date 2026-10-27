@@ -87,11 +87,19 @@ export function WordsPage({ list = bankWords }: { list?: readonly Word[] }) {
     if (document.scrollingElement) document.scrollingElement.scrollTop = 0;
   }, [round.length]);
 
+  /** Another was tapped: the card's region is not mounted yet under the score plate, so it takes the focus once it is. */
+  const focusNewRound = useRef(false);
+  useEffect(() => {
+    if (!focusNewRound.current) return;
+    focusNewRound.current = false;
+    toTop(top.current);
+  }, [round]);
+
   const another = useCallback(() => {
     setRound(startRound(list));
     setPlace(0);
     setPicks([]);
-    toTop(top.current);
+    focusNewRound.current = true;
   }, [list]);
 
   const dock = useDock();
