@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState, type ReactNode } from 'react'
 import { FailureLine } from '@/components/FailureLine';
 import { useDock } from '@/components/nav/dock';
 import { QuestionCard } from '@/components/question/QuestionCard';
+import { useAnswerKeys } from '@/components/question/useAnswerKeys';
 import { RoundSummary } from '@/components/round/RoundSummary';
 import { Button } from '@/components/ui/button';
 import { useI18n } from '@/i18n/useI18n';
@@ -11,7 +12,6 @@ import { isCorrectOption } from '@/model';
 import { getStates, recordAnswer } from '@/storage';
 import { FlagsRow } from './FlagsRow';
 import { drawPracticeQuestion } from './recent';
-import { usePracticeKeys } from './usePracticeKeys';
 
 /** The question on screen and, once answered, the option picked. A new object per draw. */
 interface Shown {
@@ -173,15 +173,27 @@ export function PracticeSession({
     if (document.scrollingElement) document.scrollingElement.scrollTop = 0;
   }, []);
 
+  /**
+   * Another was tapped: the card's region is not mounted under the score plate, nor while the next question loads, so
+   * it takes the focus once the question is on screen, as the words drill's does.
+   */
+  const focusNewRound = useRef(false);
+  useEffect(() => {
+    if (!focusNewRound.current || shown === undefined) return;
+    focusNewRound.current = false;
+    top.current?.focus({ preventScroll: true });
+  }, [shown]);
+
   /** Another round of the same size: the tally starts again and the next question is drawn. */
   const another = useCallback(() => {
     setTally(NOTHING_YET);
     setScored(false);
+    focusNewRound.current = true;
     next();
   }, [next]);
 
   const dock = useDock();
-  usePracticeKeys({ answered, onAnswer: answer, onNext: roundOver ? finish : next, onPeekChange: setPeeking, region: top, dock });
+  useAnswerKeys({ answered, onAnswer: answer, onNext: roundOver ? finish : next, onPeekChange: setPeeking, region: top, dock });
 
   if (scored) {
     return (

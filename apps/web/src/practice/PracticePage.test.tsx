@@ -533,6 +533,8 @@ describe('PracticePage', () => {
       await user.click(another);
       expect(await shownId()).toBe(4);
       expect(scorePlate()).not.toBeInTheDocument();
+      // The focus is on the new round's region, as on the words drill, not dropped to the body with the score plate.
+      expect(screen.getByRole('article').parentElement).toHaveFocus();
       expect(counter()).toHaveTextContent(t.round.position(1, ROUND));
       await user.click(optionFor(wrongOf(4)));
       expect(nextButton()).toBeInTheDocument();

@@ -2,7 +2,7 @@ import type { Word } from '@cacador/data';
 import { act, render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router';
-import { describe, expect, it, vi } from 'vitest';
+import { describe, expect, it, onTestFinished, vi } from 'vitest';
 import { setLocale } from '@/i18n/locale';
 import { MESSAGES } from '@/i18n/messages';
 import { readiness, seededRandom } from '@/model';
@@ -108,8 +108,8 @@ describe('WordsPage', () => {
     const right = optionTexts().indexOf(word.en);
     expect(marks()[chosen]).toBe('wrong');
     expect(marks()[right]).toBe('correct');
-    expect(within(optionButtons()[chosen]!).getByText(en.practice.card.wrong)).toBeInTheDocument();
-    expect(within(optionButtons()[right]!).getByText(en.practice.card.right)).toBeInTheDocument();
+    expect(within(optionButtons()[chosen]!).getByText(t.wrong)).toBeInTheDocument();
+    expect(within(optionButtons()[right]!).getByText(t.right)).toBeInTheDocument();
     for (const button of optionButtons()) expect(button).toBeDisabled();
 
     const sentence = sentenceFor(word)!;
@@ -131,6 +131,28 @@ describe('WordsPage', () => {
     expect(shownWord()).not.toBe(word);
     expect(marks()).toEqual([null, null, null]);
     expect(screen.queryByRole('region')).not.toBeInTheDocument();
+  });
+
+  it('brings the panel and Next into view after an answer, and Next goes back to the top with the focus on the card', async () => {
+    const user = userEvent.setup();
+    // jsdom has no scrollingElement; the document element keeps a scrollTop, so it stands in.
+    Object.defineProperty(document, 'scrollingElement', { configurable: true, get: () => document.documentElement });
+    onTestFinished(() => {
+      Reflect.deleteProperty(document, 'scrollingElement');
+      document.documentElement.scrollTop = 0;
+    });
+    const scroll = vi.spyOn(Element.prototype, 'scrollIntoView');
+    renderWords();
+    expect(scroll).not.toHaveBeenCalled();
+    await answer(user, false);
+    expect(scroll).toHaveBeenCalledExactlyOnceWith({ block: 'nearest' });
+    expect(scroll.mock.contexts[0]).toBe(nextButton()!.parentElement);
+
+    document.documentElement.scrollTop = 400;
+    await user.click(nextButton()!);
+    expect(counter(2)).toBeInTheDocument();
+    expect(document.documentElement.scrollTop).toBe(0);
+    expect(card().parentElement).toHaveFocus();
   });
 
   it('shows the note when the word has one and none when it has not, the question over the sentence either way', async () => {

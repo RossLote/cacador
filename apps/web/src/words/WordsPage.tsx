@@ -3,11 +3,11 @@ import { ChevronRight } from 'lucide-react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useDock } from '@/components/nav/dock';
 import { ScreenHeader } from '@/components/nav/ScreenHeader';
+import { useAnswerKeys } from '@/components/question/useAnswerKeys';
 import { RoundCounter } from '@/components/round/RoundCounter';
 import { Button } from '@/components/ui/button';
 import { useI18n } from '@/i18n/useI18n';
 import { wordOptions } from '@/model';
-import { usePracticeKeys } from '@/practice/usePracticeKeys';
 import { nextRoundWords, spendWord } from '@/storage';
 import { WordCard, type DrawnWord } from './WordCard';
 import { WordsSummary } from './WordsSummary';
@@ -103,7 +103,7 @@ export function WordsPage({ list = bankWords }: { list?: readonly Word[] }) {
   }, [list]);
 
   const dock = useDock();
-  usePracticeKeys({ answered, onAnswer: answer, onNext: last ? finish : next, region: top, dock });
+  useAnswerKeys({ answered, onAnswer: answer, onNext: last ? finish : next, region: top, dock });
 
   const header = (
     <ScreenHeader
