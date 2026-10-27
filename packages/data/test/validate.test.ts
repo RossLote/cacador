@@ -82,7 +82,7 @@ function expectFailure(change: (dir: string) => void, message: RegExp): void {
 
 describe('validate on the real data', () => {
   it('passes and returns the counts of DESIGN.md § 2 and § 3, the translations on disk and the glossary sizes', () => {
-    const { translations, hints, glossaries, patterns, ...bank } = validate();
+    const { translations, hints, glossaries, patterns, words, ...bank } = validate();
     expect(bank).toEqual({ questions: 506, files: 18, sections: 11, topics: 29, images: 15, imageQuestions: 18 });
     // Phase 2 leaves every entry translated and none draft; reviewed grows as Ross studies.
     expect(translations).toMatchObject({ entries: 506, files: 18, draft: 0 });
@@ -94,6 +94,9 @@ describe('validate on the real data', () => {
     expect(glossaries.terms).toBeGreaterThan(0);
     expect(patterns).toBeGreaterThan(0);
     expect(patterns).toBeLessThanOrEqual(25);
+    // Phase 5 starts from the 17 precedent words in the twelve kind files and grows to about 720.
+    expect(words.files).toBe(12);
+    expect(words.entries).toBeGreaterThanOrEqual(17);
   });
 });
 
@@ -110,6 +113,7 @@ describe('validate on the tiny fixture', () => {
       hints: { entries: 2, files: 1, draft: 2, checked: 0, reviewed: 0 },
       glossaries: { species: 2, terms: 2 },
       patterns: 2,
+      words: { entries: 3, files: 12 },
     });
   });
 
@@ -699,6 +703,174 @@ describe('rule 8: pattern list and hint tags', () => {
     remove(dir, 'hints/patterns.json');
     editRows(dir, 'hints/en/02-beta.json', (h) => (h[1].patterns = ['no-such-pattern']));
     expect(() => validate(dir)).not.toThrow();
+  });
+});
+
+interface WordEntry {
+  pt: string;
+  phrase?: string;
+  en?: string;
+  kind?: string;
+  ids?: unknown;
+  note?: unknown;
+  [field: string]: unknown;
+}
+
+describe('rule 9: words', () => {
+  const editWords = (dir: string, kind: string, change: (w: WordEntry[]) => void) => editJson<WordEntry[]>(dir, `words/${kind}.json`, change);
+  /** A word that passes every check, in words/general.json unless `fields` say otherwise. */
+  const gato = (fields: Partial<WordEntry> = {}): WordEntry => ({ pt: 'gato', phrase: 'Um gato', en: 'cat', kind: 'general', ids: [2], note: '', ...fields });
+  const addWord = (dir: string, fields: Partial<WordEntry> = {}) => editWords(dir, String(fields.kind ?? 'general'), (w) => w.push(gato(fields)));
+
+  it('passes a phrase lowercased from an option, and an empty file, as the base holds them', () => {
+    // furão's phrase "um furão" is question 2's option B with its first letter lowercased, as levantar's
+    // is question 19's option B; nine of the base's twelve files are empty.
+    expect(validate(base).words).toEqual({ entries: 3, files: 12 });
+  });
+
+  it('passes twelve empty files', () => {
+    const dir = copyBase();
+    for (const kind of ['species', 'method', 'law']) writeText(dir, `words/${kind}.json`, '[]');
+    expect(validate(dir).words).toEqual({ entries: 0, files: 12 });
+  });
+
+  it('counts the words across the files', () => {
+    const dir = copyBase();
+    addWord(dir);
+    addWord(dir, { pt: 'cão', phrase: 'um cão', en: 'dog', kind: 'dog' });
+    expect(validate(dir).words).toEqual({ entries: 5, files: 12 });
+  });
+
+  it('fails on a file in words/ that is not one of the twelve, naming it', () => {
+    expectFailure((dir) => writeText(dir, 'words/birds.json', '[]'), /words\/birds\.json: is not one of the twelve kind files \(anatomy, dog, falconry, general, ground, habitat, law, life, method, species, time, weapon\)/);
+  });
+
+  it('fails on a missing kind file, or no words/ at all', () => {
+    expectFailure((dir) => remove(dir, 'words/time.json'), /words\/time\.json: is missing, words\/ holds a file for each of the twelve kinds/);
+    expectFailure((dir) => remove(dir, 'words'), /words\/anatomy\.json: is missing/);
+  });
+
+  it('fails on a file that is not a list', () => {
+    expectFailure((dir) => writeText(dir, 'words/time.json', '{}'), /words\/time\.json: does not hold a list/);
+  });
+
+  it('fails on a phrase in none of its questions, naming the file and the word', () => {
+    expectFailure((dir) => editWords(dir, 'species', (w) => (w[0]!.phrase = 'uma perdiz')), /words\/species\.json: word perdiz-vermelha phrase "uma perdiz" occurs in none of its questions \(4\)/);
+  });
+
+  it('fails on a phrase that only occurs across the join of the stem and an option', () => {
+    expectFailure((dir) => editWords(dir, 'law', (w) => (w[0]!.phrase = 'mínima? Dezasseis')), /words\/law\.json: word idade mínima phrase "mínima\? Dezasseis" occurs in none of its questions \(1\)/);
+  });
+
+  it('passes a phrase that only a later one of its questions holds', () => {
+    const dir = copyBase();
+    editWords(dir, 'species', (w) => (w[0]!.ids = [1, 2, 4]));
+    expect(() => validate(dir)).not.toThrow();
+  });
+
+  it.each([
+    ['curly in the bank, straight in the phrase', 'Uma galinha-d’água', "uma galinha-d'água"],
+    ['straight in the bank, curly in the phrase', "Uma galinha-d'água", 'uma galinha-d’água'],
+    ['curly double quotes in the bank', 'Uma “galinha”', 'uma "galinha"'],
+  ])('reads curly quotes as straight in a phrase: %s', (_name, option, phrase) => {
+    const dir = copyBase();
+    editRows(dir, 'questions/02-beta.json', (q) => (q[0].options.B = option));
+    addWord(dir, { pt: 'galinha-d’água', phrase, en: 'moorhen', kind: 'species', ids: [3] });
+    expect(() => validate(dir)).not.toThrow();
+  });
+
+  it.each([
+    ['species', 'species', (w: WordEntry[]) => (w[0]!.en = 'Wild duck'), /words\/species\.json: word perdiz-vermelha en "Wild duck" differs from "Red-legged partridge", the en of glossary\/species\.json/],
+    ['terms', 'method', (w: WordEntry[]) => (w[0]!.en = 'polecat'), /words\/method\.json: word furão en "polecat" differs from "ferret", the en of glossary\/terms\.json/],
+  ])('fails on an en that differs from the %s glossary for the same pt', (_name, kind, change, message) => {
+    expectFailure((dir) => editWords(dir, kind, change), message);
+  });
+
+  it('compares the en and the pt with the glossary ignoring case', () => {
+    const dir = copyBase();
+    editWords(dir, 'species', (w) => (w[0]!.en = 'red-legged Partridge'));
+    editWords(dir, 'method', (w) => (w[0]!.pt = 'Furão'));
+    expect(() => validate(dir)).not.toThrow();
+    editWords(dir, 'method', (w) => (w[0]!.en = 'ferrets'));
+    expect(() => validate(dir)).toThrow(/words\/method\.json: word Furão en "ferrets" differs from "ferret"/);
+  });
+
+  describe('a glossary en that is the pt followed by a gloss in parentheses', () => {
+    /** The base with the term montaria glossed, as the real terms.json writes it, and question 4 using it. */
+    const withMontaria = (en: string) => {
+      const dir = copyBase();
+      editJson<TermEntry[]>(dir, 'glossary/terms.json', (t) => t.push({ pt: 'montaria', en: 'montaria (driven big-game hunt with hounds)', note: '' }));
+      editRows(dir, 'questions/02-beta.json', (q) => (q[1].options.C = 'Apenas em montaria'));
+      addWord(dir, { pt: 'montaria', phrase: 'em montaria', en, kind: 'method', ids: [4] });
+      return dir;
+    };
+
+    it('takes the gloss as the en', () => {
+      expect(() => validate(withMontaria('driven big-game hunt with hounds'))).not.toThrow();
+      expect(() => validate(withMontaria('Driven big-game hunt with hounds'))).not.toThrow();
+    });
+
+    it.each(['montaria (driven big-game hunt with hounds)', 'driven hunt'])('rejects the en %s', (en) => {
+      expect(() => validate(withMontaria(en))).toThrow(/words\/method\.json: word montaria en ".*" differs from "driven big-game hunt with hounds", the en of glossary\/terms\.json/);
+    });
+  });
+
+  it('fails on an en containing its own pt as a whole word, matched as rule 6 matches', () => {
+    expectFailure((dir) => addWord(dir, { en: 'gato (cat)' }), /words\/general\.json: word gato en "gato \(cat\)" contains the word's pt/);
+    expectFailure((dir) => addWord(dir, { en: 'a Gato' }), /words\/general\.json: word gato en "a Gato" contains the word's pt/);
+    const dir = copyBase();
+    // A letter or a hyphen next to it makes it part of a longer word.
+    addWord(dir, { en: 'gatos, gato-bravo' });
+    expect(() => validate(dir)).not.toThrow();
+  });
+
+  it("fails on a kind that is not its file's", () => {
+    expectFailure((dir) => editWords(dir, 'species', (w) => (w[0]!.kind = 'general')), /words\/species\.json: word perdiz-vermelha has kind "general", the file's kind is "species"/);
+  });
+
+  it('fails on a pt also in another file, ignoring case and curly quotes', () => {
+    expectFailure(
+      (dir) => addWord(dir, { pt: 'Perdiz-Vermelha', phrase: 'a perdiz-vermelha', en: 'Red-legged partridge', ids: [4] }),
+      /words\/species\.json: word perdiz-vermelha is listed twice \(also in words\/general\.json as Perdiz-Vermelha\)/,
+    );
+    expectFailure(
+      (dir) => {
+        addWord(dir, { pt: 'd’água' });
+        addWord(dir, { pt: "d'água", kind: 'life' });
+      },
+      /words\/life\.json: word d'água is listed twice \(also in words\/general\.json as d’água\)/,
+    );
+  });
+
+  it('fails on a pt twice in one file', () => {
+    expectFailure((dir) => editWords(dir, 'species', (w) => w.push({ ...w[0]! })), /words\/species\.json: word perdiz-vermelha is listed twice/);
+  });
+
+  it.each([
+    ['unsorted', [3, 1], /words\/species\.json: word perdiz-vermelha ids are not ascending \(1 after 3\)/],
+    ['repeated', [3, 3], /words\/species\.json: word perdiz-vermelha names question 3 twice/],
+    ['below 1', [0, 3], /words\/species\.json: word perdiz-vermelha names question 0, which is not in 1-4/],
+    ['above the bank', [3, 5], /words\/species\.json: word perdiz-vermelha names question 5, which is not in 1-4/],
+    ['not an integer', [3.5], /words\/species\.json: word perdiz-vermelha names question 3\.5, which is not in 1-4/],
+    ['a string', ['3'], /words\/species\.json: word perdiz-vermelha names question 3, which is not in 1-4/],
+    ['empty', [], /words\/species\.json: word perdiz-vermelha names no question in ids/],
+    ['not a list', 3, /words\/species\.json: word perdiz-vermelha has no list "ids"/],
+  ])('fails on ids %s', (_name, ids, message) => {
+    expectFailure((dir) => editWords(dir, 'species', (w) => (w[0]!.ids = ids)), message);
+  });
+
+  it.each([
+    ['no phrase', (w: WordEntry[]) => delete w[0]!.phrase, /words\/law\.json: word idade mínima has no non-empty string "phrase"/],
+    ['an empty en', (w: WordEntry[]) => (w[0]!.en = ''), /words\/law\.json: word idade mínima has no non-empty string "en"/],
+    ['no kind', (w: WordEntry[]) => delete w[0]!.kind, /words\/law\.json: word idade mínima has no non-empty string "kind"/],
+    ['no ids', (w: WordEntry[]) => delete w[0]!.ids, /words\/law\.json: word idade mínima has no list "ids"/],
+    ['no note', (w: WordEntry[]) => delete w[0]!.note, /words\/law\.json: word idade mínima has no string "note"/],
+    ['a note that is not a string', (w: WordEntry[]) => (w[0]!.note = 7), /words\/law\.json: word idade mínima has no string "note"/],
+    ['an empty pt', (w: WordEntry[]) => (w[0]!.pt = ''), /words\/law\.json: word #1 has no non-empty string "pt"/],
+    ['an extra field', (w: WordEntry[]) => (w[0]!.status = 'draft'), /words\/law\.json: word idade mínima has the field "status", a word has only pt, phrase, en, kind, ids, note/],
+    ['an entry that is not an object', (w: WordEntry[]) => w.push('x' as unknown as WordEntry), /words\/law\.json: word #2 is not an object/],
+  ])('fails on a word with %s', (_name, change, message) => {
+    expectFailure((dir) => editWords(dir, 'law', change), message);
   });
 });
 

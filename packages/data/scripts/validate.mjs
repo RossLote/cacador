@@ -17,6 +17,7 @@ try {
       `glossaries ${c.glossaries.species} species, ${c.glossaries.terms} terms`,
   );
   console.log(`validate: ${entryLine('hints', c.hints)}; patterns ${c.patterns}`);
+  console.log(`validate: words ${c.words.entries} entries in ${c.words.files} files`);
 } catch (error) {
   if (!(error instanceof ValidationError)) throw error;
   console.error(`validate: ${error.message}`);

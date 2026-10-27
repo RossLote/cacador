@@ -20,6 +20,12 @@ export interface GlossaryCounts {
   terms: number;
 }
 
+/** The words/ files (DESIGN.md § 3.3): how many words, in how many kind files. */
+export interface WordCounts {
+  entries: number;
+  files: number;
+}
+
 export interface ValidationCounts {
   questions: number;
   files: number;
@@ -32,6 +38,7 @@ export interface ValidationCounts {
   glossaries: GlossaryCounts;
   /** Entries in hints/patterns.json, 0 when the file does not exist. */
   patterns: number;
+  words: WordCounts;
 }
 
 /** Reads and parses a JSON file under `dir`; throws a ValidationError naming the file when it cannot. */

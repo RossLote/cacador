@@ -1,10 +1,12 @@
-import { existsSync } from 'node:fs';
+import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import {
+  findPhrase,
   hintFor,
   manifest,
   patterns,
   questionById,
+  questionForWord,
   questions,
   questionsInSection,
   questionsInTopic,
@@ -13,7 +15,12 @@ import {
   topicOf,
   topics,
   translationFor,
+  wordKinds,
+  words,
+  type Word,
 } from '../src/index';
+
+const readData = (rel: string): unknown => JSON.parse(readFileSync(new URL(`../${rel}`, import.meta.url), 'utf8'));
 
 describe('loader', () => {
   it('holds all 506 questions in id order', () => {
@@ -71,5 +78,46 @@ describe('loader', () => {
     ['hints', hintFor],
   ] as const)('resolves %s that have passed the meaning pass or the check', (_, lookup) => {
     for (const id of [1, 229, 506]) expect(['checked', 'reviewed']).toContain(lookup(id)?.status);
+  });
+
+  // The loader lists the words/ files by hand too (src/index.ts); the validator makes words/ hold
+  // exactly the twelve kind files and every word's kind its file's, so the list must be the files'
+  // words kind by kind, or a file was never wired in or sits under another kind.
+  it('wires every words/ file into the loader under its kind', () => {
+    expect(readdirSync(new URL('../words', import.meta.url)).sort()).toEqual(wordKinds.map((kind) => `${kind}.json`));
+    expect(words).toEqual(wordKinds.flatMap((kind) => readData(`words/${kind}.json`) as Word[]));
+  });
+
+  it('holds the 17 precedent words, with the two fixes of DESIGN.md § 5 step 5', () => {
+    const sample = readData('source/words-sample.json') as Word[];
+    expect(sample).toHaveLength(17);
+    const byPt = new Map(words.map((w) => [w.pt, w]));
+    for (const { pt, kind } of sample) expect(byPt.get(pt)?.kind).toBe(kind);
+    expect(byPt.get('cio')).toMatchObject({ en: 'rut', note: expect.stringContaining('Heat') });
+    expect(byPt.get('seixa')?.en).toBe('Stock dove');
+  });
+
+  it('finds for every word the first of its questions whose stem or an option holds the phrase', () => {
+    for (const word of words) {
+      expect(word.ids).toContain(questionForWord(word)?.id);
+    }
+    const levantar = words.find((w) => w.pt === 'levantar');
+    if (!levantar) throw new Error('levantar missing');
+    // Its phrase is question 19's option B with the first letter lowercased.
+    const q = questionForWord(levantar);
+    expect(q?.id).toBe(19);
+    const start = findPhrase(q?.options.B ?? '', levantar.phrase);
+    expect(start).toBe(0);
+    expect(q?.options.B.slice(start, start + levantar.phrase.length)).toBe('Procurar, perseguir e levantar espécies de caça maior');
+    // Question 1 does not hold the phrase, so 19 is still the first that does.
+    expect(questionForWord({ ...levantar, ids: [1, 19, 40] })?.id).toBe(19);
+    expect(questionForWord({ ...levantar, ids: [1, 2] })).toBeUndefined();
+  });
+
+  it('matches a phrase ignoring case and reading curly quotes as straight ones, at its place in the text', () => {
+    expect(findPhrase('Uma galinha-d\u2019água', "GALINHA-D'ÁGUA")).toBe(4);
+    expect(findPhrase("Uma galinha-d'água", 'galinha-d\u2019água')).toBe(4);
+    expect(findPhrase('O \u201cpombo\u201d', '"pombo"')).toBe(2);
+    expect(findPhrase('Um gato', 'um cão')).toBe(-1);
   });
 });

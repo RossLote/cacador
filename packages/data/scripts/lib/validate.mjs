@@ -4,6 +4,7 @@ import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { dataDir, imageByQuestion, inRanges } from './manifest.mjs';
 import { clean } from './parse.mjs';
+import { WORD_KINDS, findPhrase, straighten } from './words.mjs';
 
 export class ValidationError extends Error {
   constructor(message) {
@@ -313,8 +314,14 @@ function checkMirrors(dir, files) {
 
 const escapeRegExp = (text) => text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
-/** Curly apostrophes and quotes become straight ones, so a glossary name matches the bank's typography. */
-const straighten = (text) => text.replace(/\u2019/g, "'").replace(/[\u201c\u201d]/g, '"');
+/** A glossary or word `pt` as rule 6 compares two of them: ignoring case, curly quotes read as straight ones. */
+const ptKey = (pt) => straighten(pt).toLowerCase();
+
+/**
+ * Rule 6's whole-word match for `name` (already straightened), case-insensitive: a letter, digit or
+ * hyphen on either side makes it part of a longer word.
+ */
+const wholeWord = (name) => new RegExp(`(?<![\\p{L}\\p{N}-])${escapeRegExp(name)}(?![\\p{L}\\p{N}-])`, 'iu');
 
 /**
  * Reads the list file `rel` when it exists: a list of objects whose fields have the types `spec` names,
@@ -337,7 +344,7 @@ function readGlossary(dir, rel, label, spec) {
   if (!glossary) return undefined;
   const first = new Map();
   for (const entry of glossary) {
-    const key = straighten(entry.pt).toLowerCase();
+    const key = ptKey(entry.pt);
     if (first.has(key)) fail(rel, `${label} ${entry.pt} is listed twice (also as ${first.get(key)})`);
     first.set(key, entry.pt);
   }
@@ -355,7 +362,7 @@ function checkGlossary(files, translations, glossary) {
   for (const entry of glossary) {
     const name = straighten(entry.pt);
     const needle = name.toLowerCase();
-    const word = new RegExp(`(?<![\\p{L}\\p{N}-])${escapeRegExp(name)}(?![\\p{L}\\p{N}-])`, 'iu');
+    const word = wholeWord(name);
     const en = straighten(entry.en).toLowerCase();
     for (const [id, translation] of translations) {
       // The substring test is a cheap filter; the word-boundary regex decides.
@@ -390,6 +397,75 @@ function checkPatterns(dir, hints) {
   return patterns;
 }
 
+const WORD_FIELDS = ['pt', 'phrase', 'en', 'kind', 'ids', 'note'];
+
+/**
+ * The en a word must carry for the glossary entry `entry` (DESIGN.md § 3.3): the gloss when the entry's
+ * en is its pt followed by a gloss in parentheses ("montaria (driven big-game hunt with hounds)"), else the en.
+ */
+function glossOf(entry) {
+  const match = /^(.+) \((.+)\)$/u.exec(entry.en);
+  return match && ptKey(match[1]) === ptKey(entry.pt) ? match[2] : entry.en;
+}
+
+/**
+ * Rule 9 (DESIGN.md § 4): words/ holds exactly the twelve kind files, each a list of words with exactly
+ * the six fields of § 3.3, `kind` the file's, `ids` ascending distinct bank ids, `pt` unique across the
+ * files as rule 6 compares it, `phrase` in a stem or option of one of the named questions, and `en` the
+ * glossaries' (or their gloss) for the same pt and never holding the pt as a whole word. An empty file
+ * passes. `glossaries` pairs each glossary file with its list, undefined when it does not exist.
+ * Returns the counts.
+ */
+function checkWords(dir, total, files, glossaries) {
+  const kindFiles = WORD_KINDS.map((kind) => `${kind}.json`);
+  for (const name of visibleFiles(join(dir, 'words'))) {
+    if (!kindFiles.includes(name)) fail(`words/${name}`, `is not one of the twelve kind files (${WORD_KINDS.join(', ')})`);
+  }
+  // Each field on its own, so a phrase cannot match across the join of the stem and an option.
+  const fieldsById = new Map([...files.values()].flat().map((q) => [q.id, [q.question, ...Object.values(q.options)]]));
+  const glossary = new Map();
+  for (const [file, list] of glossaries) {
+    for (const entry of list ?? []) {
+      const key = ptKey(entry.pt);
+      glossary.set(key, [...(glossary.get(key) ?? []), { file, entry }]);
+    }
+  }
+  const seen = new Map();
+  let entries = 0;
+  for (const kind of WORD_KINDS) {
+    const rel = `words/${kind}.json`;
+    if (!existsSync(join(dir, rel))) fail(rel, 'is missing, words/ holds a file for each of the twelve kinds');
+    const list = readJson(dir, rel);
+    if (!Array.isArray(list)) fail(rel, 'does not hold a list');
+    checkEntries(rel, 'word', list, 'pt', { pt: 'string', phrase: 'string', en: 'string', kind: 'string', ids: 'list', note: 'text' });
+    for (const word of list) {
+      const name = `word ${word.pt}`;
+      const extra = Object.keys(word).find((field) => !WORD_FIELDS.includes(field));
+      if (extra) fail(rel, `${name} has the field "${extra}", a word has only ${WORD_FIELDS.join(', ')}`);
+      if (word.kind !== kind) fail(rel, `${name} has kind "${word.kind}", the file's kind is "${kind}"`);
+      if (word.ids.length === 0) fail(rel, `${name} names no question in ids`);
+      word.ids.forEach((id, i) => {
+        if (!Number.isInteger(id) || id < 1 || id > total) fail(rel, `${name} names question ${id}, which is not in 1-${total}`);
+        if (id === word.ids[i - 1]) fail(rel, `${name} names question ${id} twice`);
+        if (id < word.ids[i - 1]) fail(rel, `${name} ids are not ascending (${id} after ${word.ids[i - 1]})`);
+      });
+      const key = ptKey(word.pt);
+      if (seen.has(key)) fail(rel, `${name} is listed twice (also in ${seen.get(key)})`);
+      seen.set(key, `${rel} as ${word.pt}`);
+      if (!word.ids.some((id) => fieldsById.get(id).some((field) => findPhrase(field, word.phrase) !== -1))) {
+        fail(rel, `${name} phrase "${word.phrase}" occurs in none of its questions (${word.ids.join(', ')})`);
+      }
+      for (const { file, entry } of glossary.get(key) ?? []) {
+        const en = glossOf(entry);
+        if (ptKey(word.en) !== ptKey(en)) fail(rel, `${name} en "${word.en}" differs from "${en}", the en of ${file}`);
+      }
+      if (wholeWord(straighten(word.pt)).test(straighten(word.en))) fail(rel, `${name} en "${word.en}" contains the word's pt`);
+    }
+    entries += list.length;
+  }
+  return { entries, files: WORD_KINDS.length };
+}
+
 /** The counts `validate` reports for translations or hints: entries, files, and entries at each status. */
 function countEntries(byId) {
   const entries = [...byId.values()];
@@ -401,7 +477,7 @@ function countEntries(byId) {
 /** Checks `dir` (default packages/data) against DESIGN.md § 4, in order, and returns the counts. */
 export function validate(dir = dataDir) {
   const manifest = readJson(dir, 'manifest.json');
-  checkManifest(manifest);
+  const total = checkManifest(manifest);
 
   const files = new Map(manifest.chunks.map((c) => [c.file, readJson(dir, `questions/${c.file}`)]));
   checkIds(dir, manifest, files);
@@ -415,6 +491,7 @@ export function validate(dir = dataDir) {
   // is the meaning pass's job, not a rule's.
   const terms = readGlossary(dir, 'glossary/terms.json', 'term', { pt: 'string', en: 'string', note: 'text' });
   const patterns = checkPatterns(dir, hints);
+  const words = checkWords(dir, total, files, [['glossary/species.json', species], ['glossary/terms.json', terms]]);
 
   const all = [...files.values()].flat();
   return {
@@ -428,5 +505,6 @@ export function validate(dir = dataDir) {
     hints: countEntries(hints),
     glossaries: { species: species?.length ?? 0, terms: terms?.length ?? 0 },
     patterns: patterns?.length ?? 0,
+    words,
   };
 }

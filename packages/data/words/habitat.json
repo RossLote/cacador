@@ -1,0 +1,5 @@
+[
+  { "pt": "alagadiço", "phrase": "locais húmidos e alagadiços", "en": "waterlogged", "kind": "habitat", "ids": [118, 141], "note": "" },
+  { "pt": "galeria", "phrase": "galerias extensas e muito ramificadas", "en": "tunnel", "kind": "habitat", "ids": [64, 66, 94], "note": "Not a gallery: the tunnels of a burrow." },
+  { "pt": "toca", "phrase": "Tocas de habitação individuais", "en": "burrow", "kind": "habitat", "ids": [64, 65, 66, 67, 68, 69, 77, 87], "note": "" }
+]

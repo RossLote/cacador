@@ -1,0 +1,4 @@
+[
+  { "pt": "batida", "phrase": "por processo diferente do de batida", "en": "driven hunt", "kind": "method", "ids": [30, 38, 39, 40, 49, 51, 56, 388], "note": "Hunters wait at fixed posts while beaters drive the game to them." },
+  { "pt": "levantar", "phrase": "procurar, perseguir e levantar espécies de caça maior", "en": "flush", "kind": "method", "ids": [19, 40, 55], "note": "Of game made to break cover. A bird that levanta voo takes off." }
+]
