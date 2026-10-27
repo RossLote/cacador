@@ -4,7 +4,21 @@ import { expect, test, type Locator, type Page } from '@playwright/test';
 // Dependency-free leaves of the app's model: seededRandom is serialised into the page.
 import { localDateKey } from '../apps/web/src/model/dates';
 import { seededRandom } from '../apps/web/src/model/random';
-import { answerPractice, cardOf, nextPractice, OPTION_KEYS, questionFor, screenHeader, shownId, tab, tabBar, wrongOf } from './app';
+import {
+  answerPractice,
+  boxOf,
+  cardOf,
+  expectTabBar,
+  nextPractice,
+  OPTION_KEYS,
+  questionFor,
+  screenHeader,
+  shownId,
+  tab,
+  TABS,
+  tabBar,
+  wrongOf,
+} from './app';
 import { background, contrastRatio, DARK, expectFraunces, ground, LIGHT, TEXT_CONTRAST, textColour } from './look';
 
 /**
@@ -19,7 +33,6 @@ import { background, contrastRatio, DARK, expectFraunces, ground, LIGHT, TEXT_CO
  */
 const SEED = 1;
 
-const TABS = ['Home', 'Practice', 'Exam', 'Progress'];
 const TABS_PT = ['Início', 'Praticar', 'Exame', 'Progresso'];
 const NOTE = 'nudge gives the answer away';
 const EXAM_SIZE = 20;
@@ -32,24 +45,6 @@ function seconds(clock: string): number {
   const match = /^(\d{2}):(\d{2})$/.exec(clock);
   if (!match) throw new Error(`not a clock: ${clock}`);
   return Number(match[1]) * 60 + Number(match[2]);
-}
-
-/** The tab bar holds the four tabs by these names, `current` alone marked as the page (none when undefined). */
-async function expectTabBar(page: Page, names: readonly string[], current?: string) {
-  const links = tabBar(page).getByRole('link');
-  await expect(links).toHaveText([...names]);
-  for (const name of names) {
-    const link = tab(page, name);
-    if (name === current) await expect(link).toHaveAttribute('aria-current', 'page');
-    else await expect(link).not.toHaveAttribute('aria-current');
-  }
-}
-
-/** Where a locator is drawn; it must be. */
-async function boxOf(locator: Locator) {
-  const box = await locator.boundingBox();
-  if (box === null) throw new Error(`not drawn: ${locator.toString()}`);
-  return box;
 }
 
 /** The bank id of the running exam's question, from the wrapper around its card. */
@@ -89,7 +84,7 @@ test('acceptance bar steps 2 to 9, in order, in one browser context', async ({ c
   /** The first exam's questions, in exam order. */
   const examIds: number[] = [];
 
-  await test.step('step 2: Home: the paper ground, "Caçador" in Fraunces, 33 % with "506 unseen", the rust tick at 75 % and "Pass line 75 %"; no exam card; main holds the three cards, Quick 10 over Practice and Exam; no "Weakest topics"; the tab bar holds the four tabs with Home current; the Settings control in the header', async () => {
+  await test.step('step 2: Home: the paper ground, "Caçador" in Fraunces, 33 % with "506 unseen", the rust tick at 75 % and "Pass line 75 %"; no exam card; main holds the four start cards, Quick 10 over Words over Practice and Exam; no "Weakest topics"; the tab bar holds the four tabs with Home current; the Settings control in the header', async () => {
     await page.goto('./');
     expect(await page.evaluate(() => Math.random.toString()), 'Math.random is the seeded source').not.toContain('[native code]');
     await expect(page.locator('body')).toHaveCSS('background-color', LIGHT.paper);
@@ -112,9 +107,11 @@ test('acceptance bar steps 2 to 9, in order, in one browser context', async ({ c
 
     await expect(examCard(page)).toHaveCount(0);
     const main = page.getByRole('main');
-    // The three cards and the Settings control are main's only links; the tabs sit outside it.
-    await expect(main.getByRole('link')).toHaveCount(4);
+    // The four start cards and the Settings control are main's only links; the tabs sit outside it.
+    await expect(main.getByRole('link')).toHaveCount(5);
+    await expect(main.locator('[data-slot="start-card"]')).toHaveCount(4);
     await expect(main.getByRole('link', { name: 'Quick 10 Weak ones first, then your score', exact: true })).toHaveAttribute('href', '/cacador/practice?round=10');
+    await expect(main.getByRole('link', { name: 'Words 10 terms from the bank · Portuguese to English', exact: true })).toHaveAttribute('href', '/cacador/words');
     await expect(main.getByRole('link', { name: 'Practice Weak ones first', exact: true })).toBeVisible();
     await expect(main.getByRole('link', { name: 'Exam 20 questions · 30 min', exact: true })).toBeVisible();
     await expect(page.getByRole('heading', { name: 'Weakest topics' })).toHaveCount(0);

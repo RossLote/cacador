@@ -1,13 +1,14 @@
 import { expect, test } from '@playwright/test';
 import { manifest } from '@cacador/data';
+import { shownWord, wordCardOf } from './app';
 import { expectFraunces } from './look';
 
 // Phase 4 D12, ACCEPTANCE BAR step 10 (epic cac-8cn): after one online load and a reload, the app opens with its fonts
 // and shows every picture with no network. The first load installs the service worker, which claims that page; the
-// reload is then a load served by it.
+// reload is then a load served by it. ACCEPTANCE BAR step 10 of epic cac-zqe: Words opens from the cache too.
 const imageStems = manifest.images.map((image) => image.file.replace(/\.jpg$/, '')).sort();
 
-test('step 10: offline, after one online visit, Home and Practice render from the cache with Fraunces available and the 15 pictures still load', async ({
+test('step 10: offline, after one online visit, Home, Practice and Words render from the cache with Fraunces available and the 15 pictures still load', async ({
   page,
   context,
 }) => {
@@ -53,6 +54,13 @@ test('step 10: offline, after one online visit, Home and Practice render from th
     expect(font.url, 'a font from the app').toMatch(/^http:\/\/localhost:\d+\/cacador\/assets\/[\w-]+\.woff2$/);
     expect(font, font.url).toMatchObject({ fromServiceWorker: true, status: 200 });
   }
+
+  // Words shows a word of the list with its phrase and three options.
+  const words = await page.goto('words');
+  expect(words?.status(), 'words').toBe(200);
+  expect(words?.fromServiceWorker(), 'words').toBe(true);
+  await shownWord(page);
+  await expect(wordCardOf(page).options).toHaveCount(3);
 
   const statuses = await page.evaluate(
     (urls) => Promise.all(urls.map(async (url) => [url, (await fetch(url)).status] as const)),
