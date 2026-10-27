@@ -149,21 +149,24 @@ pnpm workspace of three packages: `packages/data`, `apps/web` and `e2e`
     the Settings control, readiness, the exam-in-progress card, the Quick 10, Words,
     Practice and Exam cards, Weakest topics), `practice` (the session, the flags row,
     the laptop keys, the focused-practice pool from the query and `recent.ts`, the
-    draw over the no-repeat window, and the round from `?round=`: the counter in the
-    header and `RoundSummary`, the score plate), `exam` (`ExamPage` owns the sub-routes:
+    draw over the no-repeat window, and the round from `?round=`, its counter and
+    score plate from `components/round/`), `exam` (`ExamPage` owns the sub-routes:
     `/exam` starts or resumes the running exam, `/exam/results/<id>` the results and
     review), `progress` (the day bars, the topic, section and pattern lists, past
     exams), `settings` (language, export and share, import, clear), `flagged` (the list,
     `FlaggedLink`, the row to it on Progress and Settings, and `copyFormat.ts`, the fixed
     copy text), `words` (the words drill: `WordsPage` with the round of ten and the
     laptop keys, `WordCard` with the panel of note and sentence after answering,
-    `sentence.ts`, and `WordsSummary`, the score plate) and `notfound` (the page for an
+    `sentence.ts`, and `WordsSummary`, the score plate around `components/round/`'s) and `notfound` (the page for an
     address that names no screen);
   - `components/nav/`: the tab bar, the screen header with the back control, and
     `dock.ts`, the dock over the tab bar where Practice pins Hold for English and Hint;
     `components/question/`: the question card, a controlled component with the peek
-    button and the hint panel, shared by practice and the exam; `components/styles.ts`:
-    the shared class strings (`FOCUS_RING`, `PLATE`, `CHIP`, `ROW_LINK`);
+    button and the hint panel, shared by practice and the exam, and `OptionList`, the
+    option rows the words card shares; `components/round/`: `RoundCounter` and
+    `RoundSummary`, the round's counter and score plate, shared by Practice and Words;
+    `components/styles.ts`: the shared class strings (`FOCUS_RING`, `PLATE`, `CHIP`,
+    `ROW_LINK`, the `MOSS_PANEL` strings);
     `components/ui/`: the generated shadcn components;
   - `model/`: the study model, pure functions for the draw weights and the no-repeat
     window, readiness, group accuracy, the day bars, the pools, the exam draw,
@@ -174,7 +177,8 @@ pnpm workspace of three packages: `packages/data`, `apps/web` and `e2e`
     the three browser key names (`keys.ts`), the exam finish (`finish.ts`), the import
     merge (`merge.ts`), the export file (`exportFile.ts`) and the no-repeat window in
     sessionStorage, kept in memory when that is blocked (`recent.ts`), and the words
-    drill's shuffled pass in localStorage, kept in memory likewise (`words.ts`);
+    drill's shuffled pass in localStorage, kept in memory likewise (`words.ts`), both
+    on one Web Storage slot with its memory fallback (`webStorageSlot.ts`);
   - `pwa/`: the image map that puts the 15 pictures in `dist` and the precache,
     `registerServiceWorker.ts`, which registers vite-plugin-pwa's service worker by
     hand, asks for an update when the app returns to the foreground and notes when a

@@ -16,3 +16,16 @@ export const straighten = (text) => text.replace(/’/g, "'").replace(/[“”]/
  * out of `text` as the bank prints it.
  */
 export const findPhrase = (text, phrase) => straighten(text).toLowerCase().indexOf(straighten(phrase).toLowerCase());
+
+/**
+ * Where a question holds `phrase` (findPhrase), each field on its own so a phrase never matches across the join of
+ * the stem and an option: the stem first, then the options A, B, C. `{ field, start }`, field 'question' or the
+ * option's letter, or undefined when no field holds it.
+ */
+export const phraseSite = (question, phrase) => {
+  for (const field of ['question', 'A', 'B', 'C']) {
+    const start = findPhrase(field === 'question' ? question.question : question.options[field], phrase);
+    if (start !== -1) return { field, start };
+  }
+  return undefined;
+};

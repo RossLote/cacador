@@ -13,9 +13,7 @@
 import type { Word } from '@cacador/data';
 import { nextWordsOfPass, settleWordPass, spendWordOfPass, WORD_ROUND_SIZE, type RandomSource, type WordPass } from '@/model';
 import { WORDS_KEY } from './keys';
-
-/** The pass as last written while localStorage could not hold it; undefined while storage holds it. */
-let unstored: WordPass | undefined;
+import { webStorageSlot } from './webStorageSlot';
 
 const isStrings = (value: unknown): value is string[] =>
   Array.isArray(value) && value.every((item) => typeof item === 'string');
@@ -30,25 +28,7 @@ function isWordPass(value: unknown): value is WordPass {
 }
 
 /** The stored pass; undefined when there is none or the stored copy is garbled. */
-function readWordPass(): WordPass | undefined {
-  if (unstored !== undefined) return unstored;
-  try {
-    const parsed: unknown = JSON.parse(localStorage.getItem(WORDS_KEY) ?? 'null');
-    return isWordPass(parsed) ? parsed : undefined;
-  } catch {
-    return undefined;
-  }
-}
-
-/** Replaces the pass, in localStorage when it can hold it and in memory otherwise. */
-function writeWordPass(pass: WordPass): void {
-  try {
-    localStorage.setItem(WORDS_KEY, JSON.stringify(pass));
-    unstored = undefined;
-  } catch {
-    unstored = pass;
-  }
-}
+const slot = webStorageSlot('localStorage', WORDS_KEY, (stored) => (isWordPass(stored) ? stored : undefined));
 
 /**
  * The round's ten words in order, none twice, without spending any (D12): the
@@ -57,22 +37,17 @@ function writeWordPass(pass: WordPass): void {
  * holds fewer than ten.
  */
 export function nextRoundWords(list: readonly Word[], random: RandomSource = Math.random): Word[] {
-  const { pass, words } = nextWordsOfPass(settleWordPass(readWordPass(), list, random), list, WORD_ROUND_SIZE, random);
-  writeWordPass(pass);
+  const { pass, words } = nextWordsOfPass(settleWordPass(slot.read(), list, random), list, WORD_ROUND_SIZE, random);
+  slot.write(pass);
   return words;
 }
 
 /** Spends an answered word, right or wrong (D12); the pass's last spent word starts the next pass. */
 export function spendWord(list: readonly Word[], word: Word, random: RandomSource = Math.random): void {
-  writeWordPass(spendWordOfPass(settleWordPass(readWordPass(), list, random), word.pt, list, random));
+  slot.write(spendWordOfPass(settleWordPass(slot.read(), list, random), word.pt, list, random));
 }
 
 /** Forgets the pass, stored or in memory (Clear progress, D13). */
 export function clearWordPass(): void {
-  unstored = undefined;
-  try {
-    globalThis.localStorage?.removeItem(WORDS_KEY);
-  } catch {
-    // Web Storage blocked: the memory copy above was the only pass.
-  }
+  slot.clear();
 }

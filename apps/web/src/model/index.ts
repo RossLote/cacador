@@ -41,5 +41,6 @@ export {
   spendWordOfPass,
   WORD_ROUND_SIZE,
   wordOptions,
+  type WordOptions,
   type WordPass,
 } from './words';

@@ -4,13 +4,13 @@ import { useCallback, useEffect, useRef, useState, type ReactNode } from 'react'
 import { FailureLine } from '@/components/FailureLine';
 import { useDock } from '@/components/nav/dock';
 import { QuestionCard } from '@/components/question/QuestionCard';
+import { RoundSummary } from '@/components/round/RoundSummary';
 import { Button } from '@/components/ui/button';
 import { useI18n } from '@/i18n/useI18n';
 import { isCorrectOption } from '@/model';
 import { getStates, recordAnswer } from '@/storage';
 import { FlagsRow } from './FlagsRow';
 import { drawPracticeQuestion } from './recent';
-import { RoundSummary } from './RoundSummary';
 import { usePracticeKeys } from './usePracticeKeys';
 
 /** The question on screen and, once answered, the option picked. A new object per draw. */
@@ -187,7 +187,13 @@ export function PracticeSession({
     return (
       <>
         {header(undefined, tally.answered)}
-        <RoundSummary right={tally.right} size={tally.answered} onAnother={another} />
+        <RoundSummary
+          heading={t.practice.round.done}
+          right={tally.right}
+          ofRight={t.practice.round.ofRight(tally.answered)}
+          another={t.practice.round.another(tally.answered)}
+          onAnother={another}
+        />
       </>
     );
   }

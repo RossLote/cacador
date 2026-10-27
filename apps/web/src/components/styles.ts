@@ -35,3 +35,16 @@ export const CHIP =
  * topics on Home, and the group and past-exam rows on Progress.
  */
 export const ROW_LINK = `flex min-h-11 items-center gap-3 rounded-md border border-line bg-card px-3.5 py-3 text-ink transition-colors hover:bg-paper ${FOCUS_RING}`;
+
+/**
+ * The moss panel (DESIGN.md § 8.6): a moss-tint block with no border, 10 px
+ * corners and ink text. The hint panel, and the words drill's panel after
+ * answering (§ 6.11).
+ */
+export const MOSS_PANEL = 'flex flex-col gap-3 rounded-lg bg-moss px-4.5 py-4 text-[15px]/[1.4] text-ink';
+
+/** A moss panel's eyebrows, in forest (DESIGN.md § 8.6). */
+export const MOSS_PANEL_HEADING = 'text-xs/4 font-semibold tracking-[0.14em] text-forest uppercase';
+
+/** Under a rule in a moss panel: the moss-line hairline over the part (the nudge, the words drill's question). */
+export const MOSS_PANEL_RULE = 'border-t border-moss-line pt-3';

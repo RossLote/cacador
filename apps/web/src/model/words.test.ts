@@ -8,6 +8,13 @@ const word = (pt: string, en: string, kind: WordKind): Word => ({ pt, phrase: pt
 
 const lower = (texts: readonly string[]): string[] => texts.map((t) => t.toLowerCase());
 
+/** A word's options as a list, A to C, after checking the answer's letter holds the word's own English. */
+function optionsOf(target: Word, list: readonly Word[], seed: number): string[] {
+  const { texts, answer } = wordOptions(target, list, seededRandom(seed));
+  expect(texts[answer]).toBe(target.en);
+  return [texts.A, texts.B, texts.C];
+}
+
 const SEEDS = Array.from({ length: 200 }, (_, i) => i + 1);
 
 describe('shuffled', () => {
@@ -39,7 +46,7 @@ describe('wordOptions', () => {
   it("gives three different English, its own among them, the others its kind's with an English unlike its own ignoring case", () => {
     const kindEn = new Set(list.filter((w) => w.kind === 'species').map((w) => w.en));
     for (const seed of SEEDS) {
-      const options = wordOptions(lebre, list, seededRandom(seed));
+      const options = optionsOf(lebre, list, seed);
       expect(options).toHaveLength(3);
       expect(new Set(lower(options)).size).toBe(3);
       expect(options.filter((en) => en.toLowerCase() === 'hare')).toEqual(['Hare']);
@@ -51,7 +58,7 @@ describe('wordOptions', () => {
     const places = new Set<number>();
     const drawn = new Set<string>();
     for (const seed of SEEDS) {
-      const options = wordOptions(lebre, list, seededRandom(seed));
+      const options = optionsOf(lebre, list, seed);
       places.add(options.indexOf('Hare'));
       for (const en of options) drawn.add(en);
     }
@@ -63,13 +70,13 @@ describe('wordOptions', () => {
     const toca = list[6] as Word;
     const cio = list[8] as Word;
     for (const seed of SEEDS) {
-      const one = wordOptions(toca, list, seededRandom(seed));
+      const one = optionsOf(toca, list, seed);
       expect(one).toHaveLength(3);
       expect(one).toContain('burrow');
       expect(one).toContain('nest');
       expect(new Set(lower(one)).size).toBe(3);
 
-      const none = wordOptions(cio, list, seededRandom(seed));
+      const none = optionsOf(cio, list, seed);
       expect(none).toHaveLength(3);
       expect(none).toContain('rut');
       expect(new Set(lower(none)).size).toBe(3);
@@ -78,15 +85,15 @@ describe('wordOptions', () => {
 
   it('gives the same options in the same order for the same seed', () => {
     for (const seed of SEEDS.slice(0, 20)) {
-      expect(wordOptions(lebre, list, seededRandom(seed))).toEqual(wordOptions(lebre, list, seededRandom(seed)));
+      expect(optionsOf(lebre, list, seed)).toEqual(optionsOf(lebre, list, seed));
     }
-    const orders = new Set(SEEDS.slice(0, 20).map((seed) => wordOptions(lebre, list, seededRandom(seed)).join('|')));
+    const orders = new Set(SEEDS.slice(0, 20).map((seed) => optionsOf(lebre, list, seed).join('|')));
     expect(orders.size).toBeGreaterThan(1);
   });
 
-  it('gives fewer than three only when the whole list cannot supply two', () => {
+  it('leaves a row empty only when the whole list cannot supply two', () => {
     const tiny = [word('a', 'one', 'law'), word('b', 'ONE', 'law'), word('c', 'two', 'time')];
-    expect(wordOptions(tiny[0] as Word, tiny, seededRandom(1)).sort()).toEqual(['one', 'two']);
+    expect(optionsOf(tiny[0] as Word, tiny, 1).sort()).toEqual(['', 'one', 'two']);
   });
 });
 

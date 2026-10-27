@@ -1,5 +1,4 @@
-import { findPhrase, questionForWord, type Word } from '@cacador/data';
-import { OPTION_KEYS } from '@/storage';
+import { wordSite, type Word } from '@cacador/data';
 
 /** The sentence the panel shows after answering (DESIGN.md § 6.11), with where the word's phrase sits in it. */
 export interface Sentence {
@@ -19,13 +18,11 @@ export interface Sentence {
  * questions holds its phrase, which validator rule 9 never lets in.
  */
 export function sentenceFor(word: Word): Sentence | undefined {
-  const question = questionForWord(word);
-  if (question === undefined) return undefined;
-  const cut = (text: string, at: number): Sentence => ({ id: question.id, text, start: at, end: at + word.phrase.length });
-  const inStem = findPhrase(question.question, word.phrase);
-  if (inStem !== -1) return cut(question.question, inStem);
-  const option = OPTION_KEYS.find((key) => findPhrase(question.options[key], word.phrase) !== -1);
-  if (option === undefined) return undefined;
-  const prefix = `${question.question} `;
-  return cut(prefix + question.options[option], prefix.length + findPhrase(question.options[option], word.phrase));
+  const site = wordSite(word);
+  if (site === undefined) return undefined;
+  const { question, field, start } = site;
+  const prefix = field === 'question' ? '' : `${question.question} `;
+  const text = prefix + (field === 'question' ? question.question : question.options[field]);
+  const at = prefix.length + start;
+  return { id: question.id, text, start: at, end: at + word.phrase.length };
 }

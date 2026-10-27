@@ -1,9 +1,8 @@
 import { findPhrase, questionForWord, words, type OptionKey, type Word } from '@cacador/data';
 import { expect, test, type Page } from '@playwright/test';
-// Dependency-free leaves of the app: seededRandom is serialised into the page; the storage keys are the app's own names.
-import { seededRandom } from '../apps/web/src/model/random';
+// A dependency-free leaf of the app: the storage keys are the app's own names.
 import { LOCALE_KEY, WORDS_KEY } from '../apps/web/src/storage/keys';
-import { boxOf, expectTabBar, OPTION_KEYS, screenHeader, shownWord, tab, TABS, wordCardOf } from './app';
+import { boxOf, expectTabBar, OPTION_KEYS, roundCounter, screenHeader, seedRandom, shownWord, tab, TABS, wordCardOf } from './app';
 import { expectFraunces, LIGHT } from './look';
 
 /**
@@ -21,7 +20,6 @@ const CARD_PT = 'Palavras 10 termos do banco · do português para o inglês';
 /** Every English of the list, for the options in Portuguese (step 8). */
 const ENGLISH = new Set(words.map((word) => word.en));
 
-const counter = (page: Page) => screenHeader(page).getByText(/^\d+ (of|de) \d+$/);
 const eyebrow = (page: Page) => screenHeader(page).locator('.eyebrow');
 const next = (page: Page) => page.getByRole('button', { name: 'Next', exact: true });
 const finish = (page: Page) => page.getByRole('button', { name: 'Finish', exact: true });
@@ -59,7 +57,7 @@ async function openFromHome(page: Page) {
 
 test('words bar steps 2 to 9, in order, in one browser context', async ({ context, page }) => {
   test.setTimeout(180_000);
-  await context.addInitScript({ content: `Math.random = (${seededRandom.toString()})(${SEED});` });
+  await seedRandom(context, SEED);
 
   /** Every word answered so far, in the order shown. */
   const answered: Word[] = [];
@@ -102,10 +100,10 @@ test('words bar steps 2 to 9, in order, in one browser context', async ({ contex
     const header = screenHeader(page);
     await expect(header.getByRole('link', { name: 'Back to Home', exact: true })).toBeVisible();
     await expect(eyebrow(page)).toHaveText('Words');
-    await expect(counter(page)).toHaveText(`1 of ${ROUND}`);
-    await expectFraunces(page, counter(page));
+    await expect(roundCounter(page)).toHaveText(`1 of ${ROUND}`);
+    await expectFraunces(page, roundCounter(page));
     const headerBox = await boxOf(header);
-    const counterBox = await boxOf(counter(page));
+    const counterBox = await boxOf(roundCounter(page));
     expect(counterBox.x, 'the counter is right of the eyebrow').toBeGreaterThan((await boxOf(eyebrow(page))).x);
     expect(headerBox.x + headerBox.width - (counterBox.x + counterBox.width), 'the counter ends the row').toBeLessThanOrEqual(4);
     await expectTabBar(page, TABS);
@@ -151,7 +149,7 @@ test('words bar steps 2 to 9, in order, in one browser context', async ({ contex
 
     await expect(finish(page)).toHaveCount(0);
     await next(page).click();
-    await expect(counter(page)).toHaveText(`2 of ${ROUND}`);
+    await expect(roundCounter(page)).toHaveText(`2 of ${ROUND}`);
     unanswered(await shownWord(page));
   });
 
@@ -162,12 +160,12 @@ test('words bar steps 2 to 9, in order, in one browser context', async ({ contex
     answered.push(shown);
     await expect(wordCardOf(page).option('B')).toHaveAttribute('aria-pressed', 'true');
     await page.keyboard.press('Enter');
-    await expect(counter(page)).toHaveText(`3 of ${ROUND}`);
+    await expect(roundCounter(page)).toHaveText(`3 of ${ROUND}`);
   });
 
   await test.step('step 6: words 3 to 10 answered, every third right by the list: the tenth answer\'s button reads Finish and there is no Next; Finish shows the region "Round done" with the count right R in Fraunces and "R of 10 right", exactly 10 rows each a word\'s Portuguese and English in the order shown, exactly 10 − R marked "Missed", and a rust "Another 10"; the header reads "10 of 10"', async () => {
     for (let n = 3; n <= ROUND; n++) {
-      await expect(counter(page)).toHaveText(`${n} of ${ROUND}`);
+      await expect(roundCounter(page)).toHaveText(`${n} of ${ROUND}`);
       const shown = await shownWord(page);
       unanswered(shown);
       right.push(await answerWord(page, shown, await keyOf(page, shown, n % 3 === 0)));
@@ -197,14 +195,14 @@ test('words bar steps 2 to 9, in order, in one browser context', async ({ contex
     }
     await expect(rows.filter({ hasText: 'Missed' })).toHaveCount(ROUND - score);
     await expect(plate.getByRole('button', { name: `Another ${ROUND}`, exact: true })).toHaveCSS('background-color', LIGHT.rust);
-    await expect(counter(page)).toHaveText(`${ROUND} of ${ROUND}`);
+    await expect(roundCounter(page)).toHaveText(`${ROUND} of ${ROUND}`);
   });
 
   await test.step('step 7: Another 10: "1 of 10"; three words answered; then the Home tab, the Words card, and a reload of the page: each time the word shown is none of the 13 answered so far, and those 13 are 13 different words', async () => {
     await page.getByRole('region', { name: 'Round done' }).getByRole('button', { name: `Another ${ROUND}`, exact: true }).click();
-    await expect(counter(page)).toHaveText(`1 of ${ROUND}`);
+    await expect(roundCounter(page)).toHaveText(`1 of ${ROUND}`);
     for (let n = 1; n <= 3; n++) {
-      await expect(counter(page)).toHaveText(`${n} of ${ROUND}`);
+      await expect(roundCounter(page)).toHaveText(`${n} of ${ROUND}`);
       const shown = await shownWord(page);
       unanswered(shown);
       await answerWord(page, shown, await keyOf(page, shown, false));
@@ -218,7 +216,7 @@ test('words bar steps 2 to 9, in order, in one browser context', async ({ contex
     await openFromHome(page);
     unanswered(await shownWord(page));
     await page.reload();
-    await expect(counter(page)).toBeVisible();
+    await expect(roundCounter(page)).toBeVisible();
     unanswered(await shownWord(page));
   });
 
@@ -233,7 +231,7 @@ test('words bar steps 2 to 9, in order, in one browser context', async ({ contex
     await expect(cardPt).toHaveAttribute('href', '/cacador/words');
     await cardPt.click();
     await expect(eyebrow(page)).toHaveText('Palavras');
-    await expect(counter(page)).toHaveText(`1 de ${ROUND}`);
+    await expect(roundCounter(page)).toHaveText(`1 de ${ROUND}`);
     const { word, phrase, options, texts } = wordCardOf(page, 'Opções');
     await expect(word).toHaveAttribute('lang', 'pt-PT');
     await expect(phrase).toHaveAttribute('lang', 'pt-PT');
@@ -249,7 +247,7 @@ test('words bar steps 2 to 9, in order, in one browser context', async ({ contex
     await page.getByRole('link', { name: 'Back to Home', exact: true }).click();
     await openFromHome(page);
     await expect(eyebrow(page)).toHaveText('Words');
-    await expect(counter(page)).toHaveText(`1 of ${ROUND}`);
+    await expect(roundCounter(page)).toHaveText(`1 of ${ROUND}`);
     await expect(wordCardOf(page).options).toHaveCount(3);
   });
 
@@ -266,7 +264,7 @@ test('words bar steps 2 to 9, in order, in one browser context', async ({ contex
 
     await page.getByRole('link', { name: 'Back to Home', exact: true }).click();
     await openFromHome(page);
-    await expect(counter(page)).toHaveText(`1 of ${ROUND}`);
+    await expect(roundCounter(page)).toHaveText(`1 of ${ROUND}`);
     await shownWord(page);
     await expect(wordCardOf(page).options).toHaveCount(3);
   });

@@ -68,7 +68,7 @@ import wordsMethod from '../words/method.json' with { type: 'json' };
 import wordsSpecies from '../words/species.json' with { type: 'json' };
 import wordsTime from '../words/time.json' with { type: 'json' };
 import wordsWeapon from '../words/weapon.json' with { type: 'json' };
-import { WORD_KINDS, findPhrase } from '../scripts/lib/words.mjs';
+import { WORD_KINDS, findPhrase, phraseSite, type PhraseSite } from '../scripts/lib/words.mjs';
 
 export type OptionKey = 'A' | 'B' | 'C';
 
@@ -259,11 +259,23 @@ const wordFiles = {
 /** Every word of the twelve files, kind by kind in `wordKinds` order, each file in its own order (sorted by pt). */
 export const words: readonly Word[] = wordKinds.flatMap((kind) => wordFiles[kind]) as Word[];
 
+/** Where a word's phrase sits in the bank: the question, and the field (its stem or an option's letter) and start in it. */
+export interface WordSite extends PhraseSite {
+  question: Question;
+}
+
 /**
- * The first of the word's questions whose stem or an option holds its phrase, compared as findPhrase
- * compares (DESIGN.md § 6.11); the validator's rule 9 guarantees one for every word of `words`.
+ * The first of the word's questions whose stem or an option holds its phrase, as the validator's rule 9 finds it
+ * (phraseSite, DESIGN.md § 6.11), with where; the rule guarantees one for every word of `words`.
  */
-export const questionForWord = (word: Word): Question | undefined =>
-  word.ids
-    .map(questionById)
-    .find((q) => q !== undefined && [q.question, ...Object.values(q.options)].some((field) => findPhrase(field, word.phrase) !== -1));
+export function wordSite(word: Word): WordSite | undefined {
+  for (const id of word.ids) {
+    const question = questionById(id);
+    const site = question && phraseSite(question, word.phrase);
+    if (question && site) return { question, ...site };
+  }
+  return undefined;
+}
+
+/** The first of the word's questions whose stem or an option holds its phrase (wordSite). */
+export const questionForWord = (word: Word): Question | undefined => wordSite(word)?.question;

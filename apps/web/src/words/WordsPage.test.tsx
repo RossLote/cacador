@@ -8,7 +8,7 @@ import { MESSAGES } from '@/i18n/messages';
 import { readiness, seededRandom } from '@/model';
 import { getStates, listAnswers, WORDS_KEY } from '@/storage';
 import { sentenceFor } from './sentence';
-import { TEST_WORDS } from './testWords';
+import { TEST_WORDS, testWord } from './testWords';
 import { WordsPage } from './WordsPage';
 
 const en = MESSAGES.en;
@@ -30,12 +30,7 @@ const wordElement = () => card().querySelectorAll('[lang="pt-PT"]')[0] as HTMLEl
 const phraseElement = () => card().querySelectorAll('[lang="pt-PT"]')[1] as HTMLElement;
 
 /** The list entry on screen, found by its Portuguese. */
-function shownWord(): Word {
-  const pt = wordElement().textContent;
-  const found = TEST_WORDS.find((w) => w.pt === pt);
-  if (found === undefined) throw new Error(`not a test word: ${pt}`);
-  return found;
-}
+const shownWord = (): Word => testWord(wordElement().textContent);
 
 const optionButtons = (name = t.options) => within(screen.getByRole('group', { name })).getAllByRole('button');
 /** Each option's English, A to C. */

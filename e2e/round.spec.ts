@@ -1,6 +1,5 @@
 import { expect, test } from '@playwright/test';
-import { seededRandom } from '../apps/web/src/model/random';
-import { answerPractice, nextPractice, questionFor, screenHeader, shownId, tab, wrongOf } from './app';
+import { answerPractice, nextPractice, questionFor, roundCounter, screenHeader, seedRandom, shownId, tab, wrongOf } from './app';
 import { expectFraunces, LIGHT } from './look';
 
 const ROUND = 10;
@@ -8,7 +7,7 @@ const ROUND = 10;
 // A round of ten (DESIGN.md § 6.4, bead cac-zdk): from Home's rust card, the header counts the questions, the last
 // answer's button reads Finish, the score plate holds the count right and Another 10, and the Practice tab ends a round.
 test('a round of ten from Home: the counter, Finish in place of the last Next, the score and Another 10', async ({ context, page }) => {
-  await context.addInitScript({ content: `Math.random = (${seededRandom.toString()})(1);` });
+  await seedRandom(context, 1);
   await page.goto('./');
 
   const main = page.getByRole('main');
@@ -27,7 +26,7 @@ test('a round of ten from Home: the counter, Finish in place of the last Next, t
 
   await roundCard.click();
   await expect(page).toHaveURL(/\/cacador\/practice\?round=10$/);
-  const counter = screenHeader(page).getByText(/^\d+ of \d+$/);
+  const counter = roundCounter(page);
   await expect(counter).toHaveText(`1 of ${ROUND}`);
   await expectFraunces(page, counter);
 
@@ -73,7 +72,7 @@ test('a round of ten from Home: the counter, Finish in place of the last Next, t
   await tab(page, 'Practice').click();
   await expect(page).toHaveURL(/\/cacador\/practice$/);
   await shownId(page);
-  await expect(screenHeader(page).getByText(/^\d+ of \d+$/)).toHaveCount(0);
+  await expect(roundCounter(page)).toHaveCount(0);
   await answerPractice(page, wrongOf(questionFor(await shownId(page))));
   await expect(next).toBeVisible();
   await expect(finish).toHaveCount(0);

@@ -1,16 +1,15 @@
 import type { OptionKey, Word } from '@cacador/data';
 import { useId } from 'react';
-import { PANEL, PANEL_HEADING, PANEL_RULE } from '@/components/question/HintPanel';
 import { OptionList } from '@/components/question/OptionList';
+import { MOSS_PANEL, MOSS_PANEL_HEADING, MOSS_PANEL_RULE } from '@/components/styles';
 import { useI18n } from '@/i18n/useI18n';
 import { cn } from '@/lib/utils';
+import type { WordOptions } from '@/model';
 import { sentenceFor } from './sentence';
 
 /** A word of the round with its options as drawn: the three English by letter, and the letter of its own. */
-export interface DrawnWord {
+export interface DrawnWord extends WordOptions {
   word: Word;
-  texts: Readonly<Record<OptionKey, string>>;
-  answer: OptionKey;
 }
 
 /**
@@ -24,11 +23,11 @@ function WordPanel({ word }: { word: Word }) {
   const headingId = useId();
   const sentence = sentenceFor(word);
   return (
-    <section aria-labelledby={sentence && headingId} className={PANEL}>
+    <section aria-labelledby={sentence && headingId} className={MOSS_PANEL}>
       {word.note && <p lang="en">{word.note}</p>}
       {sentence && (
-        <div className={cn('flex flex-col gap-1.5', word.note && PANEL_RULE)}>
-          <h2 id={headingId} className={PANEL_HEADING}>
+        <div className={cn('flex flex-col gap-1.5', word.note && MOSS_PANEL_RULE)}>
+          <h2 id={headingId} className={MOSS_PANEL_HEADING}>
             {t.words.questionNumber(sentence.id)}
           </h2>
           <p lang="pt-PT" className="text-[15px]/[1.45]">

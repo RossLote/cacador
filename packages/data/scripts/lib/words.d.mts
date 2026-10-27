@@ -9,3 +9,15 @@ export function straighten(text: string): string;
 
 /** Where `phrase` starts in `text`, ignoring case and reading curly quotes as straight ones, or -1; the index cuts the phrase out of `text`. */
 export function findPhrase(text: string, phrase: string): number;
+
+/** Where a question holds a phrase: the field, its stem or an option's letter, and the phrase's start in it. */
+export interface PhraseSite {
+  field: 'question' | 'A' | 'B' | 'C';
+  start: number;
+}
+
+/** Where `question` holds `phrase` (findPhrase), field by field: the stem first, then the options A, B, C; or undefined. */
+export function phraseSite(
+  question: { question: string; options: { A: string; B: string; C: string } },
+  phrase: string,
+): PhraseSite | undefined;

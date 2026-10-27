@@ -1,4 +1,4 @@
-import type { Word } from '@cacador/data';
+import type { OptionKey, Word } from '@cacador/data';
 import { shuffled, type RandomSource } from './random';
 
 /**
@@ -26,7 +26,8 @@ export interface WordPass {
 function startPass(list: readonly Word[], random: RandomSource, ahead: readonly string[] = []): WordPass {
   const inList = new Set(list.map((w) => w.pt));
   const head = [...new Set(ahead)].filter((pt) => inList.has(pt));
-  const rest = list.map((w) => w.pt).filter((pt) => !head.includes(pt));
+  const inHead = new Set(head);
+  const rest = list.map((w) => w.pt).filter((pt) => !inHead.has(pt));
   return { order: [...head, ...shuffled(rest, random)], place: 0, ahead: [] };
 }
 
@@ -97,14 +98,20 @@ export function spendWordOfPass(pass: WordPass, pt: string, list: readonly Word[
   return place < order.length ? { ...pass, order, place } : startPass(list, random, pass.ahead);
 }
 
+/** A word's three options as drawn: the English by letter, and the letter of the word's own. */
+export interface WordOptions {
+  texts: Record<OptionKey, string>;
+  answer: OptionKey;
+}
+
 /**
- * A word's options in order, A to C (D11): its own English and two others drawn
- * at random from the words of its kind whose English differs, ignoring case,
+ * A word's options, A to C (D11): its own English and two others drawn at
+ * random from the words of its kind whose English differs, ignoring case,
  * from its own and from each other, the rest from the whole list when the kind
- * cannot supply two; the right answer's place is random. Fewer than three only
+ * cannot supply two; the right answer's place is random. A row is empty only
  * when the whole list cannot supply two.
  */
-export function wordOptions(word: Word, list: readonly Word[], random: RandomSource = Math.random): string[] {
+export function wordOptions(word: Word, list: readonly Word[], random: RandomSource = Math.random): WordOptions {
   const options = [word.en];
   const used = new Set([word.en.toLowerCase()]);
   const drawFrom = (words: readonly Word[]): void => {
@@ -117,5 +124,9 @@ export function wordOptions(word: Word, list: readonly Word[], random: RandomSou
   };
   drawFrom(list.filter((w) => w.kind === word.kind));
   if (options.length < 3) drawFrom(list);
-  return shuffled(options, random);
+  const order = shuffled(options, random);
+  const [A = '', B = '', C = ''] = order;
+  // The word's own English is in the list once, and no other option equals it.
+  const answer = (['A', 'B', 'C'] as const)[order.indexOf(word.en)] ?? 'A';
+  return { texts: { A, B, C }, answer };
 }

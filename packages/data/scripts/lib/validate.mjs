@@ -4,7 +4,7 @@ import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { dataDir, imageByQuestion, inRanges } from './manifest.mjs';
 import { clean } from './parse.mjs';
-import { WORD_KINDS, findPhrase, straighten } from './words.mjs';
+import { WORD_KINDS, phraseSite, straighten } from './words.mjs';
 
 export class ValidationError extends Error {
   constructor(message) {
@@ -397,7 +397,9 @@ function checkPatterns(dir, hints) {
   return patterns;
 }
 
-const WORD_FIELDS = ['pt', 'phrase', 'en', 'kind', 'ids', 'note'];
+/** A word's six fields (DESIGN.md § 3.3) and their types, in checkEntries' terms; a word has no other field. */
+const WORD_SPEC = { pt: 'string', phrase: 'string', en: 'string', kind: 'string', ids: 'list', note: 'text' };
+const WORD_FIELDS = Object.keys(WORD_SPEC);
 
 /**
  * The en a word must carry for the glossary entry `entry` (DESIGN.md § 3.3): the gloss when the entry's
@@ -421,8 +423,7 @@ function checkWords(dir, total, files, glossaries) {
   for (const name of visibleFiles(join(dir, 'words'))) {
     if (!kindFiles.includes(name)) fail(`words/${name}`, `is not one of the twelve kind files (${WORD_KINDS.join(', ')})`);
   }
-  // Each field on its own, so a phrase cannot match across the join of the stem and an option.
-  const fieldsById = new Map([...files.values()].flat().map((q) => [q.id, [q.question, ...Object.values(q.options)]]));
+  const questionById = new Map([...files.values()].flat().map((q) => [q.id, q]));
   const glossary = new Map();
   for (const [file, list] of glossaries) {
     for (const entry of list ?? []) {
@@ -434,10 +435,8 @@ function checkWords(dir, total, files, glossaries) {
   let entries = 0;
   for (const kind of WORD_KINDS) {
     const rel = `words/${kind}.json`;
-    if (!existsSync(join(dir, rel))) fail(rel, 'is missing, words/ holds a file for each of the twelve kinds');
-    const list = readJson(dir, rel);
-    if (!Array.isArray(list)) fail(rel, 'does not hold a list');
-    checkEntries(rel, 'word', list, 'pt', { pt: 'string', phrase: 'string', en: 'string', kind: 'string', ids: 'list', note: 'text' });
+    const list = readList(dir, rel, 'word', 'pt', WORD_SPEC);
+    if (!list) fail(rel, 'is missing, words/ holds a file for each of the twelve kinds');
     for (const word of list) {
       const name = `word ${word.pt}`;
       const extra = Object.keys(word).find((field) => !WORD_FIELDS.includes(field));
@@ -452,7 +451,7 @@ function checkWords(dir, total, files, glossaries) {
       const key = ptKey(word.pt);
       if (seen.has(key)) fail(rel, `${name} is listed twice (also in ${seen.get(key)})`);
       seen.set(key, `${rel} as ${word.pt}`);
-      if (!word.ids.some((id) => fieldsById.get(id).some((field) => findPhrase(field, word.phrase) !== -1))) {
+      if (!word.ids.some((id) => phraseSite(questionById.get(id), word.phrase) !== undefined)) {
         fail(rel, `${name} phrase "${word.phrase}" occurs in none of its questions (${word.ids.join(', ')})`);
       }
       for (const { file, entry } of glossary.get(key) ?? []) {

@@ -1,9 +1,8 @@
 import { readFileSync } from 'node:fs';
 import { hintFor, questions, sectionOf, topicOf, topics, translationFor, type OptionKey } from '@cacador/data';
 import { expect, test, type Locator, type Page } from '@playwright/test';
-// Dependency-free leaves of the app's model: seededRandom is serialised into the page.
+// A dependency-free leaf of the app's model.
 import { localDateKey } from '../apps/web/src/model/dates';
-import { seededRandom } from '../apps/web/src/model/random';
 import {
   answerPractice,
   boxOf,
@@ -13,6 +12,7 @@ import {
   OPTION_KEYS,
   questionFor,
   screenHeader,
+  seedRandom,
   shownId,
   tab,
   TABS,
@@ -75,7 +75,7 @@ test.use({ permissions: ['clipboard-read', 'clipboard-write'] });
 
 test('acceptance bar steps 2 to 9, in order, in one browser context', async ({ context, page }) => {
   test.setTimeout(300_000);
-  await context.addInitScript({ content: `Math.random = (${seededRandom.toString()})(${SEED});` });
+  await seedRandom(context, SEED);
   // The pages' clock runs with real time until a step moves it on.
   await context.clock.install();
 

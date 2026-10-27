@@ -1220,13 +1220,18 @@ apps/web/
                            header with the back control, on every screen but Home, and
                            dock.ts (the dock over the tab bar and the footer's scroll
                            padding, § 8.2)
-    components/question/   QuestionCard with PeekButton and HintPanel, names.ts (a name in
-                           the interface language)
+    components/question/   QuestionCard with PeekButton and HintPanel, OptionList (the
+                           lettered option rows, shared with the words card), names.ts (a
+                           name in the interface language)
+    components/round/      RoundCounter (the "n of 10" in the screen header) and
+                           RoundSummary (the score plate), shared by Practice's round and
+                           the words drill
     components/LinkButton.tsx  a router link drawn as a button
     components/FailureLine.tsx the one line a screen uses to say something did not work
     components/styles.ts   the shared class strings (§ 8.5): FOCUS_RING (the keyboard focus
-                           ring), PLATE (a plate's box), CHIP (the flag and language chips)
-                           and ROW_LINK (a card row that links somewhere)
+                           ring), PLATE (a plate's box), CHIP (the flag and language chips),
+                           ROW_LINK (a card row that links somewhere) and the MOSS_PANEL
+                           strings (the hint panel's look, shared with the words panel)
     components/ui/         the 11 generated shadcn components
     model/                 the study model: draw.ts (weights, window, recent list), states.ts,
                            progress.ts (readiness, group accuracy, day bars), pools.ts,
@@ -1255,6 +1260,9 @@ e2e/
   tsconfig.json
   look.ts                  the Campo colour values, the contrast helper, the colour a text
                            sits on, the Fraunces check
+  app.ts                   the pieces the specs find by their words, the seeded Math.random
+                           and the round counter
+  round.spec.ts            a round of ten from Home's Quick 10 card to the score and Another 10
   acceptance.spec.ts       steps 2 to 9 of the Campo acceptance bar, in order, then four
                            steps after the bar
   words.spec.ts            steps 2 to 9 of the words bar (epic cac-zqe), in order, the
