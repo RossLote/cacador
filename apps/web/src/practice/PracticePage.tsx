@@ -3,20 +3,11 @@ import { useSearchParams } from 'react-router';
 import { Badge } from '@/components/ui/badge';
 import { ScreenHeader } from '@/components/nav/ScreenHeader';
 import { nameIn, placeOf } from '@/components/question/names';
+import { RoundCounter } from '@/components/round/RoundCounter';
 import { useI18n } from '@/i18n/useI18n';
 import { parseRoundSize } from '@/model';
 import { PracticeSession } from './PracticeSession';
 import { usePracticePool } from './usePracticePool';
-
-/** A round's counter in the header's right-hand slot: the question on screen's place, as "3 of 10", in Fraunces 26 px. */
-function RoundCounter({ position, size }: { position: number; size: number }) {
-  const { t } = useI18n();
-  return (
-    <p className="shrink-0 pr-0.5 font-heading text-[26px] leading-none font-semibold tabular-nums">
-      {t.practice.round.position(position, size)}
-    </p>
-  );
-}
 
 /**
  * The Practice screen (DESIGN.md § 6.4) at /practice. The screen header names
@@ -39,7 +30,7 @@ export function PracticePage() {
       <ScreenHeader
         eyebrow={question ? placeOf(question, locale) : t.common.nav.practice}
         line={question && t.practice.card.questionNumber(question.id)}
-        aside={round === undefined ? undefined : <RoundCounter position={position} size={round} />}
+        aside={round === undefined ? undefined : <RoundCounter label={t.practice.round.position(position, round)} />}
         heading={t.practice.title}
       />
       {group !== undefined && (

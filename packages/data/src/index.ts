@@ -56,6 +56,19 @@ import hint16 from '../hints/en/16-campos-treino.json' with { type: 'json' };
 import hint17 from '../hints/en/17-caes.json' with { type: 'json' };
 import hint18 from '../hints/en/18-cetraria.json' with { type: 'json' };
 import patternsJson from '../hints/patterns.json' with { type: 'json' };
+import wordsAnatomy from '../words/anatomy.json' with { type: 'json' };
+import wordsDog from '../words/dog.json' with { type: 'json' };
+import wordsFalconry from '../words/falconry.json' with { type: 'json' };
+import wordsGeneral from '../words/general.json' with { type: 'json' };
+import wordsGround from '../words/ground.json' with { type: 'json' };
+import wordsHabitat from '../words/habitat.json' with { type: 'json' };
+import wordsLaw from '../words/law.json' with { type: 'json' };
+import wordsLife from '../words/life.json' with { type: 'json' };
+import wordsMethod from '../words/method.json' with { type: 'json' };
+import wordsSpecies from '../words/species.json' with { type: 'json' };
+import wordsTime from '../words/time.json' with { type: 'json' };
+import wordsWeapon from '../words/weapon.json' with { type: 'json' };
+import { WORD_KINDS, findPhrase, phraseSite, type PhraseSite } from '../scripts/lib/words.mjs';
 
 export type OptionKey = 'A' | 'B' | 'C';
 
@@ -207,3 +220,62 @@ export const translationFor = (id: number): Translation | undefined => translati
 
 /** The hint for an id, or undefined while no file holds it. */
 export const hintFor = (id: number): Hint | undefined => hintById.get(id);
+
+/** The twelve kinds of term the words drill draws from (DESIGN.md § 3.3), each a file words/<kind>.json. */
+export type WordKind = (typeof WORD_KINDS)[number];
+
+/** A word, one entry in a words/ file (DESIGN.md § 3.3). */
+export interface Word {
+  /** The dictionary headword, or a set phrase; unique across the twelve files. */
+  pt: string;
+  /** A short run of words verbatim from one of the named questions (findPhrase compares it). */
+  phrase: string;
+  /** The English the translation uses for the word. */
+  en: string;
+  /** The kind of the file the word sits in. */
+  kind: WordKind;
+  /** Every question that uses the word in this sense, ascending. */
+  ids: number[];
+  /** Shown only after answering; empty when the word needs none. */
+  note: string;
+}
+
+/** The validator's phrase match (rule 9), so the app finds and cuts out a word's phrase as the validator checks it. */
+export { findPhrase };
+
+/** The twelve kinds in the order `words` lists them. */
+export const wordKinds: readonly WordKind[] = WORD_KINDS;
+
+/**
+ * One import per words/ file, keyed by its kind (the loader test fails when a file's words are not its
+ * file's); the JSON widens `kind` to string, so the list is narrowed to Word once, here.
+ */
+const wordFiles = {
+  anatomy: wordsAnatomy, dog: wordsDog, falconry: wordsFalconry, general: wordsGeneral,
+  ground: wordsGround, habitat: wordsHabitat, law: wordsLaw, life: wordsLife,
+  method: wordsMethod, species: wordsSpecies, time: wordsTime, weapon: wordsWeapon,
+} satisfies Record<WordKind, unknown[]>;
+
+/** Every word of the twelve files, kind by kind in `wordKinds` order, each file in its own order (sorted by pt). */
+export const words: readonly Word[] = wordKinds.flatMap((kind) => wordFiles[kind]) as Word[];
+
+/** Where a word's phrase sits in the bank: the question, and the field (its stem or an option's letter) and start in it. */
+export interface WordSite extends PhraseSite {
+  question: Question;
+}
+
+/**
+ * The first of the word's questions whose stem or an option holds its phrase, as the validator's rule 9 finds it
+ * (phraseSite, DESIGN.md § 6.11), with where; the rule guarantees one for every word of `words`.
+ */
+export function wordSite(word: Word): WordSite | undefined {
+  for (const id of word.ids) {
+    const question = questionById(id);
+    const site = question && phraseSite(question, word.phrase);
+    if (question && site) return { question, ...site };
+  }
+  return undefined;
+}
+
+/** The first of the word's questions whose stem or an option holds its phrase (wordSite). */
+export const questionForWord = (word: Word): Question | undefined => wordSite(word)?.question;

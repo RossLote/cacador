@@ -115,7 +115,8 @@ extractor's acceptance compares against it.
 Everything lives in `packages/data`. Portuguese is the source of truth and is only
 written by the extractor; English and hints are hand-maintained and mirror the ids.
 Agents work on one chunk file at a time, so no file holds more than 51 questions and
-no file spans two sections.
+no file spans two sections. The words drill's list (§ 3.3, § 6.11) is hand-maintained
+too and is the one set of files not cut by chunk: one file per kind of term.
 
 ```
 packages/data/
@@ -123,6 +124,9 @@ packages/data/
   source/
     questionario-2016.pdf    the official bank
     reference-2026-05.json   the earlier parse, for cross-checking only
+    terms-inventory.json     the 739 terms a sweep of the bank found, a source for the
+                             words/ writers only (§ 5 step 5)
+    words-sample.json        the 17-entry precedent of words/, read by Ross (§ 5 step 5)
   questions/                 Portuguese, written by scripts/extract.mjs
     01-documentos.json
     …                        18 files, table below
@@ -135,6 +139,10 @@ packages/data/
   glossary/
     species.json             { pt, scientific, en, group }, one entry per surface form (§ 3.3)
     terms.json               { pt, en, note }, hunting and legal vocabulary (§ 3.3)
+  words/                     the words drill's list (§ 3.3), a file per kind, 12 files:
+    anatomy.json             anatomy, dog, falconry, general, ground, habitat, law,
+    …                        life, method, species, time and weapon
+    weapon.json
   scripts/
     extract.mjs              PDF to questions/ and images/, deterministic
     validate.mjs             the rules in § 4, run by pnpm lint
@@ -143,7 +151,7 @@ packages/data/
       parse.mjs              the PDF text parser, pure, unit-tested on the § 2.2 hazards
       validate.mjs           the rule checks as functions, imported by extract.mjs and the tests
   src/
-    index.ts                 typed loader for the app and the tests
+    index.ts                 typed loader for the app and the tests, the words included
   test/
     fixtures/valid/          a 4-question data directory the validator tests copy and break
 ```
@@ -310,6 +318,62 @@ construction does to the reading and when to tag it. The list is closed: it is b
 from a sweep of the bank, holds about 20 entries and never more than 25, and rule 8 in
 § 4 rejects a tag that is not one of its slugs.
 
+A word, one entry in a `words/` file (the `galeria` entry of `source/words-sample.json`,
+the precedent of § 5 step 5):
+
+```json
+{ "pt": "galeria", "phrase": "galerias extensas e muito ramificadas", "en": "tunnel", "kind": "habitat", "ids": [64, 66, 94], "note": "Not a gallery: the tunnels of a burrow." }
+```
+
+Each entry has exactly these six fields. `pt` is the dictionary headword (`láparo` for
+the bank's láparos, `levantar` for its levantadas), or a set phrase whose meaning its
+words do not give (`levantar voo`, `espelho alar`); it is unique across the twelve files
+in the sense of § 4 rule 6. `ids` lists, ascending, every question whose stem or options
+use the word in this entry's sense, inflected forms included; a second sense is its own
+entry. `phrase` is a short run of words verbatim from one of those questions, compared
+ignoring case and reading curly quotes as straight (the sample lowercases an option's
+first letter: `levantar`'s phrase is from question 19's option B); it need not occur in
+every named question, and the drill shows the first named question that holds it
+(§ 6.11). `en` is the English the translation uses for the word. Where
+`glossary/species.json` or `glossary/terms.json` has an entry whose `pt` equals the
+word's `pt` in rule 6's sense, `en` equals that entry's `en` ignoring case, and where
+that `en` is the Portuguese followed by a gloss in parentheses (montaria, listado,
+terçó, baixo-voo), `en` is the gloss. A species is written as the glossary writes it,
+capitalised as a name; every other word is lower case. `en` never contains the word's
+`pt` as a whole word. `kind` is the kind of the file the entry sits in. `note` is
+English, one sentence or two short ones, shown only after answering: written for a false
+friend, a second meaning, or a method, role, ground or legal word whose English alone
+does not separate it from its neighbours (batida, montaria), and empty otherwise; never
+a grammar lesson.
+
+A `words/` file is `<kind>.json`, an array sorted by `pt`, one entry per line as
+`source/words-sample.json` lays it out. There is no cap on a file's length: the largest
+kind holds about 120 one-line entries, a tenth of a question chunk's text, and one
+file per kind keeps the drill's wrong options from the same kind a lookup of one file
+(§ 6.11). The twelve kinds, and the category of `source/terms-inventory.json` each one
+takes its terms from:
+
+| Kind | Inventory category | Inventory terms | Holds |
+| --- | --- | --- | --- |
+| species | species | 90 | species names, their other names (seixa) and classes of animal |
+| anatomy | anatomy | 86 | body parts, coat and plumage, and the words for shape and size |
+| life | behaviour-life | 108 | diet, breeding, the young, groups and behaviour |
+| habitat | habitat | 83 | where game lives: burrows, cover, soils, crops and water |
+| ground | ground-type | 42 | the kinds of hunting ground and the places hunting keeps away from |
+| method | method-role | 31 | the hunting methods, the people in them and what they do |
+| weapon | weapon-ammo | 34 | firearms, bows and crossbows, ammunition and their handling |
+| dog | dog | 30 | hunting dogs, their breeds and their work |
+| falconry | falconry | 11 | falconry and its birds |
+| law | legal-admin | 72 | licences, authorities, the people the law names and legal words |
+| time | season-time | 33 | the hunting periods, the seasons of breeding and the times of day |
+| general | general | 119 | the general exam words that stop a stem being read, plant parts included |
+
+The list holds the hunting, wildlife and legal terms of the bank plus the general exam
+words, about 720 of the inventory's 739; § 5 step 5 rule 3 gives what is left out. The
+glossaries, translations, hints and questions are never edited for it. The two
+`source/` files are a writer's sources, committed unchanged as Ross approved them and
+never imported by the app or the validator.
+
 ### 3.4 Manifest
 
 `manifest.json` is hand-maintained and drives both the extractor and the validator:
@@ -348,7 +412,8 @@ the file and id. Rules:
    `questions/` file, the same ids once each, the same option keys, and a `status` from
    the three allowed values; each entry carries the other fields of § 3.3 with their
    types (strings non-empty except `notes`, `note` and `nudge`). A `language` entry's
-   `pt` text occurs in the question or its options. A hint entry at `checked` or
+   `pt` text occurs in the question or its options, ignoring case and reading curly
+   quotes as straight ones. A hint entry at `checked` or
    `reviewed` has a non-empty `nudge`.
 6. Once `glossary/species.json` exists: for every Portuguese species name in a
    question, the matching English name is present in its translation (case-insensitive).
@@ -368,6 +433,20 @@ the file and id. Rules:
    joined by single hyphens). Every tag in the `patterns` of every entry in every
    `hints/en/` file is the `slug` of an entry; a tag that is not fails naming the file,
    the id and the slug.
+9. `words/` holds exactly the twelve kind files of § 3.3, each an array. Every entry has
+   exactly the six fields `pt`, `phrase`, `en`, `kind`, `ids` and `note`; the strings
+   are non-empty but `note`, a string with empty allowed; `kind` equals its file's
+   kind; `ids` is a non-empty ascending list of distinct bank ids. `pt` is unique across
+   the twelve files in the same sense as rule 6. `phrase` occurs in at least one of the
+   questions `ids` names, in its stem or an option, ignoring case and reading curly
+   quotes and apostrophes as straight ones (§ 3.3), and as whole words, as rule 6 matches
+   a name: a letter, digit or hyphen next to either end is no boundary. Where `glossary/species.json` or
+   `glossary/terms.json` has an entry whose `pt` equals the word's `pt` in rule 6's
+   sense, `en` equals that entry's `en` ignoring case, or its gloss when that `en` is
+   the Portuguese followed by a gloss in parentheses; and `en` never contains the
+   word's `pt` as a whole word, matched as rule 6 matches. The validator prints a words
+   line with the count of files and of words. An empty file passes, so the scaffold and
+   a half-run phase stay green.
 
 The manifest itself is checked first: every entry has the fields of § 3.4 with their
 types and a unique slug or file name, section ranges tile 1 to 506, chunk ranges tile
@@ -376,7 +455,7 @@ names existing questions, each under one image only.
 
 ## 5. Pipeline
 
-Four phases, each its own epic, in order.
+Five phases, each its own epic, in order.
 
 1. **Extract** (done, cac-eo6): workspace, manifest, extractor, images, validator,
    loader.
@@ -529,6 +608,72 @@ Four phases, each its own epic, in order.
        its place in the list (the first option, the third): the quote points at the
        words that carry the fact, as rule 5 asks.
 4. **App** (phase 4, epic cac-eil): § 6 to § 8.
+5. **Words** (phase 5, epic cac-zqe): the words drill's list `words/` (§ 3.3) and the
+   drill (§ 6.11). One scaffolding bead first creates the twelve kind files holding the
+   17 precedent entries, adds § 4 rule 9 to the validator and exports the words from
+   the loader, so writer and checker beads own only their kind files. Then a writer's
+   pass per group of kinds, about 75 to 120 words a bead, and a checker's pass per
+   writer bead by a different agent; a tail bead last applies what their close reasons
+   list. Writer and checker beads run on Opus. A writer or checker follows these rules:
+
+   1. Read `source/words-sample.json` first: it is the precedent, hand-written and read
+      by Ross, and every rule below is shown in it but one: its `cio` reads "heat, rut",
+      and rule 7 makes it "rut", the note keeping heat. Then read both glossaries. The
+      precedent's entries sit in their kind files from the scaffolding bead and go
+      through the checker's pass like any other entry.
+   2. `source/terms-inventory.json` is a starting list, never the truth: the terms of a
+      bead's kinds are those of the inventory categories § 3.3 maps to them, and each
+      term's forms, ids, English and category are checked against the bank and never
+      copied. Neither `source/` file is ever edited.
+   3. The list holds the hunting, wildlife and legal terms and the general exam words.
+      Left out are the nine months, the three weekdays and the four seasons the
+      inventory lists (16 terms), and any term whose only English is the Portuguese
+      word itself (ICNF, Instituto de Conservação da Natureza e das Florestas, podengo,
+      ogival, and the breeds beagle, pointer and terrier), because an option identical
+      to the prompt teaches nothing. A name with an English form stays (Assembleia da
+      República as Assembly of the Republic). A word whose meaning is a question's
+      answer stays in (seixa in 278, láparos in 83, terçó in 503): knowing the word is
+      what that question tests.
+   4. `pt` is the dictionary headword, or a set phrase whose meaning its words do not
+      give (§ 3.3), unique across the twelve files. A word with two senses is two
+      entries, each in the kind of its sense (`levantar`, flush, in method; `levantar
+      voo`, take off, in life).
+   5. `ids` are found by searching the stems and options of `questions/` for every form
+      of the word (plural, feminine, verb forms), never taken from the inventory: every
+      question that uses the word in this entry's sense, ascending, and no other.
+   6. `phrase` is a short run of words verbatim from one of the named questions, long
+      enough to show the sense. The drill shows the first named question that holds it
+      (§ 6.11).
+   7. `en` is the English the translation in `translations/en/` uses for the word in the
+      named questions. Where a glossary has the word (rule 6's sense), `en` is the
+      glossary's `en`, or the gloss when that `en` is the Portuguese with a gloss in
+      parentheses (montaria, listado, terçó, baixo-voo). A species is capitalised as the
+      glossary writes it; every other word is lower case. `en` never contains the word's
+      `pt` as a whole word. Where the precedent breaks this rule, the rule wins.
+   8. `note` follows § 3.3: English, one sentence or two short ones, written for a
+      false friend (galeria, prejuízo), a second meaning (pata, a leg and a female
+      duck), or a method, role, ground or legal word whose English alone does not
+      separate it from its neighbours (batida, montaria); empty otherwise, never a
+      grammar lesson. It is shown only after answering, so it may say what the word
+      means even where a question tests it.
+   9. `kind` is the kind of the file, chosen by the word's sense in the named questions.
+      A file is sorted by `pt`, one entry per line as the precedent lays it out.
+   10. The checker is a different agent, never the writer of the same files. It reads
+       every entry against its named questions, their translation and the glossaries,
+       searches the bank again for the forms the writer missed, and fixes the entry in
+       place. A word entry has no status and no notes field.
+   11. A writer or checker edits only its own kind files: never the `source/` files,
+       `src/index.ts`, the scripts, the tests, the glossaries, `translations/`,
+       `hints/` or `questions/`. A word it thinks belongs to another kind, a second
+       sense that belongs to another kind, and an inventory term it drops or merges go
+       in its close reason, for the tail bead (cac-zqe.19) to apply. A translation or
+       glossary slip goes in its close reason too, and the tail bead appends it to
+       cac-4x1; it is never fixed in this phase.
+   12. A close reason gives the count of entries in the bead's files; every inventory
+       term of its categories not carried as its own word and where it went (merged
+       into a named word, excluded under rule 3, or sent to another kind); the senses
+       for another kind; and the slips for cac-4x1, or none. A checker's close reason
+       also lists the entries it changed.
 
 ## 6. App behaviour
 
@@ -539,6 +684,7 @@ the epic's review fill in detail under them. The Campo design round (epic cac-8c
 restyled every screen (§ 8.5, § 8.6), replaced Home's buttons with the tab bar
 (§ 6.3) and added three things the chosen artboards carry: Weakest topics on Home, the
 count answered on the exam-in-progress card and the count unanswered on Submit. The
+words drill (§ 6.11) and Home's Words card came in phase 5 (epic cac-zqe). The
 app is a static site with no backend: everything it knows about the learner stays on
 the device (§ 7).
 
@@ -550,6 +696,9 @@ the device (§ 7).
   survives a reload, and `<html lang>` follows it (`en-GB` or `pt-PT`).
 - The questions are in Portuguese in either interface language, and their English
   appears only during a peek. The hints are the English files of `hints/en/`.
+- The words drill's own words follow the interface; its Portuguese word, phrase and
+  sentence are Portuguese, and its options and notes English, in either language
+  (§ 6.11).
 - Section, topic and pattern names follow the interface: the manifest's or the pattern
   list's `en`, or its `pt` when the interface is Portuguese.
 - The one text that does not follow the interface is the Flagged page's copied list
@@ -592,9 +741,12 @@ The hub, at `/`, top to bottom:
 - When the storage module returns an unfinished exam, a card for the exam in progress,
   which opens it: "N minutes left · A of 20 answered", A the answers the exam holds
   (the module never returns an exam past its deadline, § 6.5).
-- Three cards: Quick 10 ("Weak ones first, then your score"), the one thing to do
+- Four cards: Quick 10 ("Weak ones first, then your score"), the one thing to do
   next, filled rust and the width of the column, which opens a round of ten
-  (`/practice?round=10`, § 6.4); under it, side by side with the ink hairline, Practice
+  (`/practice?round=10`, § 6.4); directly under it Words ("10 terms from the bank ·
+  Portuguese to English"), the width of the column with the ink hairline and the
+  book-open icon, which opens the words drill (`/words`, § 6.11), Quick 10 staying the
+  one rust card; under it, side by side with the ink hairline, Practice
   ("Weak ones first"), which opens practice over the whole bank with no end, and Exam
   ("20 questions · 30 min", the numbers from the study model), which opens `/exam`.
   Each card's accessible name is its title and its line, so a link named exactly
@@ -609,10 +761,10 @@ The hub, at `/`, top to bottom:
 named exactly by the navigation words, the current one marked (`aria-current="page"`).
 It shows on every screen except the `/exam` route itself: the start screen and the
 running exam take the whole screen and keep only the back control. The results
-(`/exam/results/<id>`), Settings, Flagged and the not-found page show the bar with no
-tab current. Settings is reached from Home's header control, Flagged from Progress and
-Settings. Every screen but Home has the back control to Home ("Back to Home") at the
-start of its screen header (§ 8.2).
+(`/exam/results/<id>`), Words, Settings, Flagged and the not-found page show the bar
+with no tab current. Settings is reached from Home's header control, Flagged from
+Progress and Settings. Every screen but Home has the back control to Home ("Back to
+Home") at the start of its screen header (§ 8.2).
 
 ### 6.4 Practice
 
@@ -752,9 +904,10 @@ progress file (§ 7); Share, shown only where the browser's share sheet takes a 
 at the tap with what the device holds and that day's date (it is started on the press,
 so the share still falls inside the tap); Import, which merges a progress file and
 reports the counts of answers, exams and flags added, or refuses a file that is not a
-Caçador export; Clear progress, behind a confirm, which empties every store and the
-no-repeat window and keeps the language; a line saying progress is not being saved on
-this device when storage is unavailable (§ 6.9); and a link to Flagged.
+Caçador export; Clear progress, behind a confirm, which empties every store, the
+no-repeat window and the words pass and keeps the language; a line saying progress
+is not being saved on this device when storage is unavailable (§ 6.9); and a link to
+Flagged.
 
 ### 6.9 Empty and failure states
 
@@ -765,9 +918,12 @@ this device when storage is unavailable (§ 6.9); and a link to Flagged.
 - **Storage unavailable**: when IndexedDB cannot be opened (a private window, blocked
   site data), the app runs on progress kept in memory for the visit, and Settings says
   progress is not being saved on this device. When localStorage is blocked, the
-  language choice holds for the visit only; when sessionStorage is blocked, the storage
-  module keeps the no-repeat window in memory for the page, and Clear progress empties
-  that copy too.
+  language choice holds for the visit only, and the storage module keeps the words
+  pass in memory for the page (§ 6.11); when sessionStorage is blocked, it keeps the
+  no-repeat window in memory for the page. Clear progress empties both memory copies
+  too. A stored pass or window that is garbled reads as none: the window starts empty
+  and the drill starts a fresh pass. The words drill has no failure line, since
+  nothing it reads or writes can be refused.
 - **A read or write that fails**: when the storage module rejects, the screen says so in
   one plain line, instead of loading for good or going on as if the write had landed:
   - a failed read: Home, Practice, Exam, Progress and Flagged show the line in place of
@@ -795,9 +951,62 @@ this device when storage is unavailable (§ 6.9); and a link to Flagged.
 
 ### 6.10 Out of scope
 
-Text-to-speech, a vocabulary drill, a browse list of all 506 questions, links from a
-nudge's question number, accounts or sync (export and import carry progress to a second
-device), and a custom domain.
+Text-to-speech, a browse list of all 506 questions, links from a nudge's question
+number, accounts or sync (export and import carry progress to a second device), and a
+custom domain. For the words drill (§ 6.11): any record of how well a word is known
+(a history, weighting by misses, a Progress line, an effect on readiness), English to
+Portuguese, a choice of kind, and links between words and missed questions (cac-5y0).
+
+### 6.11 Words
+
+At `/words`, rounds of ten words from the bank's list (§ 3.3), each asking the English
+for a Portuguese term, opened from Home's Words card (§ 6.3). The tab bar shows with no
+tab current. The screen header takes its eyebrow form (§ 8.2): the eyebrow "Words" and
+the counter "n of 10" in the right-hand slot, as a round's (§ 6.4).
+
+- **The card**: the word's `pt` in Fraunces, its `phrase` under it, and three option
+  rows lettered A, B, C in the question card's look (§ 8.6), each an English `en`. No
+  peek, no Hint and no flags row.
+- **The options**: the word's `en` and two others drawn at random from the words of the
+  same kind whose `en` differs, ignoring case, from the right answer's and from each
+  other; when the kind cannot supply two, the rest come from the whole list. The right
+  answer's place among A, B, C is random. The draw takes a random source as the study
+  model's draws do (`model/random.ts`), so the tests and the e2e suite seed it.
+- **Answering**: tap an option. At once the rows are marked Right and Wrong as the
+  question card marks them (§ 8.6) and the options lock. Under them a moss-tint panel in
+  the hint panel's look holds the word's `note`, when it has one, then "Question N"
+  over the sentence: N is the first of the word's `ids` whose question holds the phrase
+  (compared as § 3.3 says), and the sentence is that question's stem, or its stem
+  followed by the option that holds the phrase, with the phrase set in Fraunces 600
+  inside it; Portuguese, with no English. Then Next, or Finish on the tenth answer, a
+  rust button as in Practice.
+- **The round and the score**: a round is always ten words. Finish shows, in place of
+  the card, a plate captioned "Round done" with the count right in Fraunces 64 px and
+  "of 10 right", then the round's ten words in the order shown, each with its
+  Portuguese and its English, the missed ones marked with a cross and "Missed" on clay
+  with ink text (§ 8.5), and a rust "Another 10" that starts the next round on the same
+  screen; the header reads "10 of 10". Nothing about words is recorded: no answer log,
+  no question state, nothing on Progress, Home's readiness or Weakest topics.
+- **The pass**: the words come from one shuffled pass over every word, all kinds mixed,
+  each round taking the next unanswered words of the pass. A word is spent when it is
+  answered, right or wrong, so a missed word waits for the next pass. A spent pass
+  reshuffles, and a round never shows a word twice, a reshuffle mid-round included.
+  Words an update adds join the unseen part of the current pass; words it removes are
+  skipped; a garbled stored pass starts a fresh one. The place in the pass is kept on
+  the device (`cacador.words`, § 7) and never shown.
+- **Leaving mid-round**: as in Practice (§ 6.4), the round's count lives on the screen,
+  so leaving the page or reloading it ends the round. The next round opens at "1 of
+  10" on the first unanswered word of the pass; the words already answered stay spent.
+  Another 10 carries on from the same place.
+- **Language**: the drill's own words (the header, the prompts, Next, Finish, the score
+  plate and Home's card) follow the interface language through the English and pt-PT
+  message files, the screen's own two and Home's ("Palavras", "1 de 10"). The word,
+  its phrase and the sentence are Portuguese, and the options and the note English, in
+  either interface language.
+- **Laptop keys**, as Practice's (§ 6.4): A, B, C and 1, 2, 3 answer; Enter advances,
+  or finishes on the tenth; Space is unbound, since there is no peek. The keys act from
+  the page and the dock, never from the back control or the tab bar, and Enter on a
+  focused button activates that button.
 
 ## 7. On-device storage
 
@@ -874,11 +1083,19 @@ from memory, export, import and clear included, and reports that it is doing so;
 shows that progress is not being saved on this device (§ 6.9). The module's tests run on
 fake-indexeddb.
 
-**Web Storage.** Two keys, both starting `cacador.`, their names exported from
+**Web Storage.** Three keys, each starting `cacador.`, their names exported from
 `apps/web/src/storage/keys.ts` for the screens to import:
 
-- localStorage `cacador.locale`: the interface language, `en` or `pt`. Nothing else
-  goes in localStorage: no theme (the system setting decides) and no last mode.
+- localStorage `cacador.locale`: the interface language, `en` or `pt`.
+- localStorage `cacador.words`: the words drill's shuffled pass and the place in it
+  (§ 6.11). The storage module owns it beside the no-repeat window and keeps it as
+  `apps/web/src/storage/recent.ts` keeps the window: in memory for the page when
+  localStorage is blocked, and a garbled stored pass reads as none, so a fresh pass
+  starts. Clear progress removes it and its memory copy. It is not in IndexedDB, because
+  a new store would bump the database version and change `storage/types.ts` for one
+  small list, and it is not in the export, because the pass is a place, not progress.
+  Nothing else goes in localStorage: no theme (the system setting decides) and no last
+  mode.
 - sessionStorage `cacador.recent`: the recent list the no-repeat window reads, the ten
   most recently drawn question ids as a JSON array, oldest first (§ 6.2). The storage
   module keeps it (`apps/web/src/storage/recent.ts`), in memory for the page when
@@ -920,9 +1137,9 @@ stays unfinished and the others are submitted as they stand at the moment of the
 import, held to the deadline rule above. Every question state is then rebuilt from the
 merged log, and the counts of answers, exams and flags added are reported.
 
-**Clear progress** asks first, then empties every store and removes `cacador.recent`,
-or empties its memory copy when sessionStorage is blocked; it never touches
-`cacador.locale`.
+**Clear progress** asks first, then empties every store and removes `cacador.recent`
+and `cacador.words`, and empties their memory copies when Web Storage is blocked; it
+never touches `cacador.locale`.
 
 ## 8. Stack and conventions
 
@@ -983,11 +1200,11 @@ apps/web/
     index.css              Tailwind, the Campo tokens light and dark mapped onto the shadcn
                            tokens, the @font-face rules of the two fonts
     home/                  HomePage: the header with the Settings control, the readiness
-                           plate, the exam-in-progress card, the Practice and Exam cards,
-                           Weakest topics
-    practice/              PracticePage and PracticeSession, FlagsRow, usePracticeKeys (the
-                           laptop keys), usePracticePool (the query filter and its chip),
-                           recent.ts (the draw over the recent list)
+                           plate, the exam-in-progress card, the Quick 10, Words,
+                           Practice and Exam cards, Weakest topics
+    practice/              PracticePage and PracticeSession, FlagsRow, usePracticePool (the
+                           query filter and its chip), recent.ts (the draw over the recent
+                           list)
     exam/                  ExamPage (the sub-routes), ExamStart (start or resume),
                            RunningExam with ExamMarkers and useExamClock, ExamResultsPage
                            (the score and the review)
@@ -998,28 +1215,38 @@ apps/web/
     flagged/               FlaggedPage, FlaggedLink (the row linking to Flagged at the foot
                            of Progress and Settings), copyFormat.ts (the fixed copy text,
                            § 6.7)
+    words/                 the words drill (§ 6.11): its page, the round of ten, the
+                           panel after answering and the score plate
     notfound/              NotFoundPage, for any address that names no screen
     components/nav/        the tab bar, on every screen but the /exam route, the screen
                            header with the back control, on every screen but Home, and
                            dock.ts (the dock over the tab bar and the footer's scroll
                            padding, § 8.2)
-    components/question/   QuestionCard with PeekButton and HintPanel, names.ts (a name in
-                           the interface language)
+    components/question/   QuestionCard with PeekButton and HintPanel, OptionList (the
+                           lettered option rows, shared with the words card), useAnswerKeys
+                           (the laptop keys, shared by Practice and the words drill),
+                           names.ts (a name in the interface language)
+    components/round/      RoundCounter (the "n of 10" in the screen header) and
+                           RoundSummary (the score plate), shared by Practice's round and
+                           the words drill
     components/LinkButton.tsx  a router link drawn as a button
     components/FailureLine.tsx the one line a screen uses to say something did not work
     components/styles.ts   the shared class strings (§ 8.5): FOCUS_RING (the keyboard focus
-                           ring), PLATE (a plate's box), CHIP (the flag and language chips)
-                           and ROW_LINK (a card row that links somewhere)
+                           ring), PLATE (a plate's box), CHIP (the flag and language chips),
+                           ROW_LINK (a card row that links somewhere) and the MOSS_PANEL
+                           strings (the hint panel's look, shared with the words panel)
     components/ui/         the 11 generated shadcn components
     model/                 the study model: draw.ts (weights, window, recent list), states.ts,
                            progress.ts (readiness, group accuracy, day bars), pools.ts,
                            groups.ts (the topics, sections and patterns with their pools),
-                           exam.ts (draw, deadline, score), random.ts, dates.ts
+                           exam.ts (draw, deadline, score), random.ts, dates.ts, and the
+                           words drill's options draw (§ 6.11)
     storage/               the storage module: index.ts (the API), backend.ts with
                            idbBackend.ts and memoryBackend.ts, state.ts (the derived state),
                            finish.ts (the exam finish), merge.ts (the import merge),
                            exportFile.ts, keys.ts, types.ts, recent.ts (the no-repeat
-                           window in sessionStorage, kept in memory when that is blocked)
+                           window in sessionStorage, kept in memory when that is
+                           blocked), and beside it the words pass in localStorage (§ 7)
     pwa/                   images.ts (the image map), registerServiceWorker.ts,
                            ReloadOnUpdate.tsx (the reload at the next change of screen)
     i18n/                  locales.ts, locale.ts (the store), useI18n.ts, messages/en/ and pt/
@@ -1036,10 +1263,15 @@ e2e/
   tsconfig.json
   look.ts                  the Campo colour values, the contrast helper, the colour a text
                            sits on, the Fraunces check
+  app.ts                   the pieces the specs find by their words, the seeded Math.random
+                           and the round counter
+  round.spec.ts            a round of ten from Home's Quick 10 card to the score and Another 10
   acceptance.spec.ts       steps 2 to 9 of the Campo acceptance bar, in order, then four
                            steps after the bar
-  offline.spec.ts          step 10: Home, Practice, Fraunces and the 15 images from the
-                           cache, offline
+  words.spec.ts            steps 2 to 9 of the words bar (epic cac-zqe), in order, the
+                           words read from @cacador/data at run time
+  offline.spec.ts          step 10 of both bars: Home, Practice, Words, Fraunces and the
+                           15 images from the cache, offline
   installable.spec.ts      the manifest and icons under /cacador/, Chrome's installability check
   build-output.spec.ts     the built dist: the 404.html copy, the worker that skips
                            waiting, the /cacador/ precache and URLs, and step 11 (four
@@ -1058,30 +1290,32 @@ Under the basename `/cacador/`, taken from Vite's `base` through
 `pattern`, and `round` for a round of n questions, § 6.4), `/exam/*` registered as a splat so the exam folder owns its
 sub-routes (`/exam`, which offers Start or resumes the unfinished exam and runs it in
 place, and `/exam/results/<id>`, the results and review), `/progress` (query `tab`,
-`section` or `pattern`, the open list, § 6.6), `/settings` and `/flagged`. Any other
+`section` or `pattern`, the open list, § 6.6), `/words` (the words drill, § 6.11),
+`/settings` and `/flagged`. Any other
 address, an unknown one under `/exam/` included, shows a not-found page inside the
 `Layout`, with the back control to Home. Each page lives in `apps/web/src/<screen>/`.
 
-The menu is the tab bar along the bottom (§ 6.3): Home, Practice, Exam and Progress,
-the labels the navigation words of `common`, the current tab in forest with a filled
-icon and `aria-current="page"`. It shows on every route except `/exam` itself, the
-start screen and the running exam; the results route, `/settings`, `/flagged` and the
-not-found page show it with no tab current. The bar sits in the layout's footer, sticky
-at the foot of the viewport at the end of the column, so it takes its own room under
-the content: first the dock, a slot a screen portals into for the controls that must
-not move (Practice's Hold for English and Hint, § 8.6), empty elsewhere, then the tab
-bar. The root's bottom scroll padding follows the footer's height, so a scroll into view
-stops above it. Every screen but Home
-opens with one screen header row: the back control to Home (a left arrow, accessible
-name "Back to Home"), then the caption, and a slot at the right. The caption takes one
-of two forms:
+The menu is the tab bar along the bottom (§ 6.3): Home, Practice, Exam and Progress, the
+labels the navigation words of `common`, the current tab in forest with a filled icon
+and `aria-current="page"`. It shows on every route except `/exam` itself, the start
+screen and the running exam; the results route, `/words`, `/settings`, `/flagged` and
+the not-found page show it with no tab current. The bar sits in the layout's footer,
+sticky at the foot of the viewport at the end of the column, so it takes its own room
+under the content: first the dock, a slot a screen portals into for the controls that
+must not move (Practice's Hold for English and Hint, § 8.6), empty elsewhere, then the
+tab bar. The root's bottom scroll padding follows the footer's height, so a scroll into
+view stops above it. Every screen but Home opens with one screen header row: the back
+control to Home (a left arrow, accessible name "Back to Home"), then the caption, and a
+slot at the right. The caption takes one of two forms:
 
-- **Eyebrow**, on Practice and the exam's screens: an eyebrow (the section · topic on
-  Practice, "Exam" on the exam) over a muted line in Fraunces 16 px (the question number
-  on Practice, "n of 20" on the running exam; none on the start screen and the
-  results), with the page's h1 ("Practice", "Exam") for screen readers only. The clock
-  sits in the slot on the running exam. The results page sets its visible h1, "Exam
-  results", in Fraunces 28 px under the row.
+- **Eyebrow**, on Practice, the exam's screens and Words: an eyebrow (the section ·
+  topic on Practice, "Exam" on the exam) over a muted line in Fraunces 16 px (the
+  question number on Practice, "n of 20" on the running exam; none on the start screen
+  and the results), with the page's h1 ("Practice", "Exam") for screen readers only. The
+  clock sits in the slot on the running exam. The results page sets its visible h1,
+  "Exam results", in Fraunces 28 px under the row. Words takes the eyebrow form too: the
+  eyebrow "Words", no line, and the counter "n of 10" in the slot as a round's (§ 6.4,
+  § 6.11).
 - **Title**, on Progress, Settings, Flagged and the not-found page: the screen's name
   as the visible h1 in Fraunces 28 px, with no eyebrow and no line. Progress puts
   "N % · M unseen" in the slot at the right, the percentage in Fraunces 26 px and the
@@ -1095,16 +1329,15 @@ renders its own header, so its own data can sit in it.
 
 No user-facing text in components; strings live in the message files, English and
 European Portuguese (`pt-PT`, never Brazilian). `apps/web/src/i18n/messages/en/` and
-`pt/` each hold `common`, `home`, `practice`, `exam`, `progress`, `settings` and
-`flagged` `.ts` files. The English index defines the `Messages` type and each
+`pt/` each hold `common`, `home`, `practice`, `exam`, `progress`, `settings`, `flagged`
+and `words` `.ts` files. The English index defines the `Messages` type and each
 Portuguese file is typed by its English counterpart, so a key missing on either side
 fails `pnpm lint`. `common` holds the app name, the navigation labels (Home included,
-for the back control) and the not-found page's two strings, and belongs to the
-scaffold. A screen's bead edits only its own
-two files and duplicates a shared word rather than editing `common`. The language store
-is a module-level store in `i18n/locale.ts` read by `useI18n()`, which returns `t`, as
-in Sumit. The one exception to the no-text rule is the Flagged page's copy format
-(§ 6.7), constants in one module and never message keys.
+for the back control) and the not-found page's two strings, and belongs to the scaffold.
+A screen's bead edits only its own two files and duplicates a shared word rather than
+editing `common`. The language store is a module-level store in `i18n/locale.ts` read by
+`useI18n()`, which returns `t`, as in Sumit. The one exception to the no-text rule is
+the Flagged page's copy format (§ 6.7), constants in one module and never message keys.
 
 ### 8.4 Hot files
 
@@ -1131,6 +1364,14 @@ from `apps/web` (§ 8.8), added `@cacador/data` to `e2e` and touched `eslint.con
 `src/storage/types.ts` and the lockfile; and the review fixes added the browser install
 script to the root and `e2e` package files and the not-found route to `App.tsx` and
 `common`, each batch holding those files alone.
+
+In phase 5 (epic cac-zqe) each shared file has one bead: the scaffolding bead
+(cac-zqe.2) alone edits `packages/data/src/index.ts`, `packages/data/scripts/**` and
+`packages/data/test/**`; the storage and model bead (cac-zqe.3) alone edits
+`apps/web/src/storage/**`, `keys.ts` the hot one, and `apps/web/src/model/**`; the
+screen bead (cac-zqe.4) alone edits `src/App.tsx` and the English and Portuguese
+message indexes; `e2e/**` and `CLAUDE.md` belong to the e2e bead (cac-zqe.20). The
+phase adds no dependency, so the lockfile and every `package.json` stay as they are.
 
 ### 8.5 Look
 
@@ -1323,7 +1564,8 @@ cac-8cn's Campo acceptance bar is performed at a phone's width. `look.ts` holds 
 Campo colour values the colour checks read (light and dark, § 8.5), the WCAG contrast
 helper and the check that an element is set in Fraunces and the face has loaded;
 `app.ts` holds the pieces the specs find by their words (the screen header, the tab
-bar, the question card, Practice's answer and Next). Six spec files:
+bar, the question card, Practice's answer and Next, the words drill's card and the word
+on it as its list entry). Seven spec files:
 
 - `round.spec.ts` walks a round of ten (§ 6.4): Home's rust Quick 10 card the width of
   the column over the hairline Practice card, the counter in the header from "1 of 10"
@@ -1341,8 +1583,19 @@ bar, the question card, Practice's answer and Next). Six spec files:
   ones listed and is listed as Passed on Progress; an exam with answers that survives a
   closed tab with its clock running; the past exams on Progress with Flagged and its
   copy; and export, clear and import;
-- `offline.spec.ts` is step 10: after one online load and a reload, Home and Practice
-  open offline with Fraunces available, and all 15 images answer from the cache;
+- `words.spec.ts` performs steps 2 to 9 of epic cac-zqe's words bar (§ 6.11), in order,
+  one named step each, in one fresh browser context with the page's random draws
+  seeded: Home's four start cards with Words under Quick 10; the drill's header, card and
+  three options of the word's kind; a wrong answer with Right, Wrong, the locked rows and
+  the panel's "Question N", sentence and note; the keys 2 and Enter; a round to Finish
+  and the score plate with its ten rows and the misses; Another 10, Home and a reload
+  never showing a word already answered; the drill in Português; and Clear progress
+  removing `cacador.words` and keeping `cacador.locale`. The list keeps growing, so the
+  spec pins nothing about it: it reads every word from `@cacador/data` at run time,
+  finds the word on screen by its Portuguese and answers right by that entry's `en`;
+- `offline.spec.ts` is step 10 of both bars: after one online load and a reload, Home,
+  Practice and Words open offline with Fraunces available, Words with a word of the list
+  and three options, and all 15 images answer from the cache;
 - `installable.spec.ts`: the manifest and icons served under `/cacador/`, and Chrome's
   own installability check reporting no errors;
 - `build-output.spec.ts` reads the built `dist` rather than the served pages, because
@@ -1363,6 +1616,9 @@ The orchestrator performs the other two steps of the bar by hand: step 1, a fres
 on Node 26 with `pnpm install`, `pnpm lint` and `pnpm test` green, and step 12, after
 the epic's merge into `main` and its push: the deploy workflow run for that push green,
 and the live site serving Home with the paper ground, the tab bar and the two fonts.
+Of the words bar, the orchestrator performs step 1 (the fresh clone, with `pnpm
+validate` printing a words line of 12 files and at least 700 words) and the Mac session
+step 11 after its push (the deploy green and the live Home showing Words under Quick 10).
 
 ### 8.11 Agents
 
@@ -1392,11 +1648,19 @@ merge, or makes a screen judgement call.
 - **2026-10-13, IndexedDB for progress.** Append-only answer log plus derived
   per-question state (§ 7); localStorage only for settings. One exception since epic
   cac-eil: an import that keeps the file's copy of an exam replaces the device's
-  answers to it (below).
+  answers to it (below). Amended 2026-10-22 by epic cac-zqe: localStorage also holds
+  the words pass, a place and not progress (below).
 - **2026-10-13, No epic ceremony.** No pull requests, no recorded walkthrough; beads
   carry the plan, lint and tests carry the proof. The push to `main` is the deploy: a
   workflow runs the gates and publishes to GitHub Pages, with nothing to do beyond the
   push (amended by epic cac-eil, D1).
+- **2026-10-22, The words drill ships by merge on the box.** No pull request and no
+  recording; the committed e2e suite performs the epic's acceptance bar. The run ends
+  with the epic branch merged into the home server's clone's local `main` and nothing
+  pushed; the Mac finishes with `git pull --ff-only box main`, `pnpm lint`, `pnpm test`
+  and `git push origin main`, the deploy, then checks the live site. Reason: No epic
+  ceremony, above; the run is headless on the home server, and the push, which is the
+  deploy, is made from the Mac (epic cac-zqe D18).
 - **2026-10-13, Beads prefix `cac`, JSONL committed.** No Dolt remote;
   `export.auto` is on and the git hooks are installed so `.beads/issues.jsonl` travels
   with every commit.
@@ -1631,10 +1895,11 @@ merge, or makes a screen judgement call.
   peeks; the keys live in the practice page, not in the shared card (§ 6.4). Reason: the
   peek stays press-and-hold on a keyboard too, and the exam must leave Space unbound
   (epic cac-eil D9; brief cac-aqy D9).
-- **2026-10-13, Out of scope for the app.** Text-to-speech, a vocabulary drill, a browse
-  list of all 506 questions, links from a nudge's question number, accounts or sync,
-  and a custom domain (§ 6.10). Reason: none is in § 6 and none blocks studying (epic
-  cac-eil D10; brief cac-aqy D10 and D14).
+- **2026-10-13, Out of scope for the app.** Text-to-speech, a browse list of all 506
+  questions, links from a nudge's question number, accounts or sync, and a custom
+  domain (§ 6.10). Reason: none is in § 6 and none blocks studying (epic cac-eil D10;
+  brief cac-aqy D10 and D14). Amended 2026-10-22 by epic cac-zqe: the words drill is in
+  scope (below).
 - **2026-10-13, Home and Progress.** Home shows readiness against 75 % with the unseen
   count, the exam in progress with its minutes left, and Practice, Exam, Progress and
   Settings; Progress shows readiness, 30 days of bars, the 29 topics, 11 sections and 17
@@ -1832,3 +2097,127 @@ merge, or makes a screen judgement call.
   screen ends the round. Endless practice stays behind the Practice tab and card.
   Reason: Ross, 2026-10-15: with no end goal he started practice and stopped after a
   few questions; knowing three are left is what gets them done (bead cac-zdk).
+- **2026-10-22, A words drill.** Rounds of ten at `/words` show a Portuguese term from
+  the bank with a short phrase from a question and ask for its English from three
+  options; after each answer, the note where the word has one and the whole sentence
+  with its question number; a score plate at the end (§ 6.11). Portuguese to English
+  only. Reverses the 2026-10-13 Out of scope line that listed a vocabulary drill
+  (§ 6.10). Reason: peeking at the English mid-question breaks Ross's flow, and
+  teaching the vocabulary itself removes the need; the exam needs recognition, not
+  production (brief cac-bc5 D3 to D5).
+- **2026-10-22, Which words.** The hunting, wildlife and legal terms plus the general
+  exam words, from the 739 of the terms inventory: not the nine months, three weekdays
+  and four seasons it lists, nor a term whose only English is the Portuguese word itself
+  (ICNF, the Instituto's full name, podengo, ogival, beagle, pointer, terrier); a name
+  with an English form stays, and so does a word whose meaning is a question's answer
+  (seixa 278, láparos 83, terçó 503). About 720 words (§ 3.3, § 5 step 5 rule 3).
+  Reason: the general words are what stop Ross reading a stem, months and days he can
+  learn anywhere, and an option identical to the prompt teaches nothing; knowing an
+  answer-word is what its question tests (epic cac-zqe D1; brief cac-bc5 D1 and D14).
+- **2026-10-22, The words list, one file per kind.** `packages/data/words/`, twelve
+  files `<kind>.json` (species, anatomy, life, habitat, ground, method, weapon, dog,
+  falconry, law, time, general, mapped from the inventory's categories), each entry
+  exactly `{ pt, phrase, en, kind, ids, note }`, one entry per line, the file sorted by
+  `pt`, with no cap on a file's length; the glossaries, translations, hints and
+  questions are not edited. The inventory and the 17-entry sample are committed
+  unchanged as `source/terms-inventory.json` and `source/words-sample.json`, a writer's
+  sources never imported by the app or the validator (§ 3, § 3.3). Reason: the
+  glossaries are a translator's tool; the largest kind is a tenth of a question chunk's
+  text, and kind equal to file makes the same-kind wrong options a lookup of one file;
+  the headless run reads nothing outside the repo (epic cac-zqe D2, and D7 the planner's
+  choice, reversible; brief cac-bc5 D6 and D17).
+- **2026-10-22, A word's questions and phrase.** `ids` lists every question that uses
+  the word in the entry's sense, inflected forms included; `phrase` is verbatim from at
+  least one of them, ignoring case and curly quotes, and the drill shows the first named
+  question that holds it (§ 3.3, § 4 rule 9). Chosen over the brief's "phrase in every
+  named question". Reason: in the sample Ross approved, 14 of the 17 entries name
+  questions that do not hold the phrase (toca names 8 and its phrase is in 64 only), so
+  that rule would fail the precedent and throw away the occurrence list cac-5y0 needs
+  (epic cac-zqe D3, the planner's choice, reversible; reconciles brief cac-bc5 D6 with
+  D11).
+- **2026-10-22, A word's English is the translation's.** `en` is the English the
+  translation uses; where a glossary has the word, it is the glossary's `en`, or the
+  gloss when that `en` is the Portuguese with a gloss in parentheses; a species is
+  capitalised as the glossary writes it, other words lower case; `en` never contains
+  the `pt` as a whole word. Where the sample breaks this, the rule wins: `cio` is
+  "rut" and its note keeps heat (§ 3.3, § 5 step 5 rule 7). Reason: the drill and the
+  peek must give the same English (epic cac-zqe D4; brief cac-bc5 D6 and D11).
+- **2026-10-22, Notes after answering.** A word's note is English, one sentence or two
+  short ones, shown only after answering, for a false friend, a second meaning, or a
+  method, role, ground or legal word whose English alone does not separate it from its
+  neighbours; empty otherwise, never a grammar lesson (§ 3.3, § 5 step 5 rule 8).
+  Reason: those are the words that trip Ross, and batida and montaria both read as a
+  drive in English (epic cac-zqe D5; brief cac-bc5 D8, D11 and D13).
+- **2026-10-22, Words writers and checkers.** Opus writers, one bead per group of kinds,
+  from the inventory and the bank side by side; a checker bead per writer bead by a
+  different agent, fixing in place; the sample is the precedent every one reads first
+  and goes through the checker like the rest; each edits only its own kind files, and
+  what belongs elsewhere, and every translation or glossary slip, goes in its close
+  reason for the tail bead, which appends the slips to cac-4x1 (§ 5 step 5). Reason:
+  the content phases' writer and checker pattern worked (epic cac-zqe D6; brief cac-bc5
+  D7 and D11).
+- **2026-10-22, Validator rule 9.** `words/` holds exactly the twelve kind files; every
+  entry has the six fields with their types, its file's kind and ascending distinct
+  bank ids; `pt` is unique across the twelve files; the phrase is in a named question;
+  `en` follows the glossary and never holds the `pt`; the validator prints the words
+  count, and an empty file passes (§ 4 rule 9). Reason: the check keeps the drill's
+  English and the peek's identical, and an empty file keeps the scaffold and a
+  half-run phase green (epic cac-zqe D8; brief cac-bc5 D6).
+- **2026-10-22, The words screen.** Route `/words`, its own folder and its own two
+  message files; the tab bar with no tab current; the screen header's eyebrow form with
+  the eyebrow "Words" and the round's counter in the slot; the word in Fraunces over its
+  phrase and three option rows in the question card's look; no peek, Hint or flags row;
+  after answering the rows marked and locked and a moss-tint panel with the note and
+  "Question N" over the Portuguese sentence, the phrase in Fraunces 600; Next, or
+  Finish on the tenth (§ 6.11, § 8.2). Reason: the drill reuses the pieces Practice's
+  round already draws (epic cac-zqe D9, the planner's choice, reversible).
+- **2026-10-22, A words round and its score.** Always ten words; Finish shows "Round
+  done" with the count right and the round's ten words with their English, the missed
+  ones marked, and Another 10. Nothing about words is recorded: no answer log, no
+  question state, nothing on Progress, readiness or Weakest topics (§ 6.11). Reason:
+  Ross wants equal coverage of every word, not word progress, and a missed word does
+  not return for 70-odd rounds, so the plate is the second look (epic cac-zqe D10;
+  brief cac-bc5 D3 and D16).
+- **2026-10-22, Same-kind wrong options.** The right English and two others drawn at
+  random from the same kind, each differing from the others ignoring case, topped up
+  from the whole list when a kind cannot supply two; the right answer's place random;
+  the draw takes the model's seeded random source (§ 6.11). Reason: matches the exam
+  and the phone, and same-kind options test meaning, not category (epic cac-zqe D11;
+  brief cac-bc5 D2).
+- **2026-10-22, One shuffled pass.** One pass over every word, all kinds mixed; a word
+  is spent when answered, so a round left half-way, a reload or Another 10 carries on
+  at the first unanswered word; a round never shows a word twice; a spent pass
+  reshuffles; words an update adds join the unseen part, words it removes are skipped,
+  and a garbled stored pass starts afresh; the place is never shown (§ 6.11). Reason:
+  equal coverage with nothing to track, and a filter by kind would break it (epic
+  cac-zqe D12; brief cac-bc5 D9, D12 and D15).
+- **2026-10-22, The pass in localStorage.** A third browser key, localStorage
+  `cacador.words`, owned by the storage module and kept as `storage/recent.ts` keeps
+  the no-repeat window, in memory for the page when Web Storage is blocked; Clear
+  progress removes it and its memory copy and keeps `cacador.locale`; it is not in the
+  export, which stays version 1 with import untouched (§ 6.9, § 7). Over IndexedDB,
+  where a new store would bump the database version and change `storage/types.ts` for
+  one small list. Reason: the pass is a place, not progress (epic cac-zqe D13, the
+  planner's choice, reversible).
+- **2026-10-22, The drill's language.** The drill's own words and Home's card follow the
+  interface language through English and pt-PT message files; the word, its phrase
+  and the sentence stay Portuguese, and the options and the note English, in either
+  interface language (§ 6.1, § 6.11). Reason: the drill is Portuguese to English only
+  (epic cac-zqe D14; brief cac-bc5 D5).
+- **2026-10-22, Words laptop keys.** A, B, C and 1, 2, 3 answer, Enter advances or
+  finishes on the tenth, Space is unbound; the keys act from the page and the dock,
+  never from the back control or the tab bar, and Enter on a focused button activates
+  it (§ 6.11). Reason: they follow Practice's (Laptop keys, above), less the peek
+  (epic cac-zqe D15, the planner's choice, reversible).
+- **2026-10-22, A Words card on Home.** Directly under Quick 10, the width of the column
+  with the ink hairline and the book-open icon, title "Words" and line "10 terms from
+  the bank · Portuguese to English", its accessible name the title and the line;
+  Practice and Exam stay side by side under it, and Quick 10 stays the one rust card
+  (§ 6.3). Reason: the brief asked for a card beside Quick 10, and one rust card keeps
+  the one thing to do next (epic cac-zqe D16; brief cac-bc5 D3).
+- **2026-10-22, Phase 5 file ownership.** The scaffolding bead alone edits the data
+  loader, scripts and tests; the storage and model bead alone edits
+  `apps/web/src/storage/**` and `apps/web/src/model/**`; the screen bead alone edits
+  `App.tsx` and the message indexes; the e2e bead owns `e2e/**` and `CLAUDE.md`; no new
+  dependency (§ 8.4). Reason: hot files have one owner, so beads beside each other never
+  share a file (epic cac-zqe D17, the planner's choice, reversible).

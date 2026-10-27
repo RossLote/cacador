@@ -2,7 +2,7 @@
  * The study model (phase 4 D3, D4, D5, D11): pure functions for the numbers and
  * draws every screen and the storage module use. No DOM, storage or strings.
  */
-export { seededRandom, type RandomSource } from './random';
+export { seededRandom, shuffled, type RandomSource } from './random';
 export { localDateKey } from './dates';
 export { indexStates, type StateMap } from './states';
 export { addToRecent, drawQuestion, RECENT_LIMIT } from './draw';
@@ -35,3 +35,12 @@ export {
   scoreExam,
   type FinishedExam,
 } from './exam';
+export {
+  nextWordsOfPass,
+  settleWordPass,
+  spendWordOfPass,
+  WORD_ROUND_SIZE,
+  wordOptions,
+  type WordOptions,
+  type WordPass,
+} from './words';

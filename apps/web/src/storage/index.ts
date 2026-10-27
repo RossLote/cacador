@@ -13,12 +13,14 @@ import { openIdbBackend } from './idbBackend';
 import type { ImportCounts } from './merge';
 import { createMemoryBackend } from './memoryBackend';
 import { clearRecentWindow } from './recent';
+import { clearWordPass } from './words';
 import { isWellFormedAnswer } from './state';
 import type { Answer, AnswerMode, Exam, ExportFile, Flag, FlagKind, OptionKey } from './types';
 
-export { LOCALE_KEY, RECENT_KEY } from './keys';
+export { LOCALE_KEY, RECENT_KEY, WORDS_KEY } from './keys';
 export { exportFileName } from './exportFile';
 export { readRecentWindow, writeRecentWindow } from './recent';
+export { nextRoundWords, spendWord } from './words';
 export type { ImportCounts } from './merge';
 export { FLAG_KINDS, OPTION_KEYS } from './types';
 export type { Answer, Exam, ExportFile, Flag, FlagKind, OptionKey, QuestionState } from './types';
@@ -221,8 +223,13 @@ export async function importProgress(text: string, now: number = Date.now()): Pr
   return { ok: true, added: await (await backend()).importFile(read.file, now) };
 }
 
-/** Clear progress (D8): empties every store and forgets the no-repeat window (sessionStorage `cacador.recent`, or its memory copy when Web Storage is blocked); the UI language stays. */
+/**
+ * Clear progress (D8): empties every store and forgets the no-repeat window (sessionStorage `cacador.recent`) and
+ * the words drill's pass (localStorage `cacador.words`), or their memory copies when Web Storage is blocked; the UI
+ * language stays.
+ */
 export async function clearProgress(): Promise<void> {
   await (await backend()).clear();
   clearRecentWindow();
+  clearWordPass();
 }

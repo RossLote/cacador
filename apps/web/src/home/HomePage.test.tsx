@@ -56,7 +56,7 @@ describe('Home', () => {
   for (const locale of ['en', 'pt'] satisfies Locale[]) {
     const t = MESSAGES[locale];
 
-    it(`shows the header, the readiness plate, the three cards and nothing else on a fresh device (${locale})`, async () => {
+    it(`shows the header, the readiness plate, the four cards and nothing else on a fresh device (${locale})`, async () => {
       act(() => setLocale(locale));
       renderHome();
 
@@ -75,16 +75,19 @@ describe('Home', () => {
       expect(tick).toHaveStyle({ left: '75%' });
 
       const round = `${t.home.roundTitle(10)} ${t.home.roundLine}`;
+      const words = `${t.home.wordsTitle} ${t.home.wordsLine(10)}`;
       const practice = `${t.common.nav.practice} ${t.home.practiceLine}`;
       const exam = `${t.common.nav.exam} ${t.home.examLine(20, 30)}`;
       expect(screen.getAllByRole('link').map((link) => link.getAttribute('href'))).toEqual([
         '/settings',
         '/practice?round=10',
+        '/words',
         '/practice',
         '/exam',
       ]);
-      expect(document.querySelectorAll('[data-slot="start-card"]')).toHaveLength(3);
+      expect(document.querySelectorAll('[data-slot="start-card"]')).toHaveLength(4);
       expect(screen.getByRole('link', { name: round })).toHaveAttribute('href', '/practice?round=10');
+      expect(screen.getByRole('link', { name: words })).toHaveAttribute('href', '/words');
       expect(screen.getByRole('link', { name: practice })).toHaveAttribute('href', '/practice');
       expect(screen.getByRole('link', { name: exam })).toHaveAttribute('href', '/exam');
       // An exact query for the nav words finds no card: on the whole app it finds the tab only.
@@ -107,10 +110,29 @@ describe('Home', () => {
     expect(round).toHaveClass('bg-rust', RUST_HOVER, 'col-span-2');
     expect(round).not.toHaveClass('hover:bg-rust/90');
     expect(round.querySelector('svg.lucide-zap')).toBeInTheDocument();
+    // Words sits directly under it, the width of the row too, with the ink hairline: Quick 10 stays the one rust card.
+    const words = screen.getByRole('link', { name: 'Words 10 terms from the bank · Portuguese to English' });
+    expect(words).toHaveAttribute('href', '/words');
+    expect(words).toHaveClass('border-ink', 'bg-card', 'col-span-2');
+    expect(words).not.toHaveClass('bg-rust');
+    expect(words.querySelector('svg.lucide-book-open')).toBeInTheDocument();
+    expect(round.nextElementSibling).toBe(words);
+    expect(document.querySelectorAll('.bg-rust[data-slot="start-card"]')).toHaveLength(1);
     const practice = screen.getByRole('link', { name: 'Practice Weak ones first' });
+    expect(words.nextElementSibling).toBe(practice);
     expect(practice).toHaveClass('border-ink');
     expect(practice).not.toHaveClass('bg-rust', 'col-span-2');
     expect(screen.getByRole('link', { name: 'Exam 20 questions · 30 min' })).toHaveClass('border-ink');
+  });
+
+  it('names the Words card in Portuguese when the interface is', async () => {
+    act(() => setLocale('pt'));
+    renderHome();
+    expect(await screen.findByText('33 %')).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'Palavras 10 termos do banco · do português para o inglês' })).toHaveAttribute(
+      'href',
+      '/words',
+    );
   });
 
   it('keeps the loading line until storage answers, then drops it', async () => {
@@ -120,12 +142,12 @@ describe('Home', () => {
     expect(screen.queryByText(en.home.loading)).not.toBeInTheDocument();
   });
 
-  it('says so when storage cannot be read, and still offers the three cards', async () => {
+  it('says so when storage cannot be read, and still offers the four cards', async () => {
     failStore('getAll');
     renderHome();
     expect(await screen.findByText(en.home.loadFailed)).toBeInTheDocument();
     expect(screen.getByRole('status')).toHaveTextContent(en.home.loadFailed);
-    expect(document.querySelectorAll('[data-slot="start-card"]')).toHaveLength(3);
+    expect(document.querySelectorAll('[data-slot="start-card"]')).toHaveLength(4);
     expect(weakest()).not.toBeInTheDocument();
   });
 

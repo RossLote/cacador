@@ -1,0 +1,14 @@
+[
+  { "pt": "calendário venatório", "phrase": "O definido no calendário venatório anual", "en": "hunting calendar", "kind": "time", "ids": [22, 45, 53, 330, 348, 387], "note": "The ministerial order published each year that lists the species that may be hunted, their open seasons and limits." },
+  { "pt": "crepúsculo", "phrase": "De noite e ao crepúsculo da tarde", "en": "twilight", "kind": "time", "ids": [217], "note": "" },
+  { "pt": "dia de caça", "phrase": "os dias de caça permitidos", "en": "hunting day", "kind": "time", "ids": [45, 57], "note": "" },
+  { "pt": "época", "phrase": "A época de reprodução mais intensa do coelho", "en": "season", "kind": "time", "ids": [72, 133, 137, 145, 150, 154, 157, 164, 165, 190, 265, 270], "note": "Época do ano is the time of year. Época venatória, the hunting year, is its own term." },
+  { "pt": "época venatória", "phrase": "Considera-se época venatória o período anual", "en": "hunting year", "kind": "time", "ids": [20, 22], "note": "The year from 1 June to 31 May; not período venatório, the open season." },
+  { "pt": "feriado", "phrase": "feriados nacionais obrigatórios e feriados municipais", "en": "public holiday", "kind": "time", "ids": [57], "note": "A public holiday, national or municipal; férias are a person's holidays." },
+  { "pt": "finais de", "phrase": "Finais de fevereiro a março", "en": "late", "kind": "time", "ids": [145, 157], "note": "Fins de says the same." },
+  { "pt": "lua cheia", "phrase": "autorizada em período de lua cheia", "en": "full moon", "kind": "time", "ids": [33], "note": "" },
+  { "pt": "meados", "phrase": "De meados de maio a junho", "en": "mid", "kind": "time", "ids": [221], "note": "" },
+  { "pt": "nascer do sol", "phrase": "entre o nascer e o pôr-do-sol", "en": "sunrise", "kind": "time", "ids": [32, 33], "note": "Shortened to o nascer before pôr-do-sol. Nascer alone is to be born." },
+  { "pt": "período venatório", "phrase": "Caçou fora do período venatório da espécie", "en": "open season", "kind": "time", "ids": [26, 43, 423, 425, 428, 430, 434, 438, 440, 441, 442, 444, 449, 450, 451, 457, 460, 462], "note": "The span in which a species may be hunted; not época venatória, the hunting year." },
+  { "pt": "pôr-do-sol", "phrase": "depois das 16 horas e até ao pôr-do-sol", "en": "sunset", "kind": "time", "ids": [32, 33, 411], "note": "" }
+]

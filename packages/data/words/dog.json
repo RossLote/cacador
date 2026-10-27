@@ -1,0 +1,20 @@
+[
+  { "pt": "baixote", "phrase": "Os baixotes são cães principalmente adequados para", "en": "short-legged scent hound", "kind": "dog", "ids": [484, 492], "note": "Kept for the blood trail of wounded big game." },
+  { "pt": "braco alemão", "phrase": "Braco alemão", "en": "German pointer", "kind": "dog", "ids": [486, 495], "note": "" },
+  { "pt": "cachorro", "phrase": "15 cães e 2 cachorros", "en": "puppy", "kind": "dog", "ids": [30], "note": "In Portugal a puppy; in Brazil any dog." },
+  { "pt": "cão", "phrase": "Cães e cavalo", "en": "dog", "kind": "dog", "ids": [6, 19, 21, 25, 29, 30, 31, 38, 48, 50, 55, 76, 193, 481, 482, 483, 484, 485, 486, 488, 489, 490, 491, 492, 493, 494, 495, 497, 498], "note": "" },
+  { "pt": "cão de busca", "phrase": "Um cão de busca e três cães galgos", "en": "search dog", "kind": "dog", "ids": [37, 38], "note": "In coursing, the dog that finds the hare for the greyhounds." },
+  { "pt": "cão de caça", "phrase": "Treinar cães de caça", "en": "hunting dog", "kind": "dog", "ids": [6, 44, 390, 397, 475, 478, 480, 490, 505], "note": "" },
+  { "pt": "cão de equipagem", "phrase": "Cães de equipagem", "en": "pack hound", "kind": "dog", "ids": [484, 489], "note": "Hounds that hunt together as a pack." },
+  { "pt": "cão de parar", "phrase": "Cães de parar", "en": "pointing dog", "kind": "dog", "ids": [484, 489], "note": "A dog that freezes to show where game lies. Parar here is to point, not to stop." },
+  { "pt": "cobrar", "phrase": "O setter irlandês cobra bem na água e em terra", "en": "retrieve", "kind": "dog", "ids": [488, 489, 490, 496], "note": "Of a dog bringing back shot game. Not the snake, not charging money." },
+  { "pt": "coelheiro", "phrase": "vulgarmente designado como coelheiro", "en": "rabbit dog", "kind": "dog", "ids": [480, 483, 486], "note": "The name for the medium podengo, the rabbit hunter." },
+  { "pt": "epagneul breton", "phrase": "O epagneul breton cobra bem", "en": "Brittany", "kind": "dog", "ids": [496], "note": "A French pointing and retrieving spaniel." },
+  { "pt": "galgo", "phrase": "Os galgos não são considerados cães de caça", "en": "greyhound", "kind": "dog", "ids": [37, 38, 490], "note": "" },
+  { "pt": "parar", "phrase": "além de “parar”, também cobra bem", "en": "point", "kind": "dog", "ids": [484, 489, 490], "note": "Of a dog, to freeze and show where game lies. Elsewhere to stop." },
+  { "pt": "perdigueiro", "phrase": "O perdigueiro português", "en": "Portuguese pointer", "kind": "dog", "ids": [483, 490, 491, 493, 496], "note": "Named after the perdiz it hunts. The bank calls the English breed pointer." },
+  { "pt": "pista de sangue", "phrase": "Seguir pistas de sangue de caça maior", "en": "blood trail", "kind": "dog", "ids": [484, 492, 496], "note": "The track of a wounded animal, followed by its blood." },
+  { "pt": "raça", "phrase": "Qual das seguintes raças de cães", "en": "breed", "kind": "dog", "ids": [481, 483, 485, 491, 493, 494, 495, 496, 498], "note": "Of animals, a breed. Also race." },
+  { "pt": "setter inglês", "phrase": "Setter inglês", "en": "English setter", "kind": "dog", "ids": [498], "note": "" },
+  { "pt": "setter irlandês", "phrase": "O setter irlandês cobra bem", "en": "Irish setter", "kind": "dog", "ids": [488], "note": "" }
+]
