@@ -1,5 +1,8 @@
-import { existsSync, readdirSync, readFileSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
+import { visibleFiles } from '../scripts/lib/validate.mjs';
+import { phraseSite } from '../scripts/lib/words.mjs';
 import {
   findPhrase,
   hintFor,
@@ -83,9 +86,10 @@ describe('loader', () => {
 
   // The loader lists the words/ files by hand too (src/index.ts); the validator makes words/ hold
   // exactly the twelve kind files and every word's kind its file's, so the list must be the files'
-  // words kind by kind, or a file was never wired in or sits under another kind.
+  // words kind by kind, or a file was never wired in or sits under another kind. The files are listed
+  // as the validator lists them, passing over a hidden file such as .DS_Store.
   it('wires every words/ file into the loader under its kind', () => {
-    expect(readdirSync(new URL('../words', import.meta.url)).sort()).toEqual(wordKinds.map((kind) => `${kind}.json`));
+    expect(visibleFiles(fileURLToPath(new URL('../words', import.meta.url)))).toEqual(wordKinds.map((kind) => `${kind}.json`));
     expect(words).toEqual(wordKinds.flatMap((kind) => readData(`words/${kind}.json`) as Word[]));
   });
 
@@ -120,6 +124,16 @@ describe('loader', () => {
     expect(findPhrase("Uma galinha-d'água", 'galinha-d\u2019água')).toBe(4);
     expect(findPhrase('O \u201cpombo\u201d', '"pombo"')).toBe(2);
     expect(findPhrase('Um gato', 'um cão')).toBe(-1);
+  });
+
+  // The field the drill shows is the first that holds the phrase, so the order stem, A, B, C decides it.
+  it('finds the phrase in the stem before an option, and in an earlier option before a later one', () => {
+    const question = (stem: string, A: string, B: string, C: string) => ({ question: stem, options: { A, B, C } });
+    expect(phraseSite(question('O cão e o furão', 'Um cão', 'Um gato', 'Um pato'), 'cão')).toEqual({ field: 'question', start: 2 });
+    expect(phraseSite(question('Qual?', 'Um furão', 'Um gato', 'Com um furão'), 'furão')).toEqual({ field: 'A', start: 3 });
+    expect(phraseSite(question('Qual?', 'Um furão', 'Com um furão', 'Um gato'), 'furão')).toEqual({ field: 'A', start: 3 });
+    expect(phraseSite(question('Qual?', 'Um gato', 'Um furão', 'Com um furão'), 'furão')).toEqual({ field: 'B', start: 3 });
+    expect(phraseSite(question('Qual?', 'Um gato', 'Um cão', 'Um pato'), 'furão')).toBeUndefined();
   });
 
   it('matches a phrase only as whole words: a letter, accented or not, a digit or a hyphen next to it is no boundary', () => {
