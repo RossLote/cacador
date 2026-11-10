@@ -1,5 +1,7 @@
 // Typed loader for the question bank (DESIGN.md § 3). JSON is imported statically so
 // Vite and vitest resolve it without runtime file reading; nothing here edits data.
+import animalsJson from '../animals/animals.json' with { type: 'json' };
+import speciesJson from '../glossary/species.json' with { type: 'json' };
 import manifestJson from '../manifest.json' with { type: 'json' };
 import chunk01 from '../questions/01-documentos.json' with { type: 'json' };
 import chunk02 from '../questions/02-conceitos-basicos.json' with { type: 'json' };
@@ -195,6 +197,84 @@ export const questionsInTopic = (slug: string): readonly Question[] => byTopic.g
 export const sectionOf = (question: Question): Section | undefined => sectionBySlug.get(question.section);
 
 export const topicOf = (question: Question): Topic | undefined => topicBySlug.get(question.topic);
+
+/** An animal of the Animals screen: one per Biology topic, with its tile names, photo, credit and questions. */
+export interface Animal {
+  /** The Biology topic's slug, which is also the photo's name and the address /animals/<slug>. */
+  slug: string;
+  /** The tile's Portuguese name: animals.json's `tile.pt` where it gives one (only tordos), else the topic's. */
+  pt: string;
+  /** The tile's English name, chosen as `pt` is. */
+  en: string;
+  /** The Biology topic, with its full names. */
+  topic: Topic;
+  /** The photo's file name in animals/ (imported as `@cacador/data/animals/<file>`). */
+  file: string;
+  /** The CSS object-position that keeps the animal in a square crop of the photo. */
+  position: string;
+  author: string;
+  licence: string;
+  licenceUrl: string;
+  /** The photo's Wikimedia Commons page. */
+  source: string;
+  /** The ids a pass asks, in order: the topic's questions, then every other question whose stem names the animal (D1, D9). */
+  questionIds: readonly number[];
+}
+
+/** One entry of animals/animals.json: the photo and its credit, with tile names where the topic's are too long. */
+interface AnimalEntry {
+  slug: string;
+  file: string;
+  position: string;
+  author: string;
+  licence: string;
+  licenceUrl: string;
+  source: string;
+  tile?: { pt: string; en: string };
+}
+
+/** One entry of glossary/species.json; `group` is a Biology topic slug for the species of the 19 animals. */
+interface Species {
+  pt: string;
+  scientific: string;
+  en: string;
+  group: string;
+}
+
+const fold = (text: string): string => text.normalize('NFC').toLowerCase();
+const inWord = /[\p{L}\p{N}-]/u;
+
+/** True when `name` (already folded) sits in `text` (already folded) with no letter, digit or hyphen on either side. */
+function names(text: string, name: string): boolean {
+  for (let at = text.indexOf(name); at !== -1; at = text.indexOf(name, at + 1)) {
+    if (!inWord.test(text.charAt(at - 1)) && !inWord.test(text.charAt(at + name.length))) return true;
+  }
+  return false;
+}
+
+const speciesNamesByGroup = Map.groupBy(speciesJson as Species[], (s) => s.group);
+const foldedStems = questions.map((q) => ({ id: q.id, topic: q.topic, stem: fold(q.question) }));
+
+/** The ids of the topic's questions, then of every other question whose stem names one of the group's species (D1, D9). */
+function questionIdsOf(slug: string): number[] {
+  const own = questionsInTopic(slug).map((q) => q.id);
+  const speciesNames = (speciesNamesByGroup.get(slug) ?? []).map((s) => fold(s.pt));
+  const named = foldedStems
+    .filter((q) => q.topic !== slug && speciesNames.some((name) => names(q.stem, name)))
+    .map((q) => q.id);
+  return [...own, ...named];
+}
+
+/** The 19 animals in animals.json's order, which is the manifest's order of the Biology topics (D2). */
+export const animals: readonly Animal[] = (animalsJson as AnimalEntry[]).map(({ tile, ...entry }) => {
+  const topic = topicBySlug.get(entry.slug);
+  if (!topic) throw new Error(`animals.json: ${entry.slug} is not a topic`);
+  return { ...entry, pt: tile?.pt ?? topic.pt, en: tile?.en ?? topic.en, topic, questionIds: questionIdsOf(entry.slug) };
+});
+
+const animalsBySlug = new Map(animals.map((a) => [a.slug, a]));
+
+export const animalBySlug = (slug: string): Animal | undefined => animalsBySlug.get(slug);
 
 /**
  * One import per translations/en/ file, listed in chunk order like `chunks` (the loader test fails

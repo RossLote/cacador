@@ -4,6 +4,8 @@ import { describe, expect, it } from 'vitest';
 import { visibleFiles } from '../scripts/lib/validate.mjs';
 import { phraseSite } from '../scripts/lib/words.mjs';
 import {
+  animalBySlug,
+  animals,
   findPhrase,
   hintFor,
   manifest,
@@ -159,5 +161,42 @@ describe('loader', () => {
       expect(inWord.test(text.charAt(site.start - 1)), `${word.pt} starts inside a word`).toBe(false);
       expect(inWord.test(text.charAt(end)), `${word.pt} ends inside a word`).toBe(false);
     }
+  });
+
+  // The sizes came from D1's rule run on the bank on 2026-11-10: if the code gives another number,
+  // its match differs from the rule (the task file's step 5), so fix the match, never the number.
+  it("gives every animal its topic's questions and then every other question whose stem names it", () => {
+    expect(animals.map((a) => [a.slug, a.questionIds.length])).toEqual([
+      ['coelho', 34], ['lebre', 24], ['raposa', 12], ['saca-rabos', 10], ['javali', 22], ['gamo', 6],
+      ['veado', 15], ['corco', 8], ['muflao', 3], ['perdiz', 35], ['pombos-rolas', 33], ['codorniz', 19],
+      ['patos', 32], ['galinha-d-agua', 8], ['galeirao', 5], ['galinhola', 15], ['narcejas', 15],
+      ['tarambola', 5], ['tordos', 13],
+    ]);
+    const boar = animalBySlug('javali')?.questionIds ?? [];
+    expect(boar.slice(0, 14)).toEqual(Array.from({ length: 14 }, (_, i) => 123 + i));
+    expect(boar.slice(14)).toEqual([422, 427, 440, 444, 447, 449, 481, 494]);
+    for (const animal of animals) {
+      expect(new Set(animal.questionIds).size, `${animal.slug} asks an id twice`).toBe(animal.questionIds.length);
+      expect(animal.questionIds.slice(0, questionsInTopic(animal.slug).length)).toEqual(questionsInTopic(animal.slug).map((q) => q.id));
+    }
+  });
+
+  it("offers the Biology topics as animals, in the manifest's order, under their tile names", () => {
+    expect(animals.map((a) => a.slug)).toEqual(topics.filter((t) => t.section === 'biologia').map((t) => t.slug));
+    for (const animal of animals) {
+      expect(animal.topic.slug).toBe(animal.slug);
+      expect(animalBySlug(animal.slug)).toBe(animal);
+    }
+    expect(animalBySlug('tordos')).toMatchObject({ pt: 'Tordos', en: 'Thrushes' });
+    expect(animalBySlug('tordos')?.topic.en).toBe('Thrushes, blackbird and the corvid pictures');
+    expect(animalBySlug('javali')).toMatchObject({ pt: 'Javali', en: 'Wild boar' });
+    expect(animalBySlug('nope')).toBeUndefined();
+  });
+
+  // Listed as the validator lists a folder, passing over a hidden file such as .DS_Store.
+  it('ships a photo for every animal, and nothing else, in animals/', () => {
+    const dir = new URL('../animals/', import.meta.url);
+    for (const { file } of animals) expect(existsSync(new URL(file, dir)), file).toBe(true);
+    expect(visibleFiles(fileURLToPath(dir))).toEqual(['animals.json', ...animals.map((a) => a.file)].sort());
   });
 });

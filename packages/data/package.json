@@ -6,7 +6,8 @@
   "exports": {
     ".": "./src/index.ts",
     "./manifest.json": "./manifest.json",
-    "./images/*": "./images/*"
+    "./images/*": "./images/*",
+    "./animals/*": "./animals/*"
   },
   "scripts": {
     "typecheck": "tsc -p tsconfig.json",
