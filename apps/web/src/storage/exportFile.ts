@@ -6,8 +6,18 @@
 import { questionById } from '@cacador/data';
 import { isOneOf } from '@/lib/isOneOf';
 import { EXAM_SIZE, examDeadline, isCorrectOption, localDateKey, MINUTE_MS, scoreExam } from '@/model';
+import { readAnimalEntry } from './animals';
 import { isWellFormedAnswer, withoutLogId } from './state';
-import { FLAG_KINDS, OPTION_KEYS, type Answer, type Exam, type ExportFile, type Flag, type OptionKey } from './types';
+import {
+  FLAG_KINDS,
+  OPTION_KEYS,
+  type AnimalsProgress,
+  type Answer,
+  type Exam,
+  type ExportFile,
+  type Flag,
+  type OptionKey,
+} from './types';
 
 /** The records an export holds: every store but questionState. */
 export interface ProgressRecords {
@@ -26,9 +36,12 @@ export function exportFileName(now: number = Date.now()): string {
   return `cacador-progress-${localDateKey(now)}.json`;
 }
 
-/** The export of `records` made at `exportedAt`; answers lose their log ids, which only mean something on this device. */
-export function toExportFile(records: ProgressRecords, exportedAt: number): ExportFile {
-  return {
+/**
+ * The export of `records` and the animals' progress made at `exportedAt`; answers lose their log ids, which only mean
+ * something on this device. `animals` is written only when some animal has a score or a kept pass (animal practice D22).
+ */
+export function toExportFile(records: ProgressRecords, exportedAt: number, animals: AnimalsProgress = {}): ExportFile {
+  const file: ExportFile = {
     app: 'cacador',
     version: 1,
     exportedAt,
@@ -36,6 +49,8 @@ export function toExportFile(records: ProgressRecords, exportedAt: number): Expo
     exams: records.exams,
     flags: records.flags,
   };
+  if (Object.keys(animals).length > 0) file.animals = animals;
+  return file;
 }
 
 /** How far ahead of the importing device's clock a time in the file may be: two devices' clocks never agree exactly. */
@@ -139,12 +154,28 @@ function readFlag(value: unknown, isTime: IsTime): Flag {
 }
 
 /**
+ * The animals' progress (animal practice D22) under the rules `readAnimals` applies to the stored copy, every score's
+ * time by `now`; where `readAnimals` drops a bad entry, here it refuses the file.
+ */
+function readAnimalsField(value: unknown, isTime: IsTime): AnimalsProgress {
+  const animals: AnimalsProgress = {};
+  for (const [slug, entry] of Object.entries(fields(value))) {
+    const { progress, flawless } = readAnimalEntry(slug, entry);
+    if (!flawless) throw new Malformed();
+    if (progress.last !== undefined) check(progress.last.at, isTime);
+    animals[slug] = progress;
+  }
+  return animals;
+}
+
+/**
  * Checks parsed JSON is a version 1 Caçador export (D8) holding only records
  * the app itself writes, and returns it with every record rebuilt from its
  * known fields, so nothing unexpected is stored. Every time must have happened
  * by `now` (the import's moment, give or take `CLOCK_SKEW_MS`), and every exam
  * answer must belong to a finished exam in the same file, as every exam answer
- * in an export does. An answer's `correct` and an exam's `score` are worked out
+ * in an export does. The optional `animals` (animal practice D22) holds only
+ * known animals with a well-formed score or kept pass. An answer's `correct` and an exam's `score` are worked out
  * again from the bank's key rather than taken as stated. Anything else is
  * refused with the reason.
  */
@@ -163,6 +194,7 @@ export function validateExportFile(data: unknown, now: number): ReadExportResult
       exams: list(f.exams, (exam) => readExam(exam, isTime)),
       flags: list(f.flags, (flag) => readFlag(flag, isTime)),
     };
+    if (f.animals !== undefined) file.animals = readAnimalsField(f.animals, isTime);
     const finished = new Set(file.exams.filter((exam) => exam.finishedAt !== undefined).map((exam) => exam.id));
     if (file.answers.some((answer) => answer.examId !== undefined && !finished.has(answer.examId))) throw new Malformed();
     return { ok: true, file };

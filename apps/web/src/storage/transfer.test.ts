@@ -1,4 +1,4 @@
-import type { OptionKey } from '@cacador/data';
+import { animalBySlug, type Animal, type OptionKey } from '@cacador/data';
 import { IDBFactory } from 'fake-indexeddb';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { drawExam, EXAM_DURATION_MS, seededRandom } from '@/model';
@@ -20,8 +20,11 @@ import {
   LOCALE_KEY,
   recordAnswer,
   RECENT_KEY,
+  readAnimals,
+  recordPassAnswer,
   setFlag,
   storageMode,
+  type AnimalsProgress,
   type Answer,
   type Exam,
   type ExportFile,
@@ -36,10 +39,13 @@ const allOf = (ids: readonly number[], pick: (id: number) => OptionKey): Record<
   Object.fromEntries(ids.map((id) => [id, pick(id)]));
 
 const questionIds = drawExam(seededRandom(7));
+
+/** The first question of an animal's pass. */
+const readFirst = (slug: string): number => (animalBySlug(slug) as Animal).questionIds[0] as number;
 const otherIds = drawExam(seededRandom(8));
 
 /** The text of an export from another device holding `records`. */
-const fileText = (records: Partial<Pick<ExportFile, 'answers' | 'exams' | 'flags'>> = {}): string =>
+const fileText = (records: Partial<Pick<ExportFile, 'answers' | 'exams' | 'flags' | 'animals'>> = {}): string =>
   JSON.stringify({ app: 'cacador', version: 1, exportedAt: T0, answers: [], exams: [], flags: [], ...records });
 
 /** The log as content, without the device-local ids. */
@@ -309,6 +315,101 @@ describe.each([
     expect(await importProgress(JSON.stringify({ ...good, flags: undefined }))).toEqual({ ok: false, reason: 'malformed' });
 
     expect({ answers: await listAnswers(), exams: await listExams(), flags: await listFlags(), states: await getStates() }).toEqual(before);
+  });
+
+  describe('the animals', () => {
+    const boar = animalBySlug('javali') as Animal;
+    const score = (right: number, at: number) => ({ right, total: 22, at });
+
+    /** A full pass of the boar finished at `at`, `wrong` answers wrong, then a pass of `left` answers kept on the rabbit. */
+    function playAnimals(wrong: number, at: number, left = 2): void {
+      boar.questionIds.forEach((_, i) => recordPassAnswer('javali', i >= wrong, at));
+      for (let i = 0; i < left; i++) recordPassAnswer('coelho', i % 2 === 0, at);
+    }
+
+    it('are in the export only once some animal has a score or a kept pass', async () => {
+      await makeProgress();
+      expect(await exportProgress()).not.toHaveProperty('animals');
+
+      recordPassAnswer('coelho', false, T0);
+      expect((await exportProgress()).animals).toEqual({ coelho: { pass: { answered: 1, right: 0, missed: [readFirst('coelho')] } } });
+    });
+
+    it('come back as they were after export, clear and import', async () => {
+      await makeProgress();
+      playAnimals(5, T0 + MINUTE);
+      const before = readAnimals();
+      expect(Object.keys(before).sort()).toEqual(['coelho', 'javali']);
+      const text = JSON.stringify(await exportProgress());
+
+      await clearProgress();
+      expect(readAnimals()).toEqual({});
+      expect(await importProgress(text)).toEqual({ ok: true, added: { answers: 25, exams: 2, flags: 2 } });
+      expect(readAnimals()).toEqual(before);
+    });
+
+    it('keep the score finished later, from the file or the device, and the device own on a tie', async () => {
+      playAnimals(5, T0 + 2 * MINUTE, 0);
+      expect(await importProgress(fileText({ animals: { javali: { last: score(20, T0 + MINUTE) } } }))).toMatchObject({ ok: true });
+      expect(readAnimals()).toEqual({ javali: { last: score(17, T0 + 2 * MINUTE) } });
+
+      expect(await importProgress(fileText({ animals: { javali: { last: score(20, T0 + 2 * MINUTE) } } }))).toMatchObject({ ok: true });
+      expect(readAnimals()).toEqual({ javali: { last: score(17, T0 + 2 * MINUTE) } });
+
+      expect(await importProgress(fileText({ animals: { javali: { last: score(20, T0 + 3 * MINUTE) } } }))).toMatchObject({ ok: true });
+      expect(readAnimals()).toEqual({ javali: { last: score(20, T0 + 3 * MINUTE) } });
+    });
+
+    it('take a kept pass from the file only where the device holds none', async () => {
+      playAnimals(0, T0, 3);
+      const own = readAnimals();
+      const theirs: AnimalsProgress = {
+        coelho: { pass: { answered: 1, right: 1, missed: [] } },
+        javali: { pass: { answered: 2, right: 1, missed: [boar.questionIds[0] as number] } },
+        lebre: { pass: { answered: 1, right: 1, missed: [] } },
+      };
+
+      expect(await importProgress(fileText({ animals: theirs }))).toMatchObject({ ok: true });
+      expect(readAnimals()).toEqual({ ...own, javali: { ...own.javali, pass: theirs.javali?.pass }, lebre: theirs.lebre });
+    });
+
+    it('refuse a file with a malformed animals entry, changing nothing', async () => {
+      await makeProgress();
+      playAnimals(5, T0);
+      const before = { answers: await listAnswers(), exams: await listExams(), flags: await listFlags(), animals: readAnimals() };
+      const good: AnimalsProgress = { lebre: { last: score(10, T0) } };
+      const answers = [{ questionId: 9, at: T0, chosen: 'A', correct: true, mode: 'practice' }] as Answer[];
+
+      for (const animals of [
+        { ...good, lobo: { last: score(10, T0) } },
+        { ...good, javali: { last: { right: 23, total: 22, at: T0 } } },
+        { ...good, javali: { last: score(10, T0 + 31 * MINUTE) } },
+        { ...good, javali: { pass: { answered: 22, right: 22, missed: [] } } },
+        { ...good, javali: { pass: { answered: 2, right: 1, missed: [500] } } },
+        { ...good, javali: {} },
+        { ...good, javali: 'boar' },
+        [good],
+      ]) {
+        const text = fileText({ answers, animals: animals as AnimalsProgress });
+        expect(await importProgress(text)).toEqual({ ok: false, reason: 'malformed' });
+      }
+      expect({ answers: await listAnswers(), exams: await listExams(), flags: await listFlags(), animals: readAnimals() }).toEqual(before);
+
+      // The same file without the bad entry imports.
+      expect(await importProgress(fileText({ answers, animals: good }))).toMatchObject({ ok: true, added: { answers: 1 } });
+      expect(readAnimals()).toEqual({ ...before.animals, ...good });
+    });
+
+    it('stay as they are on the import of a version 1 file without the field', async () => {
+      playAnimals(5, T0);
+      const before = readAnimals();
+      const text = fileText({ answers: [{ questionId: 9, at: T0, chosen: correctOf(9), correct: true, mode: 'practice' }] });
+      expect(JSON.parse(text)).not.toHaveProperty('animals');
+
+      expect(await importProgress(text)).toEqual({ ok: true, added: { answers: 1, exams: 0, flags: 0 } });
+      expect(readAnimals()).toEqual(before);
+      expect(await listAnswers()).toHaveLength(1);
+    });
   });
 
   it('clears every store and the no-repeat window, never the locale', async () => {

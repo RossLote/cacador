@@ -12,18 +12,32 @@ import { isRunning, newestFirst, runningExam } from './finish';
 import { openIdbBackend } from './idbBackend';
 import type { ImportCounts } from './merge';
 import { createMemoryBackend } from './memoryBackend';
+import { clearAnimals, mergeAnimals, readAnimals } from './animals';
 import { clearRecentWindow } from './recent';
 import { clearWordPass } from './words';
 import { isWellFormedAnswer } from './state';
 import type { Answer, AnswerMode, Exam, ExportFile, Flag, FlagKind, OptionKey } from './types';
 
-export { LOCALE_KEY, RECENT_KEY, WORDS_KEY } from './keys';
+export { ANIMALS_KEY, LOCALE_KEY, RECENT_KEY, WORDS_KEY } from './keys';
+export { readAnimals, recordPassAnswer, restartPass, type PassAnswerResult } from './animals';
 export { exportFileName } from './exportFile';
 export { readRecentWindow, writeRecentWindow } from './recent';
 export { nextRoundWords, spendWord } from './words';
 export type { ImportCounts } from './merge';
 export { FLAG_KINDS, OPTION_KEYS } from './types';
-export type { Answer, Exam, ExportFile, Flag, FlagKind, OptionKey, QuestionState } from './types';
+export type {
+  AnimalPass,
+  AnimalProgress,
+  AnimalScore,
+  AnimalsProgress,
+  Answer,
+  Exam,
+  ExportFile,
+  Flag,
+  FlagKind,
+  OptionKey,
+  QuestionState,
+} from './types';
 
 let opening: Promise<StorageBackend> | undefined;
 
@@ -195,9 +209,12 @@ export async function listFlags(): Promise<Flag[]> {
 
 // Export, import and clear (D8)
 
-/** Every answer, exam and flag on this device as the version 1 export file, any stale exam settled first; question state is never exported. Save it under `exportFileName(exportedAt)`. */
+/**
+ * Every answer, exam and flag on this device, and the animals' scores and kept passes, as the version 1 export file,
+ * any stale exam settled first; question state is never exported. Save it under `exportFileName(exportedAt)`.
+ */
 export async function exportProgress(exportedAt: number = Date.now()): Promise<ExportFile> {
-  return toExportFile(await (await settled()).readAll(), exportedAt);
+  return toExportFile(await (await settled()).readAll(), exportedAt, readAnimals());
 }
 
 /** What an import did: what it added, or why the file was refused (nothing changed). */
@@ -215,21 +232,27 @@ export type ImportResult = { ok: true; added: ImportCounts } | { ok: false; reas
  * others submitted as they stand at `now`, held to their deadlines as D3
  * holds them), rebuilds every question state from the merged log, and reports
  * the answers inserted, the exams inserted or replaced by the file's copy and
- * the flags inserted or replaced by a newer one.
+ * the flags inserted or replaced by a newer one. Then the file's animals are
+ * merged into the device's (`mergeAnimals`, animal practice D22): per animal
+ * the later score wins, and a kept pass comes in only where the device has
+ * none; the counts leave them out.
  */
 export async function importProgress(text: string, now: number = Date.now()): Promise<ImportResult> {
   const read = readExportFile(text, now);
   if (!read.ok) return read;
-  return { ok: true, added: await (await backend()).importFile(read.file, now) };
+  const added = await (await backend()).importFile(read.file, now);
+  mergeAnimals(read.file.animals ?? {});
+  return { ok: true, added };
 }
 
 /**
- * Clear progress (D8): empties every store and forgets the no-repeat window (sessionStorage `cacador.recent`) and
- * the words drill's pass (localStorage `cacador.words`), or their memory copies when Web Storage is blocked; the UI
- * language stays.
+ * Clear progress (D8): empties every store and forgets the no-repeat window (sessionStorage `cacador.recent`), the
+ * words drill's pass (localStorage `cacador.words`) and the animals' scores and kept passes (localStorage
+ * `cacador.animals`), or their memory copies when Web Storage is blocked; the UI language stays.
  */
 export async function clearProgress(): Promise<void> {
   await (await backend()).clear();
   clearRecentWindow();
   clearWordPass();
+  clearAnimals();
 }
