@@ -1,10 +1,13 @@
+import { animalBySlug } from '@cacador/data';
 import { act, render, screen, within } from '@testing-library/react';
 import { MemoryRouter } from 'react-router';
 import { describe, expect, it } from 'vitest';
 import App from '@/App';
+import { placeOf } from '@/components/question/names';
 import { setLocale } from '@/i18n/locale';
 import type { Locale } from '@/i18n/locales';
 import { MESSAGES } from '@/i18n/messages';
+import { question } from '../../test/fixtures';
 
 /** The app at `path`, so the /animals/* route in App.tsx is proved along with this folder's sub-routes. */
 function renderAt(path: string) {
@@ -45,10 +48,11 @@ describe('AnimalsPage (D21)', () => {
       expectFrame();
     });
 
-    it(`opens /animals/javali on the pass, its eyebrow and screen-reader heading ${t.animals.title} (${locale})`, () => {
+    it(`opens /animals/javali on the pass, its eyebrow the first question's place, its screen-reader heading ${t.animals.title} (${locale})`, () => {
       act(() => setLocale(locale));
       renderAt('/animals/javali');
-      expect(screen.getByText(t.animals.title, { selector: 'p.eyebrow' })).toBeInTheDocument();
+      const first = question(animalBySlug('javali')!.questionIds[0]!);
+      expect(screen.getByText(placeOf(first, locale), { selector: 'p.eyebrow' })).toBeInTheDocument();
       expect(h1()).toHaveTextContent(t.animals.title);
       expect(h1()).toHaveClass('sr-only');
       expect(screen.queryByRole('heading', { name: t.common.notFound.title })).not.toBeInTheDocument();
