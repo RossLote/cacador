@@ -4,8 +4,8 @@ const minutesLeft = (minutes: number) => (minutes === 1 ? '1 minute left' : `${m
 
 /**
  * Home (DESIGN.md § 6.3, epic cac-8cn D7): readiness against the pass line, the
- * unseen count, the exam in progress, the Quick 10, Words, Practice and Exam
- * cards and the weakest topics. The Practice and Exam titles are common.nav's
+ * unseen count, the exam in progress, the Quick 10, Words, Animals, Practice and
+ * Exam cards and the weakest topics. The Practice and Exam titles are common.nav's
  * words; the row words are Progress's, duplicated here rather than shared (D18).
  */
 export const home = {
@@ -30,6 +30,10 @@ export const home = {
   wordsTitle: 'Words',
   /** The line on the words card: the round's size, and the way the drill asks. */
   wordsLine: (size: number) => `${size} terms from the bank · Portuguese to English`,
+  /** The title of the Animals card (animal practice D14). */
+  animalsTitle: 'Animals',
+  /** The line on the Animals card: one animal's questions, all of them. */
+  animalsLine: 'One animal at a time · every question about it',
   /** The line on the Practice card. */
   practiceLine: 'Weak ones first',
   /** The line on the Exam card: the exam's size and its minutes. */

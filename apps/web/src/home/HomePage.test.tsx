@@ -56,7 +56,7 @@ describe('Home', () => {
   for (const locale of ['en', 'pt'] satisfies Locale[]) {
     const t = MESSAGES[locale];
 
-    it(`shows the header, the readiness plate, the four cards and nothing else on a fresh device (${locale})`, async () => {
+    it(`shows the header, the readiness plate, the five cards and nothing else on a fresh device (${locale})`, async () => {
       act(() => setLocale(locale));
       renderHome();
 
@@ -76,18 +76,28 @@ describe('Home', () => {
 
       const round = `${t.home.roundTitle(10)} ${t.home.roundLine}`;
       const words = `${t.home.wordsTitle} ${t.home.wordsLine(10)}`;
+      const animals = `${t.home.animalsTitle} ${t.home.animalsLine}`;
       const practice = `${t.common.nav.practice} ${t.home.practiceLine}`;
       const exam = `${t.common.nav.exam} ${t.home.examLine(20, 30)}`;
       expect(screen.getAllByRole('link').map((link) => link.getAttribute('href'))).toEqual([
         '/settings',
         '/practice?round=10',
         '/words',
+        '/animals',
         '/practice',
         '/exam',
       ]);
-      expect(document.querySelectorAll('[data-slot="start-card"]')).toHaveLength(4);
+      // The five start cards in their order, each read as its accessible name is.
+      expect(Array.from(document.querySelectorAll('[data-slot="start-card"]'), (card) => card.textContent)).toEqual([
+        round,
+        words,
+        animals,
+        practice,
+        exam,
+      ]);
       expect(screen.getByRole('link', { name: round })).toHaveAttribute('href', '/practice?round=10');
       expect(screen.getByRole('link', { name: words })).toHaveAttribute('href', '/words');
+      expect(screen.getByRole('link', { name: animals })).toHaveAttribute('href', '/animals');
       expect(screen.getByRole('link', { name: practice })).toHaveAttribute('href', '/practice');
       expect(screen.getByRole('link', { name: exam })).toHaveAttribute('href', '/exam');
       // An exact query for the nav words finds no card: on the whole app it finds the tab only.
@@ -117,15 +127,22 @@ describe('Home', () => {
     expect(words).not.toHaveClass('bg-rust');
     expect(words.querySelector('svg.lucide-book-open')).toBeInTheDocument();
     expect(round.nextElementSibling).toBe(words);
+    // Animals sits directly under Words, the width of the row, with the ink hairline (animal practice D6).
+    const animals = screen.getByRole('link', { name: 'Animals One animal at a time · every question about it' });
+    expect(animals).toHaveAttribute('href', '/animals');
+    expect(animals).toHaveClass('border-ink', 'bg-card', 'col-span-2');
+    expect(animals).not.toHaveClass('bg-rust');
+    expect(animals.querySelector('svg.lucide-paw-print')).toBeInTheDocument();
+    expect(words.nextElementSibling).toBe(animals);
     expect(document.querySelectorAll('.bg-rust[data-slot="start-card"]')).toHaveLength(1);
     const practice = screen.getByRole('link', { name: 'Practice Weak ones first' });
-    expect(words.nextElementSibling).toBe(practice);
+    expect(animals.nextElementSibling).toBe(practice);
     expect(practice).toHaveClass('border-ink');
     expect(practice).not.toHaveClass('bg-rust', 'col-span-2');
     expect(screen.getByRole('link', { name: 'Exam 20 questions · 30 min' })).toHaveClass('border-ink');
   });
 
-  it('names the Words card in Portuguese when the interface is', async () => {
+  it('names the Words and Animals cards in Portuguese when the interface is', async () => {
     act(() => setLocale('pt'));
     renderHome();
     expect(await screen.findByText('33 %')).toBeInTheDocument();
@@ -133,6 +150,9 @@ describe('Home', () => {
       'href',
       '/words',
     );
+    expect(
+      screen.getByRole('link', { name: 'Animais Um animal de cada vez · todas as perguntas sobre ele' }),
+    ).toHaveAttribute('href', '/animals');
   });
 
   it('keeps the loading line until storage answers, then drops it', async () => {
@@ -142,12 +162,19 @@ describe('Home', () => {
     expect(screen.queryByText(en.home.loading)).not.toBeInTheDocument();
   });
 
-  it('says so when storage cannot be read, and still offers the four cards', async () => {
+  it('says so when storage cannot be read, and still offers the five cards', async () => {
     failStore('getAll');
     renderHome();
     expect(await screen.findByText(en.home.loadFailed)).toBeInTheDocument();
     expect(screen.getByRole('status')).toHaveTextContent(en.home.loadFailed);
-    expect(document.querySelectorAll('[data-slot="start-card"]')).toHaveLength(4);
+    expect(Array.from(document.querySelectorAll('[data-slot="start-card"]'), (card) => card.getAttribute('href'))).toEqual([
+      '/practice?round=10',
+      '/words',
+      '/animals',
+      '/practice',
+      '/exam',
+    ]);
+    expect(screen.getByRole('link', { name: 'Animals One animal at a time · every question about it' })).toBeInTheDocument();
     expect(weakest()).not.toBeInTheDocument();
   });
 

@@ -17,6 +17,8 @@ export const home: Messages['home'] = {
   roundLine: 'As mais fracas primeiro e depois a pontuação',
   wordsTitle: 'Palavras',
   wordsLine: (size) => `${size} termos do banco · do português para o inglês`,
+  animalsTitle: 'Animais',
+  animalsLine: 'Um animal de cada vez · todas as perguntas sobre ele',
   practiceLine: 'As mais fracas primeiro',
   examLine: (size, minutes) => `${size} perguntas · ${minutes} min`,
   weakestTopics: 'Temas mais fracos',
