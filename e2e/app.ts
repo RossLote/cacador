@@ -1,6 +1,6 @@
 /**
- * The pieces of the app the specs find by their words: the screen header, the tab bar, the question card, Practice's
- * loop and the words drill's card.
+ * The pieces of the app the specs find by their words: the screen header, the tab bar, Home's start cards, the question
+ * card, Practice's loop, the words drill's card and the Animals grid's tiles.
  */
 import { questionById, words, type OptionKey, type Question, type Word } from '@cacador/data';
 import { expect, type BrowserContext, type Locator, type Page } from '@playwright/test';
@@ -26,6 +26,53 @@ export const tabBar = (page: Page): Locator => page.getByRole('navigation', { na
 export const tab = (page: Page, name: string): Locator => tabBar(page).getByRole('link', { name, exact: true });
 
 export const TABS = ['Home', 'Practice', 'Exam', 'Progress'];
+
+/**
+ * Home's five start cards in order (DESIGN.md § 6.3): each card's accessible name, its title, a space and its line,
+ * and its address. Animals sits between Words and Practice (animal practice D6).
+ */
+export const START_CARDS = [
+  { name: 'Quick 10 Weak ones first, then your score', href: '/cacador/practice?round=10' },
+  { name: 'Words 10 terms from the bank · Portuguese to English', href: '/cacador/words' },
+  { name: 'Animals One animal at a time · every question about it', href: '/cacador/animals' },
+  { name: 'Practice Weak ones first', href: '/cacador/practice' },
+  { name: 'Exam 20 questions · 30 min', href: '/cacador/exam' },
+] as const;
+
+export const startCards = (page: Page): Locator => page.getByRole('main').locator('[data-slot="start-card"]');
+
+/**
+ * Home's main holds exactly the five start cards, named and addressed as START_CARDS in that order: Quick 10, Words
+ * and Animals each the width of the column, one under the other, then Practice and Exam side by side under Animals.
+ */
+export async function expectStartCards(page: Page) {
+  const cards = startCards(page);
+  await expect(cards).toHaveCount(START_CARDS.length);
+  for (const [i, { name, href }] of START_CARDS.entries()) {
+    await expect(cards.nth(i)).toHaveAccessibleName(name);
+    await expect(cards.nth(i)).toHaveAttribute('href', href);
+  }
+  const [quick, words, animals, practice, exam] = await Promise.all([
+    boxOf(cards.nth(0)),
+    boxOf(cards.nth(1)),
+    boxOf(cards.nth(2)),
+    boxOf(cards.nth(3)),
+    boxOf(cards.nth(4)),
+  ]);
+  for (const [wide, above, name] of [
+    [words, quick, 'Words'],
+    [animals, words, 'Animals'],
+  ] as const) {
+    expect(Math.abs(wide.width - quick.width), `${name} is the width of Quick 10`).toBeLessThanOrEqual(1);
+    expect(Math.abs(wide.x - quick.x)).toBeLessThanOrEqual(1);
+    expect(wide.y, `${name} is under the card before it`).toBeGreaterThan(above.y + above.height - 1);
+  }
+  expect(Math.abs(practice.x - quick.x)).toBeLessThanOrEqual(1);
+  expect(Math.abs(exam.x + exam.width - (quick.x + quick.width))).toBeLessThanOrEqual(1);
+  expect(practice.y, 'Practice is under Animals').toBeGreaterThan(animals.y + animals.height - 1);
+  expect(Math.abs(exam.y - practice.y), 'Exam beside Practice').toBeLessThanOrEqual(1);
+  expect(exam.x).toBeGreaterThan(practice.x + practice.width - 1);
+}
 
 /** Every page the context loads draws with the app's own seeded source in place of Math.random, so a run replays. */
 export async function seedRandom(context: BrowserContext, seed: number) {
@@ -129,4 +176,34 @@ export async function shownWord(page: Page): Promise<Word> {
   const entry = wordFor((await word.textContent()) ?? '');
   await expect(phrase).toHaveText(entry.phrase);
   return entry;
+}
+
+/**
+ * The Animals grid's tile links (animal practice D4, D7), one per animal in the data's order, each an <a> to
+ * /cacador/animals/<slug> named by its aria-label ("Javali, Wild boar", then ", 17 of 22 right" or ", 12 of 34
+ * answered").
+ */
+export const animalTiles = (page: Page): Locator => page.getByRole('main').getByRole('listitem').getByRole('link');
+
+export function animalTileOf(page: Page, slug: string) {
+  const tile = page.getByRole('main').locator(`a[href="/cacador/animals/${slug}"]`);
+  return {
+    tile,
+    photo: tile.locator('img'),
+    /** The chip on the photo's corner, "17/22" or "12 of 34"; the tile's only absolutely placed span. */
+    chip: tile.locator('span.absolute'),
+    pt: tile.locator('[lang="pt-PT"]'),
+    en: tile.locator('[lang="en"]'),
+  };
+}
+
+/** Every photo of the grid has loaded: complete, with a natural width. */
+export async function expectPhotosLoaded(page: Page, count: number) {
+  const photos = animalTiles(page).locator('img');
+  await expect(photos).toHaveCount(count);
+  for (let i = 0; i < count; i++) {
+    await expect
+      .poll(() => photos.nth(i).evaluate((img: HTMLImageElement) => (img.complete ? img.naturalWidth : 0)), `photo ${i + 1}`)
+      .toBeGreaterThan(0);
+  }
 }

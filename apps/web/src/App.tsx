@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Outlet, Route, Routes, useLocation } from 'react-router';
+import { AnimalsPage } from '@/animals/AnimalsPage';
 import { DockContext, useFooterScrollPadding } from '@/components/nav/dock';
 import { TabBar } from '@/components/nav/TabBar';
 import { showsTabBar } from '@/components/nav/tabs';
@@ -52,6 +53,7 @@ export default function App() {
         <Route path="exam/*" element={<ExamPage />} />
         <Route path="progress" element={<ProgressPage />} />
         <Route path="words" element={<WordsPage />} />
+        <Route path="animals/*" element={<AnimalsPage />} />
         <Route path="settings" element={<SettingsPage />} />
         <Route path="flagged" element={<FlaggedPage />} />
         <Route path="*" element={<NotFoundPage />} />

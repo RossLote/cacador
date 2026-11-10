@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test';
-import { answerPractice, nextPractice, questionFor, roundCounter, screenHeader, seedRandom, shownId, tab, wrongOf } from './app';
+import { answerPractice, expectStartCards, nextPractice, questionFor, roundCounter, screenHeader, seedRandom, shownId, tab, wrongOf } from './app';
 import { expectFraunces, LIGHT } from './look';
 
 const ROUND = 10;
@@ -9,6 +9,8 @@ const ROUND = 10;
 test('a round of ten from Home: the counter, Finish in place of the last Next, the score and Another 10', async ({ context, page }) => {
   await seedRandom(context, 1);
   await page.goto('./');
+  // Home's five start cards: Quick 10, Words, Animals (animal practice D6), then Practice and Exam side by side.
+  await expectStartCards(page);
 
   const main = page.getByRole('main');
   const roundCard = main.getByRole('link', { name: 'Quick 10 Weak ones first, then your score', exact: true });

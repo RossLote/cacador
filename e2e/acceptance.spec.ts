@@ -7,6 +7,7 @@ import {
   answerPractice,
   boxOf,
   cardOf,
+  expectStartCards,
   expectTabBar,
   nextPractice,
   OPTION_KEYS,
@@ -84,7 +85,7 @@ test('acceptance bar steps 2 to 9, in order, in one browser context', async ({ c
   /** The first exam's questions, in exam order. */
   const examIds: number[] = [];
 
-  await test.step('step 2: Home: the paper ground, "Caçador" in Fraunces, 33 % with "506 unseen", the rust tick at 75 % and "Pass line 75 %"; no exam card; main holds the four start cards, Quick 10 over Words over Practice and Exam; no "Weakest topics"; the tab bar holds the four tabs with Home current; the Settings control in the header', async () => {
+  await test.step('step 2: Home: the paper ground, "Caçador" in Fraunces, 33 % with "506 unseen", the rust tick at 75 % and "Pass line 75 %"; no exam card; main holds the five start cards, Quick 10 over Words over Animals over Practice and Exam; no "Weakest topics"; the tab bar holds the four tabs with Home current; the Settings control in the header', async () => {
     await page.goto('./');
     expect(await page.evaluate(() => Math.random.toString()), 'Math.random is the seeded source').not.toContain('[native code]');
     await expect(page.locator('body')).toHaveCSS('background-color', LIGHT.paper);
@@ -107,13 +108,9 @@ test('acceptance bar steps 2 to 9, in order, in one browser context', async ({ c
 
     await expect(examCard(page)).toHaveCount(0);
     const main = page.getByRole('main');
-    // The four start cards and the Settings control are main's only links; the tabs sit outside it.
-    await expect(main.getByRole('link')).toHaveCount(5);
-    await expect(main.locator('[data-slot="start-card"]')).toHaveCount(4);
-    await expect(main.getByRole('link', { name: 'Quick 10 Weak ones first, then your score', exact: true })).toHaveAttribute('href', '/cacador/practice?round=10');
-    await expect(main.getByRole('link', { name: 'Words 10 terms from the bank · Portuguese to English', exact: true })).toHaveAttribute('href', '/cacador/words');
-    await expect(main.getByRole('link', { name: 'Practice Weak ones first', exact: true })).toBeVisible();
-    await expect(main.getByRole('link', { name: 'Exam 20 questions · 30 min', exact: true })).toBeVisible();
+    // The five start cards and the Settings control are main's only links; the tabs sit outside it.
+    await expect(main.getByRole('link')).toHaveCount(6);
+    await expectStartCards(page);
     await expect(page.getByRole('heading', { name: 'Weakest topics' })).toHaveCount(0);
     await expectTabBar(page, TABS, 'Home');
     // The header is the row the app name opens.

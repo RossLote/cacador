@@ -47,9 +47,10 @@ test('D12: the precache holds every built file, the manifest and index.html amon
   expect([...urls].sort()).toEqual(expected.sort());
 });
 
-// ACCEPTANCE BAR step 11 (epic cac-8cn D3): the two self-hosted fonts, latin and latin-ext each, and the 15 pictures
-// are precached under the base path, and nothing the app serves points at a font host.
-test('step 11: the precache holds exactly 4 woff2 URLs and the 15 jpg URLs, every URL under /cacador/; no URL points at a font host', () => {
+// ACCEPTANCE BAR step 11 (epic cac-8cn D3): the two self-hosted fonts, latin and latin-ext each, and the 34 pictures
+// (the bank's 15 and the 19 animal photos, animal practice D5) are precached under the base path, and nothing the app
+// serves points at a font host.
+test('step 11: the precache holds exactly 4 woff2 URLs and the 34 jpg URLs, every URL under /cacador/; no URL points at a font host', () => {
   const urls = precacheUrls();
   for (const url of urls) expect(url, 'precache').toMatch(/^\/cacador\//);
   const fonts = urls.filter((url) => url.endsWith('.woff2'));
@@ -65,7 +66,7 @@ test('step 11: the precache holds exactly 4 woff2 URLs and the 15 jpg URLs, ever
   const fontFile = (url: string) => fontFiles.find((name) => url.startsWith(`/cacador/assets/${name}-`)) ?? url;
   for (const url of fonts) expect(url, 'a hashed font file under assets/').toMatch(/^\/cacador\/assets\/[\w-]+\.woff2$/);
   expect(fonts.map(fontFile).sort()).toEqual(fontFiles);
-  expect(urls.filter((url) => url.endsWith('.jpg'))).toHaveLength(15);
+  expect(urls.filter((url) => url.endsWith('.jpg'))).toHaveLength(34);
   expect(distFiles().filter((file) => file.endsWith('.woff2')), 'font files in dist').toHaveLength(4);
 
   // Every font the CSS declares is one of the four, by its built URL.

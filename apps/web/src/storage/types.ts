@@ -70,6 +70,33 @@ export interface Flag {
   at: number;
 }
 
+/** An animal's latest full pass (animal practice D13): right answers out of its questions, finished at `at`. */
+export interface AnimalScore {
+  right: number;
+  total: number;
+  /** When the pass's last answer was given, ms since the epoch. */
+  at: number;
+}
+
+/** A full pass left partway (animal practice D12): it carries on at the animal's question number `answered + 1`. */
+export interface AnimalPass {
+  /** How many of the animal's questions are answered, in the pass's order (the first `answered`). */
+  answered: number;
+  /** How many of those were right. */
+  right: number;
+  /** The ids answered wrongly, in the order asked. */
+  missed: number[];
+}
+
+/** One animal's scores and kept pass; either may be absent. */
+export interface AnimalProgress {
+  last?: AnimalScore;
+  pass?: AnimalPass;
+}
+
+/** Every animal's progress, keyed by animal slug (localStorage `cacador.animals`, animal practice D22). */
+export type AnimalsProgress = Record<string, AnimalProgress>;
+
 /** The export file, cacador-progress-<YYYY-MM-DD>.json (D8). Question state is never exported. */
 export interface ExportFile {
   app: 'cacador';
@@ -79,4 +106,6 @@ export interface ExportFile {
   answers: Answer[];
   exams: Exam[];
   flags: Flag[];
+  /** Each animal's score and kept pass (animal practice D22); present only when some animal has either. */
+  animals?: AnimalsProgress;
 }

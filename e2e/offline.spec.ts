@@ -1,14 +1,19 @@
 import { expect, test } from '@playwright/test';
-import { manifest } from '@cacador/data';
-import { shownWord, wordCardOf } from './app';
+import { animals, manifest } from '@cacador/data';
+import { animalTiles, cardOf, expectPhotosLoaded, shownId, shownWord, wordCardOf } from './app';
 import { expectFraunces } from './look';
 
 // Phase 4 D12, ACCEPTANCE BAR step 10 (epic cac-8cn): after one online load and a reload, the app opens with its fonts
 // and shows every picture with no network. The first load installs the service worker, which claims that page; the
-// reload is then a load served by it. ACCEPTANCE BAR step 10 of epic cac-zqe: Words opens from the cache too.
-const imageStems = manifest.images.map((image) => image.file.replace(/\.jpg$/, '')).sort();
+// reload is then a load served by it. ACCEPTANCE BAR step 10 of epic cac-zqe: Words opens from the cache too. Animal
+// practice D5: the Animals grid shows its 19 photos from the cache, and a pass opens.
+const stemOf = (file: string) => file.replace(/\.jpg$/, '');
+const imageStems = [...manifest.images.map((image) => stemOf(image.file)), ...animals.map((animal) => stemOf(animal.file))].sort();
+/** The picture a built URL is, by its file name's stem; Vite's hash may hold a '-', so the longest stem that prefixes it. */
+const builtStem = (url: string) =>
+  imageStems.filter((stem) => url.startsWith(`/cacador/assets/${stem}-`)).sort((a, b) => b.length - a.length)[0] ?? url;
 
-test('step 10: offline, after one online visit, Home, Practice and Words render from the cache with Fraunces available and the 15 pictures still load', async ({
+test('step 10: offline, after one online visit, Home, Practice, Words and Animals render from the cache with Fraunces available and the 34 pictures still load', async ({
   page,
   context,
 }) => {
@@ -22,8 +27,9 @@ test('step 10: offline, after one online visit, Home, Practice and Words render 
   // The pictures' built URLs, read from the worker's own precache list while still online.
   const sw = await page.evaluate(async () => (await fetch('/cacador/sw.js')).text());
   const imageUrls = [...new Set(sw.match(/\/cacador\/assets\/[\w-]+\.jpg/g) ?? [])];
-  expect(imageUrls).toHaveLength(15);
-  expect(imageUrls.map((url) => url.replace(/^\/cacador\/assets\/([a-z0-9]+)-.*$/, '$1')).sort()).toEqual(imageStems);
+  // The bank's 15 pictures and the 19 animal photos.
+  expect(imageUrls).toHaveLength(34);
+  expect(imageUrls.map(builtStem).sort()).toEqual(imageStems);
 
   await context.setOffline(true);
   expect(await page.evaluate(() => navigator.onLine)).toBe(false);
@@ -61,6 +67,17 @@ test('step 10: offline, after one online visit, Home, Practice and Words render 
   expect(words?.fromServiceWorker(), 'words').toBe(true);
   await shownWord(page);
   await expect(wordCardOf(page).options).toHaveCount(3);
+
+  // Animals shows its 19 tiles with every photo loaded from the cache, and the boar's pass opens at its first question.
+  const grid = await page.goto('animals');
+  expect(grid?.status(), 'animals').toBe(200);
+  expect(grid?.fromServiceWorker(), 'animals').toBe(true);
+  await expect(animalTiles(page)).toHaveCount(animals.length);
+  await expectPhotosLoaded(page, animals.length);
+  await animalTiles(page).first().click();
+  await expect(page).toHaveURL(new RegExp(`/cacador/animals/${animals[0]?.slug}$`));
+  expect(await shownId(page)).toBe(animals[0]?.questionIds[0]);
+  await expect(cardOf(page).options).toHaveCount(3);
 
   const statuses = await page.evaluate(
     (urls) => Promise.all(urls.map(async (url) => [url, (await fetch(url)).status] as const)),
