@@ -2,7 +2,20 @@ import { findPhrase, questionForWord, words, type OptionKey, type Word } from '@
 import { expect, test, type Page } from '@playwright/test';
 // A dependency-free leaf of the app: the storage keys are the app's own names.
 import { LOCALE_KEY, WORDS_KEY } from '../apps/web/src/storage/keys';
-import { boxOf, expectTabBar, OPTION_KEYS, roundCounter, screenHeader, seedRandom, shownWord, tab, TABS, wordCardOf } from './app';
+import {
+  boxOf,
+  expectStartCards,
+  expectTabBar,
+  OPTION_KEYS,
+  roundCounter,
+  screenHeader,
+  seedRandom,
+  shownWord,
+  startCards,
+  tab,
+  TABS,
+  wordCardOf,
+} from './app';
 import { expectFraunces, LIGHT } from './look';
 
 /**
@@ -65,34 +78,20 @@ test('words bar steps 2 to 9, in order, in one browser context', async ({ contex
   const right: boolean[] = [];
   const unanswered = (word: Word) => expect(answered.map((seen) => seen.pt), 'a word not answered before').not.toContain(word.pt);
 
-  await test.step('step 2: Home: main holds exactly four start cards: Quick 10 (rust, the width of the column) at the top; under it Words, the width of the column with the ink hairline, a link named exactly "Words 10 terms from the bank · Portuguese to English" to /cacador/words; under it Practice and Exam side by side', async () => {
+  await test.step('step 2: Home: main holds exactly five start cards: Quick 10 (rust, the width of the column) at the top; under it Words, the width of the column with the ink hairline, a link named exactly "Words 10 terms from the bank · Portuguese to English" to /cacador/words; under it Animals (animal practice D6); under that Practice and Exam side by side', async () => {
     await page.goto('./');
     expect(await page.evaluate(() => Math.random.toString()), 'Math.random is the seeded source').not.toContain('[native code]');
-    const main = page.getByRole('main');
-    const cards = main.locator('[data-slot="start-card"]');
-    await expect(cards).toHaveCount(4);
-    const names = ['Quick 10 Weak ones first, then your score', CARD, 'Practice Weak ones first', 'Exam 20 questions · 30 min'];
-    for (const [i, name] of names.entries()) await expect(cards.nth(i)).toHaveAccessibleName(name);
-    const [quick, wordsCard, practice, exam] = [cards.nth(0), cards.nth(1), cards.nth(2), cards.nth(3)];
+    await expectStartCards(page);
+    const cards = startCards(page);
+    const [quick, wordsCard] = [cards.nth(0), cards.nth(1)];
+    await expect(wordsCard).toHaveAccessibleName(CARD);
 
     await expect(quick).toHaveCSS('background-color', LIGHT.rust);
-    await expect(wordsCard).toHaveAttribute('href', '/cacador/words');
     await expect(wordsCard).not.toHaveCSS('background-color', LIGHT.rust);
     for (const side of ['top', 'right', 'bottom', 'left']) {
       await expect(wordsCard).toHaveCSS(`border-${side}-color`, LIGHT.ink);
       await expect(wordsCard).toHaveCSS(`border-${side}-width`, '1px');
     }
-
-    const [quickBox, wordsBox, practiceBox, examBox] = await Promise.all([boxOf(quick), boxOf(wordsCard), boxOf(practice), boxOf(exam)]);
-    // Quick 10 and Words take the column's width; Practice and Exam share the row under them.
-    expect(Math.abs(wordsBox.width - quickBox.width), 'Words is the width of Quick 10').toBeLessThanOrEqual(1);
-    expect(Math.abs(wordsBox.x - quickBox.x)).toBeLessThanOrEqual(1);
-    expect(Math.abs(practiceBox.x - quickBox.x)).toBeLessThanOrEqual(1);
-    expect(Math.abs(examBox.x + examBox.width - (quickBox.x + quickBox.width))).toBeLessThanOrEqual(1);
-    expect(wordsBox.y, 'Words is under Quick 10').toBeGreaterThan(quickBox.y + quickBox.height - 1);
-    expect(practiceBox.y, 'Practice is under Words').toBeGreaterThan(wordsBox.y + wordsBox.height - 1);
-    expect(Math.abs(examBox.y - practiceBox.y), 'Exam beside Practice').toBeLessThanOrEqual(1);
-    expect(examBox.x).toBeGreaterThan(practiceBox.x + practiceBox.width - 1);
   });
 
   await test.step('step 3: the Words card: the address is /cacador/words; the screen header has "Back to Home", the eyebrow "Words" and "1 of 10" in Fraunces at the right; the tab bar shows its four tabs with none current; the word in Fraunces with its phrase under it, both a list entry\'s; exactly 3 options lettered A, B, C, each the English of a word of the entry\'s kind, exactly one the entry\'s en; no "Hold for English" and no "Hint"', async () => {

@@ -116,7 +116,9 @@ Everything lives in `packages/data`. Portuguese is the source of truth and is on
 written by the extractor; English and hints are hand-maintained and mirror the ids.
 Agents work on one chunk file at a time, so no file holds more than 51 questions and
 no file spans two sections. The words drill's list (§ 3.3, § 6.11) is hand-maintained
-too and is the one set of files not cut by chunk: one file per kind of term.
+too and is the one set of files not cut by chunk: one file per kind of term. The
+Animals screen's photos and their credits (§ 3.3, § 6.12) sit in `animals/`, beside
+`images/` and not in it.
 
 ```
 packages/data/
@@ -136,6 +138,11 @@ packages/data/
     patterns.json            { slug, pt, en, note }, the closed list of pattern tags hints use (§ 3.3)
     en/                      same 18 file names, language notes and nudges
   images/                    q119.jpg … q320.jpg and sinal.jpg
+  animals/                   the Animals screen's photos (§ 3.3, § 6.12):
+    animals.json             { slug, file, position, author, licence, licenceUrl, source, tile? }
+    coelho.jpg               one per Biology topic, <topic-slug>.jpg, 19 files
+    …
+    tordos.jpg
   glossary/
     species.json             { pt, scientific, en, group }, one entry per surface form (§ 3.3)
     terms.json               { pt, en, note }, hunting and legal vocabulary (§ 3.3)
@@ -151,7 +158,8 @@ packages/data/
       parse.mjs              the PDF text parser, pure, unit-tested on the § 2.2 hazards
       validate.mjs           the rule checks as functions, imported by extract.mjs and the tests
   src/
-    index.ts                 typed loader for the app and the tests, the words included
+    index.ts                 typed loader for the app and the tests, the words and the
+                             animals included
   test/
     fixtures/valid/          a 4-question data directory the validator tests copy and break
 ```
@@ -373,6 +381,32 @@ words, about 720 of the inventory's 739; § 5 step 5 rule 3 gives what is left o
 glossaries, translations, hints and questions are never edited for it. The two
 `source/` files are a writer's sources, committed unchanged as Ross approved them and
 never imported by the app or the validator.
+
+An animal, one entry in `animals/animals.json` (an array in the manifest's order of the
+19 Biology topics, animal practice D2):
+
+```json
+{ "slug": "tordos", "file": "tordos.jpg", "position": "50% 50%", "author": "Dion Art",
+  "licence": "CC BY-SA 4.0", "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:…", "tile": { "pt": "Tordos", "en": "Thrushes" } }
+```
+
+`slug` is a Biology topic's slug, and `file` its photo in `animals/`, a jpg 640 px on
+its long side (the mouflon's 510 px, its source being no larger), about 1.3 MB for the
+19. `position` is the CSS `object-position` that keeps the animal in a square crop: the
+fox's and the hare's are not centred. `author`, `licence`, `licenceUrl` and `source`,
+the photo's Wikimedia Commons page, are its credit (§ 6.12). `tile` is present only
+where the topic's names are too long for a tile, the thrushes alone (animal practice
+D16). The photos are outside `images/`, so § 4's image rules never see them, and
+`packages/data/package.json` exports them as `@cacador/data/animals/*`.
+
+The loader's `animals`, with `animalBySlug(slug)`, gives each entry as an `Animal`: its
+fields less `tile`; `pt` and `en`, the tile's names (`tile`'s, else the topic's);
+`topic`, the manifest topic with its full names; and `questionIds`, the questions a pass
+asks in order: the topic's, then every other question whose stem names one of the
+animal's species, a `glossary/species.json` entry whose `group` is the slug, as a whole
+word ignoring case (animal practice D1, D9). The sets are worked out, never written by
+hand.
 
 ### 3.4 Manifest
 
@@ -684,8 +718,9 @@ the epic's review fill in detail under them. The Campo design round (epic cac-8c
 restyled every screen (§ 8.5, § 8.6), replaced Home's buttons with the tab bar
 (§ 6.3) and added three things the chosen artboards carry: Weakest topics on Home, the
 count answered on the exam-in-progress card and the count unanswered on Submit. The
-words drill (§ 6.11) and Home's Words card came in phase 5 (epic cac-zqe). The
-app is a static site with no backend: everything it knows about the learner stays on
+words drill (§ 6.11) and Home's Words card came in phase 5 (epic cac-zqe), and the
+Animals screens (§ 6.12) and Home's Animals card with animal practice
+(`planning/animal-practice`, decisions D1 to D23, § 9). The app is a static site with no backend: everything it knows about the learner stays on
 the device (§ 7).
 
 ### 6.1 Language
@@ -741,12 +776,15 @@ The hub, at `/`, top to bottom:
 - When the storage module returns an unfinished exam, a card for the exam in progress,
   which opens it: "N minutes left · A of 20 answered", A the answers the exam holds
   (the module never returns an exam past its deadline, § 6.5).
-- Four cards: Quick 10 ("Weak ones first, then your score"), the one thing to do
+- Five cards: Quick 10 ("Weak ones first, then your score"), the one thing to do
   next, filled rust and the width of the column, which opens a round of ten
   (`/practice?round=10`, § 6.4); directly under it Words ("10 terms from the bank ·
   Portuguese to English"), the width of the column with the ink hairline and the
   book-open icon, which opens the words drill (`/words`, § 6.11), Quick 10 staying the
-  one rust card; under it, side by side with the ink hairline, Practice
+  one rust card; under Words, Animals ("One animal at a time · every question about
+  it"), the width of the column with the ink hairline and the paw-print icon, which
+  opens the Animals grid (`/animals`, § 6.12; animal practice D6, D14); under it, side
+  by side with the ink hairline, Practice
   ("Weak ones first"), which opens practice over the whole bank with no end, and Exam
   ("20 questions · 30 min", the numbers from the study model), which opens `/exam`.
   Each card's accessible name is its title and its line, so a link named exactly
@@ -761,8 +799,8 @@ The hub, at `/`, top to bottom:
 named exactly by the navigation words, the current one marked (`aria-current="page"`).
 It shows on every screen except the `/exam` route itself: the start screen and the
 running exam take the whole screen and keep only the back control. The results
-(`/exam/results/<id>`), Words, Settings, Flagged and the not-found page show the bar
-with no tab current. Settings is reached from Home's header control, Flagged from
+(`/exam/results/<id>`), Words, the three Animals screens, Settings, Flagged and the
+not-found page show the bar with no tab current. Settings is reached from Home's header control, Flagged from
 Progress and Settings. Every screen but Home has the back control to Home ("Back to
 Home") at the start of its screen header (§ 8.2).
 
@@ -905,7 +943,8 @@ at the tap with what the device holds and that day's date (it is started on the 
 so the share still falls inside the tap); Import, which merges a progress file and
 reports the counts of answers, exams and flags added, or refuses a file that is not a
 Caçador export; Clear progress, behind a confirm, which empties every store, the
-no-repeat window and the words pass and keeps the language; a line saying progress
+no-repeat window, the words pass and the animals' scores and kept passes and keeps the
+language; a line saying progress
 is not being saved on this device when storage is unavailable (§ 6.9); and a link to
 Flagged.
 
@@ -919,7 +958,8 @@ Flagged.
   site data), the app runs on progress kept in memory for the visit, and Settings says
   progress is not being saved on this device. When localStorage is blocked, the
   language choice holds for the visit only, and the storage module keeps the words
-  pass in memory for the page (§ 6.11); when sessionStorage is blocked, it keeps the
+  pass (§ 6.11) and the animals' scores and kept passes (§ 6.12) in memory for the
+  page; when sessionStorage is blocked, it keeps the
   no-repeat window in memory for the page. Clear progress empties both memory copies
   too. A stored pass or window that is garbled reads as none: the window starts empty
   and the drill starts a fresh pass. The words drill has no failure line, since
@@ -956,6 +996,13 @@ number, accounts or sync (export and import carry progress to a second device), 
 custom domain. For the words drill (§ 6.11): any record of how well a word is known
 (a history, weighting by misses, a Progress line, an effect on readiness), English to
 Portuguese, a choice of kind, and links between words and missed questions (cac-5y0).
+For animal practice (§ 6.12): Non-game species and the other sections as tiles; single
+species inside the four groups (ducks, pigeons and doves, snipe, thrushes); a choice of
+order or a shuffle; a best score or a score history; and any change to Progress's topic
+rows, Home's Weakest topics, focused practice (`/practice?topic=`) or the readiness
+number's rule. It adds no tab, no Progress line and no second readiness number, and the
+tiles never show the bank's own 14 species photos, which are the answers to the "this
+picture shows" questions.
 
 ### 6.11 Words
 
@@ -1007,6 +1054,85 @@ the counter "n of 10" in the right-hand slot, as a round's (§ 6.4).
   or finishes on the tenth; Space is unbound, since there is no peek. The keys act from
   the page and the dock, never from the back control or the tab bar, and Enter on a
   focused button activates that button.
+
+### 6.12 Animals
+
+The 19 animals of the bank's Biology section as a grid of photos, opened from Home's
+Animals card (§ 6.3); picking one runs a pass through every question about that
+animal, each asked once in the bank's order, and ends with a score (animal practice D3,
+D6). Three screens, each in `apps/web/src/animals/`: the grid at `/animals`, an
+animal's pass at `/animals/<slug>`, the slug its topic's, and the photo credits at
+`/animals/credits`; an unknown slug, or any deeper address, shows the not-found page.
+Each opens with the usual screen header, its back control to Home ("Back to Home"), and
+the tab bar shows with no tab current, as on Words; "Back to animals" is on the score
+only (D21).
+
+- **The animals**: the 19 Biology topics as they stand, in the manifest's order, the
+  four groups (pigeons and doves, ducks, snipe, thrushes) kept as groups, because
+  splitting them leaves sets of one or two questions; Non-game species is not one (D2).
+  An animal's set is its topic plus every question elsewhere whose stem names it, not
+  the questions that only list it among the options (D1, `questionIds` in § 3.3): rabbit
+  34, hare 24, fox 12, mongoose 10, boar 22, fallow deer 6, red deer 15, roe deer 8,
+  mouflon 3, partridge 35, pigeons and doves 33, quail 19, ducks 32, moorhen 8, coot 5,
+  woodcock 15, snipe 15, golden plover 5, thrushes 13. A pass asks them in the same
+  order every time, the topic's questions and then the others that name the animal,
+  so it reads like the manual's chapter on the animal (D9).
+- **The grid**: the title "Animals" (the title form, § 8.2), then one tile per animal,
+  three to a row at every width (D4): the photo in a square, then the Portuguese tile
+  name over the English, the same in either interface language (D7, D14). The thrushes
+  tile reads "Tordos" / "Thrushes", because the topic's full name runs to four lines on
+  a tile; the pass's chip and the score's caption use the tile's Portuguese name too,
+  while Progress and the question's eyebrow keep the topic's full name (D16). The
+  photo's bottom right corner holds a chip: while a pass is kept partway, its place,
+  "12 of 34", on clay with a rust hairline and ink text, even when the animal also has
+  a score; else the latest full pass's score, "17/22" in Fraunces on the card colour
+  with the hairline, forest when right/total is 75 % or more and rust below, as
+  Progress colours a percentage; nothing when not started (D7, D12, D17). A tile is a
+  link named "Javali, Wild boar", then ", 17 of 22 right" when done or ", 12 of 34
+  answered" partway (D23). The grid reads the scores as it opens, so coming back from
+  a pass shows its chip. A "Photo credits" link sits at its foot (D8).
+- **The photos** are Creative Commons pictures from Wikimedia Commons, one per animal,
+  the lead photo of the species' English Wikipedia article, shipped with the app so
+  they work offline (D5, § 8.7, § 8.8). The four groups show one species each: a wood
+  pigeon, a mallard pair, a common snipe and a song thrush (D11). They ship at 640 px on
+  the long side, which covers a tile at twice its widest size (D19).
+- **The pass**: Practice's question card with Hold for English, Hint, the dock, the
+  laptop keys and the flags row (§ 6.4). The screen header takes the eyebrow form: the
+  question's section · topic over "Question N", and the counter "3 of 22" in the
+  right-hand slot, as a round's; over the card the line "Practising" with the tile's
+  Portuguese name in a chip ("Practising [Javali]", D14). Next moves on, and the last
+  question puts Finish in its place. Every answer goes to the answers log as a practice
+  answer and counts toward progress and readiness as any practice answer does (D10); an
+  answer whose write fails says so in Practice's words and the pass moves on (§ 6.9).
+- **A pass left partway** is kept, one per animal: opening the animal again carries on
+  at the question it was left on, across a reload and closing the app, and its tile
+  shows "12 of 34" until it is finished (D12). The score is recorded at the pass's last
+  answer, before Finish, so closing the app on the last question keeps it (D22).
+- **The score**: Finish puts in place of the card a plate captioned "Javali done" with
+  the count right in Fraunces 64 px and "of 22 right" beside it; the header's eyebrow
+  reads "Animals" and its counter "22 of 22". Under the plate, full width: "Missed ones
+  only (n)" when any were wrong, "Go again", and "Back to animals" to the grid. One is
+  rust, Missed ones only when it shows and Go again otherwise; the others are outlined
+  (D10, D18). Go again always starts from question 1 (D12).
+- **Missed ones only** asks just the questions the score counted wrong, in the order
+  asked: the header counts "2 of 5", it ends on the same plate with its own numbers
+  ("3 of 5 right"), and it offers "Missed ones only (2)" again while any are still
+  wrong. It is never kept when left and never changes the tile: the tile's score is
+  the latest full pass's, and leaving returns the animal to it (D13, D20).
+- **Photo credits**, at `/animals/credits`: the title "Photo credits", then one line,
+  "Photos from Wikimedia Commons, resized and cropped.", because resizing and cropping
+  change a CC-licensed work, then a row per animal in the grid's order with its
+  thumbnail, its Portuguese tile name, the author and the licence, and "Source", which
+  opens the photo's Commons page in a new tab (D8, D19). The licences require the
+  credit, and the tiles stay clean.
+- **Storage**: the scores and kept passes stay on the device in localStorage
+  `cacador.animals` (§ 7), in memory when that is blocked; Clear progress removes them,
+  and the export file carries them (D13, D22).
+- **Language**: the screens' own words follow the interface through the `animals`
+  message files ("Animais", "1 de 3", "A praticar", "Javali concluído",
+  "Só as erradas (5)", "Outra vez", "Voltar aos animais", "Créditos das fotografias",
+  "Fonte"); the tile names, the credits and the questions do not (D14, D23).
+- Progress's topic rows, Home's Weakest topics and focused practice do not change (D15).
 
 ## 7. On-device storage
 
@@ -1083,7 +1209,7 @@ from memory, export, import and clear included, and reports that it is doing so;
 shows that progress is not being saved on this device (§ 6.9). The module's tests run on
 fake-indexeddb.
 
-**Web Storage.** Three keys, each starting `cacador.`, their names exported from
+**Web Storage.** Four keys, each starting `cacador.`, their names exported from
 `apps/web/src/storage/keys.ts` for the screens to import:
 
 - localStorage `cacador.locale`: the interface language, `en` or `pt`.
@@ -1094,6 +1220,26 @@ fake-indexeddb.
   starts. Clear progress removes it and its memory copy. It is not in IndexedDB, because
   a new store would bump the database version and change `storage/types.ts` for one
   small list, and it is not in the export, because the pass is a place, not progress.
+- localStorage `cacador.animals`: the Animals screen's progress (§ 6.12, animal
+  practice D22), one JSON value keyed by animal slug, each entry holding the latest full
+  pass's score, the pass left partway, or both:
+
+  ```ts
+  Record<slug, { last?: { right: number, total: number, at: number },
+                 pass?: { answered: number, right: number, missed: number[] } }>
+  ```
+
+  `last` is written at the full pass's last answer, `at` that answer's time, and the
+  kept pass removed in the same write. `pass` carries on at the animal's question
+  `answered + 1`; `missed` holds the ids answered wrongly so far, in the order asked. A
+  Missed ones only pass writes nothing here. An animal with neither has no entry, and
+  the key is removed rather than stored empty. The storage module owns it as it owns
+  `cacador.words` (`apps/web/src/storage/animals.ts`): in memory for the page when
+  localStorage is blocked, and read entry by entry, so an unknown slug, or a score or
+  pass that is not well formed, reads as none. Clear progress removes it and its memory
+  copy. Unlike the words pass it is in the export, because scores are progress. It is
+  not in IndexedDB for the words pass's reason: a new store would bump the database
+  version and change `storage/types.ts` for one small value.
   Nothing else goes in localStorage: no theme (the system setting decides) and no last
   mode.
 - sessionStorage `cacador.recent`: the recent list the no-repeat window reads, the ten
@@ -1106,8 +1252,13 @@ but `questionState`, each as an array of its records:
 
 ```json
 { "app": "cacador", "version": 1, "exportedAt": 1791883800000,
-  "answers": [], "exams": [], "flags": [] }
+  "answers": [], "exams": [], "flags": [],
+  "animals": { "javali": { "last": { "right": 17, "total": 22, "at": 1791883700000 } } } }
 ```
+
+`animals` is optional and present only when some animal has a score or a kept pass:
+`cacador.animals` as it stands (animal practice D22). The file stays version 1, and a
+file without `animals` imports as before.
 
 **Import.** It validates the shape and refuses anything that is not a version 1 Caçador
 export without changing anything. It also refuses, changing nothing, a file holding a
@@ -1124,7 +1275,12 @@ Otherwise it merges:
 - exams by `id`: a finished copy wins over an unfinished one; between two finished
   copies the one with the earlier `finishedAt` stays; between two unfinished copies the
   one with more answers stays, the device's own on a tie;
-- flags by `(questionId, kind)`, the newer kept.
+- flags by `(questionId, kind)`, the newer kept;
+- animals by slug, after the stores' merge has committed: the score with the later
+  `at` wins, the device's own on a tie, and a kept pass in the file comes in only where
+  the device holds none (animal practice D22). An `animals` entry that is not well
+  formed by the rules above, or a score's `at` more than five minutes after the
+  import's moment, refuses the file. The counts reported leave the animals out.
 
 An exam's logged answers follow the copy kept. When the file's copy replaces one the
 device holds, the device's logged answers for that exam id are removed and the file's
@@ -1137,9 +1293,9 @@ stays unfinished and the others are submitted as they stand at the moment of the
 import, held to the deadline rule above. Every question state is then rebuilt from the
 merged log, and the counts of answers, exams and flags added are reported.
 
-**Clear progress** asks first, then empties every store and removes `cacador.recent`
-and `cacador.words`, and empties their memory copies when Web Storage is blocked; it
-never touches `cacador.locale`.
+**Clear progress** asks first, then empties every store and removes `cacador.recent`,
+`cacador.words` and `cacador.animals`, and empties their memory copies when Web Storage
+is blocked; it never touches `cacador.locale`.
 
 ## 8. Stack and conventions
 
@@ -1201,7 +1357,7 @@ apps/web/
                            tokens, the @font-face rules of the two fonts
     home/                  HomePage: the header with the Settings control, the readiness
                            plate, the exam-in-progress card, the Quick 10, Words,
-                           Practice and Exam cards, Weakest topics
+                           Animals, Practice and Exam cards, Weakest topics
     practice/              PracticePage and PracticeSession, FlagsRow, usePracticePool (the
                            query filter and its chip), recent.ts (the draw over the recent
                            list)
@@ -1217,6 +1373,9 @@ apps/web/
                            § 6.7)
     words/                 the words drill (§ 6.11): its page, the round of ten, the
                            panel after answering and the score plate
+    animals/               the Animals screens (§ 6.12): AnimalsPage (the sub-routes),
+                           AnimalsGrid (the tiles and their chips), AnimalPass (the pass),
+                           AnimalSummary (the score), AnimalCredits (the photo credits)
     notfound/              NotFoundPage, for any address that names no screen
     components/nav/        the tab bar, on every screen but the /exam route, the screen
                            header with the back control, on every screen but Home, and
@@ -1246,8 +1405,10 @@ apps/web/
                            finish.ts (the exam finish), merge.ts (the import merge),
                            exportFile.ts, keys.ts, types.ts, recent.ts (the no-repeat
                            window in sessionStorage, kept in memory when that is
-                           blocked), and beside it the words pass in localStorage (§ 7)
-    pwa/                   images.ts (the image map), registerServiceWorker.ts,
+                           blocked), and beside it the words pass and animals.ts (the
+                           animals' scores and kept passes) in localStorage (§ 7)
+    pwa/                   images.ts (the image map), animalImages.ts (the animal photo
+                           map), registerServiceWorker.ts,
                            ReloadOnUpdate.tsx (the reload at the next change of screen)
     i18n/                  locales.ts, locale.ts (the store), useI18n.ts, messages/en/ and pt/
     lib/                   utils.ts (the cn helper the shadcn components use), useLoaded.ts
@@ -1263,19 +1424,22 @@ e2e/
   tsconfig.json
   look.ts                  the Campo colour values, the contrast helper, the colour a text
                            sits on, the Fraunces check
-  app.ts                   the pieces the specs find by their words, the seeded Math.random
-                           and the round counter
+  app.ts                   the pieces the specs find by their words, the seeded Math.random,
+                           the round counter, Home's five start cards and the animal tiles
   round.spec.ts            a round of ten from Home's Quick 10 card to the score and Another 10
   acceptance.spec.ts       steps 2 to 9 of the Campo acceptance bar, in order, then four
                            steps after the bar
   words.spec.ts            steps 2 to 9 of the words bar (epic cac-zqe), in order, the
                            words read from @cacador/data at run time
-  offline.spec.ts          step 10 of both bars: Home, Practice, Words, Fraunces and the
-                           15 images from the cache, offline
+  animals.spec.ts          animal practice from Home's card: the grid, a pass kept and
+                           finished, Missed ones only, the credits, Português and Clear
+                           progress, the animals read from @cacador/data at run time
+  offline.spec.ts          step 10 of both bars: Home, Practice, Words, Animals, Fraunces
+                           and the 34 pictures from the cache, offline
   installable.spec.ts      the manifest and icons under /cacador/, Chrome's installability check
   build-output.spec.ts     the built dist: the 404.html copy, the worker that skips
                            waiting, the /cacador/ precache and URLs, and step 11 (four
-                           woff2, 15 jpg)
+                           woff2, 34 jpg)
   update.spec.ts           a deploy under an open page reaches it at the next change of
                            screen, never on the screen in use
 ```
@@ -1291,15 +1455,17 @@ Under the basename `/cacador/`, taken from Vite's `base` through
 sub-routes (`/exam`, which offers Start or resumes the unfinished exam and runs it in
 place, and `/exam/results/<id>`, the results and review), `/progress` (query `tab`,
 `section` or `pattern`, the open list, § 6.6), `/words` (the words drill, § 6.11),
-`/settings` and `/flagged`. Any other
-address, an unknown one under `/exam/` included, shows a not-found page inside the
+`/animals/*` registered as a splat so the animals folder owns its sub-routes
+(`/animals`, the grid; `/animals/credits`, the photo credits; `/animals/<slug>`, the
+animal's pass, § 6.12), `/settings` and `/flagged`. Any other
+address, an unknown one under `/exam/` or `/animals/` included, shows a not-found page inside the
 `Layout`, with the back control to Home. Each page lives in `apps/web/src/<screen>/`.
 
 The menu is the tab bar along the bottom (§ 6.3): Home, Practice, Exam and Progress, the
 labels the navigation words of `common`, the current tab in forest with a filled icon
 and `aria-current="page"`. It shows on every route except `/exam` itself, the start
-screen and the running exam; the results route, `/words`, `/settings`, `/flagged` and
-the not-found page show it with no tab current. The bar sits in the layout's footer,
+screen and the running exam; the results route, `/words`, the three `/animals`
+screens, `/settings`, `/flagged` and the not-found page show it with no tab current. The bar sits in the layout's footer,
 sticky at the foot of the viewport at the end of the column, so it takes its own room
 under the content: first the dock, a slot a screen portals into for the controls that
 must not move (Practice's Hold for English and Hint, § 8.6), empty elsewhere, then the
@@ -1315,8 +1481,10 @@ slot at the right. The caption takes one of two forms:
   clock sits in the slot on the running exam. The results page sets its visible h1,
   "Exam results", in Fraunces 28 px under the row. Words takes the eyebrow form too: the
   eyebrow "Words", no line, and the counter "n of 10" in the slot as a round's (§ 6.4,
-  § 6.11).
-- **Title**, on Progress, Settings, Flagged and the not-found page: the screen's name
+  § 6.11). An animal's pass takes Practice's eyebrow and line with its counter "3 of
+  22" in the slot, and its score the eyebrow "Animals" with "22 of 22" (§ 6.12).
+- **Title**, on Progress, Settings, Flagged, the Animals grid, Photo credits and the
+  not-found page: the screen's name
   as the visible h1 in Fraunces 28 px, with no eyebrow and no line. Progress puts
   "N % · M unseen" in the slot at the right, the percentage in Fraunces 26 px and the
   unseen count in muted 13 px.
@@ -1329,8 +1497,9 @@ renders its own header, so its own data can sit in it.
 
 No user-facing text in components; strings live in the message files, English and
 European Portuguese (`pt-PT`, never Brazilian). `apps/web/src/i18n/messages/en/` and
-`pt/` each hold `common`, `home`, `practice`, `exam`, `progress`, `settings`, `flagged`
-and `words` `.ts` files. The English index defines the `Messages` type and each
+`pt/` each hold `common`, `home`, `practice`, `exam`, `progress`, `settings`, `flagged`,
+`words` and `animals` `.ts` files; `animals` duplicates the words of Practice's that the
+pass uses (Next, the not-saved line) rather than sharing them. The English index defines the `Messages` type and each
 Portuguese file is typed by its English counterpart, so a key missing on either side
 fails `pnpm lint`. `common` holds the app name, the navigation labels (Home included,
 for the back control) and the not-found page's two strings, and belongs to the scaffold.
@@ -1497,12 +1666,18 @@ and the loader unchanged. The 15 images reach the bundle through one image map u
 `apps/web/src/pwa/`: every file under `@cacador/data/images` imported as a URL, and an
 `imageUrl(file)` lookup that every screen uses. Vite emits an asset only when a module
 imports it, so the map puts the jpgs in `dist` and in the precache whatever the screens
-do; nothing copies them into `public/`.
+do; nothing copies them into `public/`. The 19 animal photos (§ 3.3, § 6.12) come
+through a second map, `apps/web/src/pwa/animalImages.ts`: every photo under
+`@cacador/data/animals` imported as a URL with `?no-inline`, so none becomes a data URL
+the precache cannot see, and an `animalImageUrl(slug)` lookup keyed by the animal's
+slug. The Animals grid and the credits import it, so the photos reach `dist` and the
+precache; the build carries 34 jpgs.
 
 ### 8.8 Installable and offline
 
 vite-plugin-pwa 2.0.0 in `generateSW` mode precaches everything in `dist`, the jpg
-assets, the four font files (§ 8.5) and the manifest included, with scope `/cacador/`.
+assets (the bank's 15 pictures and the 19 animal photos, 34 in all, § 8.7), the four
+font files (§ 8.5) and the manifest included, with scope `/cacador/`.
 A new service worker installs in the background and takes over the open pages as soon
 as it has installed (`skipWaiting` and `clientsClaim`, set in the workbox options because
 the plugin's `registerType: 'autoUpdate'` sets them only when it injects the
@@ -1564,11 +1739,13 @@ cac-8cn's Campo acceptance bar is performed at a phone's width. `look.ts` holds 
 Campo colour values the colour checks read (light and dark, § 8.5), the WCAG contrast
 helper and the check that an element is set in Fraunces and the face has loaded;
 `app.ts` holds the pieces the specs find by their words (the screen header, the tab
-bar, the question card, Practice's answer and Next, the words drill's card and the word
-on it as its list entry). Seven spec files:
+bar, Home's five start cards in order with their layout, the question card, Practice's
+answer and Next, the words drill's card and the word on it as its list entry, and the
+Animals grid's tiles with their chips and photos). Eight spec files:
 
-- `round.spec.ts` walks a round of ten (§ 6.4): Home's rust Quick 10 card the width of
-  the column over the hairline Practice card, the counter in the header from "1 of 10"
+- `round.spec.ts` walks a round of ten (§ 6.4): Home's five start cards, Quick 10,
+  Words, Animals, then Practice and Exam side by side, the rust Quick 10 card the width
+  of the column over the hairline Practice card, the counter in the header from "1 of 10"
   through every answer, Finish in place of the last Next, the score plate with the
   count right in Fraunces and Another 10, then the Practice tab with no counter and
   Next again;
@@ -1585,7 +1762,7 @@ on it as its list entry). Seven spec files:
   copy; and export, clear and import;
 - `words.spec.ts` performs steps 2 to 9 of epic cac-zqe's words bar (§ 6.11), in order,
   one named step each, in one fresh browser context with the page's random draws
-  seeded: Home's four start cards with Words under Quick 10; the drill's header, card and
+  seeded: Home's five start cards with Words under Quick 10 and Animals under Words; the drill's header, card and
   three options of the word's kind; a wrong answer with Right, Wrong, the locked rows and
   the panel's "Question N", sentence and note; the keys 2 and Enter; a round to Finish
   and the score plate with its ten rows and the misses; Another 10, Home and a reload
@@ -1593,9 +1770,23 @@ on it as its list entry). Seven spec files:
   removing `cacador.words` and keeping `cacador.locale`. The list keeps growing, so the
   spec pins nothing about it: it reads every word from `@cacador/data` at run time,
   finds the word on screen by its Portuguese and answers right by that entry's `en`;
+- `animals.spec.ts` walks animal practice (§ 6.12) in named steps, in one fresh browser
+  context, reading the animals, their names, credits and questions from
+  `@cacador/data` at run time and answering by the bank's key: Home's five cards with
+  Animals under Words opening `/animals`; the grid's 19 tiles three to a row with every
+  photo loaded, "Javali" over "Wild boar", "Tordos" over "Thrushes", no chip and no tab
+  current; the boar's pass at "1 of 22" with the chip "Practising Javali" on question
+  123, three answered, Home and back showing "3 of 22" on its tile and "4 of 22" on
+  opening it; a reload still at "4 of 22", the rest answered to "Javali done", "21 of
+  22 right" and a rust "Missed ones only (1)"; Missed ones only at "1 of 1" to "1 of 1
+  right", then the tile's "21/22" in forest; the mouflon all wrong, "0/3" in rust; Photo
+  credits with its line, 19 rows and the boar's author, licence and Source address; the
+  screens in Português; and Clear progress removing `cacador.animals` and every chip;
 - `offline.spec.ts` is step 10 of both bars: after one online load and a reload, Home,
-  Practice and Words open offline with Fraunces available, Words with a word of the list
-  and three options, and all 15 images answer from the cache;
+  Practice, Words and Animals open offline with Fraunces available, Words with a word of
+  the list and three options, Animals with its 19 photos loaded and the first animal's
+  pass on its first question, and all 34 pictures, the bank's 15 and the 19 animal
+  photos, answer from the cache;
 - `installable.spec.ts`: the manifest and icons served under `/cacador/`, and Chrome's
   own installability check reporting no errors;
 - `build-output.spec.ts` reads the built `dist` rather than the served pages, because
@@ -1604,8 +1795,8 @@ on it as its list entry). Seven spec files:
   `SKIP_WAITING` listener, the precache holds every built file under `/cacador/`, and
   every URL in `index.html` starts with `/cacador/`. It also carries step 11: the
   precache holds exactly four woff2 URLs (Fraunces and Source Sans 3, latin and
-  latin-ext) and the 15 jpg URLs, every URL under `/cacador/`, and no file served
-  points at a font host;
+  latin-ext) and 34 jpg URLs (the bank's 15 pictures and the 19 animal photos), every
+  URL under `/cacador/`, and no file served points at a font host;
 - `update.spec.ts` deploys under an open page by rewriting `dist/sw.js` (vite preview
   reads `dist` from disk on each request) and restores it after: a change of screen
   before the update stays in the page, the new worker takes over after the app's
@@ -2230,3 +2421,42 @@ merge, or makes a screen judgement call.
   no pull request: "if the agent has the ability to create a pull request, then that is
   the point where it's complete. Not before." Recorded for every repo in the orchestrate
   skill and in the orchestrator's Caçador prompt (orchestrator PR #4).
+- **2026-11-10, Animal practice.** A new Animals screen offers the 19 Biology topics as
+  photo tiles, and picking one runs a pass through every question about that animal
+  (§ 6.12; brief `planning/animal-practice`, decisions D1 to D23, all Ross's or taken on
+  his word). An animal's set is its topic plus every question elsewhere whose stem
+  names it, not those that only list it among the options (boar: 22) (D1). The animals
+  are the 19 topics as they stand, the four groups kept whole; Non-game species is not
+  one (D2). A session is one pass, each question once, then the score (D3), in the
+  bank's order every time, the topic's questions then the others that name the animal
+  (D9). The picker is a grid three wide of photo tiles (D4) on a new screen at
+  `/animals`, opened by a full-width Animals card under Words on Home, the Practice tab
+  staying whole-bank practice (D6). The photos are Creative Commons pictures from
+  Wikimedia Commons shipped with the app (D5), the groups shown by a wood pigeon, a
+  mallard pair, a common snipe and a song thrush (D11), at 640 px on the long side,
+  the credits saying they were resized and cropped (D19). A tile gives the Portuguese
+  name over the English and the last score on the photo's corner (D7), "Tordos" /
+  "Thrushes" for the thrushes, whose full name Progress keeps (D16); the score chip is
+  forest at 75 % or more and rust below, the partway chip clay with a rust hairline,
+  and a tile not started has none (D17). A Photo credits link at the grid's foot opens
+  the authors, licences and sources (D8). The score offers Go again, Back to animals
+  and, when any were wrong, Missed ones only, and every answer counts as a practice
+  answer (D10); its one rust button is Missed ones only, or Go again when nothing was
+  missed (D18). A pass left partway is kept, one per animal, and carries on where it was
+  left, its tile showing "12 of 34"; Go again starts from question 1 (D12). The tile's
+  score is the latest full pass's; Clear progress removes the scores and kept passes,
+  and the export carries them (D13). A Missed ones only pass counts and scores its own
+  questions, is never kept and never changes the tile (D20). Progress's topic rows and
+  Home's Weakest topics do not change (D15). The three screens open with the usual
+  screen header and its back control to Home, with the tab bar and no tab current; the
+  addresses are `/animals`, `/animals/<slug>` and `/animals/credits`, and an unknown
+  slug is not found (D21). Scores and kept passes are one value in localStorage
+  `cacador.animals`, kept in memory when that is blocked; the export stays version 1
+  with an optional `animals` field, the later score winning on import and a kept pass
+  coming in only where the device has none; the score is recorded at the pass's last
+  answer (D22, § 7). The screens' words in English and Portuguese are D14's and D23's
+  (§ 6.12). Reason: Ross, 2026-11-10, asking to pick an animal and be asked about it
+  alone, "so that I can get familiar with all of the individual animals without the
+  questioning being spread too far across all of the animals at once": a question about
+  one animal, then another, then something else in the middle "is really spreading the
+  questioning thin, and it makes it really hard to focus my attention."
