@@ -198,6 +198,13 @@ export const sectionOf = (question: Question): Section | undefined => sectionByS
 
 export const topicOf = (question: Question): Topic | undefined => topicBySlug.get(question.topic);
 
+const PT_AGREEMENTS = ['o', 'a', 'os', 'as'] as const;
+
+/** The ending a Portuguese past participle takes after an animal's tile name: "Javali concluído", "Lebre concluída", "Tordos concluídos", "Narcejas concluídas" (D24). */
+export type PtAgreement = (typeof PT_AGREEMENTS)[number];
+
+const isPtAgreement = (value: string): value is PtAgreement => PT_AGREEMENTS.some((ending) => ending === value);
+
 /** An animal of the Animals screen: one per Biology topic, with its tile names, photo, credit and questions. */
 export interface Animal {
   /** The Biology topic's slug, which is also the photo's name and the address /animals/<slug>. */
@@ -206,6 +213,8 @@ export interface Animal {
   pt: string;
   /** The tile's English name, chosen as `pt` is. */
   en: string;
+  /** How a participle agrees with `pt` in gender and number, from animals.json (D24). */
+  ptAgreement: PtAgreement;
   /** The Biology topic, with its full names. */
   topic: Topic;
   /** The photo's file name in animals/ (imported as `@cacador/data/animals/<file>`). */
@@ -224,6 +233,7 @@ export interface Animal {
 /** One entry of animals/animals.json: the photo and its credit, with tile names where the topic's are too long. */
 interface AnimalEntry {
   slug: string;
+  ptAgreement: string;
   file: string;
   position: string;
   author: string;
@@ -266,10 +276,18 @@ function questionIdsOf(slug: string): number[] {
 }
 
 /** The 19 animals in animals.json's order, which is the manifest's order of the Biology topics (D2). */
-export const animals: readonly Animal[] = (animalsJson as AnimalEntry[]).map(({ tile, ...entry }) => {
+export const animals: readonly Animal[] = (animalsJson as AnimalEntry[]).map(({ tile, ptAgreement, ...entry }) => {
   const topic = topicBySlug.get(entry.slug);
   if (!topic) throw new Error(`animals.json: ${entry.slug} is not a topic`);
-  return { ...entry, pt: tile?.pt ?? topic.pt, en: tile?.en ?? topic.en, topic, questionIds: questionIdsOf(entry.slug) };
+  if (!isPtAgreement(ptAgreement)) throw new Error(`animals.json: ${entry.slug} has ptAgreement ${ptAgreement}`);
+  return {
+    ...entry,
+    pt: tile?.pt ?? topic.pt,
+    en: tile?.en ?? topic.en,
+    ptAgreement,
+    topic,
+    questionIds: questionIdsOf(entry.slug),
+  };
 });
 
 const animalsBySlug = new Map(animals.map((a) => [a.slug, a]));

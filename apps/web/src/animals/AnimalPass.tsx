@@ -190,6 +190,7 @@ function PassSession({ animal }: { animal: Animal }) {
         {score !== undefined && (
           <AnimalSummary
             name={animal.pt}
+            agreement={animal.ptAgreement}
             right={score.right}
             total={score.total}
             missed={score.missed.length}

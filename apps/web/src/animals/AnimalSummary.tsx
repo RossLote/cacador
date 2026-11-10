@@ -1,3 +1,4 @@
+import type { PtAgreement } from '@cacador/data';
 import { useId } from 'react';
 import { LinkButton } from '@/components/LinkButton';
 import { PLATE } from '@/components/styles';
@@ -11,14 +12,16 @@ const SCORE_BUTTON = 'h-12 w-full text-[17px]';
 /**
  * The score at the end of an animal's pass (animal practice D10, D18, D20), in
  * place of the card: a plate like RoundSummary's, captioned "<animal> done"
- * with the animal's tile name, the count right in Fraunces 64 px and "of N
- * right" beside it; under the plate, full width, Missed ones only (n) while any
+ * with the animal's tile name (in Portuguese agreeing with it, "Lebre
+ * concluída", D24), the count right in Fraunces 64 px and "of N right" beside
+ * it; under the plate, full width, Missed ones only (n) while any
  * were wrong, Go again, and the link Back to animals. One button is rust:
  * Missed ones only when there is one, Go again otherwise; Go again is then
  * outlined with the ink hairline, and Back to animals with the line hairline.
  */
 export function AnimalSummary({
   name,
+  agreement,
   right,
   total,
   missed,
@@ -27,6 +30,8 @@ export function AnimalSummary({
 }: {
   /** The animal's Portuguese tile name (D16). */
   name: string;
+  /** How the Portuguese caption's "concluído" agrees with `name` (D24). */
+  agreement: PtAgreement;
   right: number;
   total: number;
   /** How many were answered wrongly. */
@@ -40,7 +45,7 @@ export function AnimalSummary({
     <div className="flex flex-col gap-3.5">
       <section aria-labelledby={headingId} className={cn('flex flex-col gap-2.5', PLATE)}>
         <h2 id={headingId} className="eyebrow">
-          {t.animals.done(name)}
+          {t.animals.done(name, agreement)}
         </h2>
         <p className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
           <span className="font-heading text-[64px] leading-none font-semibold tabular-nums">{right}</span>{' '}

@@ -1,6 +1,7 @@
 [
   {
     "slug": "coelho",
+    "ptAgreement": "o",
     "file": "coelho.jpg",
     "position": "50% 50%",
     "author": "euqirneto",
@@ -10,6 +11,7 @@
   },
   {
     "slug": "lebre",
+    "ptAgreement": "a",
     "file": "lebre.jpg",
     "position": "100% 50%",
     "author": "Jan Ebr",
@@ -19,6 +21,7 @@
   },
   {
     "slug": "raposa",
+    "ptAgreement": "a",
     "file": "raposa.jpg",
     "position": "100% 50%",
     "author": "ClaudiaTen",
@@ -28,6 +31,7 @@
   },
   {
     "slug": "saca-rabos",
+    "ptAgreement": "o",
     "file": "saca-rabos.jpg",
     "position": "20% 50%",
     "author": "Anna Liflyand",
@@ -37,6 +41,7 @@
   },
   {
     "slug": "javali",
+    "ptAgreement": "o",
     "file": "javali.jpg",
     "position": "30% 50%",
     "author": "Valentin Panzirsch",
@@ -46,6 +51,7 @@
   },
   {
     "slug": "gamo",
+    "ptAgreement": "o",
     "file": "gamo.jpg",
     "position": "50% 50%",
     "author": "Johann-Nikolaus Andreae",
@@ -55,6 +61,7 @@
   },
   {
     "slug": "veado",
+    "ptAgreement": "o",
     "file": "veado.jpg",
     "position": "50% 50%",
     "author": "Luc Viatour",
@@ -64,6 +71,7 @@
   },
   {
     "slug": "corco",
+    "ptAgreement": "o",
     "file": "corco.jpg",
     "position": "50% 50%",
     "author": "Charles J. Sharp",
@@ -73,6 +81,7 @@
   },
   {
     "slug": "muflao",
+    "ptAgreement": "o",
     "file": "muflao.jpg",
     "position": "60% 50%",
     "author": "Unknown author",
@@ -82,6 +91,7 @@
   },
   {
     "slug": "perdiz",
+    "ptAgreement": "a",
     "file": "perdiz.jpg",
     "position": "50% 50%",
     "author": "Pierre Dalous",
@@ -91,6 +101,7 @@
   },
   {
     "slug": "pombos-rolas",
+    "ptAgreement": "os",
     "file": "pombos-rolas.jpg",
     "position": "50% 50%",
     "author": "Bengt Nyman",
@@ -100,6 +111,7 @@
   },
   {
     "slug": "codorniz",
+    "ptAgreement": "a",
     "file": "codorniz.jpg",
     "position": "50% 50%",
     "author": "christoph_moning",
@@ -109,6 +121,7 @@
   },
   {
     "slug": "patos",
+    "ptAgreement": "os",
     "file": "patos.jpg",
     "position": "50% 50%",
     "author": "Richard Bartz",
@@ -118,6 +131,7 @@
   },
   {
     "slug": "galinha-d-agua",
+    "ptAgreement": "a",
     "file": "galinha-d-agua.jpg",
     "position": "60% 50%",
     "author": "Alexis Lours",
@@ -127,6 +141,7 @@
   },
   {
     "slug": "galeirao",
+    "ptAgreement": "o",
     "file": "galeirao.jpg",
     "position": "60% 50%",
     "author": "Alexis Lours",
@@ -136,6 +151,7 @@
   },
   {
     "slug": "galinhola",
+    "ptAgreement": "a",
     "file": "galinhola.jpg",
     "position": "50% 50%",
     "author": "Ronald Slabke",
@@ -145,6 +161,7 @@
   },
   {
     "slug": "narcejas",
+    "ptAgreement": "as",
     "file": "narcejas.jpg",
     "position": "40% 50%",
     "author": "TRinaud",
@@ -154,6 +171,7 @@
   },
   {
     "slug": "tarambola",
+    "ptAgreement": "a",
     "file": "tarambola.jpg",
     "position": "50% 50%",
     "author": "Charles J. Sharp",
@@ -163,6 +181,7 @@
   },
   {
     "slug": "tordos",
+    "ptAgreement": "os",
     "file": "tordos.jpg",
     "position": "50% 50%",
     "author": "Dion Art",

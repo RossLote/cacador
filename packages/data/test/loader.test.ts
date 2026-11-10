@@ -193,6 +193,16 @@ describe('loader', () => {
     expect(animalBySlug('nope')).toBeUndefined();
   });
 
+  // The ending "concluído" takes after each tile name on the score (D24): Coelho-bravo, Lebre, ..., Tordos.
+  it("gives every animal the agreement of its Portuguese tile name, in animals.json's order", () => {
+    expect(animals.map((a) => [a.slug, a.ptAgreement])).toEqual([
+      ['coelho', 'o'], ['lebre', 'a'], ['raposa', 'a'], ['saca-rabos', 'o'], ['javali', 'o'], ['gamo', 'o'],
+      ['veado', 'o'], ['corco', 'o'], ['muflao', 'o'], ['perdiz', 'a'], ['pombos-rolas', 'os'], ['codorniz', 'a'],
+      ['patos', 'os'], ['galinha-d-agua', 'a'], ['galeirao', 'o'], ['galinhola', 'a'], ['narcejas', 'as'],
+      ['tarambola', 'a'], ['tordos', 'os'],
+    ]);
+  });
+
   // Listed as the validator lists a folder, passing over a hidden file such as .DS_Store.
   it('ships a photo for every animal, and nothing else, in animals/', () => {
     const dir = new URL('../animals/', import.meta.url);

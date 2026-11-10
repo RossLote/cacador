@@ -139,7 +139,8 @@ packages/data/
     en/                      same 18 file names, language notes and nudges
   images/                    q119.jpg … q320.jpg and sinal.jpg
   animals/                   the Animals screen's photos (§ 3.3, § 6.12):
-    animals.json             { slug, file, position, author, licence, licenceUrl, source, tile? }
+    animals.json             { slug, ptAgreement, file, position, author, licence,
+                             licenceUrl, source, tile? }
     coelho.jpg               one per Biology topic, <topic-slug>.jpg, 19 files
     …
     tordos.jpg
@@ -386,27 +387,32 @@ An animal, one entry in `animals/animals.json` (an array in the manifest's order
 19 Biology topics, animal practice D2):
 
 ```json
-{ "slug": "tordos", "file": "tordos.jpg", "position": "50% 50%", "author": "Dion Art",
-  "licence": "CC BY-SA 4.0", "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+{ "slug": "tordos", "ptAgreement": "os", "file": "tordos.jpg", "position": "50% 50%",
+  "author": "Dion Art", "licence": "CC BY-SA 4.0",
+  "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
   "source": "https://commons.wikimedia.org/wiki/File:…", "tile": { "pt": "Tordos", "en": "Thrushes" } }
 ```
 
-`slug` is a Biology topic's slug, and `file` its photo in `animals/`, a jpg 640 px on
-its long side (the mouflon's 510 px, its source being no larger), about 1.3 MB for the
-19. `position` is the CSS `object-position` that keeps the animal in a square crop: the
-fox's and the hare's are not centred. `author`, `licence`, `licenceUrl` and `source`,
-the photo's Wikimedia Commons page, are its credit (§ 6.12). `tile` is present only
-where the topic's names are too long for a tile, the thrushes alone (animal practice
-D16). The photos are outside `images/`, so § 4's image rules never see them, and
+`slug` is a Biology topic's slug. `ptAgreement`, one of `o`, `a`, `os` and `as`, is the
+ending a Portuguese past participle takes after the tile's Portuguese name, so the
+score's caption agrees with it: "Javali concluído", "Lebre concluída", "Tordos
+concluídos", "Narcejas concluídas" (animal practice D24); the loader throws at load on
+any other value. `file` is its photo in `animals/`, a jpg 640 px on its long side (the
+mouflon's 510 px, its source being no larger), about 1.3 MB for the 19. `position` is
+the CSS `object-position` that keeps the animal in a square crop: the fox's and the
+hare's are not centred. `author`, `licence`, `licenceUrl` and `source`, the photo's
+Wikimedia Commons page, are its credit (§ 6.12). `tile` is present only where the
+topic's names are too long for a tile, the thrushes alone (animal practice D16). The
+photos are outside `images/`, so § 4's image rules never see them, and
 `packages/data/package.json` exports them as `@cacador/data/animals/*`.
 
 The loader's `animals`, with `animalBySlug(slug)`, gives each entry as an `Animal`: its
-fields less `tile`; `pt` and `en`, the tile's names (`tile`'s, else the topic's);
-`topic`, the manifest topic with its full names; and `questionIds`, the questions a pass
-asks in order: the topic's, then every other question whose stem names one of the
-animal's species, a `glossary/species.json` entry whose `group` is the slug, as a whole
-word ignoring case (animal practice D1, D9). The sets are worked out, never written by
-hand.
+fields less `tile` (`ptAgreement` typed as `PtAgreement`); `pt` and `en`, the tile's
+names (`tile`'s, else the topic's); `topic`, the manifest topic with its full names; and
+`questionIds`, the questions a pass asks in order: the topic's, then every other
+question whose stem names one of the animal's species, a `glossary/species.json` entry
+whose `group` is the slug, as a whole word ignoring case (animal practice D1, D9). The
+sets are worked out, never written by hand.
 
 ### 3.4 Manifest
 
@@ -1113,7 +1119,10 @@ only (D21).
   reads "Animals" and its counter "22 of 22". Under the plate, full width: "Missed ones
   only (n)" when any were wrong, "Go again", and "Back to animals" to the grid. One is
   rust, Missed ones only when it shows and Go again otherwise; the others are outlined
-  (D10, D18). Go again always starts from question 1 (D12).
+  (D10, D18). Go again always starts from question 1 (D12). In Portuguese the caption
+  agrees with the tile name in gender and number, by the animal's `ptAgreement` (§ 3.3):
+  "Javali concluído", "Lebre concluída", "Tordos concluídos", "Narcejas concluídas"
+  (D24).
 - **Missed ones only** asks just the questions the score counted wrong, in the order
   asked: the header counts "2 of 5", it ends on the same plate with its own numbers
   ("3 of 5 right"), and it offers "Missed ones only (2)" again while any are still

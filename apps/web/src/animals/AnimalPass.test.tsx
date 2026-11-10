@@ -14,6 +14,8 @@ import { failStore } from '../../test/storage';
 
 const BOAR = animalBySlug('javali')!.questionIds;
 const MOUFLON = animalBySlug('muflao')!.questionIds;
+const PLOVER = animalBySlug('tarambola')!.questionIds;
+const THRUSHES = animalBySlug('tordos')!.questionIds;
 /** The five boar questions the long walk answers wrongly, in the pass's order: one before the reload, two either side of the law questions. */
 const BOAR_WRONG = [123, 126, 136, 422, 494];
 
@@ -45,7 +47,11 @@ function words(locale: Locale = 'en') {
       within(screen.getByRole('group', { name: m.practice.card.options })).getAllByRole('button')[['A', 'B', 'C'].indexOf(key)]!,
     nextButton: () => screen.queryByRole('button', { name: m.animals.next }),
     finishButton: () => screen.queryByRole('button', { name: m.animals.finish }),
-    plate: (name: string) => screen.queryByRole('region', { name: m.animals.done(name) }),
+    /** The score plate of the animal at `slug`, named by its caption. */
+    plate: (slug: string) => {
+      const { pt, ptAgreement } = animalBySlug(slug)!;
+      return screen.queryByRole('region', { name: m.animals.done(pt, ptAgreement) });
+    },
   };
 }
 
@@ -102,7 +108,7 @@ describe('AnimalPass', () => {
     expect(BOAR.indexOf(422)).toBe(BOAR.indexOf(136) + 1);
     await walk(user, BOAR.slice(3), BOAR_WRONG);
 
-    const score = plate('Javali')!;
+    const score = plate('javali')!;
     expect(score).toHaveClass('bg-card');
     expect(within(score).getByRole('heading', { name: 'Javali done' })).toBeInTheDocument();
     expect(within(score).getByText('17')).toHaveClass('font-heading', 'text-[64px]');
@@ -137,8 +143,8 @@ describe('AnimalPass', () => {
     expect(counter()).toHaveTextContent('1 of 5');
     expect(screen.getByText('Javali').parentElement).toHaveTextContent('PractisingJavali');
     await walk(user, BOAR_WRONG, [126, 494]);
-    expect(within(plate('Javali')!).getByText('3')).toBeInTheDocument();
-    expect(within(plate('Javali')!).getByText('of 5 right')).toBeInTheDocument();
+    expect(within(plate('javali')!).getByText('3')).toBeInTheDocument();
+    expect(within(plate('javali')!).getByText('of 5 right')).toBeInTheDocument();
     expect(counter()).toHaveTextContent('5 of 5');
     expect(screen.getByRole('button', { name: 'Missed ones only (2)' })).toHaveClass('bg-primary');
     expect((await listAnswers()).map((a) => a.questionId).slice(22)).toEqual(BOAR_WRONG);
@@ -149,7 +155,7 @@ describe('AnimalPass', () => {
     expect(shown()).toBe(126);
     expect(counter()).toHaveTextContent('1 of 2');
     await walk(user, [126, 494], []);
-    expect(within(plate('Javali')!).getByText('of 2 right')).toBeInTheDocument();
+    expect(within(plate('javali')!).getByText('of 2 right')).toBeInTheDocument();
     expect(screen.queryByRole('button', { name: /Missed ones only/ })).not.toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Go again' })).toHaveClass('bg-primary');
 
@@ -181,8 +187,8 @@ describe('AnimalPass', () => {
     const view = renderAt('/animals/muflao');
     expect(counter()).toHaveTextContent('1 of 3');
     await walk(user, MOUFLON, []);
-    expect(within(plate('Muflão')!).getByText('3')).toBeInTheDocument();
-    expect(within(plate('Muflão')!).getByText('of 3 right')).toBeInTheDocument();
+    expect(within(plate('muflao')!).getByText('3')).toBeInTheDocument();
+    expect(within(plate('muflao')!).getByText('of 3 right')).toBeInTheDocument();
     expect(counter()).toHaveTextContent('3 of 3');
     expect(screen.queryByRole('button', { name: /Missed ones only/ })).not.toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Go again' })).toHaveClass('bg-primary');
@@ -233,7 +239,7 @@ describe('AnimalPass', () => {
     await user.keyboard('C');
     expect(finishButton()).toBeInTheDocument();
     await user.keyboard('{Enter}');
-    expect(plate('Muflão')).toBeInTheDocument();
+    expect(plate('muflao')).toBeInTheDocument();
     expect((await listAnswers()).map((a) => a.chosen)).toEqual(['B', 'B', 'C']);
 
     // 1 and A on a fresh pass.
@@ -260,12 +266,36 @@ describe('AnimalPass', () => {
     await waitFor(166);
     expect(counter()).toHaveTextContent('2 de 3');
     await walk(user, MOUFLON.slice(1), [167], 'pt');
-    const score = pt.plate('Muflão')!;
+    const score = pt.plate('muflao')!;
     expect(within(score).getByRole('heading', { name: 'Muflão concluído' })).toBeInTheDocument();
     expect(within(score).getByText('de 3 certas')).toBeInTheDocument();
     expect(counter()).toHaveTextContent('3 de 3');
     expect(screen.getByRole('button', { name: 'Só as erradas (1)' })).toHaveClass('bg-primary');
     expect(screen.getByRole('button', { name: 'Outra vez' })).toBeInTheDocument();
     expect(screen.getByRole('link', { name: 'Voltar aos animais' })).toHaveAttribute('href', '/animals');
+  });
+
+  it('agrees the Portuguese caption with the animal\'s name: concluída after a feminine one, concluídos after a plural', async () => {
+    act(() => setLocale('pt'));
+    const pt = words('pt');
+    const user = userEvent.setup();
+    const plover = renderAt('/animals/tarambola');
+    await walk(user, PLOVER, [], 'pt');
+    expect(within(pt.plate('tarambola')!).getByRole('heading', { name: 'Tarambola-dourada concluída' })).toBeInTheDocument();
+    plover.unmount();
+
+    renderAt('/animals/tordos');
+    await walk(user, THRUSHES, [], 'pt');
+    expect(within(pt.plate('tordos')!).getByRole('heading', { name: 'Tordos concluídos' })).toBeInTheDocument();
+
+    // D24's four captions, from each animal's own ending.
+    const caption = (slug: string) => pt.t.done(animalBySlug(slug)!.pt, animalBySlug(slug)!.ptAgreement);
+    expect(['javali', 'lebre', 'narcejas', 'tordos'].map(caption)).toEqual([
+      'Javali concluído',
+      'Lebre concluída',
+      'Narcejas concluídas',
+      'Tordos concluídos',
+    ]);
+    expect(t.done('Lebre', 'a')).toBe('Lebre done');
   });
 });

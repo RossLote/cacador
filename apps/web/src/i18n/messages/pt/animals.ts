@@ -15,7 +15,7 @@ export const animals: Messages['animals'] = {
   practising: 'A praticar',
   next: 'Seguinte',
   finish: 'Terminar',
-  done: (name) => `${name} concluído`,
+  done: (name, agreement) => `${name} concluíd${agreement}`,
   ofRight: (size) => `de ${size} certas`,
   missedOnly: (count) => `Só as erradas (${count})`,
   again: 'Outra vez',

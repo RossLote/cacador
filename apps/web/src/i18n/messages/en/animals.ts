@@ -1,3 +1,5 @@
+import type { PtAgreement } from '@cacador/data';
+
 /**
  * The Animals screens (epic animal-practice D14, D19, D21, D23): the grid at
  * /animals, the photo credits at /animals/credits and an animal's pass at
@@ -5,6 +7,12 @@
  * The pass's and the score's words that Practice also uses are duplicated here
  * rather than shared (DESIGN.md § 8.3).
  */
+/**
+ * The caption of the score plate, with the animal's Portuguese tile name and
+ * the ending a participle takes after it (D24), which only the Portuguese uses.
+ */
+const done: (name: string, agreement: PtAgreement) => string = (name) => `${name} done`;
+
 export const animals = {
   /** The grid's title, the pass's eyebrow, and the pass's heading for screen readers. */
   title: 'Animals',
@@ -34,8 +42,7 @@ export const animals = {
   next: 'Next',
   /** The button under the pass's last answer, in place of Next. */
   finish: 'Finish',
-  /** The caption of the score plate, with the animal's Portuguese tile name. */
-  done: (name: string) => `${name} done`,
+  done,
   /** Beside the count right on the score plate. */
   ofRight: (size: number) => `of ${size} right`,
   /** The score's button for a pass of only the questions answered wrongly, with how many. */
