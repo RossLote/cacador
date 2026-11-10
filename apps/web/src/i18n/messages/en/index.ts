@@ -4,6 +4,7 @@
  * key missing on either side fails `pnpm lint`. A screen bead edits only its
  * own two files (en/<screen>.ts and pt/<screen>.ts) and never this index.
  */
+import { animals } from './animals';
 import { common } from './common';
 import { exam } from './exam';
 import { flagged } from './flagged';
@@ -13,6 +14,6 @@ import { progress } from './progress';
 import { settings } from './settings';
 import { words } from './words';
 
-export const en = { common, home, practice, exam, progress, settings, flagged, words };
+export const en = { common, home, practice, exam, progress, settings, flagged, words, animals };
 
 export type Messages = typeof en;

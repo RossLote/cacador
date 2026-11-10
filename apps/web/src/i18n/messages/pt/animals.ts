@@ -1,0 +1,26 @@
+import type { Messages } from '../en';
+
+export const animals: Messages['animals'] = {
+  title: 'Animais',
+  credits: 'Créditos das fotografias',
+  creditsIntro: 'Fotografias da Wikimedia Commons, redimensionadas e recortadas.',
+  source: 'Fonte',
+  sourceOf: (name) => `Fonte: ${name}`,
+  tileScore: (right, total) => `${right}/${total}`,
+  tilePartway: (answered, total) => `${answered} de ${total}`,
+  tileName: (pt, en) => `${pt}, ${en}`,
+  tileDone: (pt, en, right, total) => `${pt}, ${en}, ${right} de ${total} certas`,
+  tileStarted: (pt, en, answered, total) => `${pt}, ${en}, ${answered} de ${total} respondidas`,
+  position: (n, size) => `${n} de ${size}`,
+  practising: 'A praticar',
+  next: 'Seguinte',
+  finish: 'Terminar',
+  done: (name) => `${name} concluído`,
+  ofRight: (size) => `de ${size} certas`,
+  missedOnly: (count) => `Só as erradas (${count})`,
+  again: 'Outra vez',
+  back: 'Voltar aos animais',
+  loading: 'A escolher uma pergunta…',
+  loadFailed: 'Não foi possível ler o progresso neste dispositivo, por isso não foi escolhida nenhuma pergunta. Recarregue a página para tentar de novo.',
+  answerNotSaved: 'Não foi possível guardar esta resposta neste dispositivo, por isso não conta para o seu progresso.',
+};
